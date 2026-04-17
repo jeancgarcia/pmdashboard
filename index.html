@@ -201,22 +201,33 @@ function DigestCard({ digest, completed, onToggle, onDelete, defaultOpen }) {
 /* ═══ Supabase Config ═══ */
 const SUPABASE_URL = "https://niqzkombzncxxihhulqq.supabase.co";
 const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5pcXprb21iem5jeHhpaGh1bHFxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM2OTI5NTgsImV4cCI6MjA4OTI2ODk1OH0.9DMbwxPi4yBkXG034sakwh6tnxt-AUcKkt_MER71qcg";
-const SB_HEADERS = { "apikey": SUPABASE_KEY, "Authorization": "Bearer " + SUPABASE_KEY, "Content-Type": "application/json", "Prefer": "return=minimal" };
+const SB_HEADERS = { "apikey": SUPABASE_KEY, "Authorization": "Bearer " + SUPABASE_KEY, "Content-Type": "application/json", "Prefer": "return=representation" };
+
+let supabaseOk = false; // tracks if Supabase is reachable
 
 async function sbRead(key, fallback) {
   try {
     const r = await fetch(SUPABASE_URL + "/rest/v1/dashboard_state?key=eq." + key + "&select=value", { headers: SB_HEADERS });
+    if (!r.ok) throw new Error(r.status);
     const data = await r.json();
+    supabaseOk = true;
     return data.length > 0 ? data[0].value : fallback;
-  } catch { return fallback; }
+  } catch {
+    supabaseOk = false;
+    // Fallback: read from localStorage
+    try { return JSON.parse(localStorage.getItem("llf-" + key) || JSON.stringify(fallback)); } catch { return fallback; }
+  }
 }
 
 async function sbWrite(key, value) {
+  // Always save to localStorage as backup
+  try { localStorage.setItem("llf-" + key, JSON.stringify(value)); } catch {}
+
+  if (!supabaseOk) return; // don't try Supabase if it's not reachable
   try {
-    // Upsert: update if exists, insert if not
     await fetch(SUPABASE_URL + "/rest/v1/dashboard_state?key=eq." + key, {
       method: "PATCH",
-      headers: SB_HEADERS,
+      headers: { ...SB_HEADERS, "Prefer": "return=minimal" },
       body: JSON.stringify({ value, updated_at: new Date().toISOString() }),
     });
   } catch {}
