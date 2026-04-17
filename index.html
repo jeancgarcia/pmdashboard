@@ -198,39 +198,43 @@ function DigestCard({ digest, completed, onToggle, onDelete, defaultOpen }) {
   );
 }
 
-/* ═══ Supabase Config ═══ */
-const SUPABASE_URL = "https://niqzkombzncxxihhulqq.supabase.co";
-const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5pcXprb21iem5jeHhpaGh1bHFxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM2OTI5NTgsImV4cCI6MjA4OTI2ODk1OH0.9DMbwxPi4yBkXG034sakwh6tnxt-AUcKkt_MER71qcg";
-const SB_HEADERS = { "apikey": SUPABASE_KEY, "Authorization": "Bearer " + SUPABASE_KEY, "Content-Type": "application/json", "Prefer": "return=representation" };
+/* ═══ State Persistence (jsonblob.com — free, CORS-friendly, no tokens) ═══ */
+const BLOB_ID = "019d9d32-5723-7040-89fa-2f5d632b3eef";
+const BLOB_URL = "https://jsonblob.com/api/jsonBlob/" + BLOB_ID;
 
-let supabaseOk = false; // tracks if Supabase is reachable
+let writeQueue = null; // debounce timer
+let remoteOk = true;   // tracks connectivity
 
-async function sbRead(key, fallback) {
+async function remoteRead() {
   try {
-    const r = await fetch(SUPABASE_URL + "/rest/v1/dashboard_state?key=eq." + key + "&select=value", { headers: SB_HEADERS });
+    const r = await fetch(BLOB_URL, { headers: { "Accept": "application/json" } });
     if (!r.ok) throw new Error(r.status);
-    const data = await r.json();
-    supabaseOk = true;
-    return data.length > 0 ? data[0].value : fallback;
+    remoteOk = true;
+    return await r.json();
   } catch {
-    supabaseOk = false;
-    // Fallback: read from localStorage
-    try { return JSON.parse(localStorage.getItem("llf-" + key) || JSON.stringify(fallback)); } catch { return fallback; }
+    remoteOk = false;
+    return null;
   }
 }
 
-async function sbWrite(key, value) {
-  // Always save to localStorage as backup
-  try { localStorage.setItem("llf-" + key, JSON.stringify(value)); } catch {}
-
-  if (!supabaseOk) return; // don't try Supabase if it's not reachable
+async function remoteWrite(state) {
   try {
-    await fetch(SUPABASE_URL + "/rest/v1/dashboard_state?key=eq." + key, {
-      method: "PATCH",
-      headers: { ...SB_HEADERS, "Prefer": "return=minimal" },
-      body: JSON.stringify({ value, updated_at: new Date().toISOString() }),
+    await fetch(BLOB_URL, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json", "Accept": "application/json" },
+      body: JSON.stringify(state)
     });
-  } catch {}
+    remoteOk = true;
+  } catch {
+    remoteOk = false;
+  }
+}
+
+function debouncedWrite(state) {
+  // Always save to localStorage as instant cache
+  try { localStorage.setItem("llf-state", JSON.stringify(state)); } catch {}
+  clearTimeout(writeQueue);
+  writeQueue = setTimeout(() => remoteWrite(state), 800);
 }
 
 /* ═══ Main App ═══ */
@@ -244,7 +248,7 @@ function App() {
   const [hidden, setHidden] = useState([]);
   const [stateLoaded, setStateLoaded] = useState(false);
 
-  // Load digests + state from Supabase on mount
+  // Load digests + state on mount
   useEffect(() => {
     // Fetch digests.json
     fetch("digests.json?" + Date.now())
@@ -256,24 +260,25 @@ function App() {
       })
       .catch(e => { setError(e.message); setLoading(false); });
 
-    // Fetch state from Supabase
-    Promise.all([sbRead("completed", {}), sbRead("hidden", [])])
-      .then(([c, h]) => { setCompleted(c); setHidden(h); setStateLoaded(true); });
+    // Load state: localStorage first (instant), then remote (authoritative)
+    try {
+      const local = JSON.parse(localStorage.getItem("llf-state") || "{}");
+      if (local.completed) setCompleted(local.completed);
+      if (local.hidden) setHidden(local.hidden);
+    } catch {}
+
+    remoteRead().then(state => {
+      if (state && state.completed) setCompleted(state.completed);
+      if (state && state.hidden) setHidden(state.hidden);
+      setStateLoaded(true);
+    });
   }, []);
 
-  // Persist completed to Supabase (debounced)
-  const completedRef = React.useRef(null);
+  // Persist state to remote (debounced)
   useEffect(() => {
     if (!stateLoaded) return;
-    clearTimeout(completedRef.current);
-    completedRef.current = setTimeout(() => sbWrite("completed", completed), 400);
-  }, [completed, stateLoaded]);
-
-  // Persist hidden to Supabase
-  useEffect(() => {
-    if (!stateLoaded) return;
-    sbWrite("hidden", hidden);
-  }, [hidden, stateLoaded]);
+    debouncedWrite({ completed, hidden });
+  }, [completed, hidden, stateLoaded]);
 
   const toggle = useCallback((id) => {
     setCompleted(prev => ({ ...prev, [id]: !prev[id] }));
