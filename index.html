@@ -138,8 +138,9 @@ function Section({ section, completed, onToggle, defaultCollapsed }) {
 }
 
 /* ═══ DigestCard ═══ */
-function DigestCard({ digest, completed, onToggle, defaultOpen }) {
+function DigestCard({ digest, completed, onToggle, onDelete, defaultOpen }) {
   const [open, setOpen] = useState(defaultOpen);
+  const [confirmDelete, setConfirmDelete] = useState(false);
   const actionItems = digest.sections.filter(s => !s.info).flatMap(s => s.items);
   const total = actionItems.length;
   const doneCount = actionItems.filter(i => completed[i.id]).length;
@@ -147,12 +148,25 @@ function DigestCard({ digest, completed, onToggle, defaultOpen }) {
 
   return (
     <div className="mb-8">
-      <button onClick={() => setOpen(!open)} className="flex items-center gap-2 mb-4 group w-full text-left">
-        <Icon.ChevronDown size={16} className={`text-gray-300 transition-transform duration-200 ${open ? "" : "-rotate-90"}`} />
-        <h2 className="text-lg font-semibold text-gray-900 tracking-tight">{digest.date}</h2>
-        <span className="text-xs text-gray-300 font-medium uppercase tracking-wider">{digest.type}</span>
-        {total > 0 && <span className="text-xs text-gray-300 font-medium ml-auto">{doneCount}/{total}</span>}
-      </button>
+      <div className="flex items-center gap-2 mb-4">
+        <button onClick={() => setOpen(!open)} className="flex items-center gap-2 group flex-1 text-left">
+          <Icon.ChevronDown size={16} className={`text-gray-300 transition-transform duration-200 ${open ? "" : "-rotate-90"}`} />
+          <h2 className="text-lg font-semibold text-gray-900 tracking-tight">{digest.date}</h2>
+          <span className="text-xs text-gray-300 font-medium uppercase tracking-wider">{digest.type}</span>
+        </button>
+        {total > 0 && <span className="text-xs text-gray-300 font-medium">{doneCount}/{total}</span>}
+        {/* Delete */}
+        {confirmDelete ? (
+          <div className="flex items-center gap-1.5 ml-2">
+            <button onClick={() => { onDelete(digest.id); setConfirmDelete(false); }} className="text-xs font-medium text-red-500 hover:text-red-600 transition-colors px-2 py-1 rounded-lg hover:bg-red-50">Delete</button>
+            <button onClick={() => setConfirmDelete(false)} className="text-xs font-medium text-gray-400 hover:text-gray-500 transition-colors px-2 py-1 rounded-lg hover:bg-gray-50">Cancel</button>
+          </div>
+        ) : (
+          <button onClick={() => setConfirmDelete(true)} className="ml-2 text-gray-200 hover:text-red-400 transition-colors p-1 rounded-lg hover:bg-gray-50" title="Remove briefing">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+          </button>
+        )}
+      </div>
 
       {open && (
         <div className="fade-in">
@@ -207,13 +221,27 @@ function App() {
       .catch(e => { setError(e.message); setLoading(false); });
   }, []);
 
+  // Hidden digests (deleted locally)
+  const [hidden, setHidden] = useState(() => {
+    try { return JSON.parse(localStorage.getItem("llf-hidden") || "[]"); } catch { return []; }
+  });
+
   // Persist completed state to localStorage
   useEffect(() => {
     try { localStorage.setItem("llf-completed", JSON.stringify(completed)); } catch {}
   }, [completed]);
 
+  // Persist hidden state to localStorage
+  useEffect(() => {
+    try { localStorage.setItem("llf-hidden", JSON.stringify(hidden)); } catch {}
+  }, [hidden]);
+
   const toggle = useCallback((id) => {
     setCompleted(prev => ({ ...prev, [id]: !prev[id] }));
+  }, []);
+
+  const deleteDigest = useCallback((digestId) => {
+    setHidden(prev => [...prev, digestId]);
   }, []);
 
   // Clock
@@ -222,7 +250,7 @@ function App() {
 
   // Filter & search
   const filtered = useMemo(() => {
-    let list = digests;
+    let list = digests.filter(d => !hidden.includes(d.id));
     if (typeFilter !== "all") list = list.filter(d => d.type === typeFilter);
     if (search.trim()) {
       const q = search.toLowerCase();
@@ -236,7 +264,7 @@ function App() {
       );
     }
     return list;
-  }, [digests, typeFilter, search]);
+  }, [digests, typeFilter, search, hidden]);
 
   // Unique types
   const types = useMemo(() => {
@@ -285,10 +313,10 @@ function App() {
         {/* Header */}
         <div className="mb-10">
           <div className="flex items-center justify-between mb-1">
-            <h1 className="text-2xl font-bold tracking-tight text-gray-900">{greeting}, Jean</h1>
-            <span className="text-sm text-gray-300 tabular-nums">{timeStr}</span>
+            <h1 className="text-2xl font-bold tracking-tight text-gray-900">{greeting}, Jean 👋</h1>
+            <img src="avatar.png" alt="" className="w-10 h-10 rounded-full object-cover shadow-sm border-2 border-gray-100" onError={(e) => { e.target.style.display = 'none'; }} />
           </div>
-          <p className="text-sm text-gray-400">{dateStr} &middot; Lisinski Law Firm</p>
+          <p className="text-sm text-gray-400">{dateStr} &middot; Lisinski Law Firm &middot; <span className="tabular-nums">{timeStr}</span></p>
         </div>
 
         {/* Search + filters */}
@@ -333,6 +361,7 @@ function App() {
               digest={d}
               completed={completed}
               onToggle={toggle}
+              onDelete={deleteDigest}
               defaultOpen={i === 0}
             />
           ))
@@ -346,7 +375,14 @@ function App() {
             </div>
             <span className="text-xs text-gray-300">Madison &middot; LLF Automation</span>
           </div>
-          <span className="text-xs text-gray-300">{digests.length} briefing{digests.length !== 1 ? "s" : ""} in history</span>
+          <div className="flex items-center gap-3">
+            {hidden.length > 0 && (
+              <button onClick={() => setHidden([])} className="text-xs text-gray-300 hover:text-gray-500 transition-colors">
+                Restore {hidden.length} removed
+              </button>
+            )}
+            <span className="text-xs text-gray-300">{digests.length - hidden.length} briefing{(digests.length - hidden.length) !== 1 ? "s" : ""}</span>
+          </div>
         </div>
 
       </div>
