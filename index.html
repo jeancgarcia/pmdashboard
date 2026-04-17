@@ -3,6 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
 <title>LLF Briefing</title>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%233b82f6'/><text x='50%25' y='54%25' dominant-baseline='middle' text-anchor='middle' fill='white' font-size='18' font-weight='bold' font-family='system-ui'>M</text></svg>">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -198,40 +201,51 @@ function DigestCard({ digest, completed, onToggle, onDelete, defaultOpen }) {
   );
 }
 
+/* ═══ Clean up old storage keys from previous versions ═══ */
+try { localStorage.removeItem("llf-completed"); localStorage.removeItem("llf-hidden"); } catch {}
+
 /* ═══ State Persistence (jsonblob.com — free, CORS-friendly, no tokens) ═══ */
 const BLOB_ID = "019d9d32-5723-7040-89fa-2f5d632b3eef";
 const BLOB_URL = "https://jsonblob.com/api/jsonBlob/" + BLOB_ID;
 
-let writeQueue = null; // debounce timer
-let remoteOk = true;   // tracks connectivity
+let writeQueue = null;
+let remoteOk = true;
 
 async function remoteRead() {
   try {
-    const r = await fetch(BLOB_URL, { headers: { "Accept": "application/json" } });
-    if (!r.ok) throw new Error(r.status);
+    const r = await fetch(BLOB_URL, {
+      headers: { "Accept": "application/json" },
+      cache: "no-store"
+    });
+    if (!r.ok) throw new Error("HTTP " + r.status);
+    const data = await r.json();
     remoteOk = true;
-    return await r.json();
-  } catch {
+    console.log("[state] remote read OK:", JSON.stringify(data));
+    return data;
+  } catch (e) {
     remoteOk = false;
+    console.warn("[state] remote read FAILED:", e);
     return null;
   }
 }
 
 async function remoteWrite(state) {
   try {
-    await fetch(BLOB_URL, {
+    const r = await fetch(BLOB_URL, {
       method: "PUT",
       headers: { "Content-Type": "application/json", "Accept": "application/json" },
       body: JSON.stringify(state)
     });
+    if (!r.ok) throw new Error("HTTP " + r.status);
     remoteOk = true;
-  } catch {
+    console.log("[state] remote write OK:", JSON.stringify(state));
+  } catch (e) {
     remoteOk = false;
+    console.warn("[state] remote write FAILED:", e);
   }
 }
 
 function debouncedWrite(state) {
-  // Always save to localStorage as instant cache
   try { localStorage.setItem("llf-state", JSON.stringify(state)); } catch {}
   clearTimeout(writeQueue);
   writeQueue = setTimeout(() => remoteWrite(state), 800);
