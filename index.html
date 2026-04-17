@@ -141,7 +141,7 @@ function Section({ section, completed, onToggle, defaultCollapsed }) {
 }
 
 /* ═══ DigestCard ═══ */
-function DigestCard({ digest, completed, onToggle, onDelete, defaultOpen }) {
+function DigestCard({ digest, completed, onToggle, onDelete, onRestore, defaultOpen }) {
   const [open, setOpen] = useState(defaultOpen);
   const [confirmDelete, setConfirmDelete] = useState(false);
   const actionItems = digest.sections.filter(s => !s.info).flatMap(s => s.items);
@@ -154,20 +154,29 @@ function DigestCard({ digest, completed, onToggle, onDelete, defaultOpen }) {
       <div className="flex items-center gap-2 mb-4">
         <button onClick={() => setOpen(!open)} className="flex items-center gap-2 group flex-1 text-left">
           <Icon.ChevronDown size={16} className={`text-gray-300 transition-transform duration-200 ${open ? "" : "-rotate-90"}`} />
-          <h2 className="text-lg font-semibold text-gray-900 tracking-tight">{digest.date}</h2>
+          <h2 className={`text-lg font-semibold tracking-tight ${onRestore ? "text-gray-400" : "text-gray-900"}`}>{digest.date}</h2>
           <span className="text-xs text-gray-300 font-medium uppercase tracking-wider">{digest.type}</span>
         </button>
-        {total > 0 && <span className="text-xs text-gray-300 font-medium">{doneCount}/{total}</span>}
-        {/* Delete */}
-        {confirmDelete ? (
-          <div className="flex items-center gap-1.5 ml-2">
-            <button onClick={() => { onDelete(digest.id); setConfirmDelete(false); }} className="text-xs font-medium text-red-500 hover:text-red-600 transition-colors px-2 py-1 rounded-lg hover:bg-red-50">Delete</button>
-            <button onClick={() => setConfirmDelete(false)} className="text-xs font-medium text-gray-400 hover:text-gray-500 transition-colors px-2 py-1 rounded-lg hover:bg-gray-50">Cancel</button>
-          </div>
-        ) : (
-          <button onClick={() => setConfirmDelete(true)} className="ml-2 text-gray-200 hover:text-red-400 transition-colors p-1 rounded-lg hover:bg-gray-50" title="Remove briefing">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+        {total > 0 && !onRestore && <span className="text-xs text-gray-300 font-medium">{doneCount}/{total}</span>}
+        {/* Restore (archive view) */}
+        {onRestore && (
+          <button onClick={() => onRestore(digest.id)} className="ml-2 text-gray-300 hover:text-blue-500 transition-colors p-1 rounded-lg hover:bg-blue-50 flex items-center gap-1" title="Restore briefing">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>
+            <span className="text-xs font-medium">Restore</span>
           </button>
+        )}
+        {/* Archive (normal view) */}
+        {onDelete && (
+          confirmDelete ? (
+            <div className="flex items-center gap-1.5 ml-2">
+              <button onClick={() => { onDelete(digest.id); setConfirmDelete(false); }} className="text-xs font-medium text-red-500 hover:text-red-600 transition-colors px-2 py-1 rounded-lg hover:bg-red-50">Archive</button>
+              <button onClick={() => setConfirmDelete(false)} className="text-xs font-medium text-gray-400 hover:text-gray-500 transition-colors px-2 py-1 rounded-lg hover:bg-gray-50">Cancel</button>
+            </div>
+          ) : (
+            <button onClick={() => setConfirmDelete(true)} className="ml-2 text-gray-200 hover:text-red-400 transition-colors p-1 rounded-lg hover:bg-gray-50" title="Archive briefing">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+            </button>
+          )
         )}
       </div>
 
@@ -309,8 +318,31 @@ function App() {
   const [time, setTime] = useState(new Date());
   useEffect(() => { const id = setInterval(() => setTime(new Date()), 60000); return () => clearInterval(id); }, []);
 
+  // Restore from archive
+  const restoreDigest = useCallback((digestId) => {
+    userActed.current = true;
+    setHidden(prev => prev.filter(id => id !== digestId));
+  }, []);
+
   // Filter & search
+  const isArchiveView = typeFilter === "archived";
+
   const filtered = useMemo(() => {
+    if (isArchiveView) {
+      let list = digests.filter(d => hidden.includes(d.id));
+      if (search.trim()) {
+        const q = search.toLowerCase();
+        list = list.filter(d =>
+          d.date.toLowerCase().includes(q) ||
+          (d.greeting || "").toLowerCase().includes(q) ||
+          d.sections.some(s =>
+            s.title.toLowerCase().includes(q) ||
+            s.items.some(i => i.label.toLowerCase().includes(q) || (i.detail || "").toLowerCase().includes(q))
+          )
+        );
+      }
+      return list;
+    }
     let list = digests.filter(d => !hidden.includes(d.id));
     if (typeFilter !== "all") list = list.filter(d => d.type === typeFilter);
     if (search.trim()) {
@@ -325,13 +357,16 @@ function App() {
       );
     }
     return list;
-  }, [digests, typeFilter, search, hidden]);
+  }, [digests, typeFilter, search, hidden, isArchiveView]);
 
-  // Unique types
+  // Unique types + archived tab
+  const activeDigests = digests.filter(d => !hidden.includes(d.id));
   const types = useMemo(() => {
-    const t = new Set(digests.map(d => d.type));
-    return ["all", ...Array.from(t)];
-  }, [digests]);
+    const t = new Set(digests.filter(d => !hidden.includes(d.id)).map(d => d.type));
+    const tabs = ["all", ...Array.from(t)];
+    if (hidden.length > 0) tabs.push("archived");
+    return tabs;
+  }, [digests, hidden]);
 
   const greeting = (() => {
     const h = time.getHours();
@@ -395,25 +430,32 @@ function App() {
           </div>
 
           {/* Type filter */}
-          <div className="flex gap-1">
-            {types.map(t => (
-              <button
-                key={t}
-                onClick={() => setTypeFilter(t)}
-                className={`px-3 py-1.5 rounded-full text-xs font-medium transition-all capitalize whitespace-nowrap ${
-                  typeFilter === t ? "bg-gray-900 text-white" : "text-gray-400 hover:text-gray-600 hover:bg-gray-50"
-                }`}
-              >
-                {t === "all" ? `All (${digests.length})` : t}
-              </button>
-            ))}
+          <div className="flex gap-1 flex-wrap">
+            {types.map(t => {
+              const count = t === "all" ? activeDigests.length
+                : t === "archived" ? hidden.length
+                : activeDigests.filter(d => d.type === t).length;
+              return (
+                <button
+                  key={t}
+                  onClick={() => setTypeFilter(t)}
+                  className={`px-3 py-1.5 rounded-full text-xs font-medium transition-all capitalize whitespace-nowrap ${
+                    typeFilter === t
+                      ? (t === "archived" ? "bg-gray-200 text-gray-600" : "bg-gray-900 text-white")
+                      : (t === "archived" ? "text-gray-300 hover:text-gray-500 hover:bg-gray-50" : "text-gray-400 hover:text-gray-600 hover:bg-gray-50")
+                  }`}
+                >
+                  {t === "all" ? `All (${count})` : `${t} (${count})`}
+                </button>
+              );
+            })}
           </div>
         </div>
 
         {/* Digest list */}
         {filtered.length === 0 ? (
           <div className="text-center py-16">
-            <p className="text-sm text-gray-400">No briefings found.</p>
+            <p className="text-sm text-gray-400">{isArchiveView ? "No archived briefings." : "No briefings found."}</p>
           </div>
         ) : (
           filtered.map((d, i) => (
@@ -422,8 +464,9 @@ function App() {
               digest={d}
               completed={completed}
               onToggle={toggle}
-              onDelete={deleteDigest}
-              defaultOpen={i === 0}
+              onDelete={isArchiveView ? null : deleteDigest}
+              onRestore={isArchiveView ? restoreDigest : null}
+              defaultOpen={isArchiveView ? false : i === 0}
             />
           ))
         )}
@@ -437,11 +480,6 @@ function App() {
             <span className="text-xs text-gray-300">Madison &middot; LLF Automation</span>
           </div>
           <div className="flex items-center gap-3">
-            {hidden.length > 0 && (
-              <button onClick={() => { userActed.current = true; setHidden([]); }} className="text-xs text-gray-300 hover:text-gray-500 transition-colors">
-                Restore {hidden.length} removed
-              </button>
-            )}
             <span className="text-xs text-gray-300">{digests.length - hidden.length} briefing{(digests.length - hidden.length) !== 1 ? "s" : ""}</span>
           </div>
         </div>
