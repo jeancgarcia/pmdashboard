@@ -260,6 +260,75 @@ function debouncedWrite(state) {
   writeQueue = setTimeout(() => remoteWrite(state), 800);
 }
 
+/* ═══ Reminder Box ═══ */
+function ReminderBox({ reminders, onAdd, onRemove }) {
+  const [open, setOpen] = useState(false);
+  const [text, setText] = useState("");
+
+  const handleAdd = () => {
+    const trimmed = text.trim();
+    if (!trimmed) return;
+    onAdd(trimmed);
+    setText("");
+  };
+
+  const handleKey = (e) => {
+    if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); handleAdd(); }
+  };
+
+  return (
+    <div className="mb-8">
+      <button
+        onClick={() => setOpen(!open)}
+        className="flex items-center gap-2 text-sm font-medium text-gray-400 hover:text-gray-600 transition-colors group"
+      >
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-blue-400 group-hover:text-blue-500 transition-colors"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+        Add reminder for next briefing
+        {reminders.length > 0 && (
+          <span className="bg-blue-100 text-blue-600 text-xs font-semibold px-1.5 py-0.5 rounded-full">{reminders.length}</span>
+        )}
+      </button>
+
+      {open && (
+        <div className="mt-3 fade-in">
+          <div className="flex gap-2 mb-3">
+            <input
+              type="text"
+              value={text}
+              onChange={e => setText(e.target.value)}
+              onKeyDown={handleKey}
+              placeholder="e.g. Follow up with Hassan on escalation..."
+              className="flex-1 px-3 py-2 text-sm bg-gray-50 border-0 rounded-xl text-gray-900 placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-100 transition-all"
+              autoFocus
+            />
+            <button
+              onClick={handleAdd}
+              disabled={!text.trim()}
+              className="px-4 py-2 text-sm font-medium rounded-xl transition-all bg-gray-900 text-white hover:bg-gray-800 disabled:bg-gray-100 disabled:text-gray-300"
+            >
+              Add
+            </button>
+          </div>
+
+          {reminders.length > 0 && (
+            <div className="space-y-1.5">
+              {reminders.map(r => (
+                <div key={r.id} className="flex items-center gap-2 py-1.5 px-3 rounded-xl bg-blue-50/50 group">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-blue-400 flex-shrink-0"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+                  <span className="text-sm text-gray-600 flex-1">{r.text}</span>
+                  <button onClick={() => onRemove(r.id)} className="text-gray-200 hover:text-red-400 transition-colors opacity-0 group-hover:opacity-100 p-0.5" title="Remove">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                  </button>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      )}
+    </div>
+  );
+}
+
 /* ═══ Main App ═══ */
 function App() {
   const [digests, setDigests] = useState([]);
@@ -269,6 +338,7 @@ function App() {
   const [search, setSearch] = useState("");
   const [typeFilter, setTypeFilter] = useState("all");
   const [hidden, setHidden] = useState([]);
+  const [reminders, setReminders] = useState([]);
   const [stateLoaded, setStateLoaded] = useState(false);
   const userActed = React.useRef(false); // only write after a real user action
 
@@ -289,11 +359,13 @@ function App() {
       const local = JSON.parse(localStorage.getItem("llf-state") || "{}");
       if (local.completed && Object.keys(local.completed).length) setCompleted(local.completed);
       if (local.hidden && local.hidden.length) setHidden(local.hidden);
+      if (local.reminders && local.reminders.length) setReminders(local.reminders);
     } catch {}
 
     remoteRead().then(state => {
       if (state && state.completed) setCompleted(state.completed);
       if (state && state.hidden) setHidden(state.hidden);
+      if (state && state.reminders) setReminders(state.reminders);
       setStateLoaded(true);
     });
   }, []);
@@ -301,8 +373,8 @@ function App() {
   // Persist state to remote — ONLY after a real user action (not on initial load)
   useEffect(() => {
     if (!stateLoaded || !userActed.current) return;
-    debouncedWrite({ completed, hidden });
-  }, [completed, hidden, stateLoaded]);
+    debouncedWrite({ completed, hidden, reminders });
+  }, [completed, hidden, reminders, stateLoaded]);
 
   const toggle = useCallback((id) => {
     userActed.current = true;
@@ -312,6 +384,16 @@ function App() {
   const deleteDigest = useCallback((digestId) => {
     userActed.current = true;
     setHidden(prev => [...prev, digestId]);
+  }, []);
+
+  const addReminder = useCallback((text) => {
+    userActed.current = true;
+    setReminders(prev => [...prev, { id: "rem-" + Date.now(), text, addedAt: new Date().toISOString() }]);
+  }, []);
+
+  const removeReminder = useCallback((remId) => {
+    userActed.current = true;
+    setReminders(prev => prev.filter(r => r.id !== remId));
   }, []);
 
   // Clock
@@ -414,6 +496,9 @@ function App() {
           </div>
           <p className="text-sm text-gray-400">{dateStr} &middot; Lisinski Law Firm &middot; <span className="tabular-nums">{timeStr}</span></p>
         </div>
+
+        {/* Reminders for next digest */}
+        <ReminderBox reminders={reminders} onAdd={addReminder} onRemove={removeReminder} />
 
         {/* Search + filters */}
         <div className="mb-8">
