@@ -1,5 +1,150 @@
 [
   {
+    "id": "eod-2026-04-17",
+    "type": "eod",
+    "date": "Friday, April 17 \u2014 End of Day",
+    "isoDate": "2026-04-17",
+    "greeting": "Solid Friday to close out the week. You moved the needle on Detention Prevention, handled the Denial/RFE dropdown escalation with Shelley, posted meeting notes for the team, and got through a full meeting block. The COE escalation POC question and UER project status color are carrying into next week.",
+    "sections": [
+      {
+        "title": "Completed Today",
+        "info": true,
+        "items": [
+          {
+            "id": "done-1",
+            "label": "Phase 2 Weekly IT Projects Sync",
+            "detail": "Led the weekly sync with the full IT projects team \u2014 Yuri, Jhara (OOO), Ana, Vikala, Camilo, Mar, Daniel, Santiago, and Archana."
+          },
+          {
+            "id": "done-2",
+            "label": "1:1 with Santiago Arango",
+            "detail": "Completed the weekly 1:1. Santiago also shared the Detention Prevention weekly update \u2014 survey and statement approved, second wave of outreach initiated."
+          },
+          {
+            "id": "done-3",
+            "label": "EPMO EOW Check In",
+            "detail": "End-of-week check-in with Sara's team (Sara OOO this week). Covered status across EPMO with Janet, Eunice, and Jorge."
+          },
+          {
+            "id": "done-4",
+            "label": "Executive Project Status Slide Update",
+            "detail": "Reviewed and updated the weekly executive project status deck with Yuri and Jhara's inputs. This is now on the new Friday cadence."
+          },
+          {
+            "id": "done-5",
+            "label": "Posted meeting notes & incident bucket sign-offs",
+            "detail": "Shared meeting notes from yesterday's session introducing new team members. Also working with Lucia Caamano and Jeannette Scheffler on the internal crisis/incident sentiment survey."
+          },
+          {
+            "id": "done-6",
+            "label": "Firmwide Critical Dates taxonomy meeting follow-up",
+            "detail": "Javier Vargas shared the PPT and recording from the Critical Dates taxonomy meeting (deadlines, notices, reminders)."
+          }
+        ]
+      },
+      {
+        "title": "Carried Over",
+        "items": [
+          {
+            "id": "carry-1",
+            "label": "Denial/RFE Dropdown Update \u2014 ticket to Josh",
+            "detail": "Shelley flagged this as very urgent (per Jill). Need to ask Josh to update the dropdown via a ticket and descope it from the project. Don't let this slip into Monday without action.",
+            "flag": "urgent"
+          },
+          {
+            "id": "carry-2",
+            "label": "COE Escalation POC clarification",
+            "detail": "Janet McDowell asked if you're the POC for COE escalations. The VPT Follow Up Confirmation Status Update is urgent per Herbert in BD. Need to confirm ownership and prioritization approach for COE efforts.",
+            "flag": "urgent"
+          },
+          {
+            "id": "carry-3",
+            "label": "UER Project status color decision",
+            "detail": "Yuri asked what color to assign the UER project since it's paused \u2014 keep green with 'On Hold' label? Needs your call.",
+            "flag": "due"
+          },
+          {
+            "id": "carry-4",
+            "label": "Danny Miller \u2014 EPMO SharePoint site issue",
+            "detail": "Danny's Claude co-work flagged something during file cleanup related to the EPMO SharePoint site. Follow up to see what was found.",
+            "flag": null
+          },
+          {
+            "id": "carry-5",
+            "label": "Rippling overdue tasks (2)",
+            "detail": "Rippling reminded you of 2 overdue tasks for LLF. Check and clear these when you get a chance.",
+            "flag": null
+          },
+          {
+            "id": "carry-6",
+            "label": "Asana overdue task (1)",
+            "detail": "One task from the past week is overdue in Asana. Review and update or close out.",
+            "flag": null
+          }
+        ]
+      },
+      {
+        "title": "Key Decisions Made",
+        "info": true,
+        "items": [
+          {
+            "id": "dec-1",
+            "label": "Detention Prevention second wave greenlit",
+            "detail": "Survey and statement completed and approved \u2014 Santiago's team is now initiating the second wave of outreach."
+          },
+          {
+            "id": "dec-2",
+            "label": "Review Transition of Data Requests \u2014 cancelled",
+            "detail": "Mar Garcia cancelled this meeting (marked high importance). The data requests transition review is off the calendar for now."
+          },
+          {
+            "id": "dec-3",
+            "label": "Executive status updates moving to Fridays",
+            "detail": "The Executive Project Status Slide Update is now on a Friday cadence going forward."
+          }
+        ]
+      },
+      {
+        "title": "Monday's Schedule",
+        "info": true,
+        "items": [
+          {
+            "id": "tom-1",
+            "time": "8:00 AM",
+            "label": "Approve Timecards & Prepare for the Week",
+            "detail": "Weekly prep block \u2014 review timecards and plan your Monday priorities",
+            "note": "Sara will be in the Dublin office all week starting Monday"
+          },
+          {
+            "id": "tom-2",
+            "time": "11:00 AM",
+            "label": "1:1 Shelley & Jean",
+            "detail": "Follow up on the Denial/RFE dropdown urgency and understand Shelley's department needs",
+            "note": "Jhara still OOO through Wednesday"
+          },
+          {
+            "id": "tom-3",
+            "time": "12:00 PM",
+            "label": "Blocked Space",
+            "detail": "Protected focus time"
+          },
+          {
+            "id": "tom-4",
+            "time": "2:00 PM",
+            "label": "EPMO Portfolio Review",
+            "detail": "Review with Sara (back from OOO but in Dublin), Danny, Jorge, Eunice, and Janet"
+          },
+          {
+            "id": "tom-5",
+            "time": "3:30 PM",
+            "label": "IT Litify Sprint #9 Review with Stakeholders",
+            "detail": "Review status of user stories in Sprint #9 and items ready for deployment. Large stakeholder group."
+          }
+        ]
+      }
+    ]
+  },
+  {
     "id": "weekly-2026-04-17",
     "type": "weekly",
     "date": "Week of April 13 \u2013 17",
