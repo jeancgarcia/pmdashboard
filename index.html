@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LLF Briefing</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%233b82f6'/><text x='50%25' y='54%25' dominant-baseline='middle' text-anchor='middle' fill='white' font-size='18' font-weight='bold' font-family='system-ui'>M</text></svg>">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<script>
+tailwind.config = {
+  theme: { extend: { fontFamily: { sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'] } } }
+}
+</script>
+<style>
+  * { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+  body { font-family: 'Inter', system-ui, -apple-system, sans-serif; }
+  /* Smooth transitions for collapsible sections */
+  .fade-in { animation: fadeIn 0.2s ease; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
+</style>
+</head>
+<body>
+<div id="root"></div>
+
+<script type="text/babel" data-type="module">
+const { useState, useEffect, useCallback, useMemo } = React;
+
+/* ═══ SVG Icons (inline, zero dependencies) ═══ */
+const Icon = {
+  Check: ({ size = 16, ...p }) => (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" {...p}><polyline points="20 6 9 17 4 12"/></svg>
+  ),
+  ChevronDown: ({ size = 16, ...p }) => (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...p}><polyline points="6 9 12 15 18 9"/></svg>
+  ),
+  ChevronRight: ({ size = 16, ...p }) => (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...p}><polyline points="9 18 15 12 9 6"/></svg>
+  ),
+  Search: ({ size = 16, ...p }) => (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...p}><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+  ),
+};
+
+/* ═══ Section color tints ═══ */
+const TINT = {
+  "Today\u2019s Schedule": "#f59e0b",
+  "Action Items": "#3b82f6",
+  "Emails Awaiting Reply": "#8b5cf6",
+  "Teams Highlights": "#06b6d4",
+  "Out of Office": "#9ca3af",
+  "Monday Preview": "#10b981",
+  "Next Day Preview": "#10b981",
+  "Week Summary": "#3b82f6",
+  "Key Decisions": "#f59e0b",
+  "Wins": "#10b981",
+  "Blockers & Risks": "#ef4444",
+  "default": "#9ca3af",
+};
+
+/* ═══ CheckItem (interactive) ═══ */
+function CheckItem({ item, done, onToggle }) {
+  return (
+    <div
+      onClick={onToggle}
+      className={`group flex items-start gap-3 py-3 px-1 cursor-pointer select-none transition-all border-b border-gray-100 last:border-0 ${done ? "opacity-40" : ""}`}
+    >
+      <div className={`mt-0.5 w-5 h-5 rounded-full flex-shrink-0 flex items-center justify-center transition-all duration-200 ${done ? "bg-emerald-500" : "border-2 border-gray-300 group-hover:border-gray-400"}`}>
+        {done && <Icon.Check size={11} color="white" />}
+      </div>
+      <div className="flex-1 min-w-0">
+        <div className="flex items-center gap-2">
+          <span className={`text-sm leading-snug ${done ? "line-through text-gray-400" : "text-gray-900"}`}>{item.label}</span>
+          {item.flag === "urgent" && !done && <span className="w-1.5 h-1.5 rounded-full bg-red-500 flex-shrink-0" />}
+          {item.flag === "due" && !done && <span className="w-1.5 h-1.5 rounded-full bg-amber-500 flex-shrink-0" />}
+        </div>
+        {item.detail && !done && <p className="text-xs text-gray-400 leading-relaxed mt-1">{item.detail}</p>}
+      </div>
+    </div>
+  );
+}
+
+/* ═══ InfoItem (non-interactive) ═══ */
+function InfoItem({ item }) {
+  return (
+    <div className="flex items-start gap-3 py-3 px-1 border-b border-gray-50 last:border-0">
+      {item.time ? (
+        <span className="text-xs font-medium text-gray-400 tabular-nums w-16 flex-shrink-0 pt-0.5 text-right">{item.time}</span>
+      ) : (
+        <span className="w-1 h-1 rounded-full bg-gray-300 flex-shrink-0 mt-2 ml-1" />
+      )}
+      <div className="flex-1 min-w-0">
+        <div className="flex items-center gap-2">
+          <span className="text-sm text-gray-900">{item.label}</span>
+          {item.note && <span className="text-xs text-gray-300 font-medium">{item.note}</span>}
+        </div>
+        {item.detail && <p className="text-xs text-gray-400 leading-relaxed mt-0.5">{item.detail}</p>}
+      </div>
+    </div>
+  );
+}
+
+/* ═══ Section ═══ */
+function Section({ section, completed, onToggle, defaultCollapsed }) {
+  const [collapsed, setCollapsed] = useState(defaultCollapsed);
+  const isInfo = !!section.info;
+  const doneCount = isInfo ? 0 : section.items.filter(i => completed[i.id]).length;
+  const total = section.items.length;
+  const tint = TINT[section.title] || TINT.default;
+
+  return (
+    <div className="mb-6 last:mb-0">
+      <button onClick={() => setCollapsed(!collapsed)} className="flex items-center gap-2 mb-1 w-full text-left">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
+          className={`text-gray-300 transition-transform duration-150 ${collapsed ? "" : "rotate-90"}`}>
+          <polyline points="9 18 15 12 9 6"/>
+        </svg>
+        <span className="w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: tint, opacity: 0.6 }} />
+        <h3 className="text-xs font-semibold uppercase tracking-wider text-gray-400">{section.title}</h3>
+        {!isInfo && doneCount === total && total > 0 && <Icon.Check size={12} className="text-emerald-400" />}
+        {!isInfo && doneCount > 0 && doneCount < total && <span className="text-xs text-gray-300 font-medium">{doneCount}/{total}</span>}
+      </button>
+      {!collapsed && (
+        <div className="pl-1 fade-in">
+          {isInfo
+            ? section.items.map(item => <InfoItem key={item.id} item={item} />)
+            : section.items.map(item => (
+                <CheckItem key={item.id} item={item} done={!!completed[item.id]} onToggle={() => onToggle(item.id)} />
+              ))
+          }
+        </div>
+      )}
+    </div>
+  );
+}
+
+/* ═══ DigestCard ═══ */
+function DigestCard({ digest, completed, onToggle, defaultOpen }) {
+  const [open, setOpen] = useState(defaultOpen);
+  const actionItems = digest.sections.filter(s => !s.info).flatMap(s => s.items);
+  const total = actionItems.length;
+  const doneCount = actionItems.filter(i => completed[i.id]).length;
+  const pct = total > 0 ? Math.round((doneCount / total) * 100) : 0;
+
+  return (
+    <div className="mb-8">
+      <button onClick={() => setOpen(!open)} className="flex items-center gap-2 mb-4 group w-full text-left">
+        <Icon.ChevronDown size={16} className={`text-gray-300 transition-transform duration-200 ${open ? "" : "-rotate-90"}`} />
+        <h2 className="text-lg font-semibold text-gray-900 tracking-tight">{digest.date}</h2>
+        <span className="text-xs text-gray-300 font-medium uppercase tracking-wider">{digest.type}</span>
+        {total > 0 && <span className="text-xs text-gray-300 font-medium ml-auto">{doneCount}/{total}</span>}
+      </button>
+
+      {open && (
+        <div className="fade-in">
+          {digest.greeting && (
+            <div className="flex items-start gap-3 mb-6 py-3 px-4 rounded-2xl" style={{ background: "rgba(59,130,246,0.04)" }}>
+              <div className="w-6 h-6 rounded-full bg-blue-600 flex items-center justify-center flex-shrink-0 mt-0.5">
+                <span className="text-white text-xs font-bold">M</span>
+              </div>
+              <p className="text-sm text-gray-600 leading-relaxed">{digest.greeting}</p>
+            </div>
+          )}
+
+          {total > 0 && (
+            <div className="flex items-center gap-3 mb-6">
+              <div className="flex-1 h-1 bg-gray-100 rounded-full overflow-hidden">
+                <div className="h-full rounded-full transition-all duration-500"
+                  style={{ width: `${pct}%`, background: pct === 100 ? "#22c55e" : pct > 0 ? "#3b82f6" : "#e5e7eb" }} />
+              </div>
+              <span className={`text-xs font-medium tabular-nums w-10 text-right ${pct === 100 ? "text-emerald-500" : "text-gray-400"}`}>{pct}%</span>
+            </div>
+          )}
+
+          {digest.sections.map((section, si) => (
+            <Section key={si} section={section} completed={completed} onToggle={onToggle} defaultCollapsed={false} />
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
+/* ═══ Main App ═══ */
+function App() {
+  const [digests, setDigests] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [completed, setCompleted] = useState({});
+  const [search, setSearch] = useState("");
+  const [typeFilter, setTypeFilter] = useState("all");
+
+  // Fetch digests.json
+  useEffect(() => {
+    fetch("digests.json?" + Date.now())
+      .then(r => { if (!r.ok) throw new Error("Failed to load"); return r.json(); })
+      .then(data => {
+        // Sort newest first by isoDate, fallback to array order
+        const sorted = [...data].sort((a, b) => (b.isoDate || "").localeCompare(a.isoDate || ""));
+        setDigests(sorted);
+        setLoading(false);
+      })
+      .catch(e => { setError(e.message); setLoading(false); });
+  }, []);
+
+  const toggle = useCallback((id) => {
+    setCompleted(prev => ({ ...prev, [id]: !prev[id] }));
+  }, []);
+
+  // Clock
+  const [time, setTime] = useState(new Date());
+  useEffect(() => { const id = setInterval(() => setTime(new Date()), 60000); return () => clearInterval(id); }, []);
+
+  // Filter & search
+  const filtered = useMemo(() => {
+    let list = digests;
+    if (typeFilter !== "all") list = list.filter(d => d.type === typeFilter);
+    if (search.trim()) {
+      const q = search.toLowerCase();
+      list = list.filter(d =>
+        d.date.toLowerCase().includes(q) ||
+        (d.greeting || "").toLowerCase().includes(q) ||
+        d.sections.some(s =>
+          s.title.toLowerCase().includes(q) ||
+          s.items.some(i => i.label.toLowerCase().includes(q) || (i.detail || "").toLowerCase().includes(q))
+        )
+      );
+    }
+    return list;
+  }, [digests, typeFilter, search]);
+
+  // Unique types
+  const types = useMemo(() => {
+    const t = new Set(digests.map(d => d.type));
+    return ["all", ...Array.from(t)];
+  }, [digests]);
+
+  const greeting = (() => {
+    const h = time.getHours();
+    if (h < 12) return "Good morning";
+    if (h < 18) return "Good afternoon";
+    return "Good evening";
+  })();
+
+  const dateStr = time.toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric" });
+  const timeStr = time.toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit" });
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-white flex items-center justify-center">
+        <div className="text-center">
+          <div className="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center mx-auto mb-3">
+            <span className="text-white text-sm font-bold">M</span>
+          </div>
+          <p className="text-sm text-gray-400">Loading briefings...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="min-h-screen bg-white flex items-center justify-center">
+        <div className="text-center max-w-sm">
+          <p className="text-sm text-gray-900 font-medium mb-1">Couldn&apos;t load briefings</p>
+          <p className="text-xs text-gray-400">Make sure <code className="bg-gray-100 px-1 py-0.5 rounded">digests.json</code> is in the same folder as this page.</p>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="min-h-screen bg-white">
+      <div className="max-w-2xl mx-auto px-6 py-10">
+
+        {/* Header */}
+        <div className="mb-10">
+          <div className="flex items-center justify-between mb-1">
+            <h1 className="text-2xl font-bold tracking-tight text-gray-900">{greeting}, Jean</h1>
+            <span className="text-sm text-gray-300 tabular-nums">{timeStr}</span>
+          </div>
+          <p className="text-sm text-gray-400">{dateStr} &middot; Lisinski Law Firm</p>
+        </div>
+
+        {/* Search + filters */}
+        <div className="mb-8">
+          {/* Search */}
+          <div className="relative mb-4">
+            <Icon.Search size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-300" />
+            <input
+              type="text"
+              value={search}
+              onChange={e => setSearch(e.target.value)}
+              placeholder="Search briefings..."
+              className="w-full pl-9 pr-4 py-2.5 text-sm bg-gray-50 border-0 rounded-xl text-gray-900 placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-200 transition-all"
+            />
+          </div>
+
+          {/* Type filter */}
+          <div className="flex gap-1">
+            {types.map(t => (
+              <button
+                key={t}
+                onClick={() => setTypeFilter(t)}
+                className={`px-3 py-1.5 rounded-full text-xs font-medium transition-all capitalize whitespace-nowrap ${
+                  typeFilter === t ? "bg-gray-900 text-white" : "text-gray-400 hover:text-gray-600 hover:bg-gray-50"
+                }`}
+              >
+                {t === "all" ? `All (${digests.length})` : t}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* Digest list */}
+        {filtered.length === 0 ? (
+          <div className="text-center py-16">
+            <p className="text-sm text-gray-400">No briefings found.</p>
+          </div>
+        ) : (
+          filtered.map((d, i) => (
+            <DigestCard
+              key={d.id}
+              digest={d}
+              completed={completed}
+              onToggle={toggle}
+              defaultOpen={i === 0}
+            />
+          ))
+        )}
+
+        {/* Footer */}
+        <div className="mt-12 pt-6 border-t border-gray-100 flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <div className="w-5 h-5 rounded-full bg-blue-600 flex items-center justify-center">
+              <span className="text-white text-xs font-bold" style={{ fontSize: "9px" }}>M</span>
+            </div>
+            <span className="text-xs text-gray-300">Madison &middot; LLF Automation</span>
+          </div>
+          <span className="text-xs text-gray-300">{digests.length} briefing{digests.length !== 1 ? "s" : ""} in history</span>
+        </div>
+
+      </div>
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+</script>
+</body>
+</html>

@@ -1,0 +1,70 @@
+[
+  {
+    "id": "daily-2026-04-17",
+    "type": "daily",
+    "date": "Friday, April 17",
+    "isoDate": "2026-04-17",
+    "greeting": "Happy Friday, Jean. A few fires before you sign off \u2014 Shelley\u2019s thread is the most time-sensitive. Here\u2019s your full picture.",
+    "sections": [
+      {
+        "title": "Today\u2019s Schedule",
+        "info": true,
+        "items": [
+          { "id": "m1", "time": "10:00 AM", "label": "Phase 2 Weekly IT Projects Sync", "detail": "You\u2019re leading. Standup format \u2014 sprint progress, blockers, deliverables. Good moment to mention the Denial/RFE descope." },
+          { "id": "m2", "time": "11:00 AM", "label": "1:1 with Santiago", "detail": "Weekly check-in. Discuss project prioritization for next week and resource needs." },
+          { "id": "m3", "time": "12:30 PM", "label": "Focus time", "detail": "Protected block. Use it to prep the Executive Status slides." },
+          { "id": "m4", "time": "2:00 PM", "label": "EPMO EOW Check In", "detail": "Sara has been OOO all week \u2014 this may go async. Check if it\u2019s still happening.", "note": "may be async" },
+          { "id": "m5", "time": "3:00 PM", "label": "Executive Project Status Update", "detail": "With Yuri & Jhara. Main deliverable of the afternoon. Jhara is OOO until Apr 21 \u2014 confirm attendance with Yuri.", "note": "key meeting" }
+        ]
+      },
+      {
+        "title": "Action Items",
+        "items": [
+          { "id": "a1", "label": "Reply to Shelley Henry \u2014 Denial/RFE dropdown", "detail": "Jill confirmed this can be descoped entirely. Ask Josh to submit a Litify ticket to update the dropdown. Shelley has flagged this twice this week and is waiting on your reply to close the thread.", "flag": "urgent" },
+          { "id": "a2", "label": "Prep Executive Project Status slides", "detail": "For your 3 PM with Yuri & Jhara. Jhara is OOO so confirm if she\u2019s dialing in. Focus on Phase 2 milestones and this week\u2019s sprint blockers.", "flag": "due" },
+          { "id": "a3", "label": "Review Hassan\u2019s client escalation", "detail": "Call logs for 847-505-9912 are ready \u2014 Zulay and Naz pulled the RingCentral reports. Hassan is waiting for your guidance on next steps with the client.", "flag": "urgent" },
+          { "id": "a4", "label": "Resolve folder naming with Danny Miller", "detail": "\"Project Charters - DO NOT USE\" is actively being used by the team. Either rename it or move contents and archive. Quick 5-minute decision." },
+          { "id": "a5", "label": "Complete 1 overdue Asana task", "detail": "Check your My Tasks view \u2014 likely the documentation task from last sprint." },
+          { "id": "a6", "label": "Complete 2 overdue Rippling tasks", "detail": "Probably time-off approvals or onboarding checklist items. Quick wins before EOD." }
+        ]
+      },
+      {
+        "title": "Emails Awaiting Reply",
+        "items": [
+          { "id": "e1", "label": "Shelley Henry \u2014 Denial/RFE Project Status", "detail": "Jill says descope the dropdown from the project, have Josh handle it standalone. Reply to Shelley confirming so she can update the tracker. Open since Wednesday.", "flag": "urgent" },
+          { "id": "e2", "label": "Jaime Vargas \u2014 Critical Dates Taxonomy", "detail": "Follow-up from this week\u2019s meeting. PPT attached, recording in the invite. No hard deadline but review before Monday\u2019s portfolio meeting." },
+          { "id": "e3", "label": "Alex Pavlov (Asana) \u2014 Closing the loop", "detail": "External email. Likely a product update or support thread closure. Quick glance to confirm no action needed." }
+        ]
+      },
+      {
+        "title": "Teams Highlights",
+        "items": [
+          { "id": "t1", "label": "Hassan Jassir \u2014 client escalation", "detail": "Asked Alejandro, Katheryn, Zulay, and Nazareth to pull call logs. Zulay & Naz delivered. Waiting on your review and guidance. The client has been described as intense.", "flag": "urgent" },
+          { "id": "t2", "label": "David Molano \u2014 Litify CoE email template", "detail": "Shared first draft of the request confirmation template. No action needed now, but review before it goes live." },
+          { "id": "t3", "label": "Danny Miller \u2014 folder naming confusion", "detail": "Flagged the \"DO NOT USE\" folder issue in Teams. A quick rename resolves it." }
+        ]
+      },
+      {
+        "title": "Out of Office",
+        "info": true,
+        "items": [
+          { "id": "o1", "label": "Sara Watson", "detail": "OOO all week. Back Monday but working from the Dublin office Mon\u2013Thu. Morning meetings are your best window for real-time overlap. Today\u2019s 2 PM check-in may go async.", "note": "Dublin Mon\u2013Thu" },
+          { "id": "o2", "label": "Jhara Ochoa", "detail": "OOO until Apr 21. On the 3 PM invite today \u2014 unclear if she\u2019s joining. She\u2019ll need a quick catch-up when she\u2019s back.", "note": "returns Monday" }
+        ]
+      },
+      {
+        "title": "Monday Preview",
+        "info": true,
+        "items": [
+          { "id": "p1", "time": "8:00 AM", "label": "Timecards & week prep", "detail": "Standard Monday admin. Clear pending approvals and triage Asana/Rippling." },
+          { "id": "p2", "time": "11:00 AM", "label": "1:1 Shelley & Jean", "detail": "Bring the Denial/RFE resolution. If you replied today, this should be a quick confirmation.", "note": "bring update" },
+          { "id": "p3", "time": "12:00 PM", "label": "Focus time", "detail": "Protected block before the heavy afternoon." },
+          { "id": "p4", "time": "2:00 PM", "label": "EPMO Portfolio Review", "detail": "Full portfolio review. Sara in Dublin, Jhara back from OOO. Come prepared with project updates." },
+          { "id": "p5", "time": "3:30 PM", "label": "Litify Sprint #9 Review", "detail": "Stakeholder demo. Make sure the dev team has their demo environment ready. Review the sprint board beforehand.", "note": "stakeholder-facing" },
+          { "id": "p6", "label": "Sara in Dublin (Mon\u2013Thu)", "detail": "Plan for the 5-hour timezone gap." },
+          { "id": "p7", "label": "Jhara returns from OOO", "detail": "Consider sending a quick summary of what she missed." }
+        ]
+      }
+    ]
+  }
+]
