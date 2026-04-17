@@ -189,7 +189,9 @@ function App() {
   const [digests, setDigests] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [completed, setCompleted] = useState({});
+  const [completed, setCompleted] = useState(() => {
+    try { return JSON.parse(localStorage.getItem("llf-completed") || "{}"); } catch { return {}; }
+  });
   const [search, setSearch] = useState("");
   const [typeFilter, setTypeFilter] = useState("all");
 
@@ -198,13 +200,17 @@ function App() {
     fetch("digests.json?" + Date.now())
       .then(r => { if (!r.ok) throw new Error("Failed to load"); return r.json(); })
       .then(data => {
-        // Sort newest first by isoDate, fallback to array order
         const sorted = [...data].sort((a, b) => (b.isoDate || "").localeCompare(a.isoDate || ""));
         setDigests(sorted);
         setLoading(false);
       })
       .catch(e => { setError(e.message); setLoading(false); });
   }, []);
+
+  // Persist completed state to localStorage
+  useEffect(() => {
+    try { localStorage.setItem("llf-completed", JSON.stringify(completed)); } catch {}
+  }, [completed]);
 
   const toggle = useCallback((id) => {
     setCompleted(prev => ({ ...prev, [id]: !prev[id] }));
