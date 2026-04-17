@@ -247,6 +247,7 @@ function App() {
   const [typeFilter, setTypeFilter] = useState("all");
   const [hidden, setHidden] = useState([]);
   const [stateLoaded, setStateLoaded] = useState(false);
+  const userActed = React.useRef(false); // only write after a real user action
 
   // Load digests + state on mount
   useEffect(() => {
@@ -263,8 +264,8 @@ function App() {
     // Load state: localStorage first (instant), then remote (authoritative)
     try {
       const local = JSON.parse(localStorage.getItem("llf-state") || "{}");
-      if (local.completed) setCompleted(local.completed);
-      if (local.hidden) setHidden(local.hidden);
+      if (local.completed && Object.keys(local.completed).length) setCompleted(local.completed);
+      if (local.hidden && local.hidden.length) setHidden(local.hidden);
     } catch {}
 
     remoteRead().then(state => {
@@ -274,17 +275,19 @@ function App() {
     });
   }, []);
 
-  // Persist state to remote (debounced)
+  // Persist state to remote — ONLY after a real user action (not on initial load)
   useEffect(() => {
-    if (!stateLoaded) return;
+    if (!stateLoaded || !userActed.current) return;
     debouncedWrite({ completed, hidden });
   }, [completed, hidden, stateLoaded]);
 
   const toggle = useCallback((id) => {
+    userActed.current = true;
     setCompleted(prev => ({ ...prev, [id]: !prev[id] }));
   }, []);
 
   const deleteDigest = useCallback((digestId) => {
+    userActed.current = true;
     setHidden(prev => [...prev, digestId]);
   }, []);
 
@@ -421,7 +424,7 @@ function App() {
           </div>
           <div className="flex items-center gap-3">
             {hidden.length > 0 && (
-              <button onClick={() => setHidden([])} className="text-xs text-gray-300 hover:text-gray-500 transition-colors">
+              <button onClick={() => { userActed.current = true; setHidden([]); }} className="text-xs text-gray-300 hover:text-gray-500 transition-colors">
                 Restore {hidden.length} removed
               </button>
             )}
