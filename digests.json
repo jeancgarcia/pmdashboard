@@ -1,5 +1,158 @@
 [
   {
+    "id": "weekly-2026-04-17",
+    "type": "weekly",
+    "date": "Week of April 13 \u2013 17",
+    "isoDate": "2026-04-17",
+    "greeting": "Week in review. This was a week of strategic pivots and operational momentum \u2014 the USCIS Expedite Request project was paused by leadership, Detention Prevention kicked off its Wave 2 client outreach, and the CoE backlog prioritization continued to drive how the team allocates effort. Several key scoping calls and cross-functional syncs kept the project machine moving, even with Jhara out all week.",
+    "sections": [
+      {
+        "title": "Wins",
+        "info": true,
+        "items": [
+          {
+            "id": "win-1",
+            "label": "Detention Prevention Wave 2 launched",
+            "detail": "Santiago and team finalized the new survey and client statement, then kicked off Wave 2 of client outreach. Nearly completed the forecasted client contacts by end of week. Strong execution while Jhara was OOO."
+          },
+          {
+            "id": "win-2",
+            "label": "Firmwide Critical Dates taxonomy presented",
+            "detail": "Javier Vargas led the meeting on the new taxonomy for deadlines, notices, and reminders. PPT and recording shared firmwide \u2014 this standardization has been a long time coming."
+          },
+          {
+            "id": "win-3",
+            "label": "Salesforce Roadmap 2026 v2 shared",
+            "detail": "Joshua Johanni shared the updated LLF Salesforce Roadmap 2026 v2 with the team. This gives the PMO clearer visibility into the IT/Litify trajectory for the year."
+          },
+          {
+            "id": "win-4",
+            "label": "Executive project status deck process improved",
+            "detail": "Yuri and Jean coordinated on the weekly executive slide update, including marking stalled projects honestly (red). Conor and Mike contributed staff augmentation updates. Transparency over optics."
+          }
+        ]
+      },
+      {
+        "title": "Key Decisions",
+        "info": true,
+        "items": [
+          {
+            "id": "dec-1",
+            "label": "USCIS Expedite Request project temporarily paused",
+            "detail": "Leadership decided to pause the UER project to align with broader strategic priorities. Yuri communicated the pause on Monday. Project marked as stalled/red on the executive deck \u2014 not hidden, not sugarcoated."
+          },
+          {
+            "id": "dec-2",
+            "label": "Denial/RFE Reason dropdown descoped from CoE project",
+            "detail": "Per Jill's direction via Shelley, the Denial/RFE Reason dropdown update will be handled as a standalone IT ticket through Josh rather than staying bundled in the larger CoE project. Shelley flagged this as very urgent."
+          },
+          {
+            "id": "dec-3",
+            "label": "Detention Prevention survey keeps service name as open question",
+            "detail": "Team decided to keep the service name as an open question in the client survey, with a closing question asking clients to suggest a name. Collaborative approach to branding."
+          }
+        ]
+      },
+      {
+        "title": "Blockers & Risks",
+        "info": true,
+        "items": [
+          {
+            "id": "blk-1",
+            "label": "Denial/RFE dropdown update still pending",
+            "detail": "Shelley marked this as very urgent on Friday. Josh needs to submit the IT ticket to update the dropdown. Jean owns the follow-up to ensure this gets actioned Monday \u2014 it's been lingering in the CoE backlog and needs to move independently now."
+          },
+          {
+            "id": "blk-2",
+            "label": "BCP firmwide survey process unclear",
+            "detail": "Jean reached out to Lucia Caamano to restart the BCP TM survey. Lucia couldn't confirm if Kris had created it yet and looped in Jeannette. Ownership and next steps need to be nailed down."
+          },
+          {
+            "id": "blk-3",
+            "label": "Hassan Jassir escalation \u2014 intense CL situation",
+            "detail": "Urgent client escalation flagged Friday involving Alejandro, Katheryn, and Zulay. Needs attention and resolution tracking into next week."
+          }
+        ]
+      },
+      {
+        "title": "Carrying Into Next Week",
+        "items": [
+          {
+            "id": "carry-1",
+            "label": "Follow up on Denial/RFE dropdown ticket with Josh",
+            "detail": "Shelley flagged this as very urgent Friday. Couldn't close this week because it was just descoped from the CoE project. Monday priority \u2014 confirm Josh has submitted the ticket.",
+            "flag": "urgent"
+          },
+          {
+            "id": "carry-2",
+            "label": "BCP survey coordination with Jeannette",
+            "detail": "Lucia handed off to Jeannette on Wednesday. Need to confirm survey status, finalize content, and set a distribution timeline. Jean owns.",
+            "flag": "due"
+          },
+          {
+            "id": "carry-3",
+            "label": "Resolve Hassan Jassir client escalation",
+            "detail": "Flagged late Friday \u2014 no resolution yet. Involves multiple team members. Track to closure early next week.",
+            "flag": "urgent"
+          },
+          {
+            "id": "carry-4",
+            "label": "Review Salesforce Roadmap 2026 v2 with team",
+            "detail": "Josh shared the doc on Wednesday. Needs review and alignment discussion, possibly in Phase 2 IT sync on Thursday.",
+            "flag": null
+          },
+          {
+            "id": "carry-5",
+            "label": "Scoping: Fix Task Sets for Appeal and Refile Process",
+            "detail": "Maria scheduled the scoping call. Meeting continues next Tuesday with the broader team. Needs clear scope definition before it enters the pipeline.",
+            "flag": null
+          }
+        ]
+      },
+      {
+        "title": "Next Week Preview",
+        "info": true,
+        "items": [
+          {
+            "id": "nxt-1",
+            "label": "Monday: Approve timecards + 1:1 with Shelley",
+            "detail": "Timecards due Sunday/Monday. The 1:1 with Shelley will likely focus on the Denial/RFE dropdown urgency and department needs. Come prepared with the IT ticket status.",
+            "note": "Prep over weekend"
+          },
+          {
+            "id": "nxt-2",
+            "label": "Monday: EPMO Portfolio Review + Litify Sprint #9 Review",
+            "detail": "Two back-to-back reviews. Portfolio review with Sara's leadership team, then Sprint #9 stakeholder review for IT/Litify projects. Review executive deck beforehand."
+          },
+          {
+            "id": "nxt-3",
+            "label": "Wednesday: April Firmwide Meeting + BCP/Incident Response Weekly",
+            "detail": "Monthly firmwide meeting at 2pm EST. Also the BCP weekly touchpoint \u2014 perfect time to push the survey forward with the team.",
+            "note": "High visibility day"
+          },
+          {
+            "id": "nxt-4",
+            "label": "Thursday: Phase 2 IT Sync + Executive Slide Update (new Friday slot)",
+            "detail": "Executive project status slides now update on Fridays instead of the previous cadence. Thursday's Phase 2 sync feeds directly into Friday's deck. Coordinate with Yuri and Jhara.",
+            "note": "Process change"
+          }
+        ]
+      },
+      {
+        "title": "Out of Office Next Week",
+        "info": true,
+        "items": [
+          {
+            "id": "ooo-1",
+            "label": "Sara Watson \u2014 Dublin Office",
+            "detail": "Sara will be working from the Dublin office Mon Apr 20 through Thu Apr 23. She's still available but on a different timezone. May affect EPMO meeting responsiveness.",
+            "note": "Apr 20\u201323"
+          }
+        ]
+      }
+    ]
+  },
+  {
     "id": "daily-2026-04-21",
     "type": "daily",
     "date": "Monday, April 21",
@@ -10,50 +163,131 @@
         "title": "Today\u2019s Schedule",
         "info": true,
         "items": [
-          { "id": "mon-m1", "time": "8:00 AM", "label": "Approve Timecards & Prepare for the Week", "detail": "Standard Monday admin. Clear any pending approvals in Rippling and review your Asana board for the week." },
-          { "id": "mon-m2", "time": "11:00 AM", "label": "1:1 Shelley & Jean", "detail": "Bring the Denial/RFE dropdown resolution from Friday. If you replied to her email, this should be a quick confirmation that Josh has the ticket.", "note": "bring update" },
-          { "id": "mon-m3", "time": "12:00 PM", "label": "Focus time", "detail": "Protected block before the heavy afternoon. Good window to prep for Portfolio Review." },
-          { "id": "mon-m4", "time": "2:00 PM", "label": "EPMO Portfolio Review", "detail": "Full portfolio review. Sara is joining from Dublin (5h ahead \u2014 it\u2019s 7 PM her time). Jhara is back. Come with project status updates for all active workstreams.", "note": "key meeting" },
-          { "id": "mon-m5", "time": "3:30 PM", "label": "IT Litify Sprint #9 Review with Stakeholders", "detail": "Stakeholder demo of Sprint 9 deliverables. Confirm the dev team has their demo environment ready. Review the sprint board before the meeting starts.", "note": "stakeholder-facing" }
+          {
+            "id": "mon-m1",
+            "time": "8:00 AM",
+            "label": "Approve Timecards & Prepare for the Week",
+            "detail": "Standard Monday admin. Clear any pending approvals in Rippling and review your Asana board for the week."
+          },
+          {
+            "id": "mon-m2",
+            "time": "11:00 AM",
+            "label": "1:1 Shelley & Jean",
+            "detail": "Bring the Denial/RFE dropdown resolution from Friday. If you replied to her email, this should be a quick confirmation that Josh has the ticket.",
+            "note": "bring update"
+          },
+          {
+            "id": "mon-m3",
+            "time": "12:00 PM",
+            "label": "Focus time",
+            "detail": "Protected block before the heavy afternoon. Good window to prep for Portfolio Review."
+          },
+          {
+            "id": "mon-m4",
+            "time": "2:00 PM",
+            "label": "EPMO Portfolio Review",
+            "detail": "Full portfolio review. Sara is joining from Dublin (5h ahead \u2014 it\u2019s 7 PM her time). Jhara is back. Come with project status updates for all active workstreams.",
+            "note": "key meeting"
+          },
+          {
+            "id": "mon-m5",
+            "time": "3:30 PM",
+            "label": "IT Litify Sprint #9 Review with Stakeholders",
+            "detail": "Stakeholder demo of Sprint 9 deliverables. Confirm the dev team has their demo environment ready. Review the sprint board before the meeting starts.",
+            "note": "stakeholder-facing"
+          }
         ]
       },
       {
         "title": "Action Items",
         "items": [
-          { "id": "mon-a1", "label": "Confirm Josh submitted the Denial/RFE Litify ticket", "detail": "You asked Josh to handle this Friday. Verify the ticket exists before your 11 AM 1:1 with Shelley so you can confirm it\u2019s in motion.", "flag": "due" },
-          { "id": "mon-a2", "label": "Send Jhara a catch-up summary", "detail": "She\u2019s been out since Apr 14. Key things she missed: Hassan\u2019s client escalation, the Denial/RFE descope decision, David\u2019s Litify CoE email template draft, and the Critical Dates taxonomy discussion with Jaime." },
-          { "id": "mon-a3", "label": "Review Hassan\u2019s call log findings", "detail": "If you didn\u2019t get to this Friday, it\u2019s still pending. Zulay and Naz pulled the RingCentral reports. Hassan needs your guidance before he contacts the client again.", "flag": "urgent" },
-          { "id": "mon-a4", "label": "Rename the \"Project Charters - DO NOT USE\" folder", "detail": "Carried over from Friday. Danny flagged the confusion. Quick rename to \"Project Charters \u2014 Active\" or similar. 2-minute fix." },
-          { "id": "mon-a5", "label": "Review David Molano\u2019s Litify CoE email template", "detail": "First draft was shared Friday in Teams. Give feedback before it goes live \u2014 David is waiting on your sign-off." },
-          { "id": "mon-a6", "label": "Prep for Sprint #9 stakeholder demo", "detail": "3:30 PM today. Review the sprint board in Litify, confirm which stories are being demoed, and check that the dev environment is stable." }
+          {
+            "id": "mon-a1",
+            "label": "Confirm Josh submitted the Denial/RFE Litify ticket",
+            "detail": "You asked Josh to handle this Friday. Verify the ticket exists before your 11 AM 1:1 with Shelley so you can confirm it\u2019s in motion.",
+            "flag": "due"
+          },
+          {
+            "id": "mon-a2",
+            "label": "Send Jhara a catch-up summary",
+            "detail": "She\u2019s been out since Apr 14. Key things she missed: Hassan\u2019s client escalation, the Denial/RFE descope decision, David\u2019s Litify CoE email template draft, and the Critical Dates taxonomy discussion with Jaime."
+          },
+          {
+            "id": "mon-a3",
+            "label": "Review Hassan\u2019s call log findings",
+            "detail": "If you didn\u2019t get to this Friday, it\u2019s still pending. Zulay and Naz pulled the RingCentral reports. Hassan needs your guidance before he contacts the client again.",
+            "flag": "urgent"
+          },
+          {
+            "id": "mon-a4",
+            "label": "Rename the \"Project Charters - DO NOT USE\" folder",
+            "detail": "Carried over from Friday. Danny flagged the confusion. Quick rename to \"Project Charters \u2014 Active\" or similar. 2-minute fix."
+          },
+          {
+            "id": "mon-a5",
+            "label": "Review David Molano\u2019s Litify CoE email template",
+            "detail": "First draft was shared Friday in Teams. Give feedback before it goes live \u2014 David is waiting on your sign-off."
+          },
+          {
+            "id": "mon-a6",
+            "label": "Prep for Sprint #9 stakeholder demo",
+            "detail": "3:30 PM today. Review the sprint board in Litify, confirm which stories are being demoed, and check that the dev environment is stable."
+          }
         ]
       },
       {
         "title": "Emails Awaiting Reply",
         "items": [
-          { "id": "mon-e1", "label": "Jaime Vargas \u2014 Critical Dates Taxonomy", "detail": "Carried over from Friday. PPT attached, recording in the invite. Review the proposed taxonomy before today\u2019s Portfolio Review \u2014 it may come up." },
-          { "id": "mon-e2", "label": "Alex Pavlov (Asana) \u2014 Closing the loop", "detail": "Low priority. External email from Friday. Quick glance to confirm no action needed." }
+          {
+            "id": "mon-e1",
+            "label": "Jaime Vargas \u2014 Critical Dates Taxonomy",
+            "detail": "Carried over from Friday. PPT attached, recording in the invite. Review the proposed taxonomy before today\u2019s Portfolio Review \u2014 it may come up."
+          },
+          {
+            "id": "mon-e2",
+            "label": "Alex Pavlov (Asana) \u2014 Closing the loop",
+            "detail": "Low priority. External email from Friday. Quick glance to confirm no action needed."
+          }
         ]
       },
       {
         "title": "Teams Highlights",
         "items": [
-          { "id": "mon-t1", "label": "Hassan Jassir \u2014 client escalation follow-up", "detail": "Thread from Friday is still active. No new updates over the weekend, but Hassan will be looking for your direction first thing this morning.", "flag": "urgent" },
-          { "id": "mon-t2", "label": "Danny Miller \u2014 folder rename confirmation", "detail": "Danny posted a follow-up asking if the rename is happening. A quick reply resolves the thread." }
+          {
+            "id": "mon-t1",
+            "label": "Hassan Jassir \u2014 client escalation follow-up",
+            "detail": "Thread from Friday is still active. No new updates over the weekend, but Hassan will be looking for your direction first thing this morning.",
+            "flag": "urgent"
+          },
+          {
+            "id": "mon-t2",
+            "label": "Danny Miller \u2014 folder rename confirmation",
+            "detail": "Danny posted a follow-up asking if the rename is happening. A quick reply resolves the thread."
+          }
         ]
       },
       {
         "title": "Out of Office",
         "info": true,
         "items": [
-          { "id": "mon-o1", "label": "Sara Watson \u2014 Dublin office this week", "detail": "Working from Dublin Mon\u2013Thu. She\u2019s 5 hours ahead, so your morning meetings (before noon ET) are the best overlap window. She\u2019s on the 2 PM Portfolio Review.", "note": "Mon\u2013Thu Dublin" }
+          {
+            "id": "mon-o1",
+            "label": "Sara Watson \u2014 Dublin office this week",
+            "detail": "Working from Dublin Mon\u2013Thu. She\u2019s 5 hours ahead, so your morning meetings (before noon ET) are the best overlap window. She\u2019s on the 2 PM Portfolio Review.",
+            "note": "Mon\u2013Thu Dublin"
+          }
         ]
       },
       {
         "title": "Returning Today",
         "info": true,
         "items": [
-          { "id": "mon-r1", "label": "Jhara Ochoa \u2014 back from OOO", "detail": "Was out since Apr 14. Send her the catch-up summary before the Portfolio Review so she\u2019s up to speed. Key threads: Denial/RFE, Hassan escalation, Litify CoE template, Critical Dates taxonomy.", "note": "needs catch-up" }
+          {
+            "id": "mon-r1",
+            "label": "Jhara Ochoa \u2014 back from OOO",
+            "detail": "Was out since Apr 14. Send her the catch-up summary before the Portfolio Review so she\u2019s up to speed. Key threads: Denial/RFE, Hassan escalation, Litify CoE template, Critical Dates taxonomy.",
+            "note": "needs catch-up"
+          }
         ]
       }
     ]
@@ -69,59 +303,184 @@
         "title": "Today\u2019s Schedule",
         "info": true,
         "items": [
-          { "id": "m1", "time": "10:00 AM", "label": "Phase 2 Weekly IT Projects Sync", "detail": "You\u2019re leading. Standup format \u2014 sprint progress, blockers, deliverables. Good moment to mention the Denial/RFE descope." },
-          { "id": "m2", "time": "11:00 AM", "label": "1:1 with Santiago", "detail": "Weekly check-in. Discuss project prioritization for next week and resource needs." },
-          { "id": "m3", "time": "12:30 PM", "label": "Focus time", "detail": "Protected block. Use it to prep the Executive Status slides." },
-          { "id": "m4", "time": "2:00 PM", "label": "EPMO EOW Check In", "detail": "Sara has been OOO all week \u2014 this may go async. Check if it\u2019s still happening.", "note": "may be async" },
-          { "id": "m5", "time": "3:00 PM", "label": "Executive Project Status Update", "detail": "With Yuri & Jhara. Main deliverable of the afternoon. Jhara is OOO until Apr 21 \u2014 confirm attendance with Yuri.", "note": "key meeting" }
+          {
+            "id": "m1",
+            "time": "10:00 AM",
+            "label": "Phase 2 Weekly IT Projects Sync",
+            "detail": "You\u2019re leading. Standup format \u2014 sprint progress, blockers, deliverables. Good moment to mention the Denial/RFE descope."
+          },
+          {
+            "id": "m2",
+            "time": "11:00 AM",
+            "label": "1:1 with Santiago",
+            "detail": "Weekly check-in. Discuss project prioritization for next week and resource needs."
+          },
+          {
+            "id": "m3",
+            "time": "12:30 PM",
+            "label": "Focus time",
+            "detail": "Protected block. Use it to prep the Executive Status slides."
+          },
+          {
+            "id": "m4",
+            "time": "2:00 PM",
+            "label": "EPMO EOW Check In",
+            "detail": "Sara has been OOO all week \u2014 this may go async. Check if it\u2019s still happening.",
+            "note": "may be async"
+          },
+          {
+            "id": "m5",
+            "time": "3:00 PM",
+            "label": "Executive Project Status Update",
+            "detail": "With Yuri & Jhara. Main deliverable of the afternoon. Jhara is OOO until Apr 21 \u2014 confirm attendance with Yuri.",
+            "note": "key meeting"
+          }
         ]
       },
       {
         "title": "Action Items",
         "items": [
-          { "id": "a1", "label": "Reply to Shelley Henry \u2014 Denial/RFE dropdown", "detail": "Jill confirmed this can be descoped entirely. Ask Josh to submit a Litify ticket to update the dropdown. Shelley has flagged this twice this week and is waiting on your reply to close the thread.", "flag": "urgent" },
-          { "id": "a2", "label": "Prep Executive Project Status slides", "detail": "For your 3 PM with Yuri & Jhara. Jhara is OOO so confirm if she\u2019s dialing in. Focus on Phase 2 milestones and this week\u2019s sprint blockers.", "flag": "due" },
-          { "id": "a3", "label": "Review Hassan\u2019s client escalation", "detail": "Call logs for 847-505-9912 are ready \u2014 Zulay and Naz pulled the RingCentral reports. Hassan is waiting for your guidance on next steps with the client.", "flag": "urgent" },
-          { "id": "a4", "label": "Resolve folder naming with Danny Miller", "detail": "\"Project Charters - DO NOT USE\" is actively being used by the team. Either rename it or move contents and archive. Quick 5-minute decision." },
-          { "id": "a5", "label": "Complete 1 overdue Asana task", "detail": "Check your My Tasks view \u2014 likely the documentation task from last sprint." },
-          { "id": "a6", "label": "Complete 2 overdue Rippling tasks", "detail": "Probably time-off approvals or onboarding checklist items. Quick wins before EOD." }
+          {
+            "id": "a1",
+            "label": "Reply to Shelley Henry \u2014 Denial/RFE dropdown",
+            "detail": "Jill confirmed this can be descoped entirely. Ask Josh to submit a Litify ticket to update the dropdown. Shelley has flagged this twice this week and is waiting on your reply to close the thread.",
+            "flag": "urgent"
+          },
+          {
+            "id": "a2",
+            "label": "Prep Executive Project Status slides",
+            "detail": "For your 3 PM with Yuri & Jhara. Jhara is OOO so confirm if she\u2019s dialing in. Focus on Phase 2 milestones and this week\u2019s sprint blockers.",
+            "flag": "due"
+          },
+          {
+            "id": "a3",
+            "label": "Review Hassan\u2019s client escalation",
+            "detail": "Call logs for 847-505-9912 are ready \u2014 Zulay and Naz pulled the RingCentral reports. Hassan is waiting for your guidance on next steps with the client.",
+            "flag": "urgent"
+          },
+          {
+            "id": "a4",
+            "label": "Resolve folder naming with Danny Miller",
+            "detail": "\"Project Charters - DO NOT USE\" is actively being used by the team. Either rename it or move contents and archive. Quick 5-minute decision."
+          },
+          {
+            "id": "a5",
+            "label": "Complete 1 overdue Asana task",
+            "detail": "Check your My Tasks view \u2014 likely the documentation task from last sprint."
+          },
+          {
+            "id": "a6",
+            "label": "Complete 2 overdue Rippling tasks",
+            "detail": "Probably time-off approvals or onboarding checklist items. Quick wins before EOD."
+          }
         ]
       },
       {
         "title": "Emails Awaiting Reply",
         "items": [
-          { "id": "e1", "label": "Shelley Henry \u2014 Denial/RFE Project Status", "detail": "Jill says descope the dropdown from the project, have Josh handle it standalone. Reply to Shelley confirming so she can update the tracker. Open since Wednesday.", "flag": "urgent" },
-          { "id": "e2", "label": "Jaime Vargas \u2014 Critical Dates Taxonomy", "detail": "Follow-up from this week\u2019s meeting. PPT attached, recording in the invite. No hard deadline but review before Monday\u2019s portfolio meeting." },
-          { "id": "e3", "label": "Alex Pavlov (Asana) \u2014 Closing the loop", "detail": "External email. Likely a product update or support thread closure. Quick glance to confirm no action needed." }
+          {
+            "id": "e1",
+            "label": "Shelley Henry \u2014 Denial/RFE Project Status",
+            "detail": "Jill says descope the dropdown from the project, have Josh handle it standalone. Reply to Shelley confirming so she can update the tracker. Open since Wednesday.",
+            "flag": "urgent"
+          },
+          {
+            "id": "e2",
+            "label": "Jaime Vargas \u2014 Critical Dates Taxonomy",
+            "detail": "Follow-up from this week\u2019s meeting. PPT attached, recording in the invite. No hard deadline but review before Monday\u2019s portfolio meeting."
+          },
+          {
+            "id": "e3",
+            "label": "Alex Pavlov (Asana) \u2014 Closing the loop",
+            "detail": "External email. Likely a product update or support thread closure. Quick glance to confirm no action needed."
+          }
         ]
       },
       {
         "title": "Teams Highlights",
         "items": [
-          { "id": "t1", "label": "Hassan Jassir \u2014 client escalation", "detail": "Asked Alejandro, Katheryn, Zulay, and Nazareth to pull call logs. Zulay & Naz delivered. Waiting on your review and guidance. The client has been described as intense.", "flag": "urgent" },
-          { "id": "t2", "label": "David Molano \u2014 Litify CoE email template", "detail": "Shared first draft of the request confirmation template. No action needed now, but review before it goes live." },
-          { "id": "t3", "label": "Danny Miller \u2014 folder naming confusion", "detail": "Flagged the \"DO NOT USE\" folder issue in Teams. A quick rename resolves it." }
+          {
+            "id": "t1",
+            "label": "Hassan Jassir \u2014 client escalation",
+            "detail": "Asked Alejandro, Katheryn, Zulay, and Nazareth to pull call logs. Zulay & Naz delivered. Waiting on your review and guidance. The client has been described as intense.",
+            "flag": "urgent"
+          },
+          {
+            "id": "t2",
+            "label": "David Molano \u2014 Litify CoE email template",
+            "detail": "Shared first draft of the request confirmation template. No action needed now, but review before it goes live."
+          },
+          {
+            "id": "t3",
+            "label": "Danny Miller \u2014 folder naming confusion",
+            "detail": "Flagged the \"DO NOT USE\" folder issue in Teams. A quick rename resolves it."
+          }
         ]
       },
       {
         "title": "Out of Office",
         "info": true,
         "items": [
-          { "id": "o1", "label": "Sara Watson", "detail": "OOO all week. Back Monday but working from the Dublin office Mon\u2013Thu. Morning meetings are your best window for real-time overlap. Today\u2019s 2 PM check-in may go async.", "note": "Dublin Mon\u2013Thu" },
-          { "id": "o2", "label": "Jhara Ochoa", "detail": "OOO until Apr 21. On the 3 PM invite today \u2014 unclear if she\u2019s joining. She\u2019ll need a quick catch-up when she\u2019s back.", "note": "returns Monday" }
+          {
+            "id": "o1",
+            "label": "Sara Watson",
+            "detail": "OOO all week. Back Monday but working from the Dublin office Mon\u2013Thu. Morning meetings are your best window for real-time overlap. Today\u2019s 2 PM check-in may go async.",
+            "note": "Dublin Mon\u2013Thu"
+          },
+          {
+            "id": "o2",
+            "label": "Jhara Ochoa",
+            "detail": "OOO until Apr 21. On the 3 PM invite today \u2014 unclear if she\u2019s joining. She\u2019ll need a quick catch-up when she\u2019s back.",
+            "note": "returns Monday"
+          }
         ]
       },
       {
         "title": "Monday Preview",
         "info": true,
         "items": [
-          { "id": "p1", "time": "8:00 AM", "label": "Timecards & week prep", "detail": "Standard Monday admin. Clear pending approvals and triage Asana/Rippling." },
-          { "id": "p2", "time": "11:00 AM", "label": "1:1 Shelley & Jean", "detail": "Bring the Denial/RFE resolution. If you replied today, this should be a quick confirmation.", "note": "bring update" },
-          { "id": "p3", "time": "12:00 PM", "label": "Focus time", "detail": "Protected block before the heavy afternoon." },
-          { "id": "p4", "time": "2:00 PM", "label": "EPMO Portfolio Review", "detail": "Full portfolio review. Sara in Dublin, Jhara back from OOO. Come prepared with project updates." },
-          { "id": "p5", "time": "3:30 PM", "label": "Litify Sprint #9 Review", "detail": "Stakeholder demo. Make sure the dev team has their demo environment ready. Review the sprint board beforehand.", "note": "stakeholder-facing" },
-          { "id": "p6", "label": "Sara in Dublin (Mon\u2013Thu)", "detail": "Plan for the 5-hour timezone gap." },
-          { "id": "p7", "label": "Jhara returns from OOO", "detail": "Consider sending a quick summary of what she missed." }
+          {
+            "id": "p1",
+            "time": "8:00 AM",
+            "label": "Timecards & week prep",
+            "detail": "Standard Monday admin. Clear pending approvals and triage Asana/Rippling."
+          },
+          {
+            "id": "p2",
+            "time": "11:00 AM",
+            "label": "1:1 Shelley & Jean",
+            "detail": "Bring the Denial/RFE resolution. If you replied today, this should be a quick confirmation.",
+            "note": "bring update"
+          },
+          {
+            "id": "p3",
+            "time": "12:00 PM",
+            "label": "Focus time",
+            "detail": "Protected block before the heavy afternoon."
+          },
+          {
+            "id": "p4",
+            "time": "2:00 PM",
+            "label": "EPMO Portfolio Review",
+            "detail": "Full portfolio review. Sara in Dublin, Jhara back from OOO. Come prepared with project updates."
+          },
+          {
+            "id": "p5",
+            "time": "3:30 PM",
+            "label": "Litify Sprint #9 Review",
+            "detail": "Stakeholder demo. Make sure the dev team has their demo environment ready. Review the sprint board beforehand.",
+            "note": "stakeholder-facing"
+          },
+          {
+            "id": "p6",
+            "label": "Sara in Dublin (Mon\u2013Thu)",
+            "detail": "Plan for the 5-hour timezone gap."
+          },
+          {
+            "id": "p7",
+            "label": "Jhara returns from OOO",
+            "detail": "Consider sending a quick summary of what she missed."
+          }
         ]
       }
     ]
