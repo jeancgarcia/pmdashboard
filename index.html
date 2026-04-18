@@ -1033,30 +1033,30 @@ function App() {
     <div className="min-h-screen overflow-x-hidden">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 md:px-8 py-12 md:py-16 fade-in w-full">
 
-        {/* Header — 3-row stacked layout: utility cluster, greeting full-width, meta row */}
+        {/* Header — 2-row: meta+avatar, then greeting full-width */}
         <div className="mb-12">
-          {/* Row 1 — avatar hub (status ring + stats + settings) */}
-          <div className="flex items-center justify-end mb-4">
-            <AvatarHub
-              digests={digests}
-              completed={completed}
-              reminders={reminders}
-              theme={theme}
-              onThemeToggle={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-            />
+          {/* Row 1 — meta row (left) + avatar hub (right) */}
+          <div className="flex items-center justify-between gap-4 mb-4">
+            <div className="flex items-center gap-2 flex-wrap min-w-0">
+              <p className="text-sm font-medium text-zinc-500 dark:text-zinc-400 capitalize bg-zinc-200/50 dark:bg-zinc-800/50 px-3 py-1 rounded-full">{dateStr}</p>
+              <span className="text-zinc-300 dark:text-zinc-600 hidden sm:inline">&middot;</span>
+              <p className="text-sm font-medium text-zinc-500 dark:text-zinc-400 hidden sm:inline">Lisinski Law Firm</p>
+              <span className="text-zinc-300 dark:text-zinc-600">&middot;</span>
+              <p className="text-sm font-semibold text-zinc-400 dark:text-zinc-500 tabular-nums">{timeStr}</p>
+            </div>
+            <div className="flex-shrink-0">
+              <AvatarHub
+                digests={digests}
+                completed={completed}
+                reminders={reminders}
+                theme={theme}
+                onThemeToggle={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+              />
+            </div>
           </div>
 
           {/* Row 2 — greeting, full width, no truncation */}
-          <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-zinc-900 dark:text-white drop-shadow-sm mb-3">{greeting}, Jean 👋</h1>
-
-          {/* Row 3 — meta row */}
-          <div className="flex items-center gap-2 flex-wrap">
-            <p className="text-sm font-medium text-zinc-500 dark:text-zinc-400 capitalize bg-zinc-200/50 dark:bg-zinc-800/50 px-3 py-1 rounded-full">{dateStr}</p>
-            <span className="text-zinc-300 dark:text-zinc-600">&middot;</span>
-            <p className="text-sm font-medium text-zinc-500 dark:text-zinc-400">Lisinski Law Firm</p>
-            <span className="text-zinc-300 dark:text-zinc-600">&middot;</span>
-            <p className="text-sm font-semibold text-zinc-400 dark:text-zinc-500 tabular-nums">{timeStr}</p>
-          </div>
+          <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-zinc-900 dark:text-white drop-shadow-sm">{greeting}, Jean 👋</h1>
         </div>
 
         {/* Quick-add reminder pill — single source of truth for adding */}
