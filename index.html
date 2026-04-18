@@ -28,22 +28,22 @@ tailwind.config = {
   * { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
   body { 
     font-family: 'Inter', system-ui, -apple-system, sans-serif; 
-    background-color: #f8fafc;
+    background-color: #fafafa;
   }
-  .dark body { background-color: #0f172a; }
+  .dark body { background-color: #0a0a0b; }
   
-  /* Optional: very subtle ambient background glow */
+  /* Subtle neutral ambient glow — no blue cast */
   body::before {
     content: '';
     position: fixed;
     top: 0; left: 0; right: 0;
     height: 100vh;
-    background: radial-gradient(circle at 50% -20%, rgba(59, 130, 246, 0.05) 0%, transparent 70%);
+    background: radial-gradient(circle at 50% -20%, rgba(0, 0, 0, 0.04) 0%, transparent 70%);
     pointer-events: none;
     z-index: -1;
   }
   .dark body::before {
-    background: radial-gradient(circle at 50% -20%, rgba(59, 130, 246, 0.08) 0%, transparent 70%);
+    background: radial-gradient(circle at 50% -20%, rgba(255, 255, 255, 0.04) 0%, transparent 70%);
   }
 
   .fade-in { animation: fadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
@@ -57,7 +57,7 @@ tailwind.config = {
 <div id="root"></div>
 
 <script type="text/babel" data-type="module">
-const { useState, useEffect, useCallback, useMemo } = React;
+const { useState, useEffect, useCallback, useMemo, useRef } = React;
 
 /* ═══ SVG Icons (inline, zero dependencies) ═══ */
 const Icon = {
@@ -79,6 +79,12 @@ const Icon = {
   Moon: ({ size = 16, ...p }) => (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...p}><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
   ),
+  Calendar: ({ size = 16, ...p }) => (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...p}><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+  ),
+  X: ({ size = 16, ...p }) => (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" {...p}><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+  ),
 };
 
 /* ═══ Section color tints ═══ */
@@ -97,76 +103,263 @@ const TINT = {
   "default": "#9ca3af",
 };
 
+/* ═══ Calendar Button — date picker for jumping to briefings ═══ */
+function CalendarButton({ digests, selectedDate, onSelect }) {
+  const [open, setOpen] = useState(false);
+  const [monthCursor, setMonthCursor] = useState(() => {
+    const seed = selectedDate ? new Date(selectedDate + "T00:00:00") : new Date();
+    return new Date(seed.getFullYear(), seed.getMonth(), 1);
+  });
+  const wrapperRef = useRef(null);
+
+  useEffect(() => {
+    if (!open) return;
+    const handler = (e) => {
+      if (wrapperRef.current && !wrapperRef.current.contains(e.target)) setOpen(false);
+    };
+    const esc = (e) => { if (e.key === "Escape") setOpen(false); };
+    document.addEventListener("mousedown", handler);
+    document.addEventListener("keydown", esc);
+    return () => {
+      document.removeEventListener("mousedown", handler);
+      document.removeEventListener("keydown", esc);
+    };
+  }, [open]);
+
+  const datesWithDigests = useMemo(() => {
+    const map = new Map();
+    for (const d of digests) {
+      if (!d.isoDate) continue;
+      map.set(d.isoDate, (map.get(d.isoDate) || 0) + 1);
+    }
+    return map;
+  }, [digests]);
+
+  const year = monthCursor.getFullYear();
+  const month = monthCursor.getMonth();
+  const firstDay = new Date(year, month, 1).getDay();
+  const daysInMonth = new Date(year, month + 1, 0).getDate();
+  const today = new Date();
+  const pad = (n) => String(n).padStart(2, "0");
+  const todayIso = `${today.getFullYear()}-${pad(today.getMonth() + 1)}-${today.getDate().toString().padStart(2, "0")}`;
+
+  const cells = [];
+  for (let i = 0; i < firstDay; i++) cells.push(null);
+  for (let d = 1; d <= daysInMonth; d++) cells.push(d);
+  while (cells.length % 7 !== 0) cells.push(null);
+
+  const monthLabel = monthCursor.toLocaleDateString("en-US", { month: "long", year: "numeric" });
+  const hasAny = datesWithDigests.size > 0;
+
+  return (
+    <div ref={wrapperRef} className="relative flex-shrink-0">
+      <button
+        onClick={() => setOpen(!open)}
+        className={`flex items-center justify-center w-[46px] h-[46px] rounded-2xl border shadow-sm transition-all ${
+          open || selectedDate
+            ? "bg-zinc-900 dark:bg-white text-white dark:text-zinc-900 border-zinc-900 dark:border-white"
+            : "bg-white/80 dark:bg-zinc-800/80 backdrop-blur-md text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white border-zinc-200 dark:border-zinc-700 hover:border-zinc-300 dark:hover:border-zinc-600"
+        }`}
+        title="Browse by date"
+        aria-label="Open calendar"
+      >
+        <Icon.Calendar size={18} />
+      </button>
+
+      {open && (
+        <div className="absolute top-full right-0 mt-2 w-[300px] bg-white dark:bg-zinc-900 rounded-2xl shadow-xl border border-zinc-200 dark:border-zinc-800 p-4 z-50 fade-in">
+          {/* Month nav */}
+          <div className="flex items-center justify-between mb-4">
+            <button
+              onClick={() => setMonthCursor(new Date(year, month - 1, 1))}
+              className="p-2 rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-800 text-zinc-500 dark:text-zinc-400 transition-colors"
+              aria-label="Previous month"
+            >
+              <Icon.ChevronRight size={14} className="rotate-180" />
+            </button>
+            <h3 className="text-sm font-bold text-zinc-900 dark:text-zinc-100 tabular-nums">{monthLabel}</h3>
+            <button
+              onClick={() => setMonthCursor(new Date(year, month + 1, 1))}
+              className="p-2 rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-800 text-zinc-500 dark:text-zinc-400 transition-colors"
+              aria-label="Next month"
+            >
+              <Icon.ChevronRight size={14} />
+            </button>
+          </div>
+
+          {/* Weekday headers */}
+          <div className="grid grid-cols-7 gap-1 mb-1">
+            {["S","M","T","W","T","F","S"].map((d, i) => (
+              <div key={i} className="text-center text-[10px] font-bold text-zinc-400 dark:text-zinc-500 uppercase tracking-wider py-1">{d}</div>
+            ))}
+          </div>
+
+          {/* Day grid */}
+          <div className="grid grid-cols-7 gap-1">
+            {cells.map((day, i) => {
+              if (day === null) return <div key={i} className="h-9" />;
+              const iso = `${year}-${pad(month + 1)}-${pad(day)}`;
+              const hasD = datesWithDigests.has(iso);
+              const isToday = iso === todayIso;
+              const isSelected = iso === selectedDate;
+              return (
+                <button
+                  key={i}
+                  onClick={() => { if (hasD) { onSelect(iso); setOpen(false); } }}
+                  disabled={!hasD}
+                  className={`relative h-9 rounded-lg text-xs font-semibold transition-all flex items-center justify-center tabular-nums ${
+                    isSelected
+                      ? "bg-blue-500 text-white shadow-md shadow-blue-500/30"
+                      : hasD
+                        ? "text-zinc-900 dark:text-zinc-100 hover:bg-zinc-100 dark:hover:bg-zinc-800 cursor-pointer"
+                        : "text-zinc-300 dark:text-zinc-700 cursor-not-allowed"
+                  } ${isToday && !isSelected ? "ring-1 ring-blue-400 ring-inset" : ""}`}
+                  title={hasD ? `${datesWithDigests.get(iso)} briefing${datesWithDigests.get(iso) > 1 ? "s" : ""}` : undefined}
+                >
+                  {day}
+                  {hasD && !isSelected && (
+                    <span className="absolute bottom-1 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-blue-500" />
+                  )}
+                </button>
+              );
+            })}
+          </div>
+
+          {/* Footer actions */}
+          <div className="mt-3 pt-3 border-t border-zinc-100 dark:border-zinc-800 flex gap-2">
+            <button
+              onClick={() => {
+                setMonthCursor(new Date(today.getFullYear(), today.getMonth(), 1));
+                if (datesWithDigests.has(todayIso)) { onSelect(todayIso); setOpen(false); }
+              }}
+              className="flex-1 py-2 text-xs font-bold text-zinc-600 dark:text-zinc-300 hover:text-zinc-900 dark:hover:text-white bg-zinc-100 dark:bg-zinc-800 hover:bg-zinc-200 dark:hover:bg-zinc-700 rounded-lg transition-colors"
+            >
+              Today
+            </button>
+            {selectedDate && (
+              <button
+                onClick={() => { onSelect(null); setOpen(false); }}
+                className="flex-1 py-2 text-xs font-bold text-zinc-600 dark:text-zinc-300 hover:text-red-500 dark:hover:text-red-400 bg-zinc-100 dark:bg-zinc-800 hover:bg-red-50 dark:hover:bg-red-500/10 rounded-lg transition-colors"
+              >
+                Clear filter
+              </button>
+            )}
+          </div>
+
+          {!hasAny && (
+            <p className="text-[10px] text-zinc-400 dark:text-zinc-500 text-center mt-3 italic">No briefings available yet.</p>
+          )}
+        </div>
+      )}
+    </div>
+  );
+}
+
+/* ═══ Text highlight helper ═══ */
+function highlight(text, query) {
+  if (!query || !text) return text;
+  const q = query.trim().toLowerCase();
+  if (!q) return text;
+  const lower = text.toLowerCase();
+  const out = [];
+  let i = 0, key = 0;
+  while (i < text.length) {
+    const idx = lower.indexOf(q, i);
+    if (idx === -1) { out.push(text.slice(i)); break; }
+    if (idx > i) out.push(text.slice(i, idx));
+    out.push(
+      <mark key={key++} className="bg-amber-200/80 dark:bg-amber-400/30 text-zinc-900 dark:text-amber-100 px-0.5 rounded-sm font-semibold">
+        {text.slice(idx, idx + q.length)}
+      </mark>
+    );
+    i = idx + q.length;
+  }
+  return out;
+}
+
+function itemMatches(item, q) {
+  if (!q) return false;
+  return item.label.toLowerCase().includes(q) || (item.detail || "").toLowerCase().includes(q);
+}
+
+function sectionMatches(section, q) {
+  if (!q) return false;
+  return section.title.toLowerCase().includes(q) || section.items.some(i => itemMatches(i, q));
+}
+
 /* ═══ CheckItem (interactive) ═══ */
-function CheckItem({ item, done, onToggle }) {
+function CheckItem({ item, done, onToggle, searchQuery }) {
   return (
     <div
       onClick={onToggle}
-      className={`group flex items-start gap-3 py-3 px-3 rounded-xl cursor-pointer select-none transition-all duration-200 hover:bg-slate-100/50 dark:hover:bg-slate-800/50 ${done ? "opacity-40" : ""}`}
+      className={`group flex items-start gap-3 py-3 px-3 rounded-xl cursor-pointer select-none transition-all duration-200 hover:bg-zinc-100/50 dark:hover:bg-zinc-800/50 ${done ? "opacity-40" : ""}`}
     >
-      <div className={`mt-0.5 w-5 h-5 rounded-full flex-shrink-0 flex items-center justify-center transition-all duration-300 ${done ? "bg-emerald-500 shadow-sm shadow-emerald-500/20 scale-105" : "border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-900 group-hover:border-slate-400 dark:group-hover:border-slate-500"}`}>
+      <div className={`mt-0.5 w-5 h-5 rounded-full flex-shrink-0 flex items-center justify-center transition-all duration-300 ${done ? "bg-emerald-500 shadow-sm shadow-emerald-500/20 scale-105" : "border border-zinc-300 dark:border-zinc-600 bg-white dark:bg-zinc-900 group-hover:border-zinc-400 dark:group-hover:border-zinc-500"}`}>
         {done && <Icon.Check size={11} color="white" />}
       </div>
       <div className="flex-1 min-w-0 transition-transform duration-200 group-hover:translate-x-1">
         <div className="flex items-center gap-2">
-          <span className={`text-sm leading-snug transition-colors duration-200 ${done ? "line-through text-slate-400 dark:text-slate-500" : "text-slate-800 dark:text-slate-200 font-medium"}`}>{item.label}</span>
+          <span className={`text-sm leading-snug transition-colors duration-200 ${done ? "line-through text-zinc-400 dark:text-zinc-500" : "text-zinc-800 dark:text-zinc-200 font-medium"}`}>{highlight(item.label, searchQuery)}</span>
           {item.flag === "urgent" && !done && <span className="w-1.5 h-1.5 rounded-full bg-red-500 shadow-[0_0_8px_rgba(239,68,68,0.5)] flex-shrink-0" />}
           {item.flag === "due" && !done && <span className="w-1.5 h-1.5 rounded-full bg-amber-500 shadow-[0_0_8px_rgba(245,158,11,0.5)] flex-shrink-0" />}
         </div>
-        {item.detail && !done && <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed mt-1">{item.detail}</p>}
+        {item.detail && !done && <p className="text-xs text-zinc-500 dark:text-zinc-400 leading-relaxed mt-1">{highlight(item.detail, searchQuery)}</p>}
       </div>
     </div>
   );
 }
 
 /* ═══ InfoItem (non-interactive) ═══ */
-function InfoItem({ item }) {
+function InfoItem({ item, searchQuery }) {
   return (
-    <div className="flex items-start gap-3 py-3 px-3 rounded-xl transition-colors duration-200 hover:bg-slate-100/30 dark:hover:bg-slate-800/30">
+    <div className="flex items-start gap-3 py-3 px-3 rounded-xl transition-colors duration-200 hover:bg-zinc-100/30 dark:hover:bg-zinc-800/30">
       {item.time ? (
-        <span className="text-xs font-semibold text-slate-400 dark:text-slate-500 tabular-nums w-16 flex-shrink-0 pt-0.5 text-right">{item.time}</span>
+        <span className="text-xs font-semibold text-zinc-400 dark:text-zinc-500 tabular-nums w-16 flex-shrink-0 pt-0.5 text-right">{item.time}</span>
       ) : (
-        <span className="w-1.5 h-1.5 rounded-full bg-slate-300 dark:bg-slate-600 flex-shrink-0 mt-2 ml-1" />
+        <span className="w-1.5 h-1.5 rounded-full bg-zinc-300 dark:bg-zinc-600 flex-shrink-0 mt-2 ml-1" />
       )}
       <div className="flex-1 min-w-0">
         <div className="flex items-center gap-2">
-          <span className="text-sm font-medium text-slate-800 dark:text-slate-200">{item.label}</span>
-          {item.note && <span className="text-[10px] uppercase tracking-wider text-slate-400 bg-slate-100 dark:bg-slate-800 dark:text-slate-400 px-1.5 py-0.5 rounded-md font-semibold">{item.note}</span>}
+          <span className="text-sm font-medium text-zinc-800 dark:text-zinc-200">{highlight(item.label, searchQuery)}</span>
+          {item.note && <span className="text-[10px] uppercase tracking-wider text-zinc-400 bg-zinc-100 dark:bg-zinc-800 dark:text-zinc-400 px-1.5 py-0.5 rounded-md font-semibold">{item.note}</span>}
         </div>
-        {item.detail && <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed mt-1">{item.detail}</p>}
+        {item.detail && <p className="text-xs text-zinc-500 dark:text-zinc-400 leading-relaxed mt-1">{highlight(item.detail, searchQuery)}</p>}
       </div>
     </div>
   );
 }
 
 /* ═══ Section ═══ */
-function Section({ section, completed, onToggle, defaultCollapsed }) {
+function Section({ section, completed, onToggle, defaultCollapsed, searchQuery }) {
   const [collapsed, setCollapsed] = useState(defaultCollapsed);
   const isInfo = !!section.info;
   const doneCount = isInfo ? 0 : section.items.filter(i => completed[i.id]).length;
   const total = section.items.length;
   const tint = TINT[section.title] || TINT.default;
+  const q = (searchQuery || "").trim().toLowerCase();
+  const hasMatch = q ? sectionMatches(section, q) : false;
+  const effectiveCollapsed = q ? !hasMatch : collapsed;
 
   return (
     <div className="mb-6 last:mb-0">
-      <button onClick={() => setCollapsed(!collapsed)} className="flex items-center gap-2 mb-1.5 w-full text-left group">
+      <button onClick={() => setCollapsed(!collapsed)} disabled={!!q} className="flex items-center gap-2 mb-1.5 w-full text-left group disabled:cursor-default">
         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
-          className={`text-slate-400 dark:text-slate-500 transition-transform duration-200 group-hover:text-slate-600 dark:group-hover:text-slate-300 ${collapsed ? "" : "rotate-90"}`}>
+          className={`text-zinc-400 dark:text-zinc-500 transition-transform duration-200 group-hover:text-zinc-600 dark:group-hover:text-zinc-300 ${effectiveCollapsed ? "" : "rotate-90"}`}>
           <polyline points="9 18 15 12 9 6"/>
         </svg>
         <span className="w-1.5 h-1.5 rounded-full flex-shrink-0 shadow-sm" style={{ background: tint, opacity: 0.8 }} />
-        <h3 className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 transition-colors group-hover:text-slate-700 dark:group-hover:text-slate-200">{section.title}</h3>
+        <h3 className="text-xs font-bold uppercase tracking-wider text-zinc-500 dark:text-zinc-400 transition-colors group-hover:text-zinc-700 dark:group-hover:text-zinc-200">{highlight(section.title, searchQuery)}</h3>
         {!isInfo && doneCount === total && total > 0 && <Icon.Check size={12} className="text-emerald-500 drop-shadow-sm" />}
-        {!isInfo && doneCount > 0 && doneCount < total && <span className="text-[10px] font-bold text-slate-400 bg-slate-100 dark:bg-slate-800 px-1.5 py-0.5 rounded-md">{doneCount}/{total}</span>}
+        {!isInfo && doneCount > 0 && doneCount < total && <span className="text-[10px] font-bold text-zinc-400 bg-zinc-100 dark:bg-zinc-800 px-1.5 py-0.5 rounded-md">{doneCount}/{total}</span>}
       </button>
-      
-      <div className={`grid transition-all duration-300 ease-in-out ${collapsed ? "grid-rows-[0fr] opacity-0" : "grid-rows-[1fr] opacity-100"}`}>
+
+      <div className={`grid transition-all duration-300 ease-in-out ${effectiveCollapsed ? "grid-rows-[0fr] opacity-0" : "grid-rows-[1fr] opacity-100"}`}>
         <div className="overflow-hidden">
           <div className="pl-1 pt-1 pb-1">
             {isInfo
-              ? section.items.map(item => <InfoItem key={item.id} item={item} />)
+              ? section.items.map(item => <InfoItem key={item.id} item={item} searchQuery={searchQuery} />)
               : section.items.map(item => (
-                  <CheckItem key={item.id} item={item} done={!!completed[item.id]} onToggle={() => onToggle(item.id)} />
+                  <CheckItem key={item.id} item={item} done={!!completed[item.id]} onToggle={() => onToggle(item.id)} searchQuery={searchQuery} />
                 ))
             }
           </div>
@@ -177,39 +370,59 @@ function Section({ section, completed, onToggle, defaultCollapsed }) {
 }
 
 /* ═══ DigestCard ═══ */
-function DigestCard({ digest, completed, onToggle, onDelete, onRestore, defaultOpen }) {
+function DigestCard({ digest, completed, onToggle, onDelete, onRestore, defaultOpen, searchQuery }) {
   const [open, setOpen] = useState(defaultOpen);
   const [confirmDelete, setConfirmDelete] = useState(false);
   const actionItems = digest.sections.filter(s => !s.info).flatMap(s => s.items);
   const total = actionItems.length;
   const doneCount = actionItems.filter(i => completed[i.id]).length;
   const pct = total > 0 ? Math.round((doneCount / total) * 100) : 0;
+  const q = (searchQuery || "").trim().toLowerCase();
+  const effectiveOpen = q ? true : open;
+
+  const matchCount = useMemo(() => {
+    if (!q) return 0;
+    let n = 0;
+    if (digest.date.toLowerCase().includes(q)) n++;
+    if ((digest.greeting || "").toLowerCase().includes(q)) n++;
+    for (const s of digest.sections) {
+      if (s.title.toLowerCase().includes(q)) n++;
+      for (const i of s.items) {
+        if (i.label.toLowerCase().includes(q)) n++;
+        if ((i.detail || "").toLowerCase().includes(q)) n++;
+      }
+    }
+    return n;
+  }, [q, digest]);
 
   return (
     <div className="mb-10 sm:mb-12 transition-all duration-300 w-full relative">
              
       <div className="flex items-center gap-2 mb-4 px-2 sm:px-4">
-        <button onClick={() => setOpen(!open)} className="flex items-center gap-3 group flex-1 text-left">
-          <div className={`p-1.5 rounded-full bg-slate-100 dark:bg-slate-800 transition-transform duration-300 ${open ? "rotate-0" : "-rotate-90"}`}>
-            <Icon.ChevronDown size={14} className="text-slate-500 dark:text-slate-400 group-hover:text-slate-800 dark:group-hover:text-slate-200 transition-colors" />
+        <button onClick={() => setOpen(!open)} disabled={!!q} className="flex items-center gap-3 group flex-1 text-left disabled:cursor-default">
+          <div className={`p-1.5 rounded-full bg-zinc-100 dark:bg-zinc-800 transition-transform duration-300 ${effectiveOpen ? "rotate-0" : "-rotate-90"}`}>
+            <Icon.ChevronDown size={14} className="text-zinc-500 dark:text-zinc-400 group-hover:text-zinc-800 dark:group-hover:text-zinc-200 transition-colors" />
           </div>
           <div>
-            <h2 className={`text-lg font-bold tracking-tight transition-colors ${onRestore ? "text-slate-400 dark:text-slate-500" : "text-slate-900 dark:text-slate-50"}`}>{digest.date}</h2>
+            <h2 className={`text-lg font-bold tracking-tight transition-colors ${onRestore ? "text-zinc-400 dark:text-zinc-500" : "text-zinc-900 dark:text-zinc-50"}`}>{highlight(digest.date, searchQuery)}</h2>
             <div className="flex items-center gap-2 mt-0.5">
-               <span className="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest">{digest.type}</span>
+               <span className="text-[10px] font-bold text-zinc-400 dark:text-zinc-500 uppercase tracking-widest">{digest.type}</span>
             </div>
           </div>
         </button>
-        {total > 0 && !onRestore && (
+        {q && matchCount > 0 && (
+          <span className="text-[10px] font-bold text-amber-700 dark:text-amber-300 bg-amber-100 dark:bg-amber-500/20 px-2 py-0.5 rounded-full tabular-nums mr-2" title={`${matchCount} match${matchCount > 1 ? "es" : ""}`}>{matchCount} match{matchCount > 1 ? "es" : ""}</span>
+        )}
+        {total > 0 && !onRestore && !q && (
           <div className="flex flex-col items-end gap-1 mr-2">
-             <span className="text-[10px] font-bold text-slate-400 bg-slate-100 dark:bg-slate-800 px-2 py-0.5 rounded-full">{doneCount}/{total}</span>
+             <span className="text-[10px] font-bold text-zinc-400 bg-zinc-100 dark:bg-zinc-800 px-2 py-0.5 rounded-full">{doneCount}/{total}</span>
           </div>
         )}
         
         {/* Actions */}
         <div className="flex items-center">
           {onRestore && (
-            <button onClick={() => onRestore(digest.id)} className="text-slate-400 hover:text-blue-500 transition-all p-2 rounded-xl hover:bg-blue-50 dark:hover:bg-slate-700 flex items-center gap-1.5" title="Restore briefing">
+            <button onClick={() => onRestore(digest.id)} className="text-zinc-400 hover:text-blue-500 transition-all p-2 rounded-xl hover:bg-blue-50 dark:hover:bg-zinc-700 flex items-center gap-1.5" title="Restore briefing">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>
               <span className="text-xs font-semibold">Restore</span>
             </button>
@@ -218,10 +431,10 @@ function DigestCard({ digest, completed, onToggle, onDelete, onRestore, defaultO
             confirmDelete ? (
               <div className="flex items-center gap-1.5">
                 <button onClick={() => { onDelete(digest.id); setConfirmDelete(false); }} className="text-xs font-bold text-red-500 hover:text-white transition-colors px-3 py-1.5 rounded-xl bg-red-50 dark:bg-red-500/10 hover:bg-red-500">Archive</button>
-                <button onClick={() => setConfirmDelete(false)} className="text-xs font-bold text-slate-500 hover:text-slate-900 dark:hover:text-white transition-colors px-3 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700">Cancel</button>
+                <button onClick={() => setConfirmDelete(false)} className="text-xs font-bold text-zinc-500 hover:text-zinc-900 dark:hover:text-white transition-colors px-3 py-1.5 rounded-xl bg-zinc-100 dark:bg-zinc-800 hover:bg-zinc-200 dark:hover:bg-zinc-700">Cancel</button>
               </div>
             ) : (
-              <button onClick={() => setConfirmDelete(true)} className="text-slate-400 hover:text-red-500 transition-all p-2 rounded-xl hover:bg-red-50 dark:hover:bg-red-500/10" title="Archive briefing">
+              <button onClick={() => setConfirmDelete(true)} className="text-zinc-400 hover:text-red-500 transition-all p-2 rounded-xl hover:bg-red-50 dark:hover:bg-red-500/10" title="Archive briefing">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
               </button>
             )
@@ -229,20 +442,20 @@ function DigestCard({ digest, completed, onToggle, onDelete, onRestore, defaultO
         </div>
       </div>
 
-      {open && (
-        <div className="fade-in mt-2 pt-6 border-t border-slate-200/50 dark:border-slate-700/50">
+      {effectiveOpen && (
+        <div className="fade-in mt-2 pt-6 border-t border-zinc-200/50 dark:border-zinc-700/50">
           {digest.greeting && (
             <div className="flex items-start gap-4 mb-8 py-4 px-5 rounded-2xl bg-blue-50/50 dark:bg-blue-900/10 border border-blue-100/50 dark:border-blue-800/30">
               <div className="w-8 h-8 rounded-full bg-blue-600 shadow-md shadow-blue-500/20 flex items-center justify-center flex-shrink-0 mt-0.5">
                 <span className="text-white text-sm font-bold">M</span>
               </div>
-              <p className="text-sm text-slate-700 dark:text-slate-300 leading-relaxed font-medium">{digest.greeting}</p>
+              <p className="text-sm text-zinc-700 dark:text-zinc-300 leading-relaxed font-medium">{highlight(digest.greeting, searchQuery)}</p>
             </div>
           )}
 
           {total > 0 && (
-            <div className="flex items-center gap-4 mb-8 bg-slate-50 dark:bg-slate-900/50 p-3 rounded-2xl border border-slate-100 dark:border-slate-800">
-              <div className="flex-1 h-1.5 bg-slate-200 dark:bg-slate-800 rounded-full overflow-hidden">
+            <div className="flex items-center gap-4 mb-8 bg-zinc-50 dark:bg-zinc-900/50 p-3 rounded-2xl border border-zinc-100 dark:border-zinc-800">
+              <div className="flex-1 h-1.5 bg-zinc-200 dark:bg-zinc-800 rounded-full overflow-hidden">
                 <div className="h-full rounded-full transition-all duration-700 ease-out relative"
                   style={{ 
                     width: `${pct}%`, 
@@ -251,13 +464,13 @@ function DigestCard({ digest, completed, onToggle, onDelete, onRestore, defaultO
                     {pct === 100 && <div className="absolute inset-0 bg-white/20 animate-pulse"></div>}
                 </div>
               </div>
-              <span className={`text-xs font-bold tabular-nums w-10 text-right transition-colors ${pct === 100 ? "text-emerald-500 drop-shadow-[0_0_8px_rgba(16,185,129,0.4)]" : "text-slate-400"}`}>{pct}%</span>
+              <span className={`text-xs font-bold tabular-nums w-10 text-right transition-colors ${pct === 100 ? "text-emerald-500 drop-shadow-[0_0_8px_rgba(16,185,129,0.4)]" : "text-zinc-400"}`}>{pct}%</span>
             </div>
           )}
 
           <div className="space-y-2">
             {digest.sections.map((section, si) => (
-              <Section key={si} section={section} completed={completed} onToggle={onToggle} defaultCollapsed={false} />
+              <Section key={si} section={section} completed={completed} onToggle={onToggle} defaultCollapsed={false} searchQuery={searchQuery} />
             ))}
           </div>
         </div>
@@ -310,8 +523,13 @@ function debouncedWrite(state) {
   writeQueue = setTimeout(() => remoteWrite(state), 800);
 }
 
-/* ═══ Reminder Box ═══ */
-function ReminderBox({ reminders, onAdd, onRemove }) {
+/* ═══ BellIcon ═══ */
+const BellIcon = ({ size = 14, className = "" }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+);
+
+/* ═══ Quick Adder — compact pill, single source of truth for adding ═══ */
+function ReminderQuickAdd({ reminders, onAdd, onSeeAll, onBack, isOnRemindersTab }) {
   const [open, setOpen] = useState(false);
   const [text, setText] = useState("");
 
@@ -320,62 +538,116 @@ function ReminderBox({ reminders, onAdd, onRemove }) {
     if (!trimmed) return;
     onAdd(trimmed);
     setText("");
+    setOpen(false);
   };
 
   const handleKey = (e) => {
     if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); handleAdd(); }
+    if (e.key === "Escape") { setOpen(false); setText(""); }
   };
 
-  return (
-    <div className="mb-10">
-      <button
-        onClick={() => setOpen(!open)}
-        className="flex items-center gap-2.5 text-sm font-semibold text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-slate-200 transition-colors group"
-      >
-        <div className="p-1.5 rounded-full bg-slate-200/50 dark:bg-slate-800 group-hover:bg-blue-100 dark:group-hover:bg-blue-900/30 transition-colors">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="text-slate-400 dark:text-slate-500 group-hover:text-blue-500 transition-colors"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
-        </div>
-        Add reminder for next briefing
-        {reminders.length > 0 && (
-          <span className="bg-blue-500 text-white shadow-sm shadow-blue-500/20 text-[10px] font-bold px-2 py-0.5 rounded-full">{reminders.length}</span>
-        )}
-      </button>
-
-      <div className={`grid transition-all duration-300 ease-in-out ${open ? "grid-rows-[1fr] opacity-100 mt-4" : "grid-rows-[0fr] opacity-0"}`}>
-        <div className="overflow-hidden">
-          <div className="flex gap-2 mb-3">
-            <input
-              type="text"
-              value={text}
-              onChange={e => setText(e.target.value)}
-              onKeyDown={handleKey}
-              placeholder="e.g. Follow up with Hassan on escalation..."
-              className="flex-1 px-4 py-2.5 text-sm bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-sm rounded-xl text-slate-900 dark:text-slate-100 placeholder-slate-400 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all font-medium"
-            />
-            <button
-              onClick={handleAdd}
-              disabled={!text.trim()}
-              className="px-5 py-2.5 text-sm font-bold rounded-xl transition-all bg-slate-900 dark:bg-slate-100 text-white dark:text-slate-900 hover:bg-slate-800 dark:hover:bg-white disabled:bg-slate-100 disabled:text-slate-400 dark:disabled:bg-slate-800 dark:disabled:text-slate-600 shadow-sm disabled:shadow-none hover:scale-[1.02] active:scale-[0.98]"
-            >
-              Add
-            </button>
-          </div>
-
-          {reminders.length > 0 && (
-            <div className="space-y-2 mt-4">
-              {reminders.map(r => (
-                <div key={r.id} className="flex items-center gap-3 py-2.5 px-4 rounded-xl bg-blue-50/50 dark:bg-blue-900/10 border border-blue-100/50 dark:border-blue-800/30 group transition-all hover:bg-blue-50 dark:hover:bg-blue-900/20">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="text-blue-500 flex-shrink-0"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
-                  <span className="text-sm font-medium text-slate-700 dark:text-slate-300 flex-1">{r.text}</span>
-                  <button onClick={() => onRemove(r.id)} className="text-slate-300 dark:text-slate-600 hover:text-red-500 dark:hover:text-red-400 transition-colors opacity-0 group-hover:opacity-100 p-1 rounded-md hover:bg-red-50 dark:hover:bg-red-500/10" title="Remove">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-                  </button>
-                </div>
-              ))}
-            </div>
-          )}
+  if (open) {
+    return (
+      <div className="mb-8 flex flex-col sm:flex-row gap-2">
+        <input
+          autoFocus
+          type="text"
+          value={text}
+          onChange={e => setText(e.target.value)}
+          onKeyDown={handleKey}
+          placeholder="e.g. Follow up with Hassan on escalation..."
+          className="flex-1 min-w-0 px-4 py-3 text-sm bg-white dark:bg-zinc-800 border border-blue-400 dark:border-blue-500 ring-2 ring-blue-500/20 shadow-sm rounded-xl text-zinc-900 dark:text-zinc-100 placeholder-zinc-400 focus:outline-none transition-all font-medium min-h-[44px]"
+        />
+        <div className="flex gap-2">
+          <button
+            onClick={handleAdd}
+            disabled={!text.trim()}
+            className="flex-1 sm:flex-none px-5 py-3 text-sm font-bold rounded-xl transition-all bg-zinc-900 dark:bg-zinc-100 text-white dark:text-zinc-900 hover:bg-zinc-800 dark:hover:bg-white disabled:bg-zinc-100 disabled:text-zinc-400 dark:disabled:bg-zinc-800 dark:disabled:text-zinc-600 shadow-sm min-h-[44px]"
+          >
+            Add
+          </button>
+          <button
+            onClick={() => { setOpen(false); setText(""); }}
+            className="px-4 py-3 text-sm font-bold rounded-xl transition-all bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-300 hover:bg-zinc-200 dark:hover:bg-zinc-700 min-h-[44px]"
+          >
+            Cancel
+          </button>
         </div>
       </div>
+    );
+  }
+
+  return (
+    <div className="mb-8 flex items-center gap-2 flex-wrap">
+      {isOnRemindersTab && (
+        <button
+          onClick={onBack}
+          className="flex items-center gap-1.5 pl-2 pr-3 py-2.5 rounded-xl bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 shadow-sm hover:border-zinc-300 dark:hover:border-zinc-600 transition-all text-xs font-bold text-zinc-600 dark:text-zinc-300 hover:text-zinc-900 dark:hover:text-white min-h-[44px]"
+          title="Back to briefings"
+        >
+          <Icon.ChevronRight size={14} className="rotate-180" />
+          Back to briefings
+        </button>
+      )}
+      <button
+        onClick={() => setOpen(true)}
+        className="flex items-center gap-2.5 pl-3 pr-4 py-2.5 rounded-xl bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 shadow-sm hover:border-blue-300 dark:hover:border-blue-700 hover:bg-blue-50/40 dark:hover:bg-blue-900/10 transition-all text-sm font-semibold text-zinc-700 dark:text-zinc-200 min-h-[44px] group"
+      >
+        <div className="p-1 rounded-full bg-blue-100 dark:bg-blue-900/30 group-hover:bg-blue-200 dark:group-hover:bg-blue-800/40 transition-colors">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" className="text-blue-500"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        </div>
+        Add reminder
+      </button>
+      {reminders.length > 0 && !isOnRemindersTab && (
+        <button
+          onClick={onSeeAll}
+          className="flex items-center gap-2 px-3 py-2.5 text-xs font-bold text-zinc-500 dark:text-zinc-400 hover:text-blue-500 dark:hover:text-blue-400 transition-colors min-h-[44px] rounded-xl hover:bg-zinc-100 dark:hover:bg-zinc-800"
+          title="View all reminders"
+        >
+          <span className="bg-blue-500 text-white shadow-sm shadow-blue-500/20 text-[10px] font-bold px-2 py-0.5 rounded-full tabular-nums">{reminders.length}</span>
+          <span>queued</span>
+          <Icon.ChevronRight size={12} />
+        </button>
+      )}
+    </div>
+  );
+}
+
+/* ═══ Full Reminders View — list + empty state only (adding happens via quick-add pill) ═══ */
+function RemindersView({ reminders, onRemove }) {
+  return (
+    <div className="fade-in">
+      <div className="flex items-center gap-2.5 mb-5">
+        <div className="p-1.5 rounded-full bg-blue-100 dark:bg-blue-900/30">
+          <BellIcon className="text-blue-500" />
+        </div>
+        <h2 className="text-sm font-semibold text-zinc-700 dark:text-zinc-200">Reminders for next briefing</h2>
+        {reminders.length > 0 && (
+          <span className="bg-blue-500 text-white shadow-sm shadow-blue-500/20 text-[10px] font-bold px-2 py-0.5 rounded-full tabular-nums">{reminders.length}</span>
+        )}
+      </div>
+
+      {reminders.length > 0 ? (
+        <div className="space-y-2">
+          {reminders.map(r => (
+            <div key={r.id} className="flex items-start gap-3 py-3 px-4 rounded-xl bg-blue-50/50 dark:bg-blue-900/10 border border-blue-100/50 dark:border-blue-800/30 transition-all hover:bg-blue-50 dark:hover:bg-blue-900/20">
+              <BellIcon className="text-blue-500 flex-shrink-0 mt-0.5" />
+              <span className="text-sm font-medium text-zinc-700 dark:text-zinc-300 flex-1 min-w-0 break-words leading-relaxed">{r.text}</span>
+              <button onClick={() => onRemove(r.id)} className="text-zinc-400 dark:text-zinc-500 hover:text-red-500 dark:hover:text-red-400 transition-colors p-2 -m-1 rounded-md hover:bg-red-50 dark:hover:bg-red-500/10 flex-shrink-0" title="Remove reminder" aria-label="Remove reminder">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+              </button>
+            </div>
+          ))}
+        </div>
+      ) : (
+        <div className="text-center py-16 px-6 rounded-[2rem] border border-dashed border-zinc-300 dark:border-zinc-700 bg-white/50 dark:bg-zinc-800/30 backdrop-blur-md">
+          <div className="w-14 h-14 bg-blue-100 dark:bg-blue-900/20 rounded-full flex items-center justify-center mx-auto mb-4">
+            <BellIcon size={22} className="text-blue-500" />
+          </div>
+          <p className="text-base font-bold text-zinc-700 dark:text-zinc-300 mb-1">No reminders queued</p>
+          <p className="text-sm font-medium text-zinc-500 dark:text-zinc-500">Use the <span className="font-bold text-zinc-700 dark:text-zinc-300">+ Add reminder</span> button above — it&apos;ll show up in tomorrow&apos;s briefing.</p>
+        </div>
+      )}
     </div>
   );
 }
@@ -388,6 +660,7 @@ function App() {
   const [completed, setCompleted] = useState({});
   const [search, setSearch] = useState("");
   const [typeFilter, setTypeFilter] = useState("all");
+  const [selectedDate, setSelectedDate] = useState(null);
   const [hidden, setHidden] = useState([]);
   const [reminders, setReminders] = useState([]);
   const [stateLoaded, setStateLoaded] = useState(false);
@@ -477,6 +750,7 @@ function App() {
 
   // Filter & search
   const isArchiveView = typeFilter === "archived";
+  const isRemindersView = typeFilter === "reminders";
 
   const filtered = useMemo(() => {
     if (isArchiveView) {
@@ -496,6 +770,7 @@ function App() {
     }
     let list = digests.filter(d => !hidden.includes(d.id));
     if (typeFilter !== "all") list = list.filter(d => d.type === typeFilter);
+    if (selectedDate) list = list.filter(d => d.isoDate === selectedDate);
     if (search.trim()) {
       const q = search.toLowerCase();
       list = list.filter(d =>
@@ -508,7 +783,7 @@ function App() {
       );
     }
     return list;
-  }, [digests, typeFilter, search, hidden, isArchiveView]);
+  }, [digests, typeFilter, search, hidden, isArchiveView, selectedDate]);
 
   // Unique types + archived tab
   const activeDigests = digests.filter(d => !hidden.includes(d.id));
@@ -531,27 +806,27 @@ function App() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-[#f8fafc] dark:bg-[#0f172a] transition-colors duration-300 overflow-x-hidden">
+      <div className="min-h-screen bg-[#fafafa] dark:bg-[#0a0a0b] transition-colors duration-300 overflow-x-hidden">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 md:px-8 py-10 w-full">
           <div className="mb-12">
             <div className="flex items-center justify-between mb-4">
-              <div className="h-8 bg-slate-200 dark:bg-slate-800 rounded-lg w-1/2 animate-pulse"></div>
-              <div className="w-24 h-24 rounded-full bg-slate-200 dark:bg-slate-800 animate-pulse border-4 border-white dark:border-slate-800 shadow-sm"></div>
+              <div className="h-8 bg-zinc-200 dark:bg-zinc-800 rounded-lg w-1/2 animate-pulse"></div>
+              <div className="w-24 h-24 rounded-full bg-zinc-200 dark:bg-zinc-800 animate-pulse border-4 border-white dark:border-zinc-800 shadow-sm"></div>
             </div>
-            <div className="h-4 bg-slate-200 dark:bg-slate-800 rounded-md w-1/3 animate-pulse"></div>
+            <div className="h-4 bg-zinc-200 dark:bg-zinc-800 rounded-md w-1/3 animate-pulse"></div>
           </div>
           
           <div className="space-y-6">
             {[1, 2, 3].map(i => (
-              <div key={i} className="p-6 rounded-[2rem] bg-white/40 dark:bg-slate-800/20 shadow-sm border border-slate-200/50 dark:border-slate-700/30 animate-pulse">
+              <div key={i} className="p-6 rounded-[2rem] bg-white/40 dark:bg-zinc-800/20 shadow-sm border border-zinc-200/50 dark:border-zinc-700/30 animate-pulse">
                 <div className="flex gap-4">
-                  <div className="w-8 h-8 rounded-full bg-slate-200 dark:bg-slate-700 hidden sm:block"></div>
+                  <div className="w-8 h-8 rounded-full bg-zinc-200 dark:bg-zinc-700 hidden sm:block"></div>
                   <div className="flex-1">
-                    <div className="h-5 bg-slate-200 dark:bg-slate-700 rounded-md w-1/3 mb-3"></div>
-                    <div className="h-3 bg-slate-200 dark:bg-slate-700 rounded-md w-1/4 mb-8"></div>
+                    <div className="h-5 bg-zinc-200 dark:bg-zinc-700 rounded-md w-1/3 mb-3"></div>
+                    <div className="h-3 bg-zinc-200 dark:bg-zinc-700 rounded-md w-1/4 mb-8"></div>
                     <div className="space-y-3">
-                       <div className="h-3 bg-slate-200 dark:bg-slate-700/50 rounded-md w-3/4"></div>
-                       <div className="h-3 bg-slate-200 dark:bg-slate-700/50 rounded-md w-5/6"></div>
+                       <div className="h-3 bg-zinc-200 dark:bg-zinc-700/50 rounded-md w-3/4"></div>
+                       <div className="h-3 bg-zinc-200 dark:bg-zinc-700/50 rounded-md w-5/6"></div>
                     </div>
                   </div>
                 </div>
@@ -565,13 +840,13 @@ function App() {
 
   if (error) {
     return (
-      <div className="min-h-screen bg-[#f8fafc] dark:bg-[#0f172a] flex items-center justify-center p-6">
-        <div className="text-center max-w-sm bg-white dark:bg-slate-800 p-8 rounded-[2rem] shadow-xl border border-slate-200 dark:border-slate-700">
+      <div className="min-h-screen bg-[#fafafa] dark:bg-[#0a0a0b] flex items-center justify-center p-6">
+        <div className="text-center max-w-sm bg-white dark:bg-zinc-800 p-8 rounded-[2rem] shadow-xl border border-zinc-200 dark:border-zinc-700">
           <div className="w-12 h-12 rounded-full bg-red-100 dark:bg-red-500/20 text-red-500 flex items-center justify-center mx-auto mb-4">
              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
           </div>
-          <p className="text-lg text-slate-900 dark:text-slate-100 font-bold mb-2">Couldn&apos;t load briefings</p>
-          <p className="text-sm text-slate-500 dark:text-slate-400">Make sure <code className="bg-slate-100 dark:bg-slate-900 px-1.5 py-0.5 rounded-md font-mono text-xs">digests.json</code> is in the same folder as this page.</p>
+          <p className="text-lg text-zinc-900 dark:text-zinc-100 font-bold mb-2">Couldn&apos;t load briefings</p>
+          <p className="text-sm text-zinc-500 dark:text-zinc-400">Make sure <code className="bg-zinc-100 dark:bg-zinc-900 px-1.5 py-0.5 rounded-md font-mono text-xs">digests.json</code> is in the same folder as this page.</p>
         </div>
       </div>
     );
@@ -583,46 +858,74 @@ function App() {
 
         {/* Header */}
         <div className="mb-12">
-          <div className="flex items-center justify-between mb-2">
-            <h1 className="text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white drop-shadow-sm">{greeting}, Jean 👋</h1>
-            <div className="flex items-center gap-4">
-              <button 
+          <div className="flex items-center justify-between gap-3 mb-3">
+            <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-zinc-900 dark:text-white drop-shadow-sm min-w-0 truncate">{greeting}, Jean 👋</h1>
+            <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
+              <button
                 onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-                className="p-2.5 rounded-full bg-white dark:bg-slate-800 text-slate-400 dark:text-slate-400 hover:text-blue-500 dark:hover:text-amber-400 shadow-sm border border-slate-200 dark:border-slate-700 transition-all hover:scale-105"
+                className="p-2.5 rounded-full bg-white dark:bg-zinc-800 text-zinc-400 dark:text-zinc-400 hover:text-blue-500 dark:hover:text-amber-400 shadow-sm border border-zinc-200 dark:border-zinc-700 transition-all hover:scale-105 flex-shrink-0"
                 title="Toggle Theme"
+                aria-label="Toggle theme"
               >
                 {theme === 'dark' ? <Icon.Sun size={18} /> : <Icon.Moon size={18} />}
               </button>
-              <img src="avatar.png" alt="" className="w-20 h-20 sm:w-24 sm:h-24 rounded-full object-cover shadow-lg shadow-slate-200/50 dark:shadow-slate-900/50 border-[3px] border-white dark:border-slate-800 transition-transform hover:scale-105" onError={(e) => { e.target.style.display = 'none'; }} />
+              <img src="avatar.png" alt="" className="w-14 h-14 sm:w-20 sm:h-20 md:w-24 md:h-24 rounded-full object-cover shadow-lg shadow-zinc-200/50 dark:shadow-zinc-900/50 border-[3px] border-white dark:border-zinc-800 transition-transform hover:scale-105 flex-shrink-0" onError={(e) => { e.target.style.display = 'none'; }} />
             </div>
           </div>
-          <div className="flex items-center gap-2">
-            <p className="text-sm font-medium text-slate-500 dark:text-slate-400 capitalize bg-slate-200/50 dark:bg-slate-800/50 px-3 py-1 rounded-full">{dateStr}</p>
-            <span className="text-slate-300 dark:text-slate-600">&middot;</span>
-            <p className="text-sm font-medium text-slate-500 dark:text-slate-400 hidden xs:inline">Lisinski Law Firm</p>
-            <span className="text-slate-300 dark:text-slate-600 hidden xs:inline">&middot;</span>
-            <p className="text-sm font-semibold text-slate-400 dark:text-slate-500 tabular-nums hidden xs:inline">{timeStr}</p>
+          <div className="flex items-center gap-2 flex-wrap">
+            <p className="text-sm font-medium text-zinc-500 dark:text-zinc-400 capitalize bg-zinc-200/50 dark:bg-zinc-800/50 px-3 py-1 rounded-full">{dateStr}</p>
+            <span className="text-zinc-300 dark:text-zinc-600">&middot;</span>
+            <p className="text-sm font-medium text-zinc-500 dark:text-zinc-400">Lisinski Law Firm</p>
+            <span className="text-zinc-300 dark:text-zinc-600">&middot;</span>
+            <p className="text-sm font-semibold text-zinc-400 dark:text-zinc-500 tabular-nums">{timeStr}</p>
           </div>
         </div>
 
-        {/* Reminders for next digest */}
-        <ReminderBox reminders={reminders} onAdd={addReminder} onRemove={removeReminder} />
+        {/* Quick-add reminder pill — single source of truth for adding */}
+        <ReminderQuickAdd
+          reminders={reminders}
+          onAdd={addReminder}
+          onSeeAll={() => setTypeFilter("reminders")}
+          onBack={() => setTypeFilter("all")}
+          isOnRemindersTab={isRemindersView}
+        />
 
-        {/* Search + filters */}
+        {/* Search + filters — hidden on reminders view (not applicable) */}
+        {!isRemindersView && (
         <div className="mb-10 w-full">
-          {/* Search */}
-          <div className="relative mb-5 group">
-            <div className="absolute left-4 top-1/2 -translate-y-1/2 p-1 rounded-full group-focus-within:bg-blue-50 dark:group-focus-within:bg-blue-900/30 transition-colors">
-              <Icon.Search size={16} className="text-slate-400 group-focus-within:text-blue-500 transition-colors" />
+          {/* Search + Calendar */}
+          <div className="flex gap-2 mb-5">
+            <div className="relative flex-1 group">
+              <div className="absolute left-4 top-1/2 -translate-y-1/2 p-1 rounded-full group-focus-within:bg-blue-50 dark:group-focus-within:bg-blue-900/30 transition-colors">
+                <Icon.Search size={16} className="text-zinc-400 group-focus-within:text-blue-500 transition-colors" />
+              </div>
+              <input
+                type="text"
+                value={search}
+                onChange={e => setSearch(e.target.value)}
+                placeholder="Search briefings..."
+                className="w-full pl-12 pr-4 py-3 text-sm font-medium bg-white/80 dark:bg-zinc-800/80 backdrop-blur-md border border-zinc-200 dark:border-zinc-700 shadow-sm rounded-2xl text-zinc-900 dark:text-zinc-100 placeholder-zinc-400 focus:outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all"
+              />
             </div>
-            <input
-              type="text"
-              value={search}
-              onChange={e => setSearch(e.target.value)}
-              placeholder="Search briefings..."
-              className="w-full pl-12 pr-4 py-3 text-sm font-medium bg-white/80 dark:bg-slate-800/80 backdrop-blur-md border border-slate-200 dark:border-slate-700 shadow-sm rounded-2xl text-slate-900 dark:text-slate-100 placeholder-slate-400 focus:outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all"
-            />
+            <CalendarButton digests={digests} selectedDate={selectedDate} onSelect={setSelectedDate} />
           </div>
+
+          {/* Active date filter chip */}
+          {selectedDate && (
+            <div className="flex items-center gap-2 mb-5 fade-in">
+              <button
+                onClick={() => setSelectedDate(null)}
+                className="flex items-center gap-2 pl-3 pr-2 py-1.5 rounded-full text-xs font-bold bg-blue-500 text-white shadow-sm shadow-blue-500/20 hover:bg-blue-600 transition-all active:scale-95 group"
+                title="Clear date filter"
+              >
+                <Icon.Calendar size={12} />
+                <span>{new Date(selectedDate + "T00:00:00").toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })}</span>
+                <span className="p-0.5 rounded-full bg-white/20 group-hover:bg-white/30 transition-colors">
+                  <Icon.X size={10} />
+                </span>
+              </button>
+            </div>
+          )}
 
           {/* Type filter */}
           <div className="flex gap-2 flex-wrap">
@@ -630,14 +933,15 @@ function App() {
               const count = t === "all" ? activeDigests.length
                 : t === "archived" ? hidden.length
                 : activeDigests.filter(d => d.type === t).length;
+              const isMuted = t === "archived";
               return (
                 <button
                   key={t}
                   onClick={() => setTypeFilter(t)}
                   className={`px-4 py-1.5 rounded-full text-xs font-bold transition-all capitalize whitespace-nowrap shadow-sm active:scale-95 ${
                     typeFilter === t
-                      ? (t === "archived" ? "bg-slate-700 text-white dark:bg-slate-200 dark:text-slate-900" : "bg-slate-900 text-white dark:bg-white dark:text-slate-900")
-                      : (t === "archived" ? "bg-white dark:bg-slate-800 text-slate-500 hover:text-slate-700 border border-slate-200 dark:border-slate-700 dark:hover:text-slate-300" : "bg-white dark:bg-slate-800 text-slate-600 hover:text-slate-900 border border-slate-200 dark:border-slate-700 dark:hover:text-slate-200")
+                      ? (isMuted ? "bg-zinc-700 text-white dark:bg-zinc-200 dark:text-zinc-900" : "bg-zinc-900 text-white dark:bg-white dark:text-zinc-900")
+                      : (isMuted ? "bg-white dark:bg-zinc-800 text-zinc-500 hover:text-zinc-700 border border-zinc-200 dark:border-zinc-700 dark:hover:text-zinc-300" : "bg-white dark:bg-zinc-800 text-zinc-600 hover:text-zinc-900 border border-zinc-200 dark:border-zinc-700 dark:hover:text-zinc-200")
                   }`}
                 >
                   {t === "all" ? `All (${count})` : `${t} (${count})`}
@@ -646,17 +950,20 @@ function App() {
             })}
           </div>
         </div>
+        )}
 
-        {/* Digest list */}
-        {filtered.length === 0 ? (
-          <div className="text-center py-20 px-6 rounded-[2rem] border border-dashed border-slate-300 dark:border-slate-700 bg-white/50 dark:bg-slate-800/30 backdrop-blur-md">
-            <div className="w-14 h-14 bg-slate-100 dark:bg-slate-800 rounded-full flex items-center justify-center mx-auto mb-4">
-              <Icon.Search size={24} className="text-slate-400 dark:text-slate-500" />
+        {/* Reminders view — single dedicated screen */}
+        {isRemindersView ? (
+          <RemindersView reminders={reminders} onRemove={removeReminder} />
+        ) : filtered.length === 0 ? (
+          <div className="text-center py-20 px-6 rounded-[2rem] border border-dashed border-zinc-300 dark:border-zinc-700 bg-white/50 dark:bg-zinc-800/30 backdrop-blur-md">
+            <div className="w-14 h-14 bg-zinc-100 dark:bg-zinc-800 rounded-full flex items-center justify-center mx-auto mb-4">
+              <Icon.Search size={24} className="text-zinc-400 dark:text-zinc-500" />
             </div>
-            <p className="text-base font-bold text-slate-700 dark:text-slate-300 mb-1">
+            <p className="text-base font-bold text-zinc-700 dark:text-zinc-300 mb-1">
               {isArchiveView ? "No archived briefings" : "No briefings found"}
             </p>
-            <p className="text-sm font-medium text-slate-500 dark:text-slate-500">Try adjusting your filters or search terms.</p>
+            <p className="text-sm font-medium text-zinc-500 dark:text-zinc-500">Try adjusting your filters or search terms.</p>
           </div>
         ) : (
           <div className="space-y-4 relative">
@@ -669,21 +976,22 @@ function App() {
                 onDelete={isArchiveView ? null : deleteDigest}
                 onRestore={isArchiveView ? restoreDigest : null}
                 defaultOpen={isArchiveView ? false : i === 0}
+                searchQuery={search}
               />
             ))}
           </div>
         )}
 
         {/* Footer */}
-        <div className="mt-16 pt-8 border-t border-slate-200/60 dark:border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div className="mt-16 pt-8 border-t border-zinc-200/60 dark:border-zinc-800 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-3">
             <div className="w-6 h-6 rounded-full bg-blue-600 shadow-md shadow-blue-500/20 flex items-center justify-center">
               <span className="text-white text-xs font-bold" style={{ fontSize: "10px" }}>M</span>
             </div>
-            <span className="text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest">Madison &middot; LLF Automation</span>
+            <span className="text-xs font-bold text-zinc-400 dark:text-zinc-500 uppercase tracking-widest">Madison &middot; LLF Automation</span>
           </div>
-          <div className="flex items-center gap-2 bg-slate-100 dark:bg-slate-800 px-3 py-1.5 rounded-full">
-            <span className="text-xs font-bold text-slate-500 dark:text-slate-400">{digests.length - hidden.length} active briefing{(digests.length - hidden.length) !== 1 ? "s" : ""}</span>
+          <div className="flex items-center gap-2 bg-zinc-100 dark:bg-zinc-800 px-3 py-1.5 rounded-full">
+            <span className="text-xs font-bold text-zinc-500 dark:text-zinc-400">{digests.length - hidden.length} active briefing{(digests.length - hidden.length) !== 1 ? "s" : ""}</span>
           </div>
         </div>
 
