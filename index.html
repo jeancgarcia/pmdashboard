@@ -1492,7 +1492,8 @@ function App() {
 
       {/* ═══ Mobile top bar ═══ */}
       <div className="fixed top-0 left-0 right-0 z-50 md:hidden bg-white/80 dark:bg-zinc-950/80 backdrop-blur-xl border-b border-zinc-200/40 dark:border-zinc-800/60">
-        <div className="flex items-center px-4 h-14">
+        <div className="flex items-center justify-between px-4 h-14">
+          <div className="flex items-center">
           <div ref={mobileMenuRef} className="relative">
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -1535,6 +1536,14 @@ function App() {
             )}
           </div>
           <span className="text-sm font-extrabold text-zinc-900 dark:text-zinc-50 ml-2">{NAV.find(n => n.id === activeModule)?.label}</span>
+          </div>
+          <AvatarHub
+            digests={digests}
+            completed={completed}
+            reminders={reminders}
+            theme={theme}
+            onThemeToggle={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+          />
         </div>
       </div>
 
