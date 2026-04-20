@@ -1446,109 +1446,100 @@ function App() {
   ];
 
   return (
-    <div className="min-h-screen overflow-x-hidden flex">
+    <div className="min-h-screen">
 
-      {/* ═══ Desktop Sidebar — icon rail, sticky ═══ */}
-      <aside className="hidden md:flex flex-col items-center w-16 flex-shrink-0 border-r border-zinc-200/40 dark:border-zinc-800/60 bg-white/40 dark:bg-zinc-950/40 backdrop-blur-xl sticky top-0 h-screen py-5 gap-1">
+      {/* ═══ Desktop Sidebar — fixed left rail with labels ═══ */}
+      <aside className="hidden md:flex flex-col w-[140px] fixed top-0 left-0 h-screen z-40 border-r border-zinc-200/40 dark:border-zinc-800/40 bg-white/60 dark:bg-zinc-950/60 backdrop-blur-xl py-5">
         {/* Logo mark */}
-        <div className="w-9 h-9 rounded-xl bg-blue-600 shadow-md shadow-blue-500/20 flex items-center justify-center mb-6 flex-shrink-0">
-          <span className="text-white text-sm font-bold">M</span>
+        <div className="flex items-center justify-center mb-8">
+          <div className="w-8 h-8 rounded-xl bg-blue-600 shadow-md shadow-blue-500/20 flex items-center justify-center">
+            <span className="text-white text-sm font-bold">M</span>
+          </div>
         </div>
 
-        {/* Nav icons */}
-        {NAV.map(item => {
-          const active = activeModule === item.id;
-          return (
-            <button
-              key={item.id}
-              onClick={() => { setActiveModule(item.id); if (item.id === "toggl") setTypeFilter("toggl"); else if (typeFilter === "toggl") setTypeFilter("all"); }}
-              className={`relative w-10 h-10 rounded-xl flex items-center justify-center transition-all group ${
-                active
-                  ? "bg-zinc-900 dark:bg-white text-white dark:text-zinc-900 shadow-sm"
-                  : "text-zinc-400 dark:text-zinc-500 hover:text-zinc-700 dark:hover:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-zinc-800/60"
-              }`}
-              title={item.label}
-            >
-              {item.icon}
-              {/* Tooltip */}
-              <span className="absolute left-full ml-3 px-2.5 py-1 rounded-lg text-xs font-bold bg-zinc-900 dark:bg-white text-white dark:text-zinc-900 shadow-lg opacity-0 pointer-events-none group-hover:opacity-100 transition-opacity whitespace-nowrap z-50">{item.label}</span>
-            </button>
-          );
-        })}
+        {/* Nav items with labels */}
+        <nav className="flex-1 px-3 space-y-0.5">
+          {NAV.map(item => {
+            const active = activeModule === item.id;
+            return (
+              <button
+                key={item.id}
+                onClick={() => { setActiveModule(item.id); if (item.id === "toggl") setTypeFilter("toggl"); else if (typeFilter === "toggl") setTypeFilter("all"); }}
+                className={`w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-left transition-all ${
+                  active
+                    ? "bg-zinc-100 dark:bg-zinc-800/80 text-zinc-900 dark:text-zinc-100"
+                    : "text-zinc-400 dark:text-zinc-500 hover:text-zinc-600 dark:hover:text-zinc-300 hover:bg-zinc-50 dark:hover:bg-zinc-800/40"
+                }`}
+              >
+                <span className={`flex-shrink-0 ${active ? "text-blue-600 dark:text-blue-400" : ""}`}>{item.icon}</span>
+                <span className={`text-xs font-semibold truncate ${active ? "text-zinc-900 dark:text-zinc-100" : ""}`}>{item.label}</span>
+              </button>
+            );
+          })}
+        </nav>
 
-        {/* Spacer */}
-        <div className="flex-1" />
-
-        {/* Theme toggle */}
-        <button
-          onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-          className="w-10 h-10 rounded-xl flex items-center justify-center text-zinc-400 dark:text-zinc-500 hover:text-zinc-700 dark:hover:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-zinc-800/60 transition-all group"
-          title={theme === "dark" ? "Light mode" : "Dark mode"}
-        >
-          {theme === "dark" ? <Icon.Sun size={16} /> : <Icon.Moon size={16} />}
-          <span className="absolute left-full ml-3 px-2.5 py-1 rounded-lg text-xs font-bold bg-zinc-900 dark:bg-white text-white dark:text-zinc-900 shadow-lg opacity-0 pointer-events-none group-hover:opacity-100 transition-opacity whitespace-nowrap z-50">{theme === "dark" ? "Light" : "Dark"}</span>
-        </button>
+        {/* Theme toggle at bottom */}
+        <div className="px-3">
+          <button
+            onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+            className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-zinc-400 dark:text-zinc-500 hover:text-zinc-600 dark:hover:text-zinc-300 hover:bg-zinc-50 dark:hover:bg-zinc-800/40 transition-all"
+          >
+            {theme === "dark" ? <Icon.Sun size={16} className="text-amber-400" /> : <Icon.Moon size={16} />}
+            <span className="text-xs font-semibold">{theme === "dark" ? "Light" : "Dark"}</span>
+          </button>
+        </div>
       </aside>
 
       {/* ═══ Mobile top bar ═══ */}
       <div className="fixed top-0 left-0 right-0 z-50 md:hidden bg-white/80 dark:bg-zinc-950/80 backdrop-blur-xl border-b border-zinc-200/40 dark:border-zinc-800/60">
-        <div className="flex items-center justify-between px-4 h-14">
-          <div className="flex items-center gap-3">
-            <div ref={mobileMenuRef} className="relative">
-              <button
-                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                className="p-2 -ml-2 rounded-xl hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
-                aria-label="Menu"
-              >
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-zinc-600 dark:text-zinc-300"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
-              </button>
+        <div className="flex items-center px-4 h-14">
+          <div ref={mobileMenuRef} className="relative">
+            <button
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="p-2 -ml-2 rounded-xl hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
+              aria-label="Menu"
+            >
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-zinc-600 dark:text-zinc-300"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+            </button>
 
-              {/* Mobile dropdown */}
-              {mobileMenuOpen && (
-                <div className="absolute top-full left-0 mt-1.5 w-48 bg-white dark:bg-zinc-900 rounded-2xl shadow-xl border border-zinc-200/60 dark:border-zinc-800 p-1.5 fade-in z-50">
-                  {NAV.map(item => {
-                    const active = activeModule === item.id;
-                    return (
-                      <button
-                        key={item.id}
-                        onClick={() => { setActiveModule(item.id); if (item.id === "toggl") setTypeFilter("toggl"); else if (typeFilter === "toggl") setTypeFilter("all"); setMobileMenuOpen(false); }}
-                        className={`w-full flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-left transition-all ${
-                          active
-                            ? "bg-zinc-900 dark:bg-white text-white dark:text-zinc-900"
-                            : "text-zinc-600 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800"
-                        }`}
-                      >
-                        <span className="flex-shrink-0">{item.icon}</span>
-                        <span className="text-sm font-bold">{item.label}</span>
-                      </button>
-                    );
-                  })}
-                  <div className="mt-1 pt-1 border-t border-zinc-100 dark:border-zinc-800">
+            {/* Mobile dropdown */}
+            {mobileMenuOpen && (
+              <div className="absolute top-full left-0 mt-1.5 w-48 bg-white dark:bg-zinc-900 rounded-2xl shadow-xl border border-zinc-200/60 dark:border-zinc-800 p-1.5 fade-in z-50">
+                {NAV.map(item => {
+                  const active = activeModule === item.id;
+                  return (
                     <button
-                      onClick={() => { setTheme(theme === 'dark' ? 'light' : 'dark'); setMobileMenuOpen(false); }}
-                      className="w-full flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-zinc-400 dark:text-zinc-500 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-all"
+                      key={item.id}
+                      onClick={() => { setActiveModule(item.id); if (item.id === "toggl") setTypeFilter("toggl"); else if (typeFilter === "toggl") setTypeFilter("all"); setMobileMenuOpen(false); }}
+                      className={`w-full flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-left transition-all ${
+                        active
+                          ? "bg-zinc-100 dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100"
+                          : "text-zinc-600 dark:text-zinc-300 hover:bg-zinc-50 dark:hover:bg-zinc-800"
+                      }`}
                     >
-                      {theme === "dark" ? <Icon.Sun size={16} /> : <Icon.Moon size={16} />}
-                      <span className="text-sm font-bold">{theme === "dark" ? "Light" : "Dark"}</span>
+                      <span className={`flex-shrink-0 ${active ? "text-blue-600 dark:text-blue-400" : ""}`}>{item.icon}</span>
+                      <span className="text-sm font-semibold">{item.label}</span>
                     </button>
-                  </div>
+                  );
+                })}
+                <div className="mt-1 pt-1 border-t border-zinc-100 dark:border-zinc-800">
+                  <button
+                    onClick={() => { setTheme(theme === 'dark' ? 'light' : 'dark'); setMobileMenuOpen(false); }}
+                    className="w-full flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-zinc-400 dark:text-zinc-500 hover:bg-zinc-50 dark:hover:bg-zinc-800 transition-all"
+                  >
+                    {theme === "dark" ? <Icon.Sun size={16} className="text-amber-400" /> : <Icon.Moon size={16} />}
+                    <span className="text-sm font-semibold">{theme === "dark" ? "Light" : "Dark"}</span>
+                  </button>
                 </div>
-              )}
-            </div>
-            <span className="text-sm font-extrabold text-zinc-900 dark:text-zinc-50">{NAV.find(n => n.id === activeModule)?.label}</span>
+              </div>
+            )}
           </div>
-          <AvatarHub
-            digests={digests}
-            completed={completed}
-            reminders={reminders}
-            theme={theme}
-            onThemeToggle={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-          />
+          <span className="text-sm font-extrabold text-zinc-900 dark:text-zinc-50 ml-2">{NAV.find(n => n.id === activeModule)?.label}</span>
         </div>
       </div>
 
       {/* ═══ Main content area ═══ */}
-      <main className="flex-1 min-w-0 pt-16 md:pt-0">
+      <main className="min-w-0 pt-16 md:pt-0 md:ml-[140px]">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 md:px-8 py-8 md:py-12 fade-in w-full">
 
           {/* Header — greeting + meta (desktop only since mobile has top bar) */}
