@@ -125,30 +125,31 @@ const TOGGL_KEY = "c4cdd69cef8e9ef2dd36a7c17286e609";
 const TOGGL_WS = 20705602;
 const TOGGL_PROJECTS = [
   /* ── Non-Utilized ── */
-  { id:216469959, name:"Downtime", client:"Non-Utilized", subs:["Internet Outage","Idle / Lack of work","Power Outage"] },
-  { id:216469960, name:"Issues", client:"Non-Utilized", subs:["LLF Technical"] },
-  { id:216469961, name:"Meetings", client:"Non-Utilized", subs:["Other Non-Ops Meetings / Firmwide","One-on-One"] },
-  { id:216469962, name:"Offline", client:"Non-Utilized", subs:["Break","Holiday","Lunch","Time Off"] },
-  { id:216469963, name:"Other", client:"Non-Utilized", subs:["Other"] },
-  { id:216469964, name:"Other work", client:"Non-Utilized", subs:["Strategic initiatives"] },
-  { id:216469965, name:"Tasks", client:"Non-Utilized", subs:["Performance Management & QA"] },
-  { id:216469966, name:"Time Management", client:"Non-Utilized", subs:["Attendance management and Rippling timecard"] },
-  { id:216469967, name:"Training", client:"Non-Utilized", subs:["Compliance / Non-Ops / Onboarding"] },
+  { id:216469959, name:"Downtime", client:"Non-Utilized", subs:["Internet Outage","Idle / Lack of work","Power Outage"], tasks:{"Internet Outage":240573816,"Idle / Lack of work":240573817,"Power Outage":240573818} },
+  { id:216469960, name:"Issues", client:"Non-Utilized", subs:["LLF Technical"], tasks:{"LLF Technical":240573819} },
+  { id:216469961, name:"Meetings", client:"Non-Utilized", subs:["Non-Ops Meetings / Firmwide","One-on-One"], tasks:{"Non-Ops Meetings / Firmwide":240573820,"One-on-One":240573821} },
+  { id:216469962, name:"Offline", client:"Non-Utilized", subs:["Break","Holiday","Lunch","Time Off"], tasks:{"Break":240573822,"Holiday":240573823,"Lunch":240573824,"Time Off":240573825} },
+  { id:216469963, name:"Other", client:"Non-Utilized", subs:["Other"], tasks:{"Other":240573826} },
+  { id:216469964, name:"Other work", client:"Non-Utilized", subs:["Strategic intiatives"], tasks:{"Strategic intiatives":240573827} },
+  { id:216469965, name:"Tasks", client:"Non-Utilized", subs:["Performance Management & QA"], tasks:{"Performance Management & QA":240573828} },
+  { id:216469966, name:"Time Management", client:"Non-Utilized", subs:["Attendance management and Rippling timecard"], tasks:{"Attendance management and Rippling timecard":240573829} },
+  { id:216469967, name:"Training", client:"Non-Utilized", subs:["Compliance / Non-Ops / Onboarding"], tasks:{"Compliance / Non-Ops / Onboarding":240573830} },
   /* ── Utilized-Mat-Work ── */
-  { id:216469968, name:"Other", client:"Utilized-Mat-Work", subs:["Other"] },
+  { id:216469968, name:"Other", client:"Utilized-Mat-Work", subs:["Other"], tasks:{"Other":240573831} },
   /* ── Utilized-Non-Mat-Work (PMO & QA) ── */
-  { id:216469956, name:"Meetings", client:"Utilized-Non-Mat-Work", subs:["Recurring Meetings & Huddles","Operations & Project Meetings"] },
-  { id:216469969, name:"Other", client:"Utilized-Non-Mat-Work", subs:["Other"] },
-  { id:216469974, name:"Training", client:"Utilized-Non-Mat-Work", subs:["Operational Training (Receiving)","Operational Training (Providing)","Coaching, Shadowing & Mentorship"] },
-  { id:216469992, name:"Consulting", client:"Utilized-Non-Mat-Work", subs:["Consulting"] },
-  { id:216469993, name:"EPMO Process & Tools", client:"Utilized-Non-Mat-Work", subs:["EPMO Process & Tools"] },
-  { id:216469994, name:"Portfolio Management", client:"Utilized-Non-Mat-Work", subs:["Portfolio Management"] },
-  { id:216469996, name:"Project Management", client:"Utilized-Non-Mat-Work", subs:["Project Tasks"] },
-  { id:216469997, name:"Resource Planning", client:"Utilized-Non-Mat-Work", subs:["Resource Planning"] },
-  { id:216469998, name:"TM Support", client:"Utilized-Non-Mat-Work", subs:["TM Support tasks"] },
-  { id:217263333, name:"System Admin", client:"Utilized-Non-Mat-Work", subs:["System Admin"] },
-  { id:217287848, name:"Process Engineering", client:"Utilized-Non-Mat-Work", subs:["Other","Dashboards & Reporting","Data Analysis","Process Mapping","SOP writing / editing"] },
-  { id:219085805, name:"Run the business", client:"Utilized-Non-Mat-Work", subs:["Run the business"] },
+  { id:216469956, name:"Meetings", client:"Utilized-Non-Mat-Work", subs:["Recurring Meetings & Huddles","Operations & Project Meetings"], tasks:{"Recurring Meetings & Huddles":240573814,"Operations & Project Meetings":240573813} },
+  { id:216469969, name:"Other", client:"Utilized-Non-Mat-Work", subs:["Other"], tasks:{"Other":240573832} },
+  { id:216469974, name:"Training", client:"Utilized-Non-Mat-Work", subs:["Operational Training (Receiving)","Operational Training (Providing)","Coaching, Shadowing & Mentorship"], tasks:{"Operational Training (Receiving)":240573841,"Operational Training (Providing)":240573842,"Coaching, Shadowing & Mentorship":240573840} },
+  { id:216469992, name:"Consulting", client:"Utilized-Non-Mat-Work", subs:["Consulting"], tasks:{"Consulting":241221766} },
+  { id:216469993, name:"EPMO Process & Tools", client:"Utilized-Non-Mat-Work", subs:["EPMO Process & Tools"], tasks:{"EPMO Process & Tools":241221768} },
+  { id:216469994, name:"Portfolio Management", client:"Utilized-Non-Mat-Work", subs:["Portfolio Management"], tasks:{"Portfolio Management":241221770} },
+  { id:216469996, name:"Project Management", client:"Utilized-Non-Mat-Work", subs:["Project Tasks"], tasks:{"Project Tasks":240573906} },
+  { id:216469997, name:"Resource Planning", client:"Utilized-Non-Mat-Work", subs:["Resource Planning"], tasks:{"Resource Planning":241221773} },
+  { id:216469998, name:"TM Support", client:"Utilized-Non-Mat-Work", subs:["TM Support tasks"], tasks:{"TM Support tasks":240573907} },
+  { id:217263333, name:"System Admin", client:"Utilized-Non-Mat-Work", subs:["System Admin"], tasks:{"System Admin":241150015} },
+  { id:217287848, name:"Process Engineering", client:"Utilized-Non-Mat-Work", subs:["SOPs/Process Development"], tasks:{"SOPs/Process Development":241160780} },
+  { id:216469995, name:"Process Engineering PMO", client:"Utilized-Non-Mat-Work", subs:["Dashboards & Reporting","Data Analysis","Process Mapping"], tasks:{"Dashboards & Reporting":240573902,"Data Analysis":240573903,"Process Mapping":240573904} },
+  { id:219085805, name:"Run the business", client:"Utilized-Non-Mat-Work", subs:["Email/Calendar Admin"], tasks:{"Email/Calendar Admin":241466357} },
 ];
 
 /* ═══ Toggl Review Component (redesigned) ═══ */
@@ -213,12 +214,16 @@ function TogglReviewTab({ onBack }) {
     const proxyUrl = SUPABASE_URL + "/functions/v1/toggl-proxy";
     let ok = 0, fail = 0;
     for (const e of proposedEntries) {
+      // Resolve task_id from project + subcategory
+      const proj = TOGGL_PROJECTS.find(p => p.id === e.project_id);
+      const taskId = proj?.tasks?.[e.subcategory] || (proj?.tasks ? Object.values(proj.tasks)[0] : null);
       const togglBody = {
         description: e.description,
         start: e.start,
         stop: e.end,
         duration: durMin(e.start, e.end) * 60,
         project_id: e.project_id,
+        task_id: taskId,
         workspace_id: TOGGL_WS,
         tag_ids: e.tag_ids || [],
         created_with: "madison-dashboard"
