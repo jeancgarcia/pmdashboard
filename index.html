@@ -1232,6 +1232,19 @@ function App() {
   const [reminderHistory, setReminderHistory] = useState([]);
   const [stateLoaded, setStateLoaded] = useState(false);
   const userActed = React.useRef(false); // only write after a real user action
+  const [activeModule, setActiveModule] = useState("digests");
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const mobileMenuRef = useRef(null);
+
+  // Close mobile menu on outside click / Escape
+  useEffect(() => {
+    if (!mobileMenuOpen) return;
+    const handler = (e) => { if (mobileMenuRef.current && !mobileMenuRef.current.contains(e.target)) setMobileMenuOpen(false); };
+    const esc = (e) => { if (e.key === "Escape") setMobileMenuOpen(false); };
+    document.addEventListener("mousedown", handler);
+    document.addEventListener("keydown", esc);
+    return () => { document.removeEventListener("mousedown", handler); document.removeEventListener("keydown", esc); };
+  }, [mobileMenuOpen]);
 
   // Theme Management
   const [theme, setTheme] = useState(() => {
@@ -1421,20 +1434,6 @@ function App() {
       </div>
     );
   }
-
-  // Module navigation — "digests" or "toggl"
-  const [activeModule, setActiveModule] = useState("digests");
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const mobileMenuRef = useRef(null);
-
-  useEffect(() => {
-    if (!mobileMenuOpen) return;
-    const handler = (e) => { if (mobileMenuRef.current && !mobileMenuRef.current.contains(e.target)) setMobileMenuOpen(false); };
-    const esc = (e) => { if (e.key === "Escape") setMobileMenuOpen(false); };
-    document.addEventListener("mousedown", handler);
-    document.addEventListener("keydown", esc);
-    return () => { document.removeEventListener("mousedown", handler); document.removeEventListener("keydown", esc); };
-  }, [mobileMenuOpen]);
 
   // Sidebar nav items
   const NAV = [
