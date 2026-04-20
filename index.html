@@ -68,6 +68,16 @@ tailwind.config = {
   .weekend-breathe {
     animation: weekendBreathe 4s ease-in-out infinite;
   }
+
+  /* Calm mode — subtle green wave when nothing urgent is pending */
+  @keyframes calmSpin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+  .calm-ring {
+    background: conic-gradient(from 0deg, #10b981, #34d399, #6ee7b7, #34d399, #10b981, #059669, #10b981);
+    animation: calmSpin 12s linear infinite;
+  }
 </style>
 </head>
 <body class="selection:bg-blue-500/30">
@@ -507,14 +517,11 @@ function AvatarHub({ digests, completed, reminders, theme, onThemeToggle }) {
     return count;
   }, [digests, completed]);
 
-  // Ring color (weekday only)
-  const ringColor = stats.total === 0
-    ? "#71717a"
-    : stats.urgent > 0
-      ? "#ef4444"
-      : stats.pct === 100
-        ? "#10b981"
-        : "#f59e0b";
+  // Ring state (weekday only)
+  // - no items or no urgent pending → calm green wave
+  // - urgent pending → solid red
+  const isCalm = !isWeekend && stats.urgent === 0;
+  const ringColor = stats.urgent > 0 ? "#ef4444" : "#10b981";
 
   return (
     <div ref={wrapperRef} className="relative">
@@ -526,8 +533,8 @@ function AvatarHub({ digests, completed, reminders, theme, onThemeToggle }) {
       >
         {/* Status ring */}
         <div
-          className={`absolute inset-0 rounded-full ${isWeekend ? "weekend-ring" : ""}`}
-          style={!isWeekend ? { background: ringColor } : undefined}
+          className={`absolute inset-0 rounded-full ${isWeekend ? "weekend-ring" : isCalm ? "calm-ring" : ""}`}
+          style={!isWeekend && !isCalm ? { background: ringColor } : undefined}
         />
         {/* Avatar image (with inset padding so ring shows) */}
         <div className="relative m-[3px] w-14 h-14 sm:w-16 sm:h-16 md:w-24 md:h-24 rounded-full overflow-hidden border-2 border-white dark:border-zinc-900 shadow-lg shadow-zinc-300/40 dark:shadow-zinc-950/60">
