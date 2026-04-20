@@ -167,7 +167,7 @@ function TogglReviewTab({ onBack }) {
     (async () => {
       try {
         const { data: item, error: err } = await supabase.from('app_state').select('data').eq('id', 2).single();
-        if (err || !item?.data?.entries) { setLoading(false); return; }
+        if (err || !item?.data?.entries || item.data.entries.length === 0 || item.data.submitted) { setLoading(false); return; }
         setEntries(item.data.entries);
         setReviewDate(item.data.date || "");
       } catch { }
@@ -245,7 +245,9 @@ function TogglReviewTab({ onBack }) {
     setSubmitting(false);
     if (fail === 0) {
       setSubmitted(true);
-      await supabase.from('app_state').upsert({ id: 2, data: null });
+      // Clear review data — mark as submitted so refresh doesn't reload them
+      const { error: clearErr } = await supabase.from('app_state').update({ data: { submitted: true, date: reviewDate, entries: [] } }).eq('id', 2);
+      if (clearErr) console.error("Failed to clear Supabase:", clearErr);
     } else {
       setError(ok + " submitted, " + fail + " failed.");
     }
