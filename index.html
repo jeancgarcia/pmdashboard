@@ -1537,13 +1537,6 @@ function App() {
           </div>
           <span className="text-sm font-extrabold text-zinc-900 dark:text-zinc-50 ml-2">{NAV.find(n => n.id === activeModule)?.label}</span>
           </div>
-          <AvatarHub
-            digests={digests}
-            completed={completed}
-            reminders={reminders}
-            theme={theme}
-            onThemeToggle={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-          />
         </div>
       </div>
 
@@ -1551,16 +1544,19 @@ function App() {
       <main className="min-w-0 pt-16 md:pt-0 md:ml-[140px]">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 md:px-8 py-8 md:py-12 fade-in w-full">
 
-          {/* Header — greeting + meta (desktop only since mobile has top bar) */}
+          {/* Header — greeting + avatar */}
           <div className="mb-10">
-            <div className="hidden md:flex items-center justify-between gap-4 mb-4">
-              <div className="flex items-center gap-2 flex-wrap min-w-0">
-                <p className="text-sm font-medium text-zinc-500 dark:text-zinc-400 capitalize bg-zinc-200/50 dark:bg-zinc-800/50 px-3 py-1 rounded-full">{dateStr}</p>
-                <span className="text-zinc-300 dark:text-zinc-600">&middot;</span>
-                <p className="text-sm font-medium text-zinc-500 dark:text-zinc-400">Lisinski Law Firm</p>
-                <span className="text-zinc-300 dark:text-zinc-600">&middot;</span>
-                <p className="text-sm font-semibold text-zinc-400 dark:text-zinc-500 tabular-nums">{timeStr}</p>
-              </div>
+            {/* Desktop meta bar */}
+            <div className="hidden md:flex items-center gap-2 flex-wrap mb-4">
+              <p className="text-sm font-medium text-zinc-500 dark:text-zinc-400 capitalize bg-zinc-200/50 dark:bg-zinc-800/50 px-3 py-1 rounded-full">{dateStr}</p>
+              <span className="text-zinc-300 dark:text-zinc-600">&middot;</span>
+              <p className="text-sm font-medium text-zinc-500 dark:text-zinc-400">Lisinski Law Firm</p>
+              <span className="text-zinc-300 dark:text-zinc-600">&middot;</span>
+              <p className="text-sm font-semibold text-zinc-400 dark:text-zinc-500 tabular-nums">{timeStr}</p>
+            </div>
+            {/* Greeting + avatar row — visible on all breakpoints */}
+            <div className="flex items-center justify-between gap-4">
+              <h1 className="text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight text-zinc-900 dark:text-white drop-shadow-sm leading-tight">{greeting},<br className="sm:hidden" /><span className="sm:hidden"> </span>Jean 👋</h1>
               <div className="flex-shrink-0">
                 <AvatarHub
                   digests={digests}
@@ -1571,7 +1567,6 @@ function App() {
                 />
               </div>
             </div>
-            <h1 className="text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight text-zinc-900 dark:text-white drop-shadow-sm">{greeting}, Jean 👋</h1>
           </div>
 
           {/* ═══ DIGESTS MODULE ═══ */}
