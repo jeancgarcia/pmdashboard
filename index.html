@@ -204,11 +204,15 @@ function TogglReviewTab({ onBack }) {
 
   const removeEntry = (id) => setEntries(prev => prev.filter(e => e.id !== id));
 
+  // Only proposed entries get submitted — existing Toggl entries are read-only
+  const proposedEntries = useMemo(() => entries.filter(e => e.source !== "toggl"), [entries]);
+  const existingEntries = useMemo(() => entries.filter(e => e.source === "toggl"), [entries]);
+
   const submitToToggl = async () => {
     setSubmitting(true);
     const authHeader = "Basic " + btoa(TOGGL_KEY + ":api_token");
     let ok = 0, fail = 0;
-    for (const e of entries) {
+    for (const e of proposedEntries) {
       const body = {
         description: e.description,
         start: e.start,
@@ -238,8 +242,8 @@ function TogglReviewTab({ onBack }) {
     }
   };
 
-  const sourceIcon = (s) => s === "calendar" ? "📅" : s === "pattern" ? "🔄" : "✋";
-  const sourceLabel = (s) => s === "calendar" ? "From calendar" : s === "pattern" ? "Pattern-based" : "Manual";
+  const sourceIcon = (s) => s === "toggl" ? "✅" : s === "calendar" ? "📅" : s === "pattern" ? "🔄" : "✋";
+  const sourceLabel = (s) => s === "toggl" ? "Already in Toggl" : s === "calendar" ? "From calendar" : s === "pattern" ? "Proposed" : "Manual";
 
   // Sort entries by start time
   const sorted = useMemo(() => [...entries].sort((a, b) => new Date(a.start) - new Date(b.start)), [entries]);
@@ -332,24 +336,29 @@ function TogglReviewTab({ onBack }) {
           const proj = TOGGL_PROJECTS.find(p => p.id === e.project_id);
           const mins = durMin(e.start, e.end);
           const isUtilized = proj && proj.client.startsWith("Utilized");
+          const isExisting = e.source === "toggl";
 
           return (
             <div key={e.id} className={`rounded-2xl border overflow-hidden transition-all duration-200 ${
-              isExpanded
-                ? "border-violet-200 dark:border-violet-800/40 bg-white dark:bg-zinc-900 shadow-sm"
-                : "border-zinc-100 dark:border-zinc-800 bg-white dark:bg-zinc-900/50 hover:border-zinc-200 dark:hover:border-zinc-700"
+              isExisting
+                ? "border-zinc-100 dark:border-zinc-800 bg-zinc-50/50 dark:bg-zinc-900/30 opacity-60"
+                : isExpanded
+                  ? "border-violet-200 dark:border-violet-800/40 bg-white dark:bg-zinc-900 shadow-sm"
+                  : "border-zinc-100 dark:border-zinc-800 bg-white dark:bg-zinc-900/50 hover:border-zinc-200 dark:hover:border-zinc-700"
             }`}>
               {/* Collapsed row */}
-              <div className="flex items-center gap-3 py-3.5 px-4 cursor-pointer group" onClick={() => setExpandedId(isExpanded ? null : e.id)}>
+              <div className={`flex items-center gap-3 py-3.5 px-4 group ${isExisting ? "cursor-default" : "cursor-pointer"}`} onClick={() => !isExisting && setExpandedId(isExpanded ? null : e.id)}>
                 <span className="text-xs" title={sourceLabel(e.source)}>{sourceIcon(e.source)}</span>
                 <span className="text-xs text-zinc-400 dark:text-zinc-500 tabular-nums w-32 flex-shrink-0 font-medium">{toAST(e.start)} – {toAST(e.end)}</span>
                 <span className="text-sm text-zinc-800 dark:text-zinc-200 font-medium flex-1 truncate">{e.description}</span>
                 <span className={`text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full flex-shrink-0 hidden sm:inline-block ${
                   isUtilized ? "bg-emerald-50 dark:bg-emerald-900/20 text-emerald-500" : "bg-zinc-100 dark:bg-zinc-800 text-zinc-400 dark:text-zinc-500"
                 }`}>{mins}m</span>
+                {!isExisting && (
                 <button onClick={(ev) => { ev.stopPropagation(); removeEntry(e.id); }} className="text-zinc-300 dark:text-zinc-600 hover:text-red-400 dark:hover:text-red-400 transition-colors p-1.5 rounded-lg hover:bg-red-50 dark:hover:bg-red-500/10 opacity-0 group-hover:opacity-100">
                   <Icon.X size={12} />
                 </button>
+                )}
               </div>
 
               {/* Expanded edit panel */}
@@ -425,10 +434,10 @@ function TogglReviewTab({ onBack }) {
 
       {/* Actions */}
       <div className="flex items-center justify-between mt-8 pt-6 border-t border-zinc-100 dark:border-zinc-800">
-        <span className="text-xs font-medium text-zinc-400 dark:text-zinc-500">{sorted.length} entries · {totalH}h tracked</span>
-        <button onClick={submitToToggl} disabled={submitting || entries.length === 0}
+        <span className="text-xs font-medium text-zinc-400 dark:text-zinc-500">{existingEntries.length} in Toggl · {proposedEntries.length} proposed · {totalH}h total</span>
+        <button onClick={submitToToggl} disabled={submitting || proposedEntries.length === 0}
           className="px-6 py-3 text-sm font-bold rounded-xl transition-all shadow-sm active:scale-95 bg-zinc-900 dark:bg-zinc-100 text-white dark:text-zinc-900 hover:bg-zinc-800 dark:hover:bg-white disabled:bg-zinc-100 disabled:text-zinc-400 dark:disabled:bg-zinc-800 dark:disabled:text-zinc-600">
-          {submitting ? "Submitting..." : "Submit to Toggl"}
+          {submitting ? "Submitting..." : proposedEntries.length > 0 ? "Submit " + proposedEntries.length + " new entries to Toggl" : "Nothing to submit"}
         </button>
       </div>
     </div>
