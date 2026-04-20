@@ -827,7 +827,7 @@ function InfoItem({ item, searchQuery }) {
       <div className="flex-1 min-w-0">
         <div className="flex items-center gap-2">
           <span className="text-sm font-medium text-zinc-800 dark:text-zinc-200">{highlight(item.label, searchQuery)}</span>
-          {item.note && <span className="text-[10px] uppercase tracking-wider text-zinc-400 bg-zinc-100 dark:bg-zinc-800 dark:text-zinc-400 px-1.5 py-0.5 rounded-md font-semibold">{item.note}</span>}
+          {item.note && <span className="text-[10px] uppercase tracking-wider text-blue-700 bg-blue-50 dark:bg-blue-500/10 dark:text-blue-300 px-1.5 py-0.5 rounded-md font-semibold">{item.note}</span>}
         </div>
         {item.detail && <p className="text-xs text-zinc-500 dark:text-zinc-400 leading-relaxed mt-1">{highlight(item.detail, searchQuery)}</p>}
       </div>
