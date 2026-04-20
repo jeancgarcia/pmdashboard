@@ -210,10 +210,10 @@ function TogglReviewTab({ onBack }) {
 
   const submitToToggl = async () => {
     setSubmitting(true);
-    const authHeader = "Basic " + btoa(TOGGL_KEY + ":api_token");
+    const proxyUrl = SUPABASE_URL + "/functions/v1/toggl-proxy";
     let ok = 0, fail = 0;
     for (const e of proposedEntries) {
-      const body = {
+      const togglBody = {
         description: e.description,
         start: e.start,
         stop: e.end,
@@ -223,19 +223,22 @@ function TogglReviewTab({ onBack }) {
         tag_ids: e.tag_ids || [],
         created_with: "madison-dashboard"
       };
+      const method = e.existing_entry_id ? "PUT" : "POST";
+      const togglUrl = e.existing_entry_id
+        ? "https://api.track.toggl.com/api/v9/workspaces/" + TOGGL_WS + "/time_entries/" + e.existing_entry_id
+        : "https://api.track.toggl.com/api/v9/workspaces/" + TOGGL_WS + "/time_entries";
       try {
-        const method = e.existing_entry_id ? "PUT" : "POST";
-        const url = e.existing_entry_id
-          ? "https://api.track.toggl.com/api/v9/workspaces/" + TOGGL_WS + "/time_entries/" + e.existing_entry_id
-          : "https://api.track.toggl.com/api/v9/workspaces/" + TOGGL_WS + "/time_entries";
-        const r = await fetch(url, { method, headers: { "Authorization": authHeader, "Content-Type": "application/json" }, body: JSON.stringify(body) });
+        const r = await fetch(proxyUrl, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ method, url: togglUrl, body: togglBody, toggl_api_key: TOGGL_KEY })
+        });
         if (r.ok) ok++; else fail++;
       } catch { fail++; }
     }
     setSubmitting(false);
     if (fail === 0) {
       setSubmitted(true);
-      // Clear from Supabase
       await supabase.from('app_state').upsert({ id: 2, data: null });
     } else {
       setError(ok + " submitted, " + fail + " failed.");
