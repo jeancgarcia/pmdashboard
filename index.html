@@ -124,27 +124,31 @@ const TINT = {
 const TOGGL_KEY = "c4cdd69cef8e9ef2dd36a7c17286e609";
 const TOGGL_WS = 20705602;
 const TOGGL_PROJECTS = [
-  { id:216469966, name:"Time Management", client:"Non-Utilized", subs:["Attendance management and Rippling timecard"] },
+  /* ── Non-Utilized ── */
   { id:216469959, name:"Downtime", client:"Non-Utilized", subs:["Internet Outage","Idle / Lack of work","Power Outage"] },
   { id:216469960, name:"Issues", client:"Non-Utilized", subs:["LLF Technical"] },
-  { id:216469961, name:"Meetings (Non-Utilized)", client:"Non-Utilized", subs:["Other Non-Ops Meetings / Firmwide","One-on-One"] },
+  { id:216469961, name:"Meetings", client:"Non-Utilized", subs:["Other Non-Ops Meetings / Firmwide","One-on-One"] },
   { id:216469962, name:"Offline", client:"Non-Utilized", subs:["Break","Holiday","Lunch","Time Off"] },
-  { id:216469963, name:"Other (Non-Utilized)", client:"Non-Utilized", subs:["Other"] },
+  { id:216469963, name:"Other", client:"Non-Utilized", subs:["Other"] },
   { id:216469964, name:"Other work", client:"Non-Utilized", subs:["Strategic initiatives"] },
   { id:216469965, name:"Tasks", client:"Non-Utilized", subs:["Performance Management & QA"] },
-  { id:216469967, name:"Training (Non-Utilized)", client:"Non-Utilized", subs:["Compliance / Non-Ops / Onboarding"] },
-  { id:216469968, name:"Other (Utilized-Mat)", client:"Utilized-Mat-Work", subs:["Other"] },
+  { id:216469966, name:"Time Management", client:"Non-Utilized", subs:["Attendance management and Rippling timecard"] },
+  { id:216469967, name:"Training", client:"Non-Utilized", subs:["Compliance / Non-Ops / Onboarding"] },
+  /* ── Utilized-Mat-Work ── */
+  { id:216469968, name:"Other", client:"Utilized-Mat-Work", subs:["Other"] },
+  /* ── Utilized-Non-Mat-Work (PMO & QA) ── */
+  { id:216469956, name:"Meetings", client:"Utilized-Non-Mat-Work", subs:["Recurring Meetings & Huddles","Operations & Project Meetings"] },
+  { id:216469969, name:"Other", client:"Utilized-Non-Mat-Work", subs:["Other"] },
+  { id:216469974, name:"Training", client:"Utilized-Non-Mat-Work", subs:["Operational Training (Receiving)","Operational Training (Providing)","Coaching, Shadowing & Mentorship"] },
   { id:216469992, name:"Consulting", client:"Utilized-Non-Mat-Work", subs:["Consulting"] },
   { id:216469993, name:"EPMO Process & Tools", client:"Utilized-Non-Mat-Work", subs:["EPMO Process & Tools"] },
-  { id:216469956, name:"Meetings (Utilized)", client:"Utilized-Non-Mat-Work", subs:["Recurring Meetings & Huddles","Operations & Project Meetings"] },
-  { id:216469969, name:"Other (Utilized)", client:"Utilized-Non-Mat-Work", subs:["Other"] },
   { id:216469994, name:"Portfolio Management", client:"Utilized-Non-Mat-Work", subs:["Portfolio Management"] },
-  { id:217287848, name:"Process Engineering", client:"Utilized-Non-Mat-Work", subs:["Other","Dashboards & Reporting","Data Analysis","Process Mapping","SOP writing / editing"] },
   { id:216469996, name:"Project Management", client:"Utilized-Non-Mat-Work", subs:["Project Tasks"] },
   { id:216469997, name:"Resource Planning", client:"Utilized-Non-Mat-Work", subs:["Resource Planning"] },
-  { id:219085805, name:"Run the business", client:"Utilized-Non-Mat-Work", subs:["Run the business"] },
   { id:216469998, name:"TM Support", client:"Utilized-Non-Mat-Work", subs:["TM Support tasks"] },
-  { id:216469974, name:"Training (Utilized)", client:"Utilized-Non-Mat-Work", subs:["Operational Training (Receiving)","Operational Training (Providing)","Coaching, Shadowing & Mentorship"] },
+  { id:217263333, name:"System Admin", client:"Utilized-Non-Mat-Work", subs:["System Admin"] },
+  { id:217287848, name:"Process Engineering", client:"Utilized-Non-Mat-Work", subs:["Other","Dashboards & Reporting","Data Analysis","Process Mapping","SOP writing / editing"] },
+  { id:219085805, name:"Run the business", client:"Utilized-Non-Mat-Work", subs:["Run the business"] },
 ];
 
 /* ═══ Toggl Review Component (redesigned) ═══ */
