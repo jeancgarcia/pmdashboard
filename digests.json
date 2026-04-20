@@ -12,41 +12,26 @@
         "items": [
           {
             "id": "eod-done-1",
-            "label": "1:1 with Shelley Henry",
-            "detail": "Discussed department needs and support strategy. Covered the Denial/RFE dropdown status and follow-up actions. Jhara's timecard issue (61hr day on 4/14) noted — Maureen Brown flagged it, you confirmed it'll be fixed tomorrow when Jhara returns."
-          },
-          {
-            "id": "eod-done-2",
-            "label": "EPMO Portfolio Review",
-            "detail": "Attended with Sara (en route to Dublin), Danny Miller, Jorge Grijalva, Eunice Barragan, and Janet McDowell. Sara was catching up on comms from the plane and confirmed she'll schedule a UAT timing & sprint escalations meeting this week."
-          },
-          {
-            "id": "eod-done-3",
-            "label": "IT Litify Sprint #9 Review with Stakeholders",
-            "detail": "Reviewed user story status and deployment-ready items. Large stakeholder group attended. Mauricio Concha had to drop early."
-          },
-          {
-            "id": "eod-done-4",
             "label": "Phase 2 Project Review with Jorge Grijalva",
             "detail": "Discussed dashboard requests handoff. Sent follow-up email to Jorge with the project details — positioned as a tool for Ops Leaders to have meaningful metrics, not urgent but valuable."
           },
           {
-            "id": "eod-done-5",
+            "id": "eod-done-2",
             "label": "Replied to Sara re: Venn Conditional Access",
             "detail": "Confirmed the scoping call happened 04/16 with Jason, Danny, Caleb, and Jon. Notes, transcript, and recording already shared with Janet. Thread closed."
           },
           {
-            "id": "eod-done-6",
+            "id": "eod-done-3",
             "label": "Litify CoE intake form testing",
             "detail": "Ran multiple test submissions through the EPMO intake form and CoE routing. Tested with Mar Garcia and David Molano. Cleaned up test projects (CoE TEST, CoE TEST 3, PM TEST 4). Mar shared the CoE Home page and confirmed assignment routing: RFE/Appeal/Denial/Refile → Carolina Lopez, RNWL/SUPP → Jessica Richburg."
           },
           {
-            "id": "eod-done-7",
+            "id": "eod-done-4",
             "label": "Congratulated David Molano on Star Award",
             "detail": "Recognized David's contributions — well deserved. \"Mas que merecido.\""
           },
           {
-            "id": "eod-done-8",
+            "id": "eod-done-5",
             "label": "David Molano — appointment rescheduled",
             "detail": "David confirmed his appointment moved to Thursday at 9am. You approved and directed him to process through Rippling."
           }
