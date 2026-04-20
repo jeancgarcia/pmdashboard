@@ -13,24 +13,68 @@
 <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
 <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
 <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
 tailwind.config = {
-  theme: { extend: { fontFamily: { sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'] } } }
+  darkMode: 'class',
+  theme: { 
+    extend: { 
+      fontFamily: { sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'] } 
+    } 
+  }
 }
 </script>
 <style>
   * { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
-  body { font-family: 'Inter', system-ui, -apple-system, sans-serif; }
-  /* Smooth transitions for collapsible sections */
-  .fade-in { animation: fadeIn 0.2s ease; }
-  @keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
+  body { 
+    font-family: 'Inter', system-ui, -apple-system, sans-serif; 
+    background-color: #fafafa;
+  }
+  .dark body { background-color: #0a0a0b; }
+  
+  /* Subtle neutral ambient glow — no blue cast */
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    height: 100vh;
+    background: radial-gradient(circle at 50% -20%, rgba(0, 0, 0, 0.04) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: -1;
+  }
+  .dark body::before {
+    background: radial-gradient(circle at 50% -20%, rgba(255, 255, 255, 0.04) 0%, transparent 70%);
+  }
+
+  .fade-in { animation: fadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Weekend mode — slow rotating conic gradient + gentle breathing */
+  @keyframes weekendSpin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+  @keyframes weekendBreathe {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.03); }
+  }
+  .weekend-ring {
+    background: conic-gradient(from 0deg, #38bdf8, #818cf8, #c084fc, #f9a8d4, #818cf8, #38bdf8);
+    animation: weekendSpin 20s linear infinite;
+  }
+  .weekend-breathe {
+    animation: weekendBreathe 4s ease-in-out infinite;
+  }
 </style>
 </head>
-<body>
+<body class="selection:bg-blue-500/30">
 <div id="root"></div>
 
 <script type="text/babel" data-type="module">
-const { useState, useEffect, useCallback, useMemo } = React;
+const { useState, useEffect, useCallback, useMemo, useRef } = React;
 
 /* ═══ SVG Icons (inline, zero dependencies) ═══ */
 const Icon = {
@@ -45,6 +89,18 @@ const Icon = {
   ),
   Search: ({ size = 16, ...p }) => (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...p}><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+  ),
+  Sun: ({ size = 16, ...p }) => (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...p}><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+  ),
+  Moon: ({ size = 16, ...p }) => (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...p}><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+  ),
+  Calendar: ({ size = 16, ...p }) => (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...p}><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+  ),
+  X: ({ size = 16, ...p }) => (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" {...p}><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
   ),
 };
 
@@ -64,146 +120,536 @@ const TINT = {
   "default": "#9ca3af",
 };
 
+/* ═══ Avatar Hub — status ring + stats popover + settings ═══ */
+function AvatarHub({ digests, completed, reminders, theme, onThemeToggle }) {
+  const [open, setOpen] = useState(false);
+  const wrapperRef = useRef(null);
+
+  useEffect(() => {
+    if (!open) return;
+    const handler = (e) => {
+      if (wrapperRef.current && !wrapperRef.current.contains(e.target)) setOpen(false);
+    };
+    const esc = (e) => { if (e.key === "Escape") setOpen(false); };
+    document.addEventListener("mousedown", handler);
+    document.addEventListener("keydown", esc);
+    return () => {
+      document.removeEventListener("mousedown", handler);
+      document.removeEventListener("keydown", esc);
+    };
+  }, [open]);
+
+  // Today detection
+  const now = new Date();
+  const dayOfWeek = now.getDay(); // 0 = Sun, 6 = Sat
+  const isWeekend = dayOfWeek === 0 || dayOfWeek === 6;
+  const pad = (n) => String(n).padStart(2, "0");
+  const todayIso = `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())}`;
+  const dayName = now.toLocaleDateString("en-US", { weekday: "long" });
+
+  // Today's digest (most relevant one — exact match, then latest)
+  const todayDigest = useMemo(() => {
+    return digests.find(d => d.isoDate === todayIso) || digests[0] || null;
+  }, [digests, todayIso]);
+
+  const stats = useMemo(() => {
+    if (!todayDigest) return { total: 0, done: 0, pct: 0, urgent: 0 };
+    const actionItems = todayDigest.sections.filter(s => !s.info).flatMap(s => s.items);
+    const total = actionItems.length;
+    const done = actionItems.filter(i => completed[i.id]).length;
+    const urgent = actionItems.filter(i => i.flag === "urgent" && !completed[i.id]).length;
+    const pct = total > 0 ? Math.round((done / total) * 100) : 0;
+    return { total, done, pct, urgent };
+  }, [todayDigest, completed]);
+
+  const perfectDays = useMemo(() => {
+    let count = 0;
+    for (const d of digests) {
+      const items = d.sections.filter(s => !s.info).flatMap(s => s.items);
+      if (items.length === 0) continue;
+      if (items.every(i => completed[i.id])) count++;
+    }
+    return count;
+  }, [digests, completed]);
+
+  // Ring color (weekday only)
+  const ringColor = stats.total === 0
+    ? "#71717a"
+    : stats.urgent > 0
+      ? "#ef4444"
+      : stats.pct === 100
+        ? "#10b981"
+        : "#f59e0b";
+
+  return (
+    <div ref={wrapperRef} className="relative">
+      <button
+        onClick={() => setOpen(!open)}
+        className={`relative rounded-full transition-transform hover:scale-105 active:scale-95 ${isWeekend ? "weekend-breathe" : ""}`}
+        title="Your day at a glance"
+        aria-label="Open profile menu"
+      >
+        {/* Status ring */}
+        <div
+          className={`absolute inset-0 rounded-full ${isWeekend ? "weekend-ring" : ""}`}
+          style={!isWeekend ? { background: ringColor } : undefined}
+        />
+        {/* Avatar image (with inset padding so ring shows) */}
+        <div className="relative m-[3px] w-14 h-14 sm:w-16 sm:h-16 rounded-full overflow-hidden border-2 border-white dark:border-zinc-900 shadow-lg shadow-zinc-300/40 dark:shadow-zinc-950/60">
+          <img src="avatar.png" alt="Jean" className="w-full h-full object-cover" onError={(e) => { e.target.style.display = 'none'; }} />
+        </div>
+      </button>
+
+      {open && (
+        <div className="absolute top-full right-0 mt-3 w-[300px] bg-white dark:bg-zinc-900 rounded-2xl shadow-xl border border-zinc-200 dark:border-zinc-800 p-5 z-50 fade-in">
+          {/* Header */}
+          <div className="flex items-center gap-3 mb-5">
+            <img src="avatar.png" alt="" className="w-11 h-11 rounded-full object-cover border-2 border-white dark:border-zinc-800 shadow-sm" onError={(e) => { e.target.style.display = 'none'; }} />
+            <div>
+              <p className="text-sm font-extrabold text-zinc-900 dark:text-zinc-50">Jean</p>
+              <p className="text-xs font-medium text-zinc-400 dark:text-zinc-500">{dayName}{isWeekend ? " · Weekend mode" : ""}</p>
+            </div>
+          </div>
+
+          {/* Today progress */}
+          {stats.total > 0 ? (
+            <div className="mb-5">
+              <div className="flex items-center justify-between mb-2">
+                <span className="text-[10px] font-bold uppercase tracking-wider text-zinc-400 dark:text-zinc-500">Today</span>
+                <span className={`text-xs font-bold tabular-nums ${stats.pct === 100 ? "text-emerald-500" : "text-zinc-700 dark:text-zinc-300"}`}>{stats.done}/{stats.total} &middot; {stats.pct}%</span>
+              </div>
+              <div className="h-1.5 bg-zinc-100 dark:bg-zinc-800 rounded-full overflow-hidden">
+                <div
+                  className="h-full rounded-full transition-all duration-500"
+                  style={{
+                    width: `${stats.pct}%`,
+                    background: stats.pct === 100 ? "#10b981" : stats.urgent > 0 ? "#ef4444" : "#3b82f6"
+                  }}
+                />
+              </div>
+            </div>
+          ) : (
+            <div className="mb-5 py-3 text-center text-xs text-zinc-400 dark:text-zinc-500 italic">No briefing for today yet.</div>
+          )}
+
+          {/* Stat chips */}
+          <div className="grid grid-cols-2 gap-2 mb-5">
+            <div className={`rounded-xl px-3 py-2.5 ${stats.urgent > 0 ? "bg-red-50 dark:bg-red-500/10" : "bg-zinc-50 dark:bg-zinc-800/50"}`}>
+              <div className={`text-lg font-extrabold tabular-nums ${stats.urgent > 0 ? "text-red-500" : "text-zinc-300 dark:text-zinc-600"}`}>{stats.urgent}</div>
+              <div className="text-[10px] font-bold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">Urgent left</div>
+            </div>
+            <div className={`rounded-xl px-3 py-2.5 ${reminders.length > 0 ? "bg-blue-50 dark:bg-blue-500/10" : "bg-zinc-50 dark:bg-zinc-800/50"}`}>
+              <div className={`text-lg font-extrabold tabular-nums ${reminders.length > 0 ? "text-blue-500" : "text-zinc-300 dark:text-zinc-600"}`}>{reminders.length}</div>
+              <div className="text-[10px] font-bold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">Reminders</div>
+            </div>
+          </div>
+
+          {/* Perfect days */}
+          <div className="flex items-center justify-between py-3 px-3 rounded-xl bg-emerald-50/50 dark:bg-emerald-500/5 border border-emerald-100/60 dark:border-emerald-500/10 mb-5">
+            <span className="text-xs font-semibold text-zinc-600 dark:text-zinc-300">Perfect days logged</span>
+            <span className="text-sm font-extrabold text-emerald-600 dark:text-emerald-400 tabular-nums">{perfectDays}</span>
+          </div>
+
+          {/* Actions */}
+          <div className="pt-4 border-t border-zinc-100 dark:border-zinc-800 space-y-1">
+            <button
+              onClick={() => { onThemeToggle(); }}
+              className="w-full flex items-center justify-between py-2.5 px-3 rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors group"
+            >
+              <span className="flex items-center gap-2.5 text-sm font-semibold text-zinc-700 dark:text-zinc-200">
+                {theme === "dark" ? <Icon.Sun size={14} className="text-amber-400" /> : <Icon.Moon size={14} className="text-zinc-500" />}
+                {theme === "dark" ? "Light mode" : "Dark mode"}
+              </span>
+              <Icon.ChevronRight size={12} className="text-zinc-300 dark:text-zinc-600 group-hover:text-zinc-500 transition-colors" />
+            </button>
+            <button
+              disabled
+              className="w-full flex items-center justify-between py-2.5 px-3 rounded-lg opacity-40 cursor-not-allowed"
+              title="Coming soon"
+            >
+              <span className="flex items-center gap-2.5 text-sm font-semibold text-zinc-700 dark:text-zinc-200">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-zinc-500"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+                Sign out
+              </span>
+              <span className="text-[9px] font-bold uppercase tracking-wider text-zinc-400 dark:text-zinc-500">Soon</span>
+            </button>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+/* ═══ Calendar Button — date picker for jumping to briefings ═══ */
+function CalendarButton({ digests, selectedDate, onSelect }) {
+  const [open, setOpen] = useState(false);
+  const [monthCursor, setMonthCursor] = useState(() => {
+    const seed = selectedDate ? new Date(selectedDate + "T00:00:00") : new Date();
+    return new Date(seed.getFullYear(), seed.getMonth(), 1);
+  });
+  const wrapperRef = useRef(null);
+
+  useEffect(() => {
+    if (!open) return;
+    const handler = (e) => {
+      if (wrapperRef.current && !wrapperRef.current.contains(e.target)) setOpen(false);
+    };
+    const esc = (e) => { if (e.key === "Escape") setOpen(false); };
+    document.addEventListener("mousedown", handler);
+    document.addEventListener("keydown", esc);
+    return () => {
+      document.removeEventListener("mousedown", handler);
+      document.removeEventListener("keydown", esc);
+    };
+  }, [open]);
+
+  const datesWithDigests = useMemo(() => {
+    const map = new Map();
+    for (const d of digests) {
+      if (!d.isoDate) continue;
+      map.set(d.isoDate, (map.get(d.isoDate) || 0) + 1);
+    }
+    return map;
+  }, [digests]);
+
+  const year = monthCursor.getFullYear();
+  const month = monthCursor.getMonth();
+  const firstDay = new Date(year, month, 1).getDay();
+  const daysInMonth = new Date(year, month + 1, 0).getDate();
+  const today = new Date();
+  const pad = (n) => String(n).padStart(2, "0");
+  const todayIso = `${today.getFullYear()}-${pad(today.getMonth() + 1)}-${today.getDate().toString().padStart(2, "0")}`;
+
+  const cells = [];
+  for (let i = 0; i < firstDay; i++) cells.push(null);
+  for (let d = 1; d <= daysInMonth; d++) cells.push(d);
+  while (cells.length % 7 !== 0) cells.push(null);
+
+  const monthLabel = monthCursor.toLocaleDateString("en-US", { month: "long", year: "numeric" });
+  const hasAny = datesWithDigests.size > 0;
+
+  return (
+    <div ref={wrapperRef} className="relative flex-shrink-0">
+      <button
+        onClick={() => setOpen(!open)}
+        className={`flex items-center justify-center w-[46px] h-[46px] rounded-2xl border shadow-sm transition-all ${
+          open || selectedDate
+            ? "bg-zinc-900 dark:bg-white text-white dark:text-zinc-900 border-zinc-900 dark:border-white"
+            : "bg-white/80 dark:bg-zinc-800/80 backdrop-blur-md text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white border-zinc-200 dark:border-zinc-700 hover:border-zinc-300 dark:hover:border-zinc-600"
+        }`}
+        title="Browse by date"
+        aria-label="Open calendar"
+      >
+        <Icon.Calendar size={18} />
+      </button>
+
+      {open && (
+        <div className="absolute top-full right-0 mt-2 w-[300px] bg-white dark:bg-zinc-900 rounded-2xl shadow-xl border border-zinc-200 dark:border-zinc-800 p-4 z-50 fade-in">
+          {/* Month nav */}
+          <div className="flex items-center justify-between mb-4">
+            <button
+              onClick={() => setMonthCursor(new Date(year, month - 1, 1))}
+              className="p-2 rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-800 text-zinc-500 dark:text-zinc-400 transition-colors"
+              aria-label="Previous month"
+            >
+              <Icon.ChevronRight size={14} className="rotate-180" />
+            </button>
+            <h3 className="text-sm font-bold text-zinc-900 dark:text-zinc-100 tabular-nums">{monthLabel}</h3>
+            <button
+              onClick={() => setMonthCursor(new Date(year, month + 1, 1))}
+              className="p-2 rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-800 text-zinc-500 dark:text-zinc-400 transition-colors"
+              aria-label="Next month"
+            >
+              <Icon.ChevronRight size={14} />
+            </button>
+          </div>
+
+          {/* Weekday headers */}
+          <div className="grid grid-cols-7 gap-1 mb-1">
+            {["S","M","T","W","T","F","S"].map((d, i) => (
+              <div key={i} className="text-center text-[10px] font-bold text-zinc-400 dark:text-zinc-500 uppercase tracking-wider py-1">{d}</div>
+            ))}
+          </div>
+
+          {/* Day grid */}
+          <div className="grid grid-cols-7 gap-1">
+            {cells.map((day, i) => {
+              if (day === null) return <div key={i} className="h-9" />;
+              const iso = `${year}-${pad(month + 1)}-${pad(day)}`;
+              const hasD = datesWithDigests.has(iso);
+              const isToday = iso === todayIso;
+              const isSelected = iso === selectedDate;
+              return (
+                <button
+                  key={i}
+                  onClick={() => { if (hasD) { onSelect(iso); setOpen(false); } }}
+                  disabled={!hasD}
+                  className={`relative h-9 rounded-lg text-xs font-semibold transition-all flex items-center justify-center tabular-nums ${
+                    isSelected
+                      ? "bg-blue-500 text-white shadow-md shadow-blue-500/30"
+                      : hasD
+                        ? "text-zinc-900 dark:text-zinc-100 hover:bg-zinc-100 dark:hover:bg-zinc-800 cursor-pointer"
+                        : "text-zinc-300 dark:text-zinc-700 cursor-not-allowed"
+                  } ${isToday && !isSelected ? "ring-1 ring-blue-400 ring-inset" : ""}`}
+                  title={hasD ? `${datesWithDigests.get(iso)} briefing${datesWithDigests.get(iso) > 1 ? "s" : ""}` : undefined}
+                >
+                  {day}
+                  {hasD && !isSelected && (
+                    <span className="absolute bottom-1 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-blue-500" />
+                  )}
+                </button>
+              );
+            })}
+          </div>
+
+          {/* Footer actions */}
+          <div className="mt-3 pt-3 border-t border-zinc-100 dark:border-zinc-800 flex gap-2">
+            <button
+              onClick={() => {
+                setMonthCursor(new Date(today.getFullYear(), today.getMonth(), 1));
+                if (datesWithDigests.has(todayIso)) { onSelect(todayIso); setOpen(false); }
+              }}
+              className="flex-1 py-2 text-xs font-bold text-zinc-600 dark:text-zinc-300 hover:text-zinc-900 dark:hover:text-white bg-zinc-100 dark:bg-zinc-800 hover:bg-zinc-200 dark:hover:bg-zinc-700 rounded-lg transition-colors"
+            >
+              Today
+            </button>
+            {selectedDate && (
+              <button
+                onClick={() => { onSelect(null); setOpen(false); }}
+                className="flex-1 py-2 text-xs font-bold text-zinc-600 dark:text-zinc-300 hover:text-red-500 dark:hover:text-red-400 bg-zinc-100 dark:bg-zinc-800 hover:bg-red-50 dark:hover:bg-red-500/10 rounded-lg transition-colors"
+              >
+                Clear filter
+              </button>
+            )}
+          </div>
+
+          {!hasAny && (
+            <p className="text-[10px] text-zinc-400 dark:text-zinc-500 text-center mt-3 italic">No briefings available yet.</p>
+          )}
+        </div>
+      )}
+    </div>
+  );
+}
+
+/* ═══ Text highlight helper ═══ */
+function highlight(text, query) {
+  if (!query || !text) return text;
+  const q = query.trim().toLowerCase();
+  if (!q) return text;
+  const lower = text.toLowerCase();
+  const out = [];
+  let i = 0, key = 0;
+  while (i < text.length) {
+    const idx = lower.indexOf(q, i);
+    if (idx === -1) { out.push(text.slice(i)); break; }
+    if (idx > i) out.push(text.slice(i, idx));
+    out.push(
+      <mark key={key++} className="bg-amber-200/80 dark:bg-amber-400/30 text-zinc-900 dark:text-amber-100 px-0.5 rounded-sm font-semibold">
+        {text.slice(idx, idx + q.length)}
+      </mark>
+    );
+    i = idx + q.length;
+  }
+  return out;
+}
+
+function itemMatches(item, q) {
+  if (!q) return false;
+  return item.label.toLowerCase().includes(q) || (item.detail || "").toLowerCase().includes(q);
+}
+
+function sectionMatches(section, q) {
+  if (!q) return false;
+  return section.title.toLowerCase().includes(q) || section.items.some(i => itemMatches(i, q));
+}
+
 /* ═══ CheckItem (interactive) ═══ */
-function CheckItem({ item, done, onToggle }) {
+function CheckItem({ item, done, onToggle, searchQuery }) {
   return (
     <div
       onClick={onToggle}
-      className={`group flex items-start gap-3 py-3 px-1 cursor-pointer select-none transition-all border-b border-gray-100 last:border-0 ${done ? "opacity-40" : ""}`}
+      className={`group flex items-start gap-3 py-3 px-3 rounded-xl cursor-pointer select-none transition-all duration-200 hover:bg-zinc-100/50 dark:hover:bg-zinc-800/50 ${done ? "opacity-40" : ""}`}
     >
-      <div className={`mt-0.5 w-5 h-5 rounded-full flex-shrink-0 flex items-center justify-center transition-all duration-200 ${done ? "bg-emerald-500" : "border-2 border-gray-300 group-hover:border-gray-400"}`}>
+      <div className={`mt-0.5 w-5 h-5 rounded-full flex-shrink-0 flex items-center justify-center transition-all duration-300 ${done ? "bg-emerald-500 shadow-sm shadow-emerald-500/20 scale-105" : "border border-zinc-300 dark:border-zinc-600 bg-white dark:bg-zinc-900 group-hover:border-zinc-400 dark:group-hover:border-zinc-500"}`}>
         {done && <Icon.Check size={11} color="white" />}
       </div>
-      <div className="flex-1 min-w-0">
+      <div className="flex-1 min-w-0 transition-transform duration-200 group-hover:translate-x-1">
         <div className="flex items-center gap-2">
-          <span className={`text-sm leading-snug ${done ? "line-through text-gray-400" : "text-gray-900"}`}>{item.label}</span>
-          {item.flag === "urgent" && !done && <span className="w-1.5 h-1.5 rounded-full bg-red-500 flex-shrink-0" />}
-          {item.flag === "due" && !done && <span className="w-1.5 h-1.5 rounded-full bg-amber-500 flex-shrink-0" />}
+          <span className={`text-sm leading-snug transition-colors duration-200 ${done ? "line-through text-zinc-400 dark:text-zinc-500" : "text-zinc-800 dark:text-zinc-200 font-medium"}`}>{highlight(item.label, searchQuery)}</span>
+          {item.flag === "urgent" && !done && <span className="w-1.5 h-1.5 rounded-full bg-red-500 shadow-[0_0_8px_rgba(239,68,68,0.5)] flex-shrink-0" />}
+          {item.flag === "due" && !done && <span className="w-1.5 h-1.5 rounded-full bg-amber-500 shadow-[0_0_8px_rgba(245,158,11,0.5)] flex-shrink-0" />}
         </div>
-        {item.detail && !done && <p className="text-xs text-gray-400 leading-relaxed mt-1">{item.detail}</p>}
+        {item.detail && !done && <p className="text-xs text-zinc-500 dark:text-zinc-400 leading-relaxed mt-1">{highlight(item.detail, searchQuery)}</p>}
       </div>
     </div>
   );
 }
 
 /* ═══ InfoItem (non-interactive) ═══ */
-function InfoItem({ item }) {
+function InfoItem({ item, searchQuery }) {
   return (
-    <div className="flex items-start gap-3 py-3 px-1 border-b border-gray-50 last:border-0">
+    <div className="flex items-start gap-3 py-3 px-3 rounded-xl transition-colors duration-200 hover:bg-zinc-100/30 dark:hover:bg-zinc-800/30">
       {item.time ? (
-        <span className="text-xs font-medium text-gray-400 tabular-nums w-16 flex-shrink-0 pt-0.5 text-right">{item.time}</span>
+        <span className="text-xs font-semibold text-zinc-400 dark:text-zinc-500 tabular-nums w-16 flex-shrink-0 pt-0.5 text-right">{item.time}</span>
       ) : (
-        <span className="w-1 h-1 rounded-full bg-gray-300 flex-shrink-0 mt-2 ml-1" />
+        <span className="w-1.5 h-1.5 rounded-full bg-zinc-300 dark:bg-zinc-600 flex-shrink-0 mt-2 ml-1" />
       )}
       <div className="flex-1 min-w-0">
         <div className="flex items-center gap-2">
-          <span className="text-sm text-gray-900">{item.label}</span>
-          {item.note && <span className="text-xs text-gray-300 font-medium">{item.note}</span>}
+          <span className="text-sm font-medium text-zinc-800 dark:text-zinc-200">{highlight(item.label, searchQuery)}</span>
+          {item.note && <span className="text-[10px] uppercase tracking-wider text-zinc-400 bg-zinc-100 dark:bg-zinc-800 dark:text-zinc-400 px-1.5 py-0.5 rounded-md font-semibold">{item.note}</span>}
         </div>
-        {item.detail && <p className="text-xs text-gray-400 leading-relaxed mt-0.5">{item.detail}</p>}
+        {item.detail && <p className="text-xs text-zinc-500 dark:text-zinc-400 leading-relaxed mt-1">{highlight(item.detail, searchQuery)}</p>}
       </div>
     </div>
   );
 }
 
 /* ═══ Section ═══ */
-function Section({ section, completed, onToggle, defaultCollapsed }) {
+function Section({ section, completed, onToggle, defaultCollapsed, searchQuery }) {
   const [collapsed, setCollapsed] = useState(defaultCollapsed);
   const isInfo = !!section.info;
   const doneCount = isInfo ? 0 : section.items.filter(i => completed[i.id]).length;
   const total = section.items.length;
   const tint = TINT[section.title] || TINT.default;
+  const q = (searchQuery || "").trim().toLowerCase();
+  const hasMatch = q ? sectionMatches(section, q) : false;
+  const effectiveCollapsed = q ? !hasMatch : collapsed;
 
   return (
     <div className="mb-6 last:mb-0">
-      <button onClick={() => setCollapsed(!collapsed)} className="flex items-center gap-2 mb-1 w-full text-left">
+      <button onClick={() => setCollapsed(!collapsed)} disabled={!!q} className="flex items-center gap-2 mb-1.5 w-full text-left group disabled:cursor-default">
         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
-          className={`text-gray-300 transition-transform duration-150 ${collapsed ? "" : "rotate-90"}`}>
+          className={`text-zinc-400 dark:text-zinc-500 transition-transform duration-200 group-hover:text-zinc-600 dark:group-hover:text-zinc-300 ${effectiveCollapsed ? "" : "rotate-90"}`}>
           <polyline points="9 18 15 12 9 6"/>
         </svg>
-        <span className="w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: tint, opacity: 0.6 }} />
-        <h3 className="text-xs font-semibold uppercase tracking-wider text-gray-400">{section.title}</h3>
-        {!isInfo && doneCount === total && total > 0 && <Icon.Check size={12} className="text-emerald-400" />}
-        {!isInfo && doneCount > 0 && doneCount < total && <span className="text-xs text-gray-300 font-medium">{doneCount}/{total}</span>}
+        <span className="w-1.5 h-1.5 rounded-full flex-shrink-0 shadow-sm" style={{ background: tint, opacity: 0.8 }} />
+        <h3 className="text-xs font-bold uppercase tracking-wider text-zinc-500 dark:text-zinc-400 transition-colors group-hover:text-zinc-700 dark:group-hover:text-zinc-200">{highlight(section.title, searchQuery)}</h3>
+        {!isInfo && doneCount === total && total > 0 && <Icon.Check size={12} className="text-emerald-500 drop-shadow-sm" />}
+        {!isInfo && doneCount > 0 && doneCount < total && <span className="text-[10px] font-bold text-zinc-400 bg-zinc-100 dark:bg-zinc-800 px-1.5 py-0.5 rounded-md">{doneCount}/{total}</span>}
       </button>
-      {!collapsed && (
-        <div className="pl-1 fade-in">
-          {isInfo
-            ? section.items.map(item => <InfoItem key={item.id} item={item} />)
-            : section.items.map(item => (
-                <CheckItem key={item.id} item={item} done={!!completed[item.id]} onToggle={() => onToggle(item.id)} />
-              ))
-          }
+
+      <div className={`grid transition-all duration-300 ease-in-out ${effectiveCollapsed ? "grid-rows-[0fr] opacity-0" : "grid-rows-[1fr] opacity-100"}`}>
+        <div className="overflow-hidden">
+          <div className="pl-1 pt-1 pb-1">
+            {isInfo
+              ? section.items.map(item => <InfoItem key={item.id} item={item} searchQuery={searchQuery} />)
+              : section.items.map(item => (
+                  <CheckItem key={item.id} item={item} done={!!completed[item.id]} onToggle={() => onToggle(item.id)} searchQuery={searchQuery} />
+                ))
+            }
+          </div>
         </div>
-      )}
+      </div>
     </div>
   );
 }
 
 /* ═══ DigestCard ═══ */
-function DigestCard({ digest, completed, onToggle, onDelete, onRestore, defaultOpen }) {
+function DigestCard({ digest, completed, onToggle, onDelete, onRestore, defaultOpen, searchQuery }) {
   const [open, setOpen] = useState(defaultOpen);
   const [confirmDelete, setConfirmDelete] = useState(false);
   const actionItems = digest.sections.filter(s => !s.info).flatMap(s => s.items);
   const total = actionItems.length;
   const doneCount = actionItems.filter(i => completed[i.id]).length;
   const pct = total > 0 ? Math.round((doneCount / total) * 100) : 0;
+  const q = (searchQuery || "").trim().toLowerCase();
+  const effectiveOpen = q ? true : open;
+
+  const matchCount = useMemo(() => {
+    if (!q) return 0;
+    let n = 0;
+    if (digest.date.toLowerCase().includes(q)) n++;
+    if ((digest.greeting || "").toLowerCase().includes(q)) n++;
+    for (const s of digest.sections) {
+      if (s.title.toLowerCase().includes(q)) n++;
+      for (const i of s.items) {
+        if (i.label.toLowerCase().includes(q)) n++;
+        if ((i.detail || "").toLowerCase().includes(q)) n++;
+      }
+    }
+    return n;
+  }, [q, digest]);
 
   return (
-    <div className="mb-8">
-      <div className="flex items-center gap-2 mb-4">
-        <button onClick={() => setOpen(!open)} className="flex items-center gap-2 group flex-1 text-left">
-          <Icon.ChevronDown size={16} className={`text-gray-300 transition-transform duration-200 ${open ? "" : "-rotate-90"}`} />
-          <h2 className={`text-lg font-semibold tracking-tight ${onRestore ? "text-gray-400" : "text-gray-900"}`}>{digest.date}</h2>
-          <span className="text-xs text-gray-300 font-medium uppercase tracking-wider">{digest.type}</span>
-        </button>
-        {total > 0 && !onRestore && <span className="text-xs text-gray-300 font-medium">{doneCount}/{total}</span>}
-        {/* Restore (archive view) */}
-        {onRestore && (
-          <button onClick={() => onRestore(digest.id)} className="ml-2 text-gray-300 hover:text-blue-500 transition-colors p-1 rounded-lg hover:bg-blue-50 flex items-center gap-1" title="Restore briefing">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>
-            <span className="text-xs font-medium">Restore</span>
-          </button>
-        )}
-        {/* Archive (normal view) */}
-        {onDelete && (
-          confirmDelete ? (
-            <div className="flex items-center gap-1.5 ml-2">
-              <button onClick={() => { onDelete(digest.id); setConfirmDelete(false); }} className="text-xs font-medium text-red-500 hover:text-red-600 transition-colors px-2 py-1 rounded-lg hover:bg-red-50">Archive</button>
-              <button onClick={() => setConfirmDelete(false)} className="text-xs font-medium text-gray-400 hover:text-gray-500 transition-colors px-2 py-1 rounded-lg hover:bg-gray-50">Cancel</button>
+    <div className="mb-10 sm:mb-12 transition-all duration-300 w-full relative">
+             
+      <div className="flex items-center gap-2 mb-4 px-2 sm:px-4">
+        <button onClick={() => setOpen(!open)} disabled={!!q} className="flex items-center gap-3 group flex-1 text-left disabled:cursor-default">
+          <div className={`p-1.5 rounded-full bg-zinc-100 dark:bg-zinc-800 transition-transform duration-300 ${effectiveOpen ? "rotate-0" : "-rotate-90"}`}>
+            <Icon.ChevronDown size={14} className="text-zinc-500 dark:text-zinc-400 group-hover:text-zinc-800 dark:group-hover:text-zinc-200 transition-colors" />
+          </div>
+          <div>
+            <h2 className={`text-lg font-bold tracking-tight transition-colors ${onRestore ? "text-zinc-400 dark:text-zinc-500" : "text-zinc-900 dark:text-zinc-50"}`}>{highlight(digest.date, searchQuery)}</h2>
+            <div className="flex items-center gap-2 mt-0.5">
+               <span className="text-[10px] font-bold text-zinc-400 dark:text-zinc-500 uppercase tracking-widest">{digest.type}</span>
             </div>
-          ) : (
-            <button onClick={() => setConfirmDelete(true)} className="ml-2 text-gray-200 hover:text-red-400 transition-colors p-1 rounded-lg hover:bg-gray-50" title="Archive briefing">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
-            </button>
-          )
+          </div>
+        </button>
+        {q && matchCount > 0 && (
+          <span className="text-[10px] font-bold text-amber-700 dark:text-amber-300 bg-amber-100 dark:bg-amber-500/20 px-2 py-0.5 rounded-full tabular-nums mr-2" title={`${matchCount} match${matchCount > 1 ? "es" : ""}`}>{matchCount} match{matchCount > 1 ? "es" : ""}</span>
         )}
+        {total > 0 && !onRestore && !q && (
+          <div className="flex flex-col items-end gap-1 mr-2">
+             <span className="text-[10px] font-bold text-zinc-400 bg-zinc-100 dark:bg-zinc-800 px-2 py-0.5 rounded-full">{doneCount}/{total}</span>
+          </div>
+        )}
+        
+        {/* Actions */}
+        <div className="flex items-center">
+          {onRestore && (
+            <button onClick={() => onRestore(digest.id)} className="text-zinc-400 hover:text-blue-500 transition-all p-2 rounded-xl hover:bg-blue-50 dark:hover:bg-zinc-700 flex items-center gap-1.5" title="Restore briefing">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>
+              <span className="text-xs font-semibold">Restore</span>
+            </button>
+          )}
+          {onDelete && (
+            confirmDelete ? (
+              <div className="flex items-center gap-1.5">
+                <button onClick={() => { onDelete(digest.id); setConfirmDelete(false); }} className="text-xs font-bold text-red-500 hover:text-white transition-colors px-3 py-1.5 rounded-xl bg-red-50 dark:bg-red-500/10 hover:bg-red-500">Archive</button>
+                <button onClick={() => setConfirmDelete(false)} className="text-xs font-bold text-zinc-500 hover:text-zinc-900 dark:hover:text-white transition-colors px-3 py-1.5 rounded-xl bg-zinc-100 dark:bg-zinc-800 hover:bg-zinc-200 dark:hover:bg-zinc-700">Cancel</button>
+              </div>
+            ) : (
+              <button onClick={() => setConfirmDelete(true)} className="text-zinc-400 hover:text-red-500 transition-all p-2 rounded-xl hover:bg-red-50 dark:hover:bg-red-500/10" title="Archive briefing">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+              </button>
+            )
+          )}
+        </div>
       </div>
 
-      {open && (
-        <div className="fade-in">
+      {effectiveOpen && (
+        <div className="fade-in mt-2 pt-6 border-t border-zinc-200/50 dark:border-zinc-700/50">
           {digest.greeting && (
-            <div className="flex items-start gap-3 mb-6 py-3 px-4 rounded-2xl" style={{ background: "rgba(59,130,246,0.04)" }}>
-              <div className="w-6 h-6 rounded-full bg-blue-600 flex items-center justify-center flex-shrink-0 mt-0.5">
-                <span className="text-white text-xs font-bold">M</span>
+            <div className="flex items-start gap-4 mb-8 py-4 px-5 rounded-2xl bg-blue-50/50 dark:bg-blue-900/10 border border-blue-100/50 dark:border-blue-800/30">
+              <div className="w-8 h-8 rounded-full bg-blue-600 shadow-md shadow-blue-500/20 flex items-center justify-center flex-shrink-0 mt-0.5">
+                <span className="text-white text-sm font-bold">M</span>
               </div>
-              <p className="text-sm text-gray-600 leading-relaxed">{digest.greeting}</p>
+              <p className="text-sm text-zinc-700 dark:text-zinc-300 leading-relaxed font-medium">{highlight(digest.greeting, searchQuery)}</p>
             </div>
           )}
 
           {total > 0 && (
-            <div className="flex items-center gap-3 mb-6">
-              <div className="flex-1 h-1 bg-gray-100 rounded-full overflow-hidden">
-                <div className="h-full rounded-full transition-all duration-500"
-                  style={{ width: `${pct}%`, background: pct === 100 ? "#22c55e" : pct > 0 ? "#3b82f6" : "#e5e7eb" }} />
+            <div className="flex items-center gap-4 mb-8 bg-zinc-50 dark:bg-zinc-900/50 p-3 rounded-2xl border border-zinc-100 dark:border-zinc-800">
+              <div className="flex-1 h-1.5 bg-zinc-200 dark:bg-zinc-800 rounded-full overflow-hidden">
+                <div className="h-full rounded-full transition-all duration-700 ease-out relative"
+                  style={{ 
+                    width: `${pct}%`, 
+                    background: pct === 100 ? "#10b981" : pct > 0 ? "#3b82f6" : "transparent"
+                  }}>
+                    {pct === 100 && <div className="absolute inset-0 bg-white/20 animate-pulse"></div>}
+                </div>
               </div>
-              <span className={`text-xs font-medium tabular-nums w-10 text-right ${pct === 100 ? "text-emerald-500" : "text-gray-400"}`}>{pct}%</span>
+              <span className={`text-xs font-bold tabular-nums w-10 text-right transition-colors ${pct === 100 ? "text-emerald-500 drop-shadow-[0_0_8px_rgba(16,185,129,0.4)]" : "text-zinc-400"}`}>{pct}%</span>
             </div>
           )}
 
-          {digest.sections.map((section, si) => (
-            <Section key={si} section={section} completed={completed} onToggle={onToggle} defaultCollapsed={false} />
-          ))}
+          <div className="space-y-2">
+            {digest.sections.map((section, si) => (
+              <Section key={si} section={section} completed={completed} onToggle={onToggle} defaultCollapsed={false} searchQuery={searchQuery} />
+            ))}
+          </div>
         </div>
       )}
     </div>
@@ -213,21 +659,19 @@ function DigestCard({ digest, completed, onToggle, onDelete, onRestore, defaultO
 /* ═══ Clean up old storage keys from previous versions ═══ */
 try { localStorage.removeItem("llf-completed"); localStorage.removeItem("llf-hidden"); } catch {}
 
-/* ═══ State Persistence (jsonblob.com — free, CORS-friendly, no tokens) ═══ */
-const BLOB_ID = "019daae5-3877-7cc6-9151-a2a22943ab55";
-const BLOB_URL = "https://jsonblob.com/api/jsonBlob/" + BLOB_ID;
+/* ═══ State Persistence (Supabase) ═══ */
+const SUPABASE_URL = "https://niqzkombzncxxihhulqq.supabase.co";
+const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5pcXprb21iem5jeHhpaGh1bHFxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM2OTI5NTgsImV4cCI6MjA4OTI2ODk1OH0.9DMbwxPi4yBkXG034sakwh6tnxt-AUcKkt_MER71qcg";
+const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 let writeQueue = null;
 let remoteOk = true;
 
 async function remoteRead() {
   try {
-    const r = await fetch(BLOB_URL, {
-      headers: { "Accept": "application/json" },
-      cache: "no-store"
-    });
-    if (!r.ok) throw new Error("HTTP " + r.status);
-    const data = await r.json();
+    const { data: item, error } = await supabase.from('app_state').select('data').eq('id', 1).single();
+    if (error && error.code !== 'PGRST116') throw error;
+    const data = item && item.data ? item.data : null;
     remoteOk = true;
     console.log("[state] remote read OK:", JSON.stringify(data));
     return data;
@@ -240,12 +684,8 @@ async function remoteRead() {
 
 async function remoteWrite(state) {
   try {
-    const r = await fetch(BLOB_URL, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json", "Accept": "application/json" },
-      body: JSON.stringify(state)
-    });
-    if (!r.ok) throw new Error("HTTP " + r.status);
+    const { error } = await supabase.from('app_state').upsert({ id: 1, data: state });
+    if (error) throw error;
     remoteOk = true;
     console.log("[state] remote write OK:", JSON.stringify(state));
   } catch (e) {
@@ -260,8 +700,18 @@ function debouncedWrite(state) {
   writeQueue = setTimeout(() => remoteWrite(state), 800);
 }
 
-/* ═══ Reminder Box ═══ */
-function ReminderBox({ reminders, onAdd, onRemove }) {
+/* ═══ BellIcon ═══ */
+const BellIcon = ({ size = 14, className = "" }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+);
+
+/* ═══ ClockIcon for reminder history ═══ */
+const ClockIcon = ({ size = 14, className = "" }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+);
+
+/* ═══ Quick Adder — compact pill, single source of truth for adding ═══ */
+function ReminderQuickAdd({ reminders, onAdd, onSeeAll, onBack, isOnRemindersTab }) {
   const [open, setOpen] = useState(false);
   const [text, setText] = useState("");
 
@@ -270,290 +720,176 @@ function ReminderBox({ reminders, onAdd, onRemove }) {
     if (!trimmed) return;
     onAdd(trimmed);
     setText("");
+    setOpen(false);
   };
 
   const handleKey = (e) => {
     if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); handleAdd(); }
+    if (e.key === "Escape") { setOpen(false); setText(""); }
   };
 
+  if (open) {
+    return (
+      <div className="mb-8 flex flex-col sm:flex-row gap-2">
+        <input
+          autoFocus
+          type="text"
+          value={text}
+          onChange={e => setText(e.target.value)}
+          onKeyDown={handleKey}
+          placeholder="e.g. Follow up with Hassan on escalation..."
+          className="flex-1 min-w-0 px-4 py-3 text-sm bg-white dark:bg-zinc-800 border border-blue-400 dark:border-blue-500 ring-2 ring-blue-500/20 shadow-sm rounded-xl text-zinc-900 dark:text-zinc-100 placeholder-zinc-400 focus:outline-none transition-all font-medium min-h-[44px]"
+        />
+        <div className="flex gap-2">
+          <button
+            onClick={handleAdd}
+            disabled={!text.trim()}
+            className="flex-1 sm:flex-none px-5 py-3 text-sm font-bold rounded-xl transition-all bg-zinc-900 dark:bg-zinc-100 text-white dark:text-zinc-900 hover:bg-zinc-800 dark:hover:bg-white disabled:bg-zinc-100 disabled:text-zinc-400 dark:disabled:bg-zinc-800 dark:disabled:text-zinc-600 shadow-sm min-h-[44px]"
+          >
+            Add
+          </button>
+          <button
+            onClick={() => { setOpen(false); setText(""); }}
+            className="px-4 py-3 text-sm font-bold rounded-xl transition-all bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-300 hover:bg-zinc-200 dark:hover:bg-zinc-700 min-h-[44px]"
+          >
+            Cancel
+          </button>
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <div className="mb-8">
+    <div className="mb-8 flex items-center gap-2 flex-wrap">
+      {isOnRemindersTab && (
+        <button
+          onClick={onBack}
+          className="flex items-center gap-1.5 pl-2 pr-3 py-2.5 rounded-xl bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 shadow-sm hover:border-zinc-300 dark:hover:border-zinc-600 transition-all text-xs font-bold text-zinc-600 dark:text-zinc-300 hover:text-zinc-900 dark:hover:text-white min-h-[44px]"
+          title="Back to briefings"
+        >
+          <Icon.ChevronRight size={14} className="rotate-180" />
+          Back to briefings
+        </button>
+      )}
       <button
-        onClick={() => setOpen(!open)}
-        className="flex items-center gap-2 text-sm font-medium text-gray-400 hover:text-gray-600 transition-colors group"
+        onClick={() => setOpen(true)}
+        className="flex items-center gap-2.5 pl-3 pr-4 py-2.5 rounded-xl bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 shadow-sm hover:border-blue-300 dark:hover:border-blue-700 hover:bg-blue-50/40 dark:hover:bg-blue-900/10 transition-all text-sm font-semibold text-zinc-700 dark:text-zinc-200 min-h-[44px] group"
       >
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-blue-400 group-hover:text-blue-500 transition-colors"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
-        Add reminder for next briefing
-        {reminders.length > 0 && (
-          <span className="bg-blue-100 text-blue-600 text-xs font-semibold px-1.5 py-0.5 rounded-full">{reminders.length}</span>
-        )}
+        <div className="p-1 rounded-full bg-blue-100 dark:bg-blue-900/30 group-hover:bg-blue-200 dark:group-hover:bg-blue-800/40 transition-colors">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" className="text-blue-500"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        </div>
+        Add reminder
       </button>
+      {reminders.length > 0 && !isOnRemindersTab && (
+        <button
+          onClick={onSeeAll}
+          className="flex items-center gap-2 px-3 py-2.5 text-xs font-bold text-zinc-500 dark:text-zinc-400 hover:text-blue-500 dark:hover:text-blue-400 transition-colors min-h-[44px] rounded-xl hover:bg-zinc-100 dark:hover:bg-zinc-800"
+          title="View all reminders"
+        >
+          <span className="bg-blue-500 text-white shadow-sm shadow-blue-500/20 text-[10px] font-bold px-2 py-0.5 rounded-full tabular-nums">{reminders.length}</span>
+          <span>queued</span>
+          <Icon.ChevronRight size={12} />
+        </button>
+      )}
+    </div>
+  );
+}
 
-      {open && (
-        <div className="mt-3 fade-in">
-          <div className="flex gap-2 mb-3">
-            <input
-              type="text"
-              value={text}
-              onChange={e => setText(e.target.value)}
-              onKeyDown={handleKey}
-              placeholder="e.g. Follow up with Hassan on escalation..."
-              className="flex-1 px-3 py-2 text-sm bg-gray-50 border-0 rounded-xl text-gray-900 placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-100 transition-all"
-              autoFocus
-            />
-            <button
-              onClick={handleAdd}
-              disabled={!text.trim()}
-              className="px-4 py-2 text-sm font-medium rounded-xl transition-all bg-gray-900 text-white hover:bg-gray-800 disabled:bg-gray-100 disabled:text-gray-300"
-            >
-              Add
-            </button>
+/* ═══ Full Reminders View — list + empty state + history ═══ */
+function RemindersView({ reminders, onRemove, reminderHistory }) {
+  const [historyOpen, setHistoryOpen] = useState(false);
+
+  /* Group history by digestDate */
+  const grouped = useMemo(() => {
+    if (!reminderHistory || !reminderHistory.length) return [];
+    const map = {};
+    reminderHistory.forEach(r => {
+      const key = r.digestDate || r.consumedAt?.split("T")[0] || "Unknown";
+      if (!map[key]) map[key] = { digestDate: key, digestId: r.digestId, items: [] };
+      map[key].items.push(r);
+    });
+    return Object.values(map).sort((a, b) => b.digestDate.localeCompare(a.digestDate));
+  }, [reminderHistory]);
+
+  return (
+    <div className="fade-in">
+      {/* Active reminders */}
+      <div className="flex items-center gap-2.5 mb-5">
+        <div className="p-1.5 rounded-full bg-blue-100 dark:bg-blue-900/30">
+          <BellIcon className="text-blue-500" />
+        </div>
+        <h2 className="text-sm font-semibold text-zinc-700 dark:text-zinc-200">Reminders for next briefing</h2>
+        {reminders.length > 0 && (
+          <span className="bg-blue-500 text-white shadow-sm shadow-blue-500/20 text-[10px] font-bold px-2 py-0.5 rounded-full tabular-nums">{reminders.length}</span>
+        )}
+      </div>
+
+      {reminders.length > 0 ? (
+        <div className="space-y-2">
+          {reminders.map(r => (
+            <div key={r.id} className="flex items-start gap-3 py-3 px-4 rounded-xl bg-blue-50/50 dark:bg-blue-900/10 border border-blue-100/50 dark:border-blue-800/30 transition-all hover:bg-blue-50 dark:hover:bg-blue-900/20">
+              <BellIcon className="text-blue-500 flex-shrink-0 mt-0.5" />
+              <span className="text-sm font-medium text-zinc-700 dark:text-zinc-300 flex-1 min-w-0 break-words leading-relaxed">{r.text}</span>
+              <button onClick={() => onRemove(r.id)} className="text-zinc-400 dark:text-zinc-500 hover:text-red-500 dark:hover:text-red-400 transition-colors p-2 -m-1 rounded-md hover:bg-red-50 dark:hover:bg-red-500/10 flex-shrink-0" title="Remove reminder" aria-label="Remove reminder">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+              </button>
+            </div>
+          ))}
+        </div>
+      ) : (
+        <div className="text-center py-16 px-6 rounded-[2rem] border border-dashed border-zinc-300 dark:border-zinc-700 bg-white/50 dark:bg-zinc-800/30 backdrop-blur-md">
+          <div className="w-14 h-14 bg-blue-100 dark:bg-blue-900/20 rounded-full flex items-center justify-center mx-auto mb-4">
+            <BellIcon size={22} className="text-blue-500" />
           </div>
+          <p className="text-base font-bold text-zinc-700 dark:text-zinc-300 mb-1">No reminders queued</p>
+          <p className="text-sm font-medium text-zinc-500 dark:text-zinc-500">Use the <span className="font-bold text-zinc-700 dark:text-zinc-300">+ Add reminder</span> button above — it&apos;ll show up in tomorrow&apos;s briefing.</p>
+        </div>
+      )}
 
-          {reminders.length > 0 && (
-            <div className="space-y-1.5">
-              {reminders.map(r => (
-                <div key={r.id} className="flex items-center gap-2 py-1.5 px-3 rounded-xl bg-blue-50/50 group">
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-blue-400 flex-shrink-0"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
-                  <span className="text-sm text-gray-600 flex-1">{r.text}</span>
-                  <button onClick={() => onRemove(r.id)} className="text-gray-200 hover:text-red-400 transition-colors opacity-0 group-hover:opacity-100 p-0.5" title="Remove">
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-                  </button>
+      {/* Reminder History */}
+      {grouped.length > 0 && (
+        <div className="mt-8">
+          <button
+            onClick={() => setHistoryOpen(prev => !prev)}
+            className="flex items-center gap-2 text-sm font-semibold text-zinc-500 dark:text-zinc-400 hover:text-zinc-700 dark:hover:text-zinc-200 transition-colors mb-4 group"
+          >
+            <div className="p-1 rounded-full bg-zinc-100 dark:bg-zinc-800 group-hover:bg-zinc-200 dark:group-hover:bg-zinc-700 transition-colors">
+              <ClockIcon size={13} className="text-zinc-400 dark:text-zinc-500" />
+            </div>
+            <span>Reminder History</span>
+            <span className="text-[10px] font-bold text-zinc-400 dark:text-zinc-600 tabular-nums">{reminderHistory.length}</span>
+            <svg
+              width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"
+              className={`text-zinc-400 transition-transform duration-200 ${historyOpen ? "rotate-180" : ""}`}
+            >
+              <polyline points="6 9 12 15 18 9"/>
+            </svg>
+          </button>
+
+          {historyOpen && (
+            <div className="space-y-5 fade-in">
+              {grouped.map(group => (
+                <div key={group.digestDate}>
+                  <div className="flex items-center gap-2 mb-2.5">
+                    <span className="text-[11px] font-bold uppercase tracking-wider text-zinc-400 dark:text-zinc-500">
+                      {new Date(group.digestDate + "T12:00:00").toLocaleDateString("en-US", { weekday: "short", month: "short", day: "numeric" })}
+                    </span>
+                    <div className="flex-1 h-px bg-zinc-200 dark:bg-zinc-700/50"/>
+                  </div>
+                  <div className="space-y-1.5">
+                    {group.items.map(r => (
+                      <div key={r.id} className="flex items-start gap-3 py-2.5 px-3.5 rounded-lg bg-zinc-50/50 dark:bg-zinc-800/30 border border-zinc-100/50 dark:border-zinc-800/30">
+                        <Icon.Check size={13} className="text-emerald-400 dark:text-emerald-500/70 flex-shrink-0 mt-0.5" />
+                        <span className="text-[13px] text-zinc-500 dark:text-zinc-400 flex-1 min-w-0 break-words leading-relaxed">{r.text}</span>
+                      </div>
+                    ))}
+                  </div>
                 </div>
               ))}
             </div>
           )}
         </div>
       )}
-    </div>
-  );
-}
-
-/* ═══ Toggl Data ═══ */
-const TOGGL_KEY = "c4cdd69cef8e9ef2dd36a7c17286e609";
-const TOGGL_WS = 20705602;
-const TOGGL_PROJECTS = [
-  { id:216469966, name:"Time Management", client:"Non-Utilized", subs:["Attendance management and Rippling timecard"] },
-  { id:216469959, name:"Downtime", client:"Non-Utilized", subs:["Internet Outage","Idle / Lack of work","Power Outage"] },
-  { id:216469960, name:"Issues", client:"Non-Utilized", subs:["LLF Technical"] },
-  { id:216469961, name:"Meetings (Non-Utilized)", client:"Non-Utilized", subs:["Other Non-Ops Meetings / Firmwide","One-on-One"] },
-  { id:216469962, name:"Offline", client:"Non-Utilized", subs:["Break","Holiday","Lunch","Time Off"] },
-  { id:216469963, name:"Other (Non-Utilized)", client:"Non-Utilized", subs:["Other"] },
-  { id:216469964, name:"Other work", client:"Non-Utilized", subs:["Strategic initiatives"] },
-  { id:216469965, name:"Tasks", client:"Non-Utilized", subs:["Performance Management & QA"] },
-  { id:216469967, name:"Training (Non-Utilized)", client:"Non-Utilized", subs:["Compliance / Non-Ops / Onboarding"] },
-  { id:216469968, name:"Other (Utilized-Mat)", client:"Utilized-Mat-Work", subs:["Other"] },
-  { id:216469992, name:"Consulting", client:"Utilized-Non-Mat-Work", subs:["Consulting"] },
-  { id:216469993, name:"EPMO Process & Tools", client:"Utilized-Non-Mat-Work", subs:["EPMO Process & Tools"] },
-  { id:216469956, name:"Meetings (Utilized)", client:"Utilized-Non-Mat-Work", subs:["Recurring Meetings & Huddles","Operations & Project Meetings"] },
-  { id:216469969, name:"Other (Utilized)", client:"Utilized-Non-Mat-Work", subs:["Other"] },
-  { id:216469994, name:"Portfolio Management", client:"Utilized-Non-Mat-Work", subs:["Portfolio Management"] },
-  { id:217287848, name:"Process Engineering", client:"Utilized-Non-Mat-Work", subs:["Other","Dashboards & Reporting","Data Analysis","Process Mapping","SOP writing / editing"] },
-  { id:216469996, name:"Project Management", client:"Utilized-Non-Mat-Work", subs:["Project Tasks"] },
-  { id:216469997, name:"Resource Planning", client:"Utilized-Non-Mat-Work", subs:["Resource Planning"] },
-  { id:219085805, name:"Run the business", client:"Utilized-Non-Mat-Work", subs:["Run the business"] },
-  { id:216469998, name:"TM Support", client:"Utilized-Non-Mat-Work", subs:["TM Support tasks"] },
-  { id:216469974, name:"Training (Utilized)", client:"Utilized-Non-Mat-Work", subs:["Operational Training (Receiving)","Operational Training (Providing)","Coaching, Shadowing & Mentorship"] },
-];
-
-/* ═══ Toggl Review Component ═══ */
-function TogglReview({ review, onClear }) {
-  const [entries, setEntries] = useState(review.entries || []);
-  const [submitting, setSubmitting] = useState(false);
-  const [submitted, setSubmitted] = useState(false);
-  const [expandedId, setExpandedId] = useState(null);
-
-  const toAST = (utc) => {
-    const d = new Date(utc);
-    return d.toLocaleTimeString("en-US", { hour:"numeric", minute:"2-digit", timeZone:"America/Santo_Domingo" });
-  };
-
-  const durMin = (start, end) => Math.round((new Date(end) - new Date(start)) / 60000);
-
-  const totalMin = entries.reduce((sum, e) => sum + durMin(e.start, e.end), 0);
-  const totalH = (totalMin / 60).toFixed(1);
-
-  const updateEntry = (id, field, value) => {
-    setEntries(prev => prev.map(e => {
-      if (e.id !== id) return e;
-      const updated = { ...e, [field]: value };
-      if (field === "project_id") {
-        const proj = TOGGL_PROJECTS.find(p => p.id === value);
-        if (proj) {
-          updated.project_name = proj.name;
-          updated.client_name = proj.client;
-          updated.subcategory = proj.subs[0] || "";
-        }
-      }
-      return updated;
-    }));
-  };
-
-  const removeEntry = (id) => setEntries(prev => prev.filter(e => e.id !== id));
-
-  const submitToToggl = async () => {
-    setSubmitting(true);
-    const authHeader = "Basic " + btoa(TOGGL_KEY + ":api_token");
-    let ok = 0, fail = 0;
-
-    for (const e of entries) {
-      const body = {
-        description: e.description,
-        start: e.start,
-        stop: e.end,
-        duration: durMin(e.start, e.end) * 60,
-        project_id: e.project_id,
-        workspace_id: TOGGL_WS,
-        tag_ids: e.tag_ids || [],
-        created_with: "madison-dashboard"
-      };
-
-      try {
-        const method = e.existing_entry_id ? "PUT" : "POST";
-        const url = e.existing_entry_id
-          ? "https://api.track.toggl.com/api/v9/workspaces/" + TOGGL_WS + "/time_entries/" + e.existing_entry_id
-          : "https://api.track.toggl.com/api/v9/workspaces/" + TOGGL_WS + "/time_entries";
-        const r = await fetch(url, {
-          method,
-          headers: { "Authorization": authHeader, "Content-Type": "application/json" },
-          body: JSON.stringify(body)
-        });
-        if (r.ok) ok++; else fail++;
-      } catch { fail++; }
-    }
-
-    setSubmitting(false);
-    if (fail === 0) {
-      setSubmitted(true);
-      // Clear review from state
-      onClear();
-    } else {
-      alert(ok + " submitted, " + fail + " failed. Check console.");
-    }
-  };
-
-  if (submitted) {
-    return (
-      <div className="mb-10 py-6 px-5 rounded-2xl bg-emerald-50/50 text-center">
-        <p className="text-sm font-medium text-emerald-600">All {entries.length} entries submitted to Toggl</p>
-      </div>
-    );
-  }
-
-  const sourceIcon = (s) => s === "calendar" ? "📅" : s === "pattern" ? "🔄" : "✋";
-
-  return (
-    <div className="mb-10">
-      <div className="flex items-center justify-between mb-4">
-        <div className="flex items-center gap-2">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-violet-500"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-          <h2 className="text-lg font-semibold text-gray-900 tracking-tight">Toggl Review</h2>
-          <span className="text-xs text-gray-300 font-medium">{review.date}</span>
-        </div>
-        <div className="flex items-center gap-2">
-          <span className={`text-xs font-semibold tabular-nums px-2 py-1 rounded-full ${totalMin > 510 ? "bg-amber-100 text-amber-600" : totalMin >= 480 ? "bg-emerald-100 text-emerald-600" : "bg-gray-100 text-gray-500"}`}>
-            {totalH}h / 8h
-          </span>
-        </div>
-      </div>
-
-      <div className="space-y-2">
-        {entries.map((e) => {
-          const isExpanded = expandedId === e.id;
-          const proj = TOGGL_PROJECTS.find(p => p.id === e.project_id);
-          return (
-            <div key={e.id} className="rounded-xl border border-gray-100 bg-white overflow-hidden transition-all hover:border-gray-200">
-              {/* Collapsed row */}
-              <div className="flex items-center gap-3 py-3 px-4 cursor-pointer" onClick={() => setExpandedId(isExpanded ? null : e.id)}>
-                <span className="text-xs" title={e.source}>{sourceIcon(e.source)}</span>
-                <span className="text-xs text-gray-400 tabular-nums w-28 flex-shrink-0">{toAST(e.start)} – {toAST(e.end)}</span>
-                <span className="text-sm text-gray-800 flex-1 truncate">{e.description}</span>
-                <span className="text-xs text-gray-300 truncate max-w-32">{e.project_name}</span>
-                <button onClick={(ev) => { ev.stopPropagation(); removeEntry(e.id); }} className="text-gray-200 hover:text-red-400 transition-colors p-1">
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-                </button>
-              </div>
-
-              {/* Expanded edit panel */}
-              {isExpanded && (
-                <div className="px-4 pb-4 pt-1 border-t border-gray-50 fade-in space-y-3">
-                  {/* Description */}
-                  <div>
-                    <label className="text-xs text-gray-400 block mb-1">Description</label>
-                    <input type="text" value={e.description} onChange={(ev) => updateEntry(e.id, "description", ev.target.value)}
-                      className="w-full text-sm px-3 py-2 bg-gray-50 rounded-lg border-0 focus:outline-none focus:ring-2 focus:ring-violet-100 text-gray-900" />
-                  </div>
-                  <div className="grid grid-cols-2 gap-3">
-                    {/* Project (Category) */}
-                    <div>
-                      <label className="text-xs text-gray-400 block mb-1">Category</label>
-                      <select value={e.project_id || ""} onChange={(ev) => updateEntry(e.id, "project_id", parseInt(ev.target.value))}
-                        className="w-full text-sm px-3 py-2 bg-gray-50 rounded-lg border-0 focus:outline-none focus:ring-2 focus:ring-violet-100 text-gray-900 appearance-none">
-                        {TOGGL_PROJECTS.map(p => (
-                          <option key={p.id} value={p.id}>{p.client} › {p.name}</option>
-                        ))}
-                      </select>
-                    </div>
-                    {/* Subcategory */}
-                    <div>
-                      <label className="text-xs text-gray-400 block mb-1">Subcategory</label>
-                      <select value={e.subcategory || ""} onChange={(ev) => updateEntry(e.id, "subcategory", ev.target.value)}
-                        className="w-full text-sm px-3 py-2 bg-gray-50 rounded-lg border-0 focus:outline-none focus:ring-2 focus:ring-violet-100 text-gray-900 appearance-none">
-                        {(proj ? proj.subs : []).map(s => (
-                          <option key={s} value={s}>{s}</option>
-                        ))}
-                      </select>
-                    </div>
-                  </div>
-                  {/* Tag display */}
-                  {e.tag_names && e.tag_names.length > 0 && (
-                    <div className="flex items-center gap-1.5 flex-wrap">
-                      <span className="text-xs text-gray-400">Tags:</span>
-                      {e.tag_names.map(t => (
-                        <span key={t} className="text-xs bg-violet-50 text-violet-500 px-2 py-0.5 rounded-full">{t}</span>
-                      ))}
-                    </div>
-                  )}
-                  {/* Time */}
-                  <div className="grid grid-cols-2 gap-3">
-                    <div>
-                      <label className="text-xs text-gray-400 block mb-1">Start (AST)</label>
-                      <input type="time" value={new Date(e.start).toLocaleTimeString("en-GB",{hour:"2-digit",minute:"2-digit",timeZone:"America/Santo_Domingo"})}
-                        onChange={(ev) => {
-                          const [h,m] = ev.target.value.split(":").map(Number);
-                          const d = new Date(e.start);
-                          d.setUTCHours(h+4, m, 0, 0);
-                          updateEntry(e.id, "start", d.toISOString());
-                        }}
-                        className="w-full text-sm px-3 py-2 bg-gray-50 rounded-lg border-0 focus:outline-none focus:ring-2 focus:ring-violet-100 text-gray-900" />
-                    </div>
-                    <div>
-                      <label className="text-xs text-gray-400 block mb-1">End (AST)</label>
-                      <input type="time" value={new Date(e.end).toLocaleTimeString("en-GB",{hour:"2-digit",minute:"2-digit",timeZone:"America/Santo_Domingo"})}
-                        onChange={(ev) => {
-                          const [h,m] = ev.target.value.split(":").map(Number);
-                          const d = new Date(e.end);
-                          d.setUTCHours(h+4, m, 0, 0);
-                          updateEntry(e.id, "end", d.toISOString());
-                        }}
-                        className="w-full text-sm px-3 py-2 bg-gray-50 rounded-lg border-0 focus:outline-none focus:ring-2 focus:ring-violet-100 text-gray-900" />
-                    </div>
-                  </div>
-                </div>
-              )}
-            </div>
-          );
-        })}
-      </div>
-
-      {/* Actions */}
-      <div className="flex items-center justify-between mt-5">
-        <button onClick={onClear} className="text-xs text-gray-300 hover:text-gray-500 transition-colors">Dismiss</button>
-        <button onClick={submitToToggl} disabled={submitting || entries.length === 0}
-          className="px-5 py-2.5 text-sm font-medium rounded-xl transition-all bg-gray-900 text-white hover:bg-gray-800 disabled:bg-gray-100 disabled:text-gray-300">
-          {submitting ? "Submitting..." : "Submit " + entries.length + " entries to Toggl"}
-        </button>
-      </div>
     </div>
   );
 }
@@ -566,11 +902,30 @@ function App() {
   const [completed, setCompleted] = useState({});
   const [search, setSearch] = useState("");
   const [typeFilter, setTypeFilter] = useState("all");
+  const [selectedDate, setSelectedDate] = useState(null);
   const [hidden, setHidden] = useState([]);
   const [reminders, setReminders] = useState([]);
-  const [togglReview, setTogglReview] = useState(null);
+  const [reminderHistory, setReminderHistory] = useState([]);
   const [stateLoaded, setStateLoaded] = useState(false);
   const userActed = React.useRef(false); // only write after a real user action
+
+  // Theme Management
+  const [theme, setTheme] = useState(() => {
+    if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
+      return localStorage.getItem('theme');
+    }
+    return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  });
+
+  useEffect(() => {
+    const root = document.documentElement;
+    if (theme === 'dark') {
+      root.classList.add('dark');
+    } else {
+      root.classList.remove('dark');
+    }
+    localStorage.setItem("theme", theme);
+  }, [theme]);
 
   // Load digests + state on mount
   useEffect(() => {
@@ -590,14 +945,14 @@ function App() {
       if (local.completed && Object.keys(local.completed).length) setCompleted(local.completed);
       if (local.hidden && local.hidden.length) setHidden(local.hidden);
       if (local.reminders && local.reminders.length) setReminders(local.reminders);
-      if (local.togglReview) setTogglReview(local.togglReview);
+      if (local.reminderHistory && local.reminderHistory.length) setReminderHistory(local.reminderHistory);
     } catch {}
 
     remoteRead().then(state => {
       if (state && state.completed) setCompleted(state.completed);
       if (state && state.hidden) setHidden(state.hidden);
       if (state && state.reminders) setReminders(state.reminders);
-      if (state && state.togglReview) setTogglReview(state.togglReview);
+      if (state && state.reminderHistory) setReminderHistory(state.reminderHistory);
       setStateLoaded(true);
     });
   }, []);
@@ -605,8 +960,8 @@ function App() {
   // Persist state to remote — ONLY after a real user action (not on initial load)
   useEffect(() => {
     if (!stateLoaded || !userActed.current) return;
-    debouncedWrite({ completed, hidden, reminders, togglReview });
-  }, [completed, hidden, reminders, togglReview, stateLoaded]);
+    debouncedWrite({ completed, hidden, reminders, reminderHistory });
+  }, [completed, hidden, reminders, reminderHistory, stateLoaded]);
 
   const toggle = useCallback((id) => {
     userActed.current = true;
@@ -640,6 +995,7 @@ function App() {
 
   // Filter & search
   const isArchiveView = typeFilter === "archived";
+  const isRemindersView = typeFilter === "reminders";
 
   const filtered = useMemo(() => {
     if (isArchiveView) {
@@ -659,6 +1015,7 @@ function App() {
     }
     let list = digests.filter(d => !hidden.includes(d.id));
     if (typeFilter !== "all") list = list.filter(d => d.type === typeFilter);
+    if (selectedDate) list = list.filter(d => d.isoDate === selectedDate);
     if (search.trim()) {
       const q = search.toLowerCase();
       list = list.filter(d =>
@@ -671,7 +1028,7 @@ function App() {
       );
     }
     return list;
-  }, [digests, typeFilter, search, hidden, isArchiveView]);
+  }, [digests, typeFilter, search, hidden, isArchiveView, selectedDate]);
 
   // Unique types + archived tab
   const activeDigests = digests.filter(d => !hidden.includes(d.id));
@@ -694,12 +1051,33 @@ function App() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-white flex items-center justify-center">
-        <div className="text-center">
-          <div className="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center mx-auto mb-3">
-            <span className="text-white text-sm font-bold">M</span>
+      <div className="min-h-screen bg-[#fafafa] dark:bg-[#0a0a0b] transition-colors duration-300 overflow-x-hidden">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 md:px-8 py-10 w-full">
+          <div className="mb-12">
+            <div className="flex items-center justify-between mb-4">
+              <div className="h-8 bg-zinc-200 dark:bg-zinc-800 rounded-lg w-1/2 animate-pulse"></div>
+              <div className="w-24 h-24 rounded-full bg-zinc-200 dark:bg-zinc-800 animate-pulse border-4 border-white dark:border-zinc-800 shadow-sm"></div>
+            </div>
+            <div className="h-4 bg-zinc-200 dark:bg-zinc-800 rounded-md w-1/3 animate-pulse"></div>
           </div>
-          <p className="text-sm text-gray-400">Loading briefings...</p>
+          
+          <div className="space-y-6">
+            {[1, 2, 3].map(i => (
+              <div key={i} className="p-6 rounded-[2rem] bg-white/40 dark:bg-zinc-800/20 shadow-sm border border-zinc-200/50 dark:border-zinc-700/30 animate-pulse">
+                <div className="flex gap-4">
+                  <div className="w-8 h-8 rounded-full bg-zinc-200 dark:bg-zinc-700 hidden sm:block"></div>
+                  <div className="flex-1">
+                    <div className="h-5 bg-zinc-200 dark:bg-zinc-700 rounded-md w-1/3 mb-3"></div>
+                    <div className="h-3 bg-zinc-200 dark:bg-zinc-700 rounded-md w-1/4 mb-8"></div>
+                    <div className="space-y-3">
+                       <div className="h-3 bg-zinc-200 dark:bg-zinc-700/50 rounded-md w-3/4"></div>
+                       <div className="h-3 bg-zinc-200 dark:bg-zinc-700/50 rounded-md w-5/6"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     );
@@ -707,64 +1085,109 @@ function App() {
 
   if (error) {
     return (
-      <div className="min-h-screen bg-white flex items-center justify-center">
-        <div className="text-center max-w-sm">
-          <p className="text-sm text-gray-900 font-medium mb-1">Couldn&apos;t load briefings</p>
-          <p className="text-xs text-gray-400">Make sure <code className="bg-gray-100 px-1 py-0.5 rounded">digests.json</code> is in the same folder as this page.</p>
+      <div className="min-h-screen bg-[#fafafa] dark:bg-[#0a0a0b] flex items-center justify-center p-6">
+        <div className="text-center max-w-sm bg-white dark:bg-zinc-800 p-8 rounded-[2rem] shadow-xl border border-zinc-200 dark:border-zinc-700">
+          <div className="w-12 h-12 rounded-full bg-red-100 dark:bg-red-500/20 text-red-500 flex items-center justify-center mx-auto mb-4">
+             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          </div>
+          <p className="text-lg text-zinc-900 dark:text-zinc-100 font-bold mb-2">Couldn&apos;t load briefings</p>
+          <p className="text-sm text-zinc-500 dark:text-zinc-400">Make sure <code className="bg-zinc-100 dark:bg-zinc-900 px-1.5 py-0.5 rounded-md font-mono text-xs">digests.json</code> is in the same folder as this page.</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-white">
-      <div className="max-w-2xl mx-auto px-6 py-10">
+    <div className="min-h-screen overflow-x-hidden">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 md:px-8 py-12 md:py-16 fade-in w-full">
 
-        {/* Header */}
-        <div className="mb-10">
-          <div className="flex items-center justify-between mb-1">
-            <h1 className="text-2xl font-bold tracking-tight text-gray-900">{greeting}, Jean 👋</h1>
-            <img src="avatar.png" alt="" className="w-28 h-28 rounded-full object-cover shadow-md border-2 border-gray-100" onError={(e) => { e.target.style.display = 'none'; }} />
+        {/* Header — 2-row: meta+avatar, then greeting full-width */}
+        <div className="mb-12">
+          {/* Row 1 — meta row (left) + avatar hub (right) */}
+          <div className="flex items-center justify-between gap-4 mb-4">
+            <div className="flex items-center gap-2 flex-wrap min-w-0">
+              <p className="text-sm font-medium text-zinc-500 dark:text-zinc-400 capitalize bg-zinc-200/50 dark:bg-zinc-800/50 px-3 py-1 rounded-full">{dateStr}</p>
+              <span className="text-zinc-300 dark:text-zinc-600 hidden sm:inline">&middot;</span>
+              <p className="text-sm font-medium text-zinc-500 dark:text-zinc-400 hidden sm:inline">Lisinski Law Firm</p>
+              <span className="text-zinc-300 dark:text-zinc-600">&middot;</span>
+              <p className="text-sm font-semibold text-zinc-400 dark:text-zinc-500 tabular-nums">{timeStr}</p>
+            </div>
+            <div className="flex-shrink-0">
+              <AvatarHub
+                digests={digests}
+                completed={completed}
+                reminders={reminders}
+                theme={theme}
+                onThemeToggle={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+              />
+            </div>
           </div>
-          <p className="text-sm text-gray-400">{dateStr} &middot; Lisinski Law Firm &middot; <span className="tabular-nums">{timeStr}</span></p>
+
+          {/* Row 2 — greeting, full width, no truncation */}
+          <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-zinc-900 dark:text-white drop-shadow-sm">{greeting}, Jean 👋</h1>
         </div>
 
-        {/* Reminders for next digest */}
-        {/* Toggl Review (appears when scheduled task generates proposals) */}
-        {togglReview && togglReview.entries && togglReview.entries.length > 0 && (
-          <TogglReview review={togglReview} onClear={() => { userActed.current = true; setTogglReview(null); }} />
-        )}
+        {/* Quick-add reminder pill — single source of truth for adding */}
+        <ReminderQuickAdd
+          reminders={reminders}
+          onAdd={addReminder}
+          onSeeAll={() => setTypeFilter("reminders")}
+          onBack={() => setTypeFilter("all")}
+          isOnRemindersTab={isRemindersView}
+        />
 
-        <ReminderBox reminders={reminders} onAdd={addReminder} onRemove={removeReminder} />
-
-        {/* Search + filters */}
-        <div className="mb-8">
-          {/* Search */}
-          <div className="relative mb-4">
-            <Icon.Search size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-300" />
-            <input
-              type="text"
-              value={search}
-              onChange={e => setSearch(e.target.value)}
-              placeholder="Search briefings..."
-              className="w-full pl-9 pr-4 py-2.5 text-sm bg-gray-50 border-0 rounded-xl text-gray-900 placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-200 transition-all"
-            />
+        {/* Search + filters — hidden on reminders view (not applicable) */}
+        {!isRemindersView && (
+        <div className="mb-10 w-full">
+          {/* Search + Calendar */}
+          <div className="flex gap-2 mb-5">
+            <div className="relative flex-1 group">
+              <div className="absolute left-4 top-1/2 -translate-y-1/2 p-1 rounded-full group-focus-within:bg-blue-50 dark:group-focus-within:bg-blue-900/30 transition-colors">
+                <Icon.Search size={16} className="text-zinc-400 group-focus-within:text-blue-500 transition-colors" />
+              </div>
+              <input
+                type="text"
+                value={search}
+                onChange={e => setSearch(e.target.value)}
+                placeholder="Search briefings..."
+                className="w-full pl-12 pr-4 py-3 text-sm font-medium bg-white/80 dark:bg-zinc-800/80 backdrop-blur-md border border-zinc-200 dark:border-zinc-700 shadow-sm rounded-2xl text-zinc-900 dark:text-zinc-100 placeholder-zinc-400 focus:outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all"
+              />
+            </div>
+            <CalendarButton digests={digests} selectedDate={selectedDate} onSelect={setSelectedDate} />
           </div>
 
+          {/* Active date filter chip */}
+          {selectedDate && (
+            <div className="flex items-center gap-2 mb-5 fade-in">
+              <button
+                onClick={() => setSelectedDate(null)}
+                className="flex items-center gap-2 pl-3 pr-2 py-1.5 rounded-full text-xs font-bold bg-blue-500 text-white shadow-sm shadow-blue-500/20 hover:bg-blue-600 transition-all active:scale-95 group"
+                title="Clear date filter"
+              >
+                <Icon.Calendar size={12} />
+                <span>{new Date(selectedDate + "T00:00:00").toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })}</span>
+                <span className="p-0.5 rounded-full bg-white/20 group-hover:bg-white/30 transition-colors">
+                  <Icon.X size={10} />
+                </span>
+              </button>
+            </div>
+          )}
+
           {/* Type filter */}
-          <div className="flex gap-1 flex-wrap">
+          <div className="flex gap-2 flex-wrap">
             {types.map(t => {
               const count = t === "all" ? activeDigests.length
                 : t === "archived" ? hidden.length
                 : activeDigests.filter(d => d.type === t).length;
+              const isMuted = t === "archived";
               return (
                 <button
                   key={t}
                   onClick={() => setTypeFilter(t)}
-                  className={`px-3 py-1.5 rounded-full text-xs font-medium transition-all capitalize whitespace-nowrap ${
+                  className={`px-4 py-1.5 rounded-full text-xs font-bold transition-all capitalize whitespace-nowrap shadow-sm active:scale-95 ${
                     typeFilter === t
-                      ? (t === "archived" ? "bg-gray-200 text-gray-600" : "bg-gray-900 text-white")
-                      : (t === "archived" ? "text-gray-300 hover:text-gray-500 hover:bg-gray-50" : "text-gray-400 hover:text-gray-600 hover:bg-gray-50")
+                      ? (isMuted ? "bg-zinc-700 text-white dark:bg-zinc-200 dark:text-zinc-900" : "bg-zinc-900 text-white dark:bg-white dark:text-zinc-900")
+                      : (isMuted ? "bg-white dark:bg-zinc-800 text-zinc-500 hover:text-zinc-700 border border-zinc-200 dark:border-zinc-700 dark:hover:text-zinc-300" : "bg-white dark:bg-zinc-800 text-zinc-600 hover:text-zinc-900 border border-zinc-200 dark:border-zinc-700 dark:hover:text-zinc-200")
                   }`}
                 >
                   {t === "all" ? `All (${count})` : `${t} (${count})`}
@@ -773,36 +1196,48 @@ function App() {
             })}
           </div>
         </div>
+        )}
 
-        {/* Digest list */}
-        {filtered.length === 0 ? (
-          <div className="text-center py-16">
-            <p className="text-sm text-gray-400">{isArchiveView ? "No archived briefings." : "No briefings found."}</p>
+        {/* Reminders view — single dedicated screen */}
+        {isRemindersView ? (
+          <RemindersView reminders={reminders} onRemove={removeReminder} reminderHistory={reminderHistory} />
+        ) : filtered.length === 0 ? (
+          <div className="text-center py-20 px-6 rounded-[2rem] border border-dashed border-zinc-300 dark:border-zinc-700 bg-white/50 dark:bg-zinc-800/30 backdrop-blur-md">
+            <div className="w-14 h-14 bg-zinc-100 dark:bg-zinc-800 rounded-full flex items-center justify-center mx-auto mb-4">
+              <Icon.Search size={24} className="text-zinc-400 dark:text-zinc-500" />
+            </div>
+            <p className="text-base font-bold text-zinc-700 dark:text-zinc-300 mb-1">
+              {isArchiveView ? "No archived briefings" : "No briefings found"}
+            </p>
+            <p className="text-sm font-medium text-zinc-500 dark:text-zinc-500">Try adjusting your filters or search terms.</p>
           </div>
         ) : (
-          filtered.map((d, i) => (
-            <DigestCard
-              key={d.id}
-              digest={d}
-              completed={completed}
-              onToggle={toggle}
-              onDelete={isArchiveView ? null : deleteDigest}
-              onRestore={isArchiveView ? restoreDigest : null}
-              defaultOpen={isArchiveView ? false : i === 0}
-            />
-          ))
+          <div className="space-y-4 relative">
+            {filtered.map((d, i) => (
+              <DigestCard
+                key={d.id}
+                digest={d}
+                completed={completed}
+                onToggle={toggle}
+                onDelete={isArchiveView ? null : deleteDigest}
+                onRestore={isArchiveView ? restoreDigest : null}
+                defaultOpen={isArchiveView ? false : i === 0}
+                searchQuery={search}
+              />
+            ))}
+          </div>
         )}
 
         {/* Footer */}
-        <div className="mt-12 pt-6 border-t border-gray-100 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <div className="w-5 h-5 rounded-full bg-blue-600 flex items-center justify-center">
-              <span className="text-white text-xs font-bold" style={{ fontSize: "9px" }}>M</span>
-            </div>
-            <span className="text-xs text-gray-300">Madison &middot; LLF Automation</span>
-          </div>
+        <div className="mt-16 pt-8 border-t border-zinc-200/60 dark:border-zinc-800 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-3">
-            <span className="text-xs text-gray-300">{digests.length - hidden.length} briefing{(digests.length - hidden.length) !== 1 ? "s" : ""}</span>
+            <div className="w-6 h-6 rounded-full bg-blue-600 shadow-md shadow-blue-500/20 flex items-center justify-center">
+              <span className="text-white text-xs font-bold" style={{ fontSize: "10px" }}>M</span>
+            </div>
+            <span className="text-xs font-bold text-zinc-400 dark:text-zinc-500 uppercase tracking-widest">Madison &middot; LLF Automation</span>
+          </div>
+          <div className="flex items-center gap-2 bg-zinc-100 dark:bg-zinc-800 px-3 py-1.5 rounded-full">
+            <span className="text-xs font-bold text-zinc-500 dark:text-zinc-400">{digests.length - hidden.length} active briefing{(digests.length - hidden.length) !== 1 ? "s" : ""}</span>
           </div>
         </div>
 
