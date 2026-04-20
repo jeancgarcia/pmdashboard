@@ -1422,159 +1422,311 @@ function App() {
     );
   }
 
+  // Module navigation — "digests" or "toggl"
+  const [activeModule, setActiveModule] = useState("digests");
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const mobileMenuRef = useRef(null);
+
+  useEffect(() => {
+    if (!mobileMenuOpen) return;
+    const handler = (e) => { if (mobileMenuRef.current && !mobileMenuRef.current.contains(e.target)) setMobileMenuOpen(false); };
+    const esc = (e) => { if (e.key === "Escape") setMobileMenuOpen(false); };
+    document.addEventListener("mousedown", handler);
+    document.addEventListener("keydown", esc);
+    return () => { document.removeEventListener("mousedown", handler); document.removeEventListener("keydown", esc); };
+  }, [mobileMenuOpen]);
+
+  // Sidebar nav items
+  const NAV = [
+    { id: "digests", label: "Digests", icon: (
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+    ), desc: "Daily, EOD & Weekly" },
+    { id: "toggl", label: "Toggl", icon: (
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+    ), desc: "Time tracking" },
+  ];
+
   return (
-    <div className="min-h-screen overflow-x-hidden">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 md:px-8 py-12 md:py-16 fade-in w-full">
+    <div className="min-h-screen overflow-x-hidden flex">
 
-        {/* Header — 2-row: meta+avatar, then greeting full-width */}
-        <div className="mb-12">
-          {/* Row 1 — meta row (left) + avatar hub (right) */}
-          <div className="flex items-center justify-between gap-4 mb-4">
-            <div className="flex items-center gap-2 flex-wrap min-w-0">
-              <p className="text-sm font-medium text-zinc-500 dark:text-zinc-400 capitalize bg-zinc-200/50 dark:bg-zinc-800/50 px-3 py-1 rounded-full">{dateStr}</p>
-              <span className="text-zinc-300 dark:text-zinc-600 hidden sm:inline">&middot;</span>
-              <p className="text-sm font-medium text-zinc-500 dark:text-zinc-400 hidden sm:inline">Lisinski Law Firm</p>
-              <span className="text-zinc-300 dark:text-zinc-600">&middot;</span>
-              <p className="text-sm font-semibold text-zinc-400 dark:text-zinc-500 tabular-nums">{timeStr}</p>
+      {/* ═══ Desktop Sidebar — hidden on mobile ═══ */}
+      <aside className="hidden md:flex flex-col w-[200px] flex-shrink-0 border-r border-zinc-200/60 dark:border-zinc-800 bg-white/50 dark:bg-zinc-950/50 backdrop-blur-xl sticky top-0 h-screen">
+        {/* Logo */}
+        <div className="px-5 pt-6 pb-8">
+          <div className="flex items-center gap-2.5">
+            <div className="w-8 h-8 rounded-xl bg-blue-600 shadow-md shadow-blue-500/20 flex items-center justify-center">
+              <span className="text-white text-sm font-bold">M</span>
             </div>
-            <div className="flex-shrink-0">
-              <AvatarHub
-                digests={digests}
-                completed={completed}
-                reminders={reminders}
-                theme={theme}
-                onThemeToggle={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-              />
+            <div>
+              <p className="text-sm font-extrabold text-zinc-900 dark:text-zinc-50 leading-none">Madison</p>
+              <p className="text-[10px] font-bold text-zinc-400 dark:text-zinc-500 uppercase tracking-wider mt-0.5">LLF</p>
             </div>
           </div>
-
-          {/* Row 2 — greeting, full width, no truncation */}
-          <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-zinc-900 dark:text-white drop-shadow-sm">{greeting}, Jean 👋</h1>
         </div>
 
-        {/* Quick-add reminder pill — single source of truth for adding */}
-        <ReminderQuickAdd
-          reminders={reminders}
-          onAdd={addReminder}
-          onSeeAll={() => setTypeFilter("reminders")}
-          onBack={() => setTypeFilter("all")}
-          isOnRemindersTab={isRemindersView}
-        />
-
-        {/* Filters area */}
-        {!isRemindersView && (
-        <div className="mb-10 w-full">
-          {/* Search + Calendar — hidden on toggl view */}
-          {!isTogglView && (
-          <>
-          <div className="flex gap-2 mb-5">
-            <div className="relative flex-1 group">
-              <div className="absolute left-4 top-1/2 -translate-y-1/2 p-1 rounded-full group-focus-within:bg-blue-50 dark:group-focus-within:bg-blue-900/30 transition-colors">
-                <Icon.Search size={16} className="text-zinc-400 group-focus-within:text-blue-500 transition-colors" />
-              </div>
-              <input
-                type="text"
-                value={search}
-                onChange={e => setSearch(e.target.value)}
-                placeholder="Search briefings..."
-                className="w-full pl-12 pr-4 py-3 text-sm font-medium bg-white/80 dark:bg-zinc-800/80 backdrop-blur-md border border-zinc-200 dark:border-zinc-700 shadow-sm rounded-2xl text-zinc-900 dark:text-zinc-100 placeholder-zinc-400 focus:outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all"
-              />
-            </div>
-            <CalendarButton digests={digests} selectedDate={selectedDate} onSelect={setSelectedDate} />
-          </div>
-
-          {/* Active date filter chip */}
-          {selectedDate && (
-            <div className="flex items-center gap-2 mb-5 fade-in">
+        {/* Nav items */}
+        <nav className="flex-1 px-3 space-y-1">
+          {NAV.map(item => {
+            const active = activeModule === item.id;
+            return (
               <button
-                onClick={() => setSelectedDate(null)}
-                className="flex items-center gap-2 pl-3 pr-2 py-1.5 rounded-full text-xs font-bold bg-blue-500 text-white shadow-sm shadow-blue-500/20 hover:bg-blue-600 transition-all active:scale-95 group"
-                title="Clear date filter"
+                key={item.id}
+                onClick={() => { setActiveModule(item.id); if (item.id === "toggl") setTypeFilter("toggl"); else if (typeFilter === "toggl") setTypeFilter("all"); }}
+                className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-left transition-all group ${
+                  active
+                    ? "bg-zinc-900 dark:bg-white text-white dark:text-zinc-900 shadow-sm"
+                    : "text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-zinc-800"
+                }`}
               >
-                <Icon.Calendar size={12} />
-                <span>{new Date(selectedDate + "T00:00:00").toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })}</span>
-                <span className="p-0.5 rounded-full bg-white/20 group-hover:bg-white/30 transition-colors">
-                  <Icon.X size={10} />
-                </span>
+                <span className={`flex-shrink-0 ${active ? "text-white dark:text-zinc-900" : "text-zinc-400 dark:text-zinc-500 group-hover:text-zinc-600 dark:group-hover:text-zinc-300"}`}>{item.icon}</span>
+                <div className="min-w-0">
+                  <p className="text-sm font-bold truncate">{item.label}</p>
+                  <p className={`text-[10px] font-medium truncate ${active ? "text-zinc-300 dark:text-zinc-500" : "text-zinc-400 dark:text-zinc-600"}`}>{item.desc}</p>
+                </div>
               </button>
-            </div>
-          )}
-          </>
-          )}
+            );
+          })}
+        </nav>
 
-          {/* Type filter */}
-          <div className="flex gap-2 flex-wrap">
-            {types.map(t => {
-              const count = t === "all" ? activeDigests.length
-                : t === "archived" ? hidden.length
-                : t === "toggl" ? null
-                : activeDigests.filter(d => d.type === t).length;
-              const isMuted = t === "archived";
-              const isToggl = t === "toggl";
-              return (
-                <button
-                  key={t}
-                  onClick={() => setTypeFilter(t)}
-                  className={`px-4 py-1.5 rounded-full text-xs font-bold transition-all capitalize whitespace-nowrap shadow-sm active:scale-95 ${
-                    typeFilter === t
-                      ? (isToggl ? "bg-violet-600 text-white dark:bg-violet-500 dark:text-white" : isMuted ? "bg-zinc-700 text-white dark:bg-zinc-200 dark:text-zinc-900" : "bg-zinc-900 text-white dark:bg-white dark:text-zinc-900")
-                      : (isToggl ? "bg-violet-50 dark:bg-violet-900/20 text-violet-600 dark:text-violet-400 border border-violet-200 dark:border-violet-800/40 hover:bg-violet-100 dark:hover:bg-violet-900/30" : isMuted ? "bg-white dark:bg-zinc-800 text-zinc-500 hover:text-zinc-700 border border-zinc-200 dark:border-zinc-700 dark:hover:text-zinc-300" : "bg-white dark:bg-zinc-800 text-zinc-600 hover:text-zinc-900 border border-zinc-200 dark:border-zinc-700 dark:hover:text-zinc-200")
-                  }`}
-                >
-                  {t === "all" ? `All (${count})` : isToggl ? "⏱ Toggl" : `${t} (${count})`}
-                </button>
-              );
-            })}
+        {/* Sidebar footer — theme toggle + avatar */}
+        <div className="px-3 pb-5 pt-4 border-t border-zinc-100 dark:border-zinc-800 space-y-2">
+          <button
+            onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+            className="w-full flex items-center gap-3 px-3 py-2 rounded-xl text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-all group"
+          >
+            {theme === "dark" ? <Icon.Sun size={16} className="text-amber-400" /> : <Icon.Moon size={16} className="text-zinc-400" />}
+            <span className="text-xs font-bold">{theme === "dark" ? "Light mode" : "Dark mode"}</span>
+          </button>
+          <div className="flex items-center gap-2.5 px-3 py-2">
+            <img src="avatar.png" alt="Jean" className="w-7 h-7 rounded-full object-cover border border-zinc-200 dark:border-zinc-700" onError={(e) => { e.target.style.display = 'none'; }} />
+            <div className="min-w-0">
+              <p className="text-xs font-bold text-zinc-700 dark:text-zinc-200 truncate">Jean</p>
+              <p className="text-[10px] text-zinc-400 dark:text-zinc-500 tabular-nums">{timeStr}</p>
+            </div>
           </div>
         </div>
-        )}
+      </aside>
 
-        {/* Toggl view — dedicated screen */}
-        {isTogglView ? (
-          <TogglReviewTab onBack={() => setTypeFilter("all")} />
-        ) : isRemindersView ? (
-          <RemindersView reminders={reminders} onRemove={removeReminder} reminderHistory={reminderHistory} />
-        ) : filtered.length === 0 ? (
-          <div className="text-center py-20 px-6 rounded-[2rem] border border-dashed border-zinc-300 dark:border-zinc-700 bg-white/50 dark:bg-zinc-800/30 backdrop-blur-md">
-            <div className="w-14 h-14 bg-zinc-100 dark:bg-zinc-800 rounded-full flex items-center justify-center mx-auto mb-4">
-              <Icon.Search size={24} className="text-zinc-400 dark:text-zinc-500" />
-            </div>
-            <p className="text-base font-bold text-zinc-700 dark:text-zinc-300 mb-1">
-              {isArchiveView ? "No archived briefings" : "No briefings found"}
-            </p>
-            <p className="text-sm font-medium text-zinc-500 dark:text-zinc-500">Try adjusting your filters or search terms.</p>
-          </div>
-        ) : (
-          <div className="space-y-4 relative">
-            {filtered.map((d, i) => (
-              <DigestCard
-                key={d.id}
-                digest={d}
-                completed={completed}
-                onToggle={toggle}
-                onDelete={isArchiveView ? null : deleteDigest}
-                onRestore={isArchiveView ? restoreDigest : null}
-                defaultOpen={isArchiveView ? false : i === 0}
-                searchQuery={search}
-              />
-            ))}
-          </div>
-        )}
-
-        {/* Footer */}
-        <div className="mt-16 pt-8 border-t border-zinc-200/60 dark:border-zinc-800 flex flex-col sm:flex-row items-center justify-between gap-4">
+      {/* ═══ Mobile top bar — visible only on mobile ═══ */}
+      <div className="fixed top-0 left-0 right-0 z-50 md:hidden bg-white/80 dark:bg-zinc-950/80 backdrop-blur-xl border-b border-zinc-200/60 dark:border-zinc-800">
+        <div className="flex items-center justify-between px-4 py-3">
           <div className="flex items-center gap-3">
-            <div className="w-6 h-6 rounded-full bg-blue-600 shadow-md shadow-blue-500/20 flex items-center justify-center">
-              <span className="text-white text-xs font-bold" style={{ fontSize: "10px" }}>M</span>
+            <div ref={mobileMenuRef} className="relative">
+              <button
+                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                className="p-2 rounded-xl hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
+                aria-label="Menu"
+              >
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-zinc-700 dark:text-zinc-200"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+              </button>
+
+              {/* Mobile drawer */}
+              {mobileMenuOpen && (
+                <div className="absolute top-full left-0 mt-2 w-56 bg-white dark:bg-zinc-900 rounded-2xl shadow-xl border border-zinc-200 dark:border-zinc-800 p-2 fade-in z-50">
+                  {NAV.map(item => {
+                    const active = activeModule === item.id;
+                    return (
+                      <button
+                        key={item.id}
+                        onClick={() => { setActiveModule(item.id); if (item.id === "toggl") setTypeFilter("toggl"); else if (typeFilter === "toggl") setTypeFilter("all"); setMobileMenuOpen(false); }}
+                        className={`w-full flex items-center gap-3 px-3 py-3 rounded-xl text-left transition-all ${
+                          active
+                            ? "bg-zinc-900 dark:bg-white text-white dark:text-zinc-900"
+                            : "text-zinc-600 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800"
+                        }`}
+                      >
+                        <span>{item.icon}</span>
+                        <div>
+                          <p className="text-sm font-bold">{item.label}</p>
+                          <p className={`text-[10px] font-medium ${active ? "text-zinc-300 dark:text-zinc-500" : "text-zinc-400"}`}>{item.desc}</p>
+                        </div>
+                      </button>
+                    );
+                  })}
+                  <div className="mt-2 pt-2 border-t border-zinc-100 dark:border-zinc-800">
+                    <button
+                      onClick={() => { setTheme(theme === 'dark' ? 'light' : 'dark'); setMobileMenuOpen(false); }}
+                      className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-zinc-500 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-all"
+                    >
+                      {theme === "dark" ? <Icon.Sun size={16} className="text-amber-400" /> : <Icon.Moon size={16} />}
+                      <span className="text-xs font-bold">{theme === "dark" ? "Light mode" : "Dark mode"}</span>
+                    </button>
+                  </div>
+                </div>
+              )}
             </div>
-            <span className="text-xs font-bold text-zinc-400 dark:text-zinc-500 uppercase tracking-widest">Madison &middot; LLF Automation</span>
+            <div className="flex items-center gap-2">
+              <div className="w-6 h-6 rounded-lg bg-blue-600 flex items-center justify-center">
+                <span className="text-white text-[10px] font-bold">M</span>
+              </div>
+              <span className="text-sm font-extrabold text-zinc-900 dark:text-zinc-50">{NAV.find(n => n.id === activeModule)?.label}</span>
+            </div>
           </div>
-          <div className="flex items-center gap-2 bg-zinc-100 dark:bg-zinc-800 px-3 py-1.5 rounded-full">
-            <span className="text-xs font-bold text-zinc-500 dark:text-zinc-400">{digests.length - hidden.length} active briefing{(digests.length - hidden.length) !== 1 ? "s" : ""}</span>
+          <div className="flex-shrink-0">
+            <AvatarHub
+              digests={digests}
+              completed={completed}
+              reminders={reminders}
+              theme={theme}
+              onThemeToggle={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+            />
           </div>
         </div>
-
       </div>
+
+      {/* ═══ Main content area ═══ */}
+      <main className="flex-1 min-w-0 pt-16 md:pt-0">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 md:px-8 py-8 md:py-12 fade-in w-full">
+
+          {/* Header — greeting + meta (desktop only since mobile has top bar) */}
+          <div className="mb-10">
+            <div className="hidden md:flex items-center justify-between gap-4 mb-4">
+              <div className="flex items-center gap-2 flex-wrap min-w-0">
+                <p className="text-sm font-medium text-zinc-500 dark:text-zinc-400 capitalize bg-zinc-200/50 dark:bg-zinc-800/50 px-3 py-1 rounded-full">{dateStr}</p>
+                <span className="text-zinc-300 dark:text-zinc-600">&middot;</span>
+                <p className="text-sm font-medium text-zinc-500 dark:text-zinc-400">Lisinski Law Firm</p>
+                <span className="text-zinc-300 dark:text-zinc-600">&middot;</span>
+                <p className="text-sm font-semibold text-zinc-400 dark:text-zinc-500 tabular-nums">{timeStr}</p>
+              </div>
+              <div className="flex-shrink-0">
+                <AvatarHub
+                  digests={digests}
+                  completed={completed}
+                  reminders={reminders}
+                  theme={theme}
+                  onThemeToggle={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+                />
+              </div>
+            </div>
+            <h1 className="text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight text-zinc-900 dark:text-white drop-shadow-sm">{greeting}, Jean 👋</h1>
+          </div>
+
+          {/* ═══ DIGESTS MODULE ═══ */}
+          {activeModule === "digests" && (
+            <>
+              {/* Quick-add reminder pill */}
+              <ReminderQuickAdd
+                reminders={reminders}
+                onAdd={addReminder}
+                onSeeAll={() => setTypeFilter("reminders")}
+                onBack={() => setTypeFilter("all")}
+                isOnRemindersTab={isRemindersView}
+              />
+
+              {/* Filters area */}
+              {!isRemindersView && (
+              <div className="mb-10 w-full">
+                {/* Search + Calendar */}
+                <div className="flex gap-2 mb-5">
+                  <div className="relative flex-1 group">
+                    <div className="absolute left-4 top-1/2 -translate-y-1/2 p-1 rounded-full group-focus-within:bg-blue-50 dark:group-focus-within:bg-blue-900/30 transition-colors">
+                      <Icon.Search size={16} className="text-zinc-400 group-focus-within:text-blue-500 transition-colors" />
+                    </div>
+                    <input
+                      type="text"
+                      value={search}
+                      onChange={e => setSearch(e.target.value)}
+                      placeholder="Search briefings..."
+                      className="w-full pl-12 pr-4 py-3 text-sm font-medium bg-white/80 dark:bg-zinc-800/80 backdrop-blur-md border border-zinc-200 dark:border-zinc-700 shadow-sm rounded-2xl text-zinc-900 dark:text-zinc-100 placeholder-zinc-400 focus:outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all"
+                    />
+                  </div>
+                  <CalendarButton digests={digests} selectedDate={selectedDate} onSelect={setSelectedDate} />
+                </div>
+
+                {/* Active date filter chip */}
+                {selectedDate && (
+                  <div className="flex items-center gap-2 mb-5 fade-in">
+                    <button
+                      onClick={() => setSelectedDate(null)}
+                      className="flex items-center gap-2 pl-3 pr-2 py-1.5 rounded-full text-xs font-bold bg-blue-500 text-white shadow-sm shadow-blue-500/20 hover:bg-blue-600 transition-all active:scale-95 group"
+                      title="Clear date filter"
+                    >
+                      <Icon.Calendar size={12} />
+                      <span>{new Date(selectedDate + "T00:00:00").toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })}</span>
+                      <span className="p-0.5 rounded-full bg-white/20 group-hover:bg-white/30 transition-colors">
+                        <Icon.X size={10} />
+                      </span>
+                    </button>
+                  </div>
+                )}
+
+                {/* Type filter — digest types only (no toggl) */}
+                <div className="flex gap-2 flex-wrap">
+                  {types.filter(t => t !== "toggl").map(t => {
+                    const count = t === "all" ? activeDigests.length
+                      : t === "archived" ? hidden.length
+                      : activeDigests.filter(d => d.type === t).length;
+                    const isMuted = t === "archived";
+                    return (
+                      <button
+                        key={t}
+                        onClick={() => setTypeFilter(t)}
+                        className={`px-4 py-1.5 rounded-full text-xs font-bold transition-all capitalize whitespace-nowrap shadow-sm active:scale-95 ${
+                          typeFilter === t
+                            ? (isMuted ? "bg-zinc-700 text-white dark:bg-zinc-200 dark:text-zinc-900" : "bg-zinc-900 text-white dark:bg-white dark:text-zinc-900")
+                            : (isMuted ? "bg-white dark:bg-zinc-800 text-zinc-500 hover:text-zinc-700 border border-zinc-200 dark:border-zinc-700 dark:hover:text-zinc-300" : "bg-white dark:bg-zinc-800 text-zinc-600 hover:text-zinc-900 border border-zinc-200 dark:border-zinc-700 dark:hover:text-zinc-200")
+                        }`}
+                      >
+                        {t === "all" ? `All (${count})` : `${t} (${count})`}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+              )}
+
+              {/* Digest content */}
+              {isRemindersView ? (
+                <RemindersView reminders={reminders} onRemove={removeReminder} reminderHistory={reminderHistory} />
+              ) : filtered.length === 0 ? (
+                <div className="text-center py-20 px-6 rounded-[2rem] border border-dashed border-zinc-300 dark:border-zinc-700 bg-white/50 dark:bg-zinc-800/30 backdrop-blur-md">
+                  <div className="w-14 h-14 bg-zinc-100 dark:bg-zinc-800 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <Icon.Search size={24} className="text-zinc-400 dark:text-zinc-500" />
+                  </div>
+                  <p className="text-base font-bold text-zinc-700 dark:text-zinc-300 mb-1">
+                    {isArchiveView ? "No archived briefings" : "No briefings found"}
+                  </p>
+                  <p className="text-sm font-medium text-zinc-500 dark:text-zinc-500">Try adjusting your filters or search terms.</p>
+                </div>
+              ) : (
+                <div className="space-y-4 relative">
+                  {filtered.map((d, i) => (
+                    <DigestCard
+                      key={d.id}
+                      digest={d}
+                      completed={completed}
+                      onToggle={toggle}
+                      onDelete={isArchiveView ? null : deleteDigest}
+                      onRestore={isArchiveView ? restoreDigest : null}
+                      defaultOpen={isArchiveView ? false : i === 0}
+                      searchQuery={search}
+                    />
+                  ))}
+                </div>
+              )}
+            </>
+          )}
+
+          {/* ═══ TOGGL MODULE ═══ */}
+          {activeModule === "toggl" && (
+            <TogglReviewTab onBack={() => { setActiveModule("digests"); setTypeFilter("all"); }} />
+          )}
+
+          {/* Footer */}
+          <div className="mt-16 pt-8 border-t border-zinc-200/60 dark:border-zinc-800 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div className="flex items-center gap-3">
+              <div className="w-6 h-6 rounded-full bg-blue-600 shadow-md shadow-blue-500/20 flex items-center justify-center">
+                <span className="text-white text-xs font-bold" style={{ fontSize: "10px" }}>M</span>
+              </div>
+              <span className="text-xs font-bold text-zinc-400 dark:text-zinc-500 uppercase tracking-widest">Madison &middot; LLF Automation</span>
+            </div>
+            <div className="flex items-center gap-2 bg-zinc-100 dark:bg-zinc-800 px-3 py-1.5 rounded-full">
+              <span className="text-xs font-bold text-zinc-500 dark:text-zinc-400">{activeModule === "digests" ? `${digests.length - hidden.length} active briefings` : "Time review"}</span>
+            </div>
+          </div>
+
+        </div>
+      </main>
     </div>
   );
 }
