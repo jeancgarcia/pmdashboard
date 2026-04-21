@@ -514,6 +514,18 @@ function AvatarHub({ digests, completed, reminders, theme, onThemeToggle }) {
 
   const emailCount = unrepliedEmails.length;
 
+  // Dismiss a single email — remove locally + update Supabase
+  const dismissEmail = useCallback(async (emailId) => {
+    setUnrepliedEmails(prev => {
+      const next = prev.filter(e => e.id !== emailId);
+      // Fire-and-forget Supabase update
+      supabase.from('app_state').upsert({ id: 3, data: { emails: next, updatedAt: new Date().toISOString() } }).then(() => {
+        console.log("[emails] dismissed", emailId);
+      });
+      return next;
+    });
+  }, []);
+
   useEffect(() => {
     if (!open && !emailPanel) return;
     const handler = (e) => {
@@ -668,7 +680,7 @@ function AvatarHub({ digests, completed, reminders, theme, onThemeToggle }) {
       )}
 
       {/* ═══ Email notification panel ═══ */}
-      {emailPanel && emailCount > 0 && (
+      {emailPanel && unrepliedEmails.length > 0 && (
         <div className="absolute top-full right-0 mt-3 w-[340px] bg-white dark:bg-zinc-900 rounded-2xl shadow-xl border border-zinc-200 dark:border-zinc-800 z-50 email-panel-in overflow-hidden">
           {/* Panel header */}
           <div className="flex items-center justify-between px-5 pt-4 pb-3 border-b border-zinc-100 dark:border-zinc-800">
@@ -693,26 +705,31 @@ function AvatarHub({ digests, completed, reminders, theme, onThemeToggle }) {
           {/* Email list */}
           <div className="max-h-[320px] overflow-y-auto">
             {unrepliedEmails.map((email, i) => (
-              <a
+              <div
                 key={email.id || i}
-                href={email.webLink || "#"}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-start gap-3 px-5 py-3.5 hover:bg-zinc-50 dark:hover:bg-zinc-800/60 transition-colors border-b border-zinc-50 dark:border-zinc-800/50 last:border-0 group"
+                className="flex items-start gap-3 px-5 py-3.5 border-b border-zinc-50 dark:border-zinc-800/50 last:border-0 group"
               >
                 {/* Sender initial */}
-                <div className="flex-shrink-0 w-8 h-8 rounded-full bg-zinc-100 dark:bg-zinc-800 flex items-center justify-center mt-0.5">
+                <a href={email.webLink || "#"} target="_blank" rel="noopener noreferrer" className="flex-shrink-0 w-8 h-8 rounded-full bg-zinc-100 dark:bg-zinc-800 flex items-center justify-center mt-0.5 hover:ring-2 hover:ring-blue-400/40 transition-all">
                   <span className="text-xs font-bold text-zinc-500 dark:text-zinc-400">{(email.senderName || email.sender || "?").charAt(0).toUpperCase()}</span>
-                </div>
-                <div className="flex-1 min-w-0">
+                </a>
+                <a href={email.webLink || "#"} target="_blank" rel="noopener noreferrer" className="flex-1 min-w-0 hover:opacity-80 transition-opacity">
                   <p className="text-sm font-bold text-zinc-800 dark:text-zinc-100 truncate group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">{email.senderName || email.sender}</p>
                   <p className="text-xs text-zinc-500 dark:text-zinc-400 truncate mt-0.5">{email.subject}</p>
                   {email.receivedAt && (
                     <p className="text-[10px] text-zinc-400 dark:text-zinc-500 mt-1 tabular-nums">{new Date(email.receivedAt).toLocaleString("es-MX", { weekday: "short", hour: "2-digit", minute: "2-digit" })}</p>
                   )}
-                </div>
-                <Icon.ChevronRight size={12} className="flex-shrink-0 mt-2 text-zinc-300 dark:text-zinc-600 group-hover:text-blue-400 transition-colors" />
-              </a>
+                </a>
+                {/* Dismiss button */}
+                <button
+                  onClick={(e) => { e.stopPropagation(); dismissEmail(email.id); }}
+                  className="flex-shrink-0 mt-1 p-1.5 rounded-lg text-zinc-300 dark:text-zinc-600 hover:text-emerald-500 hover:bg-emerald-50 dark:hover:bg-emerald-500/10 transition-all opacity-0 group-hover:opacity-100"
+                  title="Marcar como listo"
+                  aria-label="Dismiss notification"
+                >
+                  <Icon.Check size={14} />
+                </button>
+              </div>
             ))}
           </div>
 
