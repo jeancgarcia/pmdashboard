@@ -1234,6 +1234,7 @@ function RemindersView({ reminders, onRemove, reminderHistory }) {
 function App() {
   const [digests, setDigests] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [syncing, setSyncing] = useState(false);
   const [error, setError] = useState(null);
   const [completed, setCompleted] = useState({});
   const [search, setSearch] = useState("");
@@ -1276,17 +1277,24 @@ function App() {
     localStorage.setItem("theme", theme);
   }, [theme]);
 
-  // Load digests + state on mount
-  useEffect(() => {
-    // Fetch digests.json
+  // Fetch digests — extracted so Sync button can call it too
+  const loadDigests = useCallback((isManual = false) => {
+    if (isManual) setSyncing(true);
     fetch("digests.json?" + Date.now())
       .then(r => { if (!r.ok) throw new Error("Failed to load"); return r.json(); })
       .then(data => {
         const sorted = [...data].sort((a, b) => (b.isoDate || "").localeCompare(a.isoDate || ""));
         setDigests(sorted);
         setLoading(false);
+        setSyncing(false);
       })
-      .catch(e => { setError(e.message); setLoading(false); });
+      .catch(e => { setError(e.message); setLoading(false); setSyncing(false); });
+  }, []);
+
+  // Load digests + state on mount
+  useEffect(() => {
+    // Fetch digests.json
+    loadDigests();
 
     // Load state: localStorage first (instant), then remote (authoritative)
     try {
@@ -1549,6 +1557,15 @@ function App() {
           </div>
           <span className="text-sm font-extrabold text-zinc-900 dark:text-zinc-50 ml-2">{NAV.find(n => n.id === activeModule)?.label}</span>
           </div>
+          {/* Mobile sync button */}
+          <button
+            onClick={() => loadDigests(true)}
+            disabled={syncing}
+            title="Sync latest briefing"
+            className="p-2 rounded-xl text-zinc-400 dark:text-zinc-500 hover:text-zinc-600 dark:hover:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors disabled:opacity-40"
+          >
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className={syncing ? "animate-spin" : ""}><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+          </button>
         </div>
       </div>
 
@@ -1565,6 +1582,15 @@ function App() {
               <p className="text-sm font-medium text-zinc-500 dark:text-zinc-400">Lisinski Law Firm</p>
               <span className="text-zinc-300 dark:text-zinc-600">&middot;</span>
               <p className="text-sm font-semibold text-zinc-400 dark:text-zinc-500 tabular-nums">{timeStr}</p>
+              <button
+                onClick={() => loadDigests(true)}
+                disabled={syncing}
+                title="Sync latest briefing"
+                className="ml-1 flex items-center gap-1.5 px-2 py-1 rounded-full text-zinc-400 dark:text-zinc-600 hover:text-zinc-600 dark:hover:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800/60 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className={syncing ? "animate-spin" : ""}><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+                {syncing && <span className="text-[10px] font-semibold tracking-wide">Syncing…</span>}
+              </button>
             </div>
             {/* Greeting + avatar row — visible on all breakpoints */}
             <div className="flex items-center justify-between gap-4 md:pr-32">
