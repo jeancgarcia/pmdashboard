@@ -1306,10 +1306,18 @@ function App() {
     } catch {}
 
     remoteRead().then(state => {
-      if (state && state.completed) setCompleted(state.completed);
-      if (state && state.hidden) setHidden(state.hidden);
-      if (state && state.reminders) setReminders(state.reminders);
-      if (state && state.reminderHistory) setReminderHistory(state.reminderHistory);
+      // Only apply remote state if the user hasn't acted yet.
+      // If they toggled something while Supabase was loading, their change wins — don't overwrite it.
+      if (!userActed.current) {
+        if (state && state.completed) setCompleted(state.completed);
+        if (state && state.hidden) setHidden(state.hidden);
+        if (state && state.reminders) setReminders(state.reminders);
+        if (state && state.reminderHistory) setReminderHistory(state.reminderHistory);
+      } else {
+        // User already acted — merge remote state without touching completed/hidden
+        if (state && state.reminders) setReminders(prev => prev.length ? prev : (state.reminders || []));
+        if (state && state.reminderHistory) setReminderHistory(prev => prev.length ? prev : (state.reminderHistory || []));
+      }
       setStateLoaded(true);
     });
   }, []);
