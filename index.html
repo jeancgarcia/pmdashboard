@@ -87,6 +87,24 @@ tailwind.config = {
   .progress-shimmer {
     animation: shimmer 1.8s ease-in-out infinite;
   }
+
+  /* Email badge pulse */
+  @keyframes badgePulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.5); }
+    50% { box-shadow: 0 0 0 4px rgba(239, 68, 68, 0); }
+  }
+  .email-badge-pulse {
+    animation: badgePulse 2s ease-in-out infinite;
+  }
+
+  /* Email panel slide-in */
+  @keyframes slideUp {
+    from { opacity: 0; transform: translateY(8px) scale(0.97); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+  }
+  .email-panel-in {
+    animation: slideUp 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
 </style>
 </head>
 <body class="selection:bg-blue-500/30">
@@ -474,24 +492,44 @@ function TogglReviewTab({ onBack }) {
   );
 }
 
-/* ═══ Avatar Hub — status ring + stats popover + settings ═══ */
+/* ═══ Avatar Hub — status ring + stats popover + settings + email badge ═══ */
 function AvatarHub({ digests, completed, reminders, theme, onThemeToggle }) {
   const [open, setOpen] = useState(false);
+  const [emailPanel, setEmailPanel] = useState(false);
+  const [unrepliedEmails, setUnrepliedEmails] = useState([]);
+  const [emailsUpdatedAt, setEmailsUpdatedAt] = useState(null);
   const wrapperRef = useRef(null);
 
+  // Fetch unreplied emails on mount + poll every 5 min
   useEffect(() => {
-    if (!open) return;
-    const handler = (e) => {
-      if (wrapperRef.current && !wrapperRef.current.contains(e.target)) setOpen(false);
+    let mounted = true;
+    const load = async () => {
+      const data = await readUnrepliedEmails();
+      if (mounted) {
+        setUnrepliedEmails(data.emails || []);
+        setEmailsUpdatedAt(data.updatedAt || null);
+      }
     };
-    const esc = (e) => { if (e.key === "Escape") setOpen(false); };
+    load();
+    const interval = setInterval(load, 5 * 60 * 1000);
+    return () => { mounted = false; clearInterval(interval); };
+  }, []);
+
+  const emailCount = unrepliedEmails.length;
+
+  useEffect(() => {
+    if (!open && !emailPanel) return;
+    const handler = (e) => {
+      if (wrapperRef.current && !wrapperRef.current.contains(e.target)) { setOpen(false); setEmailPanel(false); }
+    };
+    const esc = (e) => { if (e.key === "Escape") { setOpen(false); setEmailPanel(false); } };
     document.addEventListener("mousedown", handler);
     document.addEventListener("keydown", esc);
     return () => {
       document.removeEventListener("mousedown", handler);
       document.removeEventListener("keydown", esc);
     };
-  }, [open]);
+  }, [open, emailPanel]);
 
   // Today detection
   const now = new Date();
@@ -535,20 +573,26 @@ function AvatarHub({ digests, completed, reminders, theme, onThemeToggle }) {
   return (
     <div ref={wrapperRef} className="relative">
       <button
-        onClick={() => setOpen(!open)}
+        onClick={() => { if (emailCount > 0 && !emailPanel) { setEmailPanel(true); setOpen(false); } else { setOpen(!open); setEmailPanel(false); } }}
         className={`relative rounded-full transition-transform hover:scale-105 active:scale-95 ${isWeekend ? "weekend-breathe" : ""}`}
-        title="Your day at a glance"
-        aria-label="Open profile menu"
+        title={emailCount > 0 ? `${emailCount} correo${emailCount === 1 ? "" : "s"} sin contestar` : "Your day at a glance"}
+        aria-label={emailCount > 0 ? "View unreplied emails" : "Open profile menu"}
       >
         {/* Status ring */}
         <div
-          className={`absolute inset-0 rounded-full ${isWeekend ? "weekend-ring" : isCalm ? "calm-ring" : ""}`}
-          style={!isWeekend && !isCalm ? { background: ringColor } : undefined}
+          className={`absolute inset-0 rounded-full ${isWeekend ? "weekend-ring" : isCalm && emailCount === 0 ? "calm-ring" : ""}`}
+          style={!isWeekend && (!isCalm || emailCount > 0) ? { background: emailCount > 0 ? "#ef4444" : ringColor } : undefined}
         />
         {/* Avatar image (with inset padding so ring shows) */}
         <div className="relative m-[3px] w-14 h-14 sm:w-16 sm:h-16 md:w-24 md:h-24 rounded-full overflow-hidden border-2 border-white dark:border-zinc-900 shadow-lg shadow-zinc-300/40 dark:shadow-zinc-950/60">
           <img src="avatar.png" alt="Jean" className="w-full h-full object-cover" onError={(e) => { e.target.style.display = 'none'; }} />
         </div>
+        {/* Email badge — red circle with count */}
+        {emailCount > 0 && (
+          <div className="absolute -top-0.5 -right-0.5 md:top-0 md:right-0 z-10 flex items-center justify-center min-w-[20px] h-[20px] md:min-w-[26px] md:h-[26px] px-1 rounded-full bg-red-500 border-2 border-white dark:border-zinc-900 email-badge-pulse">
+            <span className="text-[10px] md:text-xs font-extrabold text-white tabular-nums leading-none">{emailCount}</span>
+          </div>
+        )}
       </button>
 
       {open && (
@@ -623,6 +667,64 @@ function AvatarHub({ digests, completed, reminders, theme, onThemeToggle }) {
               <span className="text-[9px] font-bold uppercase tracking-wider text-zinc-400 dark:text-zinc-500">Soon</span>
             </button>
           </div>
+        </div>
+      )}
+
+      {/* ═══ Email notification panel ═══ */}
+      {emailPanel && emailCount > 0 && (
+        <div className="absolute top-full right-0 mt-3 w-[340px] bg-white dark:bg-zinc-900 rounded-2xl shadow-xl border border-zinc-200 dark:border-zinc-800 z-50 email-panel-in overflow-hidden">
+          {/* Panel header */}
+          <div className="flex items-center justify-between px-5 pt-4 pb-3 border-b border-zinc-100 dark:border-zinc-800">
+            <div className="flex items-center gap-2.5">
+              <div className="flex items-center justify-center w-7 h-7 rounded-lg bg-red-50 dark:bg-red-500/10">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-red-500"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+              </div>
+              <div>
+                <p className="text-sm font-extrabold text-zinc-900 dark:text-zinc-50">Esperando respuesta</p>
+                <p className="text-[10px] font-medium text-zinc-400 dark:text-zinc-500">{emailCount} correo{emailCount === 1 ? "" : "s"} pendiente{emailCount === 1 ? "" : "s"}</p>
+              </div>
+            </div>
+            <button
+              onClick={() => { setEmailPanel(false); }}
+              className="p-1.5 rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-300"
+              aria-label="Close"
+            >
+              <Icon.X size={14} />
+            </button>
+          </div>
+
+          {/* Email list */}
+          <div className="max-h-[320px] overflow-y-auto">
+            {unrepliedEmails.map((email, i) => (
+              <a
+                key={email.id || i}
+                href={email.webLink || "#"}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-start gap-3 px-5 py-3.5 hover:bg-zinc-50 dark:hover:bg-zinc-800/60 transition-colors border-b border-zinc-50 dark:border-zinc-800/50 last:border-0 group"
+              >
+                {/* Sender initial */}
+                <div className="flex-shrink-0 w-8 h-8 rounded-full bg-zinc-100 dark:bg-zinc-800 flex items-center justify-center mt-0.5">
+                  <span className="text-xs font-bold text-zinc-500 dark:text-zinc-400">{(email.senderName || email.sender || "?").charAt(0).toUpperCase()}</span>
+                </div>
+                <div className="flex-1 min-w-0">
+                  <p className="text-sm font-bold text-zinc-800 dark:text-zinc-100 truncate group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">{email.senderName || email.sender}</p>
+                  <p className="text-xs text-zinc-500 dark:text-zinc-400 truncate mt-0.5">{email.subject}</p>
+                  {email.receivedAt && (
+                    <p className="text-[10px] text-zinc-400 dark:text-zinc-500 mt-1 tabular-nums">{new Date(email.receivedAt).toLocaleString("es-MX", { weekday: "short", hour: "2-digit", minute: "2-digit" })}</p>
+                  )}
+                </div>
+                <Icon.ChevronRight size={12} className="flex-shrink-0 mt-2 text-zinc-300 dark:text-zinc-600 group-hover:text-blue-400 transition-colors" />
+              </a>
+            ))}
+          </div>
+
+          {/* Footer */}
+          {emailsUpdatedAt && (
+            <div className="px-5 py-2.5 border-t border-zinc-100 dark:border-zinc-800 bg-zinc-50/50 dark:bg-zinc-900/80">
+              <p className="text-[9px] font-medium uppercase tracking-wider text-zinc-400 dark:text-zinc-500">Actualizado {new Date(emailsUpdatedAt).toLocaleString("es-MX", { hour: "2-digit", minute: "2-digit" })}</p>
+            </div>
+          )}
         </div>
       )}
     </div>
@@ -1050,6 +1152,18 @@ function debouncedWrite(state) {
   try { localStorage.setItem("llf-state", JSON.stringify(state)); } catch {}
   clearTimeout(writeQueue);
   writeQueue = setTimeout(() => remoteWrite(state), 800);
+}
+
+/* ═══ Unreplied Emails — read from Supabase app_state id=3 ═══ */
+async function readUnrepliedEmails() {
+  try {
+    const { data: item, error } = await supabase.from('app_state').select('data').eq('id', 3).single();
+    if (error && error.code !== 'PGRST116') throw error;
+    return item && item.data ? item.data : { emails: [], updatedAt: null };
+  } catch (e) {
+    console.warn("[emails] read failed:", e);
+    return { emails: [], updatedAt: null };
+  }
 }
 
 /* ═══ BellIcon ═══ */
