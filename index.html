@@ -500,19 +500,16 @@ function AvatarHub({ digests, completed, reminders, theme, onThemeToggle }) {
   const [emailsUpdatedAt, setEmailsUpdatedAt] = useState(null);
   const wrapperRef = useRef(null);
 
-  // Fetch unreplied emails on mount + poll every 5 min
+  // Fetch unreplied emails once on mount (data comes from scheduled task)
   useEffect(() => {
     let mounted = true;
-    const load = async () => {
-      const data = await readUnrepliedEmails();
+    readUnrepliedEmails().then(data => {
       if (mounted) {
         setUnrepliedEmails(data.emails || []);
         setEmailsUpdatedAt(data.updatedAt || null);
       }
-    };
-    load();
-    const interval = setInterval(load, 5 * 60 * 1000);
-    return () => { mounted = false; clearInterval(interval); };
+    });
+    return () => { mounted = false; };
   }, []);
 
   const emailCount = unrepliedEmails.length;
