@@ -26,9 +26,10 @@ tailwind.config = {
 </script>
 <style>
   * { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
-  body { 
+  body {
     font-family: 'Satoshi', system-ui, -apple-system, sans-serif;
     background-color: #fafafa;
+    scrollbar-gutter: stable;
   }
   .dark body { background-color: #0a0a0b; }
   
@@ -111,6 +112,7 @@ tailwind.config = {
     display: grid;
     grid-template-rows: 0fr;
     transition: grid-template-rows 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    overflow-x: clip;
   }
   .month-collapsible.open {
     grid-template-rows: 1fr;
