@@ -1556,26 +1556,43 @@ function App() {
       const local = JSON.parse(localStorage.getItem("llf-state") || "{}");
       if (local.completed && Object.keys(local.completed).length) setCompleted(local.completed);
       if (local.hidden && local.hidden.length) setHidden(local.hidden);
-      if (local.reminders && local.reminders.length) setReminders(local.reminders);
-      if (local.reminderHistory && local.reminderHistory.length) setReminderHistory(local.reminderHistory);
+      // NOTE: reminders are intentionally NOT loaded from localStorage.
+      // They are automation-controlled. Loading stale localStorage reminders causes
+      // consumed reminders to reappear after the automation clears them. We wait
+      // for the authoritative remote read instead.
       if (local.edits && Object.keys(local.edits).length) setEdits(local.edits);
     } catch {}
 
     remoteRead().then(state => {
-      // Only apply remote state if the user hasn't acted yet.
-      // If they toggled something while Supabase was loading, their change wins — don't overwrite it.
+      // completed, hidden, edits: local user actions win if they acted first.
+      // These fields reflect user checkbox interactions — their changes should not be overwritten.
       if (!userActed.current) {
         if (state && state.completed) setCompleted(state.completed);
         if (state && state.hidden) setHidden(state.hidden);
-        if (state && state.reminders) setReminders(state.reminders);
-        if (state && state.reminderHistory) setReminderHistory(state.reminderHistory);
         if (state && state.edits) setEdits(state.edits);
       } else {
-        // User already acted — merge remote state without touching completed/hidden/edits
-        if (state && state.reminders) setReminders(prev => prev.length ? prev : (state.reminders || []));
-        if (state && state.reminderHistory) setReminderHistory(prev => prev.length ? prev : (state.reminderHistory || []));
+        // User already acted — keep their checkbox/edit changes, don't touch completed/hidden/edits
         if (state && state.edits) setEdits(prev => Object.keys(prev).length ? prev : (state.edits || {}));
       }
+
+      // reminders + reminderHistory: ALWAYS apply with smart merge, regardless of userActed.
+      // Reminders are automation-controlled — the automation may have consumed/cleared them.
+      // Smart merge: start from remote state (authoritative), then add any locally-added reminders
+      // that haven't synced to remote yet (not in remote list and not in history = just added by user).
+      const remoteReminders = (state && state.reminders) || [];
+      const remoteHistory  = (state && state.reminderHistory) || [];
+      const remoteIds  = new Set(remoteReminders.map(r => r.id));
+      const historyIds = new Set(remoteHistory.map(r => r.id));
+      setReminders(prev => {
+        const merged = [...remoteReminders];
+        for (const r of prev) {
+          // Keep locally-added reminders that haven't made it to Supabase yet
+          if (!remoteIds.has(r.id) && !historyIds.has(r.id)) merged.push(r);
+        }
+        return merged;
+      });
+      setReminderHistory(remoteHistory);
+
       setStateLoaded(true);
     });
   }, []);
