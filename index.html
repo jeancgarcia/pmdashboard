@@ -139,6 +139,12 @@ const Icon = {
   X: ({ size = 16, ...p }) => (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" {...p}><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
   ),
+  Pencil: ({ size = 16, ...p }) => (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...p}><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+  ),
+  Save: ({ size = 16, ...p }) => (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...p}><polyline points="20 6 9 17 4 12"/></svg>
+  ),
 };
 
 /* ═══ Section color tints ═══ */
@@ -929,24 +935,106 @@ function sectionMatches(section, q) {
   return section.title.toLowerCase().includes(q) || section.items.some(i => itemMatches(i, q));
 }
 
-/* ═══ CheckItem (interactive) ═══ */
-function CheckItem({ item, done, onToggle, searchQuery }) {
+/* ═══ CheckItem (interactive + inline edit) ═══ */
+function CheckItem({ item, done, onToggle, searchQuery, editOverride, onEdit }) {
+  const [editing, setEditing] = useState(false);
+  const [editLabel, setEditLabel] = useState("");
+  const [editDetail, setEditDetail] = useState("");
+  const labelRef = useRef(null);
+
+  const displayLabel = editOverride?.label || item.label;
+  const displayDetail = editOverride?.detail !== undefined ? editOverride.detail : (item.detail || "");
+
+  const startEdit = (e) => {
+    e.stopPropagation();
+    setEditLabel(displayLabel);
+    setEditDetail(displayDetail);
+    setEditing(true);
+  };
+
+  const saveEdit = (e) => {
+    e.stopPropagation();
+    if (editLabel.trim() && onEdit) {
+      onEdit(item.id, { label: editLabel.trim(), detail: editDetail.trim() });
+    }
+    setEditing(false);
+  };
+
+  const cancelEdit = (e) => {
+    e.stopPropagation();
+    setEditing(false);
+  };
+
+  useEffect(() => {
+    if (editing && labelRef.current) {
+      labelRef.current.focus();
+      labelRef.current.select();
+    }
+  }, [editing]);
+
+  if (editing) {
+    return (
+      <div
+        onClick={e => e.stopPropagation()}
+        className="py-3 px-3 rounded-xl bg-blue-50/60 dark:bg-blue-500/5 border border-blue-200 dark:border-blue-500/20 transition-all duration-200"
+      >
+        <div className="flex items-start gap-3 mb-3">
+          <div className="mt-1.5 w-5 h-5 rounded-full flex-shrink-0 border border-zinc-300 dark:border-zinc-600 bg-white dark:bg-zinc-900" />
+          <div className="flex-1 space-y-2">
+            <textarea
+              ref={labelRef}
+              value={editLabel}
+              onChange={e => setEditLabel(e.target.value)}
+              rows={2}
+              onKeyDown={e => { if (e.key === "Escape") cancelEdit(e); if (e.key === "Enter" && (e.metaKey || e.ctrlKey)) saveEdit(e); }}
+              className="w-full text-sm font-medium text-zinc-800 dark:text-zinc-200 bg-white dark:bg-zinc-800 border border-zinc-300 dark:border-zinc-600 focus:border-blue-400 dark:focus:border-blue-500 rounded-lg px-2.5 py-1.5 resize-none outline-none transition-colors"
+              placeholder="Label..."
+            />
+            <textarea
+              value={editDetail}
+              onChange={e => setEditDetail(e.target.value)}
+              rows={3}
+              onKeyDown={e => { if (e.key === "Escape") cancelEdit(e); if (e.key === "Enter" && (e.metaKey || e.ctrlKey)) saveEdit(e); }}
+              className="w-full text-xs text-zinc-500 dark:text-zinc-400 bg-white dark:bg-zinc-800 border border-zinc-300 dark:border-zinc-600 focus:border-blue-400 dark:focus:border-blue-500 rounded-lg px-2.5 py-1.5 resize-none outline-none transition-colors"
+              placeholder="Detail (optional)..."
+            />
+            <p className="text-[10px] text-zinc-400 dark:text-zinc-500">⌘↵ to save · Esc to cancel</p>
+          </div>
+        </div>
+        <div className="flex justify-end gap-2 pl-8">
+          <button onClick={cancelEdit} className="text-xs font-medium text-zinc-500 hover:text-zinc-700 dark:text-zinc-400 dark:hover:text-zinc-200 px-3 py-1.5 rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-700 transition-colors">Cancel</button>
+          <button onClick={saveEdit} className="text-xs font-bold text-blue-600 dark:text-blue-400 px-3 py-1.5 rounded-lg bg-blue-100 dark:bg-blue-500/15 hover:bg-blue-200 dark:hover:bg-blue-500/25 transition-colors">Save edit</button>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div
       onClick={onToggle}
-      className={`group flex items-start gap-3 py-3 px-3 rounded-xl cursor-pointer select-none transition-all duration-200 hover:bg-zinc-100/50 dark:hover:bg-zinc-800/50 ${done ? "opacity-40" : ""}`}
+      className={`group relative flex items-start gap-3 py-3 px-3 rounded-xl cursor-pointer select-none transition-all duration-200 hover:bg-zinc-100/50 dark:hover:bg-zinc-800/50 ${done ? "opacity-40" : ""}`}
     >
       <div className={`mt-0.5 w-5 h-5 rounded-full flex-shrink-0 flex items-center justify-center transition-all duration-300 ${done ? "bg-emerald-500 shadow-sm shadow-emerald-500/20 scale-105" : "border border-zinc-300 dark:border-zinc-600 bg-white dark:bg-zinc-900 group-hover:border-zinc-400 dark:group-hover:border-zinc-500"}`}>
         {done && <Icon.Check size={11} color="white" />}
       </div>
       <div className="flex-1 min-w-0 transition-transform duration-200 group-hover:translate-x-1">
-        <div className="flex items-center gap-2">
-          <span className={`text-sm leading-snug transition-colors duration-200 ${done ? "line-through text-zinc-400 dark:text-zinc-500" : "text-zinc-800 dark:text-zinc-200 font-medium"}`}>{highlight(item.label, searchQuery)}</span>
+        <div className="flex items-center gap-2 flex-wrap">
+          <span className={`text-sm leading-snug transition-colors duration-200 ${done ? "line-through text-zinc-400 dark:text-zinc-500" : "text-zinc-800 dark:text-zinc-200 font-medium"}`}>{highlight(displayLabel, searchQuery)}</span>
           {item.flag === "urgent" && !done && <span className="w-1.5 h-1.5 rounded-full bg-red-500 shadow-[0_0_8px_rgba(239,68,68,0.5)] flex-shrink-0" />}
           {item.flag === "due" && !done && <span className="w-1.5 h-1.5 rounded-full bg-amber-500 shadow-[0_0_8px_rgba(245,158,11,0.5)] flex-shrink-0" />}
+          {editOverride && !done && <span className="text-[9px] uppercase tracking-wider font-bold text-blue-400 dark:text-blue-500 px-1 py-0.5 bg-blue-50 dark:bg-blue-500/10 rounded flex-shrink-0">edited</span>}
         </div>
-        {item.detail && !done && <p className="text-xs text-zinc-500 dark:text-zinc-400 leading-relaxed mt-1">{highlight(item.detail, searchQuery)}</p>}
+        {displayDetail && !done && <p className="text-xs text-zinc-500 dark:text-zinc-400 leading-relaxed mt-1">{highlight(displayDetail, searchQuery)}</p>}
       </div>
+      {!done && onEdit && (
+        <button
+          onClick={startEdit}
+          className="opacity-0 group-hover:opacity-100 transition-all duration-150 flex-shrink-0 mt-0.5 p-1.5 rounded-lg text-zinc-400 hover:text-blue-500 hover:bg-blue-50 dark:hover:bg-blue-500/10 dark:text-zinc-500 dark:hover:text-blue-400"
+          title="Edit this item"
+        >
+          <Icon.Pencil size={12} />
+        </button>
+      )}
     </div>
   );
 }
@@ -972,7 +1060,7 @@ function InfoItem({ item, searchQuery }) {
 }
 
 /* ═══ Section ═══ */
-function Section({ section, completed, onToggle, defaultCollapsed, searchQuery }) {
+function Section({ section, completed, onToggle, defaultCollapsed, searchQuery, edits, onEditItem }) {
   const [collapsed, setCollapsed] = useState(defaultCollapsed);
   const isInfo = !!section.info;
   const doneCount = isInfo ? 0 : section.items.filter(i => completed[i.id]).length;
@@ -1001,7 +1089,15 @@ function Section({ section, completed, onToggle, defaultCollapsed, searchQuery }
             {isInfo
               ? section.items.map(item => <InfoItem key={item.id} item={item} searchQuery={searchQuery} />)
               : section.items.map(item => (
-                  <CheckItem key={item.id} item={item} done={!!completed[item.id]} onToggle={() => onToggle(item.id)} searchQuery={searchQuery} />
+                  <CheckItem
+                    key={item.id}
+                    item={item}
+                    done={!!completed[item.id]}
+                    onToggle={() => onToggle(item.id)}
+                    searchQuery={searchQuery}
+                    editOverride={edits ? edits[item.id] : null}
+                    onEdit={onEditItem || null}
+                  />
                 ))
             }
           </div>
@@ -1012,7 +1108,7 @@ function Section({ section, completed, onToggle, defaultCollapsed, searchQuery }
 }
 
 /* ═══ DigestCard ═══ */
-function DigestCard({ digest, completed, onToggle, onDelete, onRestore, defaultOpen, searchQuery }) {
+function DigestCard({ digest, completed, onToggle, onDelete, onRestore, defaultOpen, searchQuery, edits, onEditItem }) {
   const [open, setOpen] = useState(defaultOpen);
   const [confirmDelete, setConfirmDelete] = useState(false);
   const actionItems = digest.sections.filter(s => !s.info).flatMap(s => s.items);
@@ -1115,7 +1211,7 @@ function DigestCard({ digest, completed, onToggle, onDelete, onRestore, defaultO
 
           <div className="space-y-2">
             {digest.sections.map((section, si) => (
-              <Section key={si} section={section} completed={completed} onToggle={onToggle} defaultCollapsed={false} searchQuery={searchQuery} />
+              <Section key={si} section={section} completed={completed} onToggle={onToggle} defaultCollapsed={false} searchQuery={searchQuery} edits={edits} onEditItem={onEditItem} />
             ))}
           </div>
         </div>
@@ -1387,6 +1483,7 @@ function App() {
   const [hidden, setHidden] = useState([]);
   const [reminders, setReminders] = useState([]);
   const [reminderHistory, setReminderHistory] = useState([]);
+  const [edits, setEdits] = useState({});
   const [stateLoaded, setStateLoaded] = useState(false);
   const userActed = React.useRef(false); // only write after a real user action
   const [activeModule, setActiveModule] = useState("digests");
@@ -1461,6 +1558,7 @@ function App() {
       if (local.hidden && local.hidden.length) setHidden(local.hidden);
       if (local.reminders && local.reminders.length) setReminders(local.reminders);
       if (local.reminderHistory && local.reminderHistory.length) setReminderHistory(local.reminderHistory);
+      if (local.edits && Object.keys(local.edits).length) setEdits(local.edits);
     } catch {}
 
     remoteRead().then(state => {
@@ -1471,10 +1569,12 @@ function App() {
         if (state && state.hidden) setHidden(state.hidden);
         if (state && state.reminders) setReminders(state.reminders);
         if (state && state.reminderHistory) setReminderHistory(state.reminderHistory);
+        if (state && state.edits) setEdits(state.edits);
       } else {
-        // User already acted — merge remote state without touching completed/hidden
+        // User already acted — merge remote state without touching completed/hidden/edits
         if (state && state.reminders) setReminders(prev => prev.length ? prev : (state.reminders || []));
         if (state && state.reminderHistory) setReminderHistory(prev => prev.length ? prev : (state.reminderHistory || []));
+        if (state && state.edits) setEdits(prev => Object.keys(prev).length ? prev : (state.edits || {}));
       }
       setStateLoaded(true);
     });
@@ -1483,12 +1583,20 @@ function App() {
   // Persist state to remote — ONLY after a real user action (not on initial load)
   useEffect(() => {
     if (!stateLoaded || !userActed.current) return;
-    debouncedWrite({ completed, hidden, reminders, reminderHistory });
-  }, [completed, hidden, reminders, reminderHistory, stateLoaded]);
+    debouncedWrite({ completed, hidden, reminders, reminderHistory, edits });
+  }, [completed, hidden, reminders, reminderHistory, edits, stateLoaded]);
 
   const toggle = useCallback((id) => {
     userActed.current = true;
     setCompleted(prev => ({ ...prev, [id]: !prev[id] }));
+  }, []);
+
+  const handleEditItem = useCallback((id, { label, detail }) => {
+    userActed.current = true;
+    setEdits(prev => ({
+      ...prev,
+      [id]: { label, detail, editedAt: new Date().toISOString() }
+    }));
   }, []);
 
   const deleteDigest = useCallback((digestId) => {
@@ -1929,6 +2037,8 @@ function App() {
                       onRestore={isArchiveView ? restoreDigest : null}
                       defaultOpen={isArchiveView ? false : i === 0}
                       searchQuery={search}
+                      edits={edits}
+                      onEditItem={handleEditItem}
                     />
                   ))}
                 </div>
