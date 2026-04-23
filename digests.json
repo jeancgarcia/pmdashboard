@@ -1,5 +1,223 @@
 [
   {
+    "id": "eod-2026-04-23",
+    "type": "eod",
+    "date": "Thursday, April 23 - End of Day",
+    "isoDate": "2026-04-23",
+    "greeting": "Thursday delivered, Jean — and it was a full one. The Firmwide went on, Tudo Bem! ran a real hour of alignment on CoE workflows, and you checked off 14 items across action items, carried items, and reminders. You sent the CoE summary to TLs and Sara, got Janet's meeting on the calendar, cleared the Hassan situation, closed out the Staff Aug link issue, and had all your 1:1s on time. A few things roll into Friday — nothing alarming — and tomorrow's calendar is actually well-structured. Rest easy. You moved the needle today.",
+    "sections": [
+      {
+        "title": "Completed Today",
+        "info": true,
+        "items": [
+          {
+            "id": "eod-0423-done-1",
+            "label": "CoE summary email to TLs + Sara — sent",
+            "detail": "Jean sent the CoE summary email as planned, closing the loop after yesterday's CoE meeting. Sara acknowledged the update."
+          },
+          {
+            "id": "eod-0423-done-2",
+            "label": "Schedule meeting with Janet — Asana CoE / EPMO Touchpoint booked for Friday",
+            "detail": "Jean scheduled the CoE → EPMO escalation process meeting with Janet McDowell for Friday, April 24 at 4:00 PM. Purpose: align on the process for projects sent back from CoE to EPMO, based on Asana's limitations."
+          },
+          {
+            "id": "eod-0423-done-3",
+            "label": "Hassan URGENT — CLs at Bio Appointments handled",
+            "detail": "Jean actioned the urgent Teams message about clients detained at Bio Appointments needing A# and nationality data lookups. Situation addressed."
+          },
+          {
+            "id": "eod-0423-done-4",
+            "label": "Yuri — Litify folder 9 follow-up completed",
+            "detail": "Followed up with Yuri (and Santiago) on the Litify folder 9 issue. Good 1:1 window with Santiago at 11 AM was used for this."
+          },
+          {
+            "id": "eod-0423-done-5",
+            "label": "Service Cloud Refresher Training — assessed for team",
+            "detail": "Reviewed the Salesforce Service Cloud Refresher Training invite from Maria Monroy ahead of the May 2, 2026 launch. Team awareness determined."
+          },
+          {
+            "id": "eod-0423-done-6",
+            "label": "Staff Augmentation gap analysis — corrected link verified and reviewed",
+            "detail": "Duvan re-shared the gap analysis from a shared location (correcting the personal OneDrive issue). Link verified and document reviewed to feed into the PRD. Duvan also shared the PRD V2.0 draft today via email."
+          },
+          {
+            "id": "eod-0423-done-7",
+            "label": "CoE Priority Tickets — Sprint 10 handoff reviewed",
+            "detail": "Reviewed Mar Garcia's Sprint 10 IT Handoff Package to confirm alignment on what was packaged for Sprint 10."
+          },
+          {
+            "id": "eod-0423-done-8",
+            "label": "Expedite Request — David and Yuri follow-up confirmed",
+            "detail": "Confirmed follow-up on UAT status with David and ON HOLD email request with Yuri. Item carried since yesterday now resolved."
+          },
+          {
+            "id": "eod-0423-done-9",
+            "label": "Incident Management Survey — T. Lawrence's feedback incorporated",
+            "detail": "Reviewed T. Lawrence's recommended changes and attachments and incorporated feedback before firm-wide distribution. This item had been carried since Wednesday."
+          },
+          {
+            "id": "eod-0423-done-10",
+            "label": "Dashboard data extraction — Plan B direction given to Javier Vargas",
+            "detail": "Javier had flagged the 9 Htz API as too slow. Jean provided direction on Plan B for extracting dashboard data. Item resolved."
+          },
+          {
+            "id": "eod-0423-done-11",
+            "label": "Buatify CoE user dashboard — meeting scheduled with David for Friday",
+            "detail": "Jean scheduled a 30-minute meeting with David Molano for Friday, April 24 at 11:00 AM to review the CoE user dashboard. David accepted."
+          },
+          {
+            "id": "eod-0423-done-12",
+            "label": "EPMO Dashboard Review — meeting scheduled with Sara",
+            "detail": "Jean scheduled the EPMO Dashboard Review with Sara Watson. Sara confirmed she is fully booked today and tomorrow, so the 1:1 and dashboard review will start next week."
+          },
+          {
+            "id": "eod-0423-done-13",
+            "label": "Quiz de 16 personalidades — reviewed for team",
+            "detail": "Reviewed the 16personalities quiz link (https://www.16personalities.com/free-personality-test) that came up in Camilo's 1:1 yesterday."
+          },
+          {
+            "id": "eod-0423-done-14",
+            "label": "All four 1:1s completed + Firmwide + BCP/IR weekly + Tudo Bem!",
+            "detail": "Full meeting day: 1:1 Andrea (10:30 AM), 1:1 Santiago (11:00 AM), BCP/Incident Response weekly (1:30 PM), April Firmwide Meeting (2:00 PM), Project Updates with Sara (2:30 PM), 1:1 David (3:00 PM), and Tudo Bem! team sync (4:00 PM) all completed."
+          }
+        ]
+      },
+      {
+        "title": "Still Open",
+        "info": false,
+        "items": [
+          {
+            "id": "eod-0423-open-1",
+            "label": "BCP/Incident Response survey — T. Lawrence's recommendations need final review",
+            "detail": "T. Lawrence's recommended changes and attachments were received Wednesday. The survey still needs final adjustments before firm-wide distribution. The BCP/IR weekly met today — confirm if this was advanced in the meeting or still needs action.",
+            "flag": "carried"
+          },
+          {
+            "id": "eod-0423-open-2",
+            "label": "Expedite Request — formal confirmation of UAT done + ON HOLD email sent",
+            "detail": "Jean followed up with David and Yuri, but formal confirmation of UAT completion and Yuri's ON HOLD email still need to be verified. Keep an eye on this one.",
+            "flag": "carried"
+          },
+          {
+            "id": "eod-0423-open-3",
+            "label": "Document Chelsea's bucket ownership decision in Incident Response project",
+            "detail": "Chelsea Schinnour confirmed: Legal owns Bucket 5, consults on Bucket 6. This needs to be formally documented in the Incident Response project. Was on today's checklist but did not get checked off."
+          },
+          {
+            "id": "eod-0423-open-4",
+            "label": "Modificar módulo EMPO en Prio — traducir a inglés y agregar logo LLF",
+            "detail": "Update the EMPO module in Prio: translate content to English and add the LLF logo to the home screen. Added as a reminder Wednesday night, carried forward."
+          },
+          {
+            "id": "eod-0423-open-5",
+            "label": "Dashboard personal — agregar función para seleccionar cuándo disparar un reminder",
+            "detail": "Feature request for your personal dashboard: allow you to choose when a reminder should trigger, not just add it. Added at 2:45 AM Wednesday, carried forward."
+          }
+        ]
+      },
+      {
+        "title": "Key Decisions",
+        "info": true,
+        "items": [
+          {
+            "id": "eod-0423-kd-1",
+            "label": "Jean/Sara 1:1 series restarts next week",
+            "detail": "Sara confirmed she is fully booked Thursday and Friday. The new weekly 1:1 series and the EPMO Dashboard Review will both start next week."
+          },
+          {
+            "id": "eod-0423-kd-2",
+            "label": "Denial/RFE dropdown — waiting on Shelley (back tomorrow)",
+            "detail": "Jill Coen replied: 'Shelley will be back tomorrow to confirm. Josh — apologies — I incorrectly assumed this was a data field with a dropdown.' Shelley's confirmation is expected Friday."
+          },
+          {
+            "id": "eod-0423-kd-3",
+            "label": "Asana CoE intake form — business vs. IT ownership question surfaced in Tudo Bem!",
+            "detail": "During Tudo Bem!, the team discussed whether all projects go through the same intake form, who submits it (business vs. IT), and whether changes require IT tickets. Santiago noted: 'I think you won't do it, business will do it. David Molano?' This needs a clear decision for the CoE operational model."
+          },
+          {
+            "id": "eod-0423-kd-4",
+            "label": "Asana EPMO tab notification not working — 2 projects pending manual review",
+            "detail": "Jean flagged in Teams: 'I haven't been able to create the notification when a project is sent to the EPMO tab in Asana, but there are 2 projects to be reviewed.' Manual review needed until automation is resolved."
+          }
+        ]
+      },
+      {
+        "title": "Tomorrow Preview",
+        "info": true,
+        "items": [
+          {
+            "id": "eod-0423-fri-1",
+            "label": "Sara Watson — last day in Dublin Office",
+            "detail": "Friday, April 24 is Sara's final day in the Dublin, OH office. All meetings will be virtual.",
+            "note": "Last Dublin day"
+          },
+          {
+            "id": "eod-0423-fri-2",
+            "time": "10:00 AM",
+            "label": "Phase 2 Weekly IT Projects Sync",
+            "detail": "Jean organizes this weekly sync with Yuri, Jhara, Andrea, Camilo, Mar Garcia, David, Santiago, and Amelia Puri. 60 minutes.",
+            "note": "Teams — Purple category"
+          },
+          {
+            "id": "eod-0423-fri-3",
+            "time": "11:00 AM",
+            "label": "Buatify CoE user dashboard — review with David",
+            "detail": "Jean meets with David Molano to review the CoE user dashboard. David accepted today.",
+            "note": "Teams meeting"
+          },
+          {
+            "id": "eod-0423-fri-4",
+            "time": "12:00 PM",
+            "label": "Blocked Space",
+            "detail": "Protected focus window. Good time for open items: IR survey, Expedite Request follow-ups, or EMPO module edits.",
+            "note": "Red category — protected"
+          },
+          {
+            "id": "eod-0423-fri-5",
+            "time": "1:00 PM",
+            "label": "Sprint Escalations & UAT Timing",
+            "detail": "Meeting organized by Sara Watson with Jamie McDowell, Jean, Eunice Barragan, Jorge Grijalva, and others. Good moment to surface the Expedite Request UAT status.",
+            "note": "Tentative — Teams"
+          },
+          {
+            "id": "eod-0423-fri-6",
+            "time": "2:00 PM",
+            "label": "EPMO EOW Check In",
+            "detail": "Sara Watson's end-of-week EPMO check-in (moved from Tuesday). With Sara, Jamie McDowell, Eunice Barragan, and Jorge Grijalva.",
+            "note": "Teams meeting"
+          },
+          {
+            "id": "eod-0423-fri-7",
+            "time": "3:00 PM",
+            "label": "Executive Project Status Slide Update",
+            "detail": "Jean organizes this weekly session with Yuri and Jhara to review and update the Executive Projects deck. Now moved to Fridays going forward.",
+            "note": "Teams — Orange category"
+          },
+          {
+            "id": "eod-0423-fri-8",
+            "time": "4:00 PM",
+            "label": "Asana CoE - EPMO Touchpoint with Janet",
+            "detail": "First meeting with Janet McDowell to define the escalation process from CoE back to EPMO based on Asana's limitations. Jean scheduled this today.",
+            "note": "Teams meeting"
+          },
+          {
+            "id": "eod-0423-fri-9",
+            "time": "4:30 PM",
+            "label": "Claude Training",
+            "detail": "Mar Garcia is organizing a Claude Training session with Jean, David, Andrea, Santiago, and Jhara. Tentative.",
+            "note": "Tentative — Teams"
+          },
+          {
+            "id": "eod-0423-fri-10",
+            "label": "Shelley back — expect Denial/RFE dropdown confirmation",
+            "detail": "Jill Coen confirmed Shelley returns Friday. Watch for confirmation on the Denial/RFE dropdown scope and next steps.",
+            "note": "Awareness"
+          }
+        ]
+      }
+    ]
+  },
+  {
     "id": "daily-2026-04-23",
     "type": "daily",
     "date": "Thursday, April 23",
