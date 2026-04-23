@@ -1,5 +1,269 @@
 [
   {
+    "id": "daily-2026-04-23",
+    "type": "daily",
+    "date": "Thursday, April 23",
+    "isoDate": "2026-04-23",
+    "greeting": "Good morning, Jean. Big Thursday — the Firmwide Meeting anchors the afternoon at 2 PM, and you've got a full morning of 1:1s with Andrea and Santiago plus the BCP/Incident Response weekly right before it. Chelsea finally closed the loop on the Incident Response bucket ownership question (Legal takes Bucket 5, consults on Bucket 6) — that one's been open for weeks. Five items carried from yesterday's open list, six reminders queued from your late-night thinking, and David is OOO until 3 PM but his 1:1 starts right at 3 so the timing should hold. Tudo Bem! closes the day at 4. You've got a full one — let's get into it.",
+    "sections": [
+      {
+        "title": "Carried Over",
+        "info": false,
+        "items": [
+          {
+            "id": "co-thu-0423-eod-0422-open-1",
+            "label": "BCP/Incident Response survey — review T. Lawrence's recommendations",
+            "detail": "T. Lawrence replied yesterday with recommended changes and attachments, and flagged that an AI survey was sent to all TMs on 4/20. Review T. Lawrence's attachments and determine if adjustments are needed before firm-wide distribution. Check who hasn't confirmed their review.",
+            "flag": "carried"
+          },
+          {
+            "id": "co-thu-0423-eod-0422-open-2",
+            "label": "Expedite Request project — confirm UAT status and ON HOLD email sent",
+            "detail": "Yesterday Jean asked David to confirm when UAT is done, and asked Yuri to send a formal ON HOLD email. Follow up to confirm both were actioned. See also today's Reminder below.",
+            "flag": "carried"
+          },
+          {
+            "id": "co-thu-0423-eod-0422-open-3",
+            "label": "Staff Augmentation gap analysis — verify corrected link is accessible",
+            "detail": "Yuri flagged Duvan's original link was on his personal OneDrive. Duvan sent a corrected link last night. Verify the new link works before reviewing the gap analysis document.",
+            "flag": "carried"
+          },
+          {
+            "id": "co-thu-0423-eod-0422-open-4",
+            "label": "Incident Management Survey — incorporate T. Lawrence's feedback before distribution",
+            "detail": "T. Lawrence sent recommended changes with attachments and flagged overlap with the AI survey sent to TMs on 4/20. Review the attachments and incorporate feedback before finalizing for firm-wide distribution.",
+            "flag": "carried"
+          },
+          {
+            "id": "co-thu-0423-eod-0422-open-5",
+            "label": "Dashboard data extraction — determine Plan B (9 Htz API too slow)",
+            "detail": "Javier Vargas flagged in Teams that the 9 Htz API is too slow to respond and Dolpao already asked about it. Javier messaged Jean directly about needing a Plan B for extracting dashboard data. Needs direction.",
+            "flag": "carried"
+          }
+        ]
+      },
+      {
+        "title": "Reminders",
+        "info": false,
+        "items": [
+          {
+            "id": "rem-1776865649999",
+            "label": "Expedite Request — follow up with David and Yuri on UAT + ON HOLD email",
+            "detail": "You sent David and Yuri this message: 'David please let me know when the UAT is done, just to close that gap in my mind. Then Yuri send an email requesting to keep that ON HOLD until further notice.' Follow up to confirm both were actioned. Connects to the carried-over item above."
+          },
+          {
+            "id": "rem-1776891881398",
+            "label": "Revisar quiz de 16 personalidades para el equipo",
+            "detail": "Link: https://www.16personalities.com/free-personality-test — came up during the 1:1 with Camilo yesterday. Worth sharing with the team."
+          },
+          {
+            "id": "rem-1776895578699",
+            "label": "Modificar módulo EMPO en Prio — traducir a inglés y agregar logo LLF",
+            "detail": "Update the EMPO module in Prio: translate the content to English and add the LLF logo to the home screen."
+          },
+          {
+            "id": "rem-1776912280531",
+            "label": "Enviar correo a TLs + Sara — resumen de lo acordado en reunión de CoE de ayer",
+            "detail": "Send an email to Team Leads and Sara Watson summarizing what was decided in yesterday's CoE meeting. You added this at 2:44 AM — it's a priority for this morning before Sara wraps her last day in Dublin."
+          },
+          {
+            "id": "rem-1776912305151",
+            "label": "Agendar meeting con Janet — proceso de escalation back to EPMO from CoE",
+            "detail": "Schedule a meeting with Janet to define the escalation process from CoE back to EPMO. Added alongside the CoE email reminder at 2:45 AM."
+          },
+          {
+            "id": "rem-1776912331246",
+            "label": "Dashboard personal — agregar función para seleccionar cuándo disparar un reminder",
+            "detail": "Feature request for your personal dashboard: allow you to choose when a reminder should trigger (not just add it). Added at 2:45 AM."
+          }
+        ]
+      },
+      {
+        "title": "Today's Schedule",
+        "info": true,
+        "items": [
+          {
+            "id": "thu-s1",
+            "time": "All day",
+            "label": "Sara Watson — Dublin Office (last full day)",
+            "detail": "Sara is in the Dublin, OH office through Friday April 24. Today is her last full day there. Available virtually for all meetings.",
+            "note": "Available virtually"
+          },
+          {
+            "id": "thu-s2",
+            "time": "9:00 AM – 3:00 PM",
+            "label": "David Molano — OOO this morning",
+            "detail": "David has OOO blocked on his calendar from 9:00 AM to 3:00 PM today. His 1:1 with Jean starts right at 3:00 PM — timing should land. Avoid scheduling anything before 3 PM that requires his input.",
+            "note": "Available at 3 PM"
+          },
+          {
+            "id": "thu-s3",
+            "time": "10:30 AM",
+            "label": "1:1 Andrea and Jean",
+            "detail": "Regular 30-minute 1:1 with Andrea Rodriguez. Jean is the organizer. Teams meeting.",
+            "note": "Teams meeting"
+          },
+          {
+            "id": "thu-s4",
+            "time": "11:00 AM",
+            "label": "1:1 Santiago & Jean",
+            "detail": "Regular 30-minute 1:1 with Santiago Arango. Jean is the organizer. Good moment to loop in on the Litify folder 9 issue Yuri asked about.",
+            "note": "Teams meeting"
+          },
+          {
+            "id": "thu-s5",
+            "time": "12:00 PM",
+            "label": "Blocked Space",
+            "detail": "Protected focus window. Use for the CoE TL+Sara email, email replies, or prepping for the Firmwide.",
+            "note": "Red category — protected"
+          },
+          {
+            "id": "thu-s6",
+            "time": "1:30 PM",
+            "label": "Weekly Meeting: BCP/Incident Response",
+            "detail": "Weekly project touchpoint Jean organizes with Larry Marioth, Lucia Caamano, T. Lawrence, Danny Miller, Danny Mackey, Santiago Kenny, Santiago Arango, Alejandro Briseno, and Josh Scheffler. Good moment to discuss T. Lawrence's survey recommendations and Chelsea's bucket ownership confirmation.",
+            "note": "Teams meeting"
+          },
+          {
+            "id": "thu-s7",
+            "time": "2:00 PM",
+            "label": "April Firmwide Meeting",
+            "detail": "Monthly all-hands Firmwide — recurring 4th Thursday at 2 PM. Full firm attendance. CoE transition and project updates may come up from colleagues.",
+            "note": "Tentative — Teams"
+          },
+          {
+            "id": "thu-s8",
+            "time": "3:00 PM",
+            "label": "1:1 David & Jean",
+            "detail": "Regular 30-minute 1:1 with David Molano. Jean is organizer. David's OOO ends at 3 PM so this should land fine. Good time to debrief the Firmwide and follow up on Expedite Request UAT status.",
+            "note": "Teams meeting"
+          },
+          {
+            "id": "thu-s9",
+            "time": "4:00 PM",
+            "label": "👍 Tudo Bem! Weekly Team Meeting",
+            "detail": "Jean's weekly team sync with David Molano, Jhara Ochoa, Mar Garcia, Yuri Almeida, Andrea Rodriguez, Camilo Vejarano, and Santiago Arango. 60 minutes. Jean is organizer.",
+            "note": "Teams — Green category"
+          }
+        ]
+      },
+      {
+        "title": "Action Items",
+        "info": false,
+        "items": [
+          {
+            "id": "thu-a1",
+            "label": "Send CoE summary email to TLs + Sara today",
+            "detail": "You added this as a 2:44 AM reminder. Send the email summarizing what was decided in yesterday's CoE meeting. Sara is in Dublin through today — this closes the loop before she leaves.",
+            "flag": "urgent"
+          },
+          {
+            "id": "thu-a2",
+            "label": "Chelsea Schinnour — document bucket ownership decision in Incident Response project",
+            "detail": "Chelsea confirmed: Legal owns Bucket 5, consults on Bucket 6. Chelsea is Jean's POC for drafting on their parts. Update the Incident Response project documentation to reflect this. Good agenda item for today's BCP/IR weekly at 1:30 PM.",
+            "flag": null
+          },
+          {
+            "id": "thu-a3",
+            "label": "Hassan — respond to URGENT message about CLs stuck at Bio Appointments",
+            "detail": "Hassan posted urgently in Teams about clients detained at Bio Appointments and needing help finding A# and nationality data from KCI, Criminal records, and EOIR. Alejandro Rodriguez provided some process guidance. Check if Jean needs to take action or if this is being handled.",
+            "flag": "urgent"
+          },
+          {
+            "id": "thu-a4",
+            "label": "Yuri — follow up on Litify folder 9 issue (Chris update?)",
+            "detail": "Yuri asked in Teams if Chris sent any updates about the issue with Litify (folder 9). Jean said she wasn't at her PC and that the ticket was commented on yesterday. Follow up with Yuri and Santiago today — the 1:1 with Santiago at 11 AM is a good window.",
+            "flag": null
+          },
+          {
+            "id": "thu-a5",
+            "label": "Service Cloud Refresher Training — assess for team",
+            "detail": "Maria Monroy sent an invite for a Salesforce Service Cloud Refresher Training ahead of the May 2, 2026 launch. Review the invite and determine if your team or direct reports need to attend or be informed.",
+            "flag": null
+          },
+          {
+            "id": "thu-a6",
+            "label": "Schedule meeting with Janet — escalation process from CoE back to EPMO",
+            "detail": "Reminder added at 2:45 AM. Set up a meeting with Janet to define the formal escalation path from CoE back to EPMO. Good to do this week while the CoE transition is fresh.",
+            "flag": null
+          }
+        ]
+      },
+      {
+        "title": "Emails Awaiting Reply",
+        "info": false,
+        "items": [
+          {
+            "id": "thu-e1",
+            "label": "Staff Augmentation — verify Duvan's corrected gap analysis link and review doc",
+            "detail": "Duvan re-shared the Staff Augmentation gap analysis link after Yuri flagged the original was on his personal OneDrive. Verify the new link is accessible and review the document — it feeds into the PRD.",
+            "flag": null
+          },
+          {
+            "id": "thu-e2",
+            "label": "CoE Priority Tickets — Sprint 10 IT Handoff Package sent by Mar Garcia",
+            "detail": "Mar Garcia sent Frank the CoE Priority Matrix and Sprint 10 handoff documents as discussed in yesterday's CoE IT Touchpoint. Jean is in the loop — review to confirm alignment on what was packaged for Sprint 10.",
+            "flag": null
+          }
+        ]
+      },
+      {
+        "title": "Teams Highlights",
+        "info": false,
+        "items": [
+          {
+            "id": "thu-t1",
+            "label": "Chelsea Schinnour — Legal owns Bucket 5, consults on Bucket 6 (Incident Response)",
+            "detail": "Chelsea messaged: 'Hi Jean, I discussed with Jessica and we think it makes sense for Legal to own Bucket 5 and for us to consult on Bucket 6 (versus owning it). Please reach out if there are any questions — I will be your POC on drafting, etc., for our parts.' This resolves a long-open ownership question.",
+            "flag": null
+          },
+          {
+            "id": "thu-t2",
+            "label": "Mar Garcia — CoE Dashboard 1st Draft shared at 3:30 AM",
+            "detail": "Mar shared a Claude artifact link for the CoE Dashboard 1st Draft: https://claude.ai/artifacts/latest/dabb82d8-1599-4dd8-93da-42115aa790e9. Jean asked if it's the document going to IT for review — Mar confirmed it's partly done and still needs David's Word doc cleanup. Review before Tudo Bem! at 4 PM.",
+            "flag": null
+          },
+          {
+            "id": "thu-t3",
+            "label": "Hassan URGENT — CLs detained at Bio Appointments, tracker and data lookup needed",
+            "detail": "Hassan posted urgently in Teams: clients detained at Bio Appointments need A# and nationality lookups via KCI, EOIR, and Shared Records to get them moving. Alejandro Rodriguez provided lookup process guidance. Check and confirm if this is being handled.",
+            "flag": "urgent"
+          }
+        ]
+      },
+      {
+        "title": "Out of Office",
+        "info": true,
+        "items": [
+          {
+            "id": "thu-ooo-1",
+            "label": "David Molano — OOO this morning (9 AM – 3 PM)",
+            "detail": "David has OOO blocked from 9:00 AM to 3:00 PM. His 1:1 with Jean starts at 3:00 PM right as his OOO ends. Available for anything after 3 PM.",
+            "note": "Returns at 3 PM"
+          }
+        ]
+      },
+      {
+        "title": "Friday Preview",
+        "info": true,
+        "items": [
+          {
+            "id": "thu-fri-1",
+            "label": "Sara Watson — last day in Dublin Office",
+            "detail": "Friday, April 24 is Sara's last day in the Dublin, OH office. She'll be available virtually.",
+            "note": "Final Dublin day"
+          },
+          {
+            "id": "thu-fri-2",
+            "label": "Service Cloud launch — 9 days out (May 2)",
+            "detail": "Salesforce Service Cloud launches Saturday, May 2, 2026. Refresher training was announced today. Make sure your team is in the loop and ready.",
+            "note": "Awareness"
+          }
+        ]
+      }
+    ]
+  },
+  {
     "id": "eod-2026-04-22",
     "type": "eod",
     "date": "Wednesday, April 22 - End of Day",
