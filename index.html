@@ -660,7 +660,7 @@ function AvatarHub({ digests, completed, reminders, theme, onThemeToggle }) {
         />
         {/* Avatar image (with inset padding so ring shows) */}
         <div className="relative m-[3px] w-14 h-14 sm:w-16 sm:h-16 md:w-24 md:h-24 rounded-full overflow-hidden border-2 border-white dark:border-zinc-900 shadow-lg shadow-zinc-300/40 dark:shadow-zinc-950/60">
-          <img src="avatar.png" alt="Jean" className="w-full h-full object-cover" onError={(e) => { e.target.style.display = 'none'; }} />
+          <img src={avatarSrc} alt="Jean" className="w-full h-full object-cover" onError={(e) => { e.target.style.display = 'none'; }} />
         </div>
         {/* Email badge — red circle with count */}
         {emailCount > 0 && (
@@ -674,7 +674,7 @@ function AvatarHub({ digests, completed, reminders, theme, onThemeToggle }) {
         <div className="absolute top-full right-0 mt-3 w-[300px] bg-white dark:bg-zinc-900 rounded-2xl shadow-xl border border-zinc-200 dark:border-zinc-800 p-5 z-50 fade-in">
           {/* Header */}
           <div className="flex items-center gap-3 mb-5">
-            <img src="avatar.png" alt="" className="w-11 h-11 rounded-full object-cover border-2 border-white dark:border-zinc-800 shadow-sm" onError={(e) => { e.target.style.display = 'none'; }} />
+            <img src={avatarSrc} alt="" className="w-11 h-11 rounded-full object-cover border-2 border-white dark:border-zinc-800 shadow-sm" onError={(e) => { e.target.style.display = 'none'; }} />
             <div>
               <p className="text-sm font-extrabold text-zinc-900 dark:text-zinc-50">Jean</p>
               <p className="text-xs font-medium text-zinc-400 dark:text-zinc-500">{dayName}{isWeekend ? " · Weekend mode" : ""}</p>
@@ -2135,6 +2135,8 @@ function App() {
     if (h < 18) return "Good afternoon";
     return "Good evening";
   })();
+
+  const avatarSrc = greeting === "Good evening" ? "avatar-evening.png" : "avatar.png";
 
   const dateStr = time.toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric" });
   const timeStr = time.toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit" });
