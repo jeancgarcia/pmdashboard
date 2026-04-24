@@ -14,6 +14,7 @@
 <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
 <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.0/dist/chart.umd.js"></script>
 <script>
 tailwind.config = {
   darkMode: 'class',
@@ -554,6 +555,278 @@ function TogglReviewTab({ onBack }) {
           className="px-6 py-3 text-sm font-bold rounded-xl transition-all shadow-sm active:scale-95 bg-zinc-900 dark:bg-zinc-100 text-white dark:text-zinc-900 hover:bg-zinc-800 dark:hover:bg-white disabled:bg-zinc-100 disabled:text-zinc-400 dark:disabled:bg-zinc-800 dark:disabled:text-zinc-600">
           {submitting ? "Submitting..." : proposedEntries.length > 0 ? "Submit " + proposedEntries.length + " new entries to Toggl" : "Nothing to submit"}
         </button>
+      </div>
+    </div>
+  );
+}
+
+/* ═══ CoE Portfolio Dashboard ═══ */
+function CoEDashboardTab({ onBack }) {
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [expandFlags, setExpandFlags] = useState(true);
+  const [sortCol, setSortCol] = useState("stage");
+  const [sortDir, setSortDir] = useState("asc");
+  const chartRefs = useRef({});
+  const chartInstances = useRef({});
+
+  useEffect(() => {
+    supabase.from("app_state").select("data").eq("id", 4).single()
+      .then(({ data: item, error: err }) => {
+        if (err || !item?.data) { setError("No CoE data yet — run the automation first"); setLoading(false); return; }
+        setData(item.data);
+        setLoading(false);
+      });
+  }, []);
+
+  // Render charts after data loads
+  useEffect(() => {
+    if (!data) return;
+    Object.values(chartInstances.current).forEach(c => c?.destroy());
+    chartInstances.current = {};
+
+    const darkMode = document.documentElement.classList.contains("dark");
+    const textColor = darkMode ? "#a1a1aa" : "#71717a";
+    const gridColor = darkMode ? "rgba(255,255,255,0.06)" : "rgba(0,0,0,0.06)";
+
+    const STAGE_COLORS = {
+      "New Request": "#818cf8", "Triage": "#f59e0b", "IT Prioritization": "#06b6d4",
+      "Scoping Call Scheduled": "#3b82f6", "In Progress": "#10b981", "Grooming": "#8b5cf6",
+      "On Hold": "#6b7280", "Awaiting Next Sprint": "#f97316", "UAT/Testing": "#14b8a6",
+      "Deployed": "#22c55e", "Escalated": "#ef4444", "Rejected": "#dc2626",
+      "Completed": "#059669", "Project Support Log": "#9ca3af"
+    };
+    const PRIORITY_COLORS = { "High": "#ef4444", "Medium": "#f59e0b", "Low": "#22c55e", "Unset": "#6b7280" };
+
+    // Stage doughnut
+    if (chartRefs.current.stage) {
+      const s = data.summary.byStage;
+      const labels = Object.keys(s).filter(k => s[k] > 0);
+      chartInstances.current.stage = new Chart(chartRefs.current.stage, {
+        type: "doughnut",
+        data: { labels, datasets: [{ data: labels.map(l => s[l]), backgroundColor: labels.map(l => STAGE_COLORS[l] || "#6b7280"), borderWidth: 0 }] },
+        options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: "right", labels: { color: textColor, font: { size: 11, family: "Satoshi" }, padding: 8, boxWidth: 12 } } } }
+      });
+    }
+
+    // Priority bar
+    if (chartRefs.current.priority) {
+      const p = data.summary.byPriority;
+      const labels = ["High", "Medium", "Low", "Unset"].filter(k => (p[k] || 0) > 0);
+      chartInstances.current.priority = new Chart(chartRefs.current.priority, {
+        type: "bar",
+        data: { labels, datasets: [{ data: labels.map(l => p[l] || 0), backgroundColor: labels.map(l => PRIORITY_COLORS[l]), borderRadius: 6, barThickness: 32 }] },
+        options: { responsive: true, maintainAspectRatio: false, indexAxis: "x", plugins: { legend: { display: false } }, scales: { x: { ticks: { color: textColor, font: { family: "Satoshi" } }, grid: { display: false } }, y: { ticks: { color: textColor, stepSize: 1, font: { family: "Satoshi" } }, grid: { color: gridColor } } } }
+      });
+    }
+
+    // Department horizontal bar
+    if (chartRefs.current.dept) {
+      const d = data.summary.byDepartment;
+      const sorted = Object.entries(d).filter(([,v]) => v > 0).sort((a, b) => b[1] - a[1]);
+      const DEPT_PALETTE = ["#3b82f6", "#8b5cf6", "#06b6d4", "#f59e0b", "#10b981", "#ef4444", "#f97316", "#ec4899", "#14b8a6", "#6366f1"];
+      chartInstances.current.dept = new Chart(chartRefs.current.dept, {
+        type: "bar",
+        data: { labels: sorted.map(([k]) => k), datasets: [{ data: sorted.map(([,v]) => v), backgroundColor: sorted.map((_,i) => DEPT_PALETTE[i % DEPT_PALETTE.length]), borderRadius: 6, barThickness: 24 }] },
+        options: { responsive: true, maintainAspectRatio: false, indexAxis: "y", plugins: { legend: { display: false } }, scales: { x: { ticks: { color: textColor, stepSize: 1, font: { family: "Satoshi" } }, grid: { color: gridColor } }, y: { ticks: { color: textColor, font: { family: "Satoshi", size: 11 } }, grid: { display: false } } } }
+      });
+    }
+
+    // Classification doughnut
+    if (chartRefs.current.classification) {
+      const c = data.summary.byClassification;
+      const labels = Object.keys(c).filter(k => c[k] > 0);
+      const CLASS_COLORS = { "CoE Project": "#3b82f6", "Admin Request": "#f59e0b", "Rejected": "#ef4444", "Tier 3": "#8b5cf6", "Escalation": "#dc2626", "Self-serve guidance": "#10b981", "Unset": "#6b7280" };
+      chartInstances.current.classification = new Chart(chartRefs.current.classification, {
+        type: "doughnut",
+        data: { labels, datasets: [{ data: labels.map(l => c[l]), backgroundColor: labels.map(l => CLASS_COLORS[l] || "#6b7280"), borderWidth: 0 }] },
+        options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: "right", labels: { color: textColor, font: { size: 11, family: "Satoshi" }, padding: 8, boxWidth: 12 } } } }
+      });
+    }
+
+    // First Review horizontal bar
+    if (chartRefs.current.review) {
+      const r = data.summary.byFirstReview;
+      const sorted = Object.entries(r).filter(([,v]) => v > 0).sort((a, b) => b[1] - a[1]);
+      const REV_PALETTE = ["#6366f1", "#06b6d4", "#f59e0b", "#10b981", "#ef4444", "#ec4899", "#8b5cf6", "#f97316", "#14b8a6", "#3b82f6"];
+      chartInstances.current.review = new Chart(chartRefs.current.review, {
+        type: "bar",
+        data: { labels: sorted.map(([k]) => k), datasets: [{ data: sorted.map(([,v]) => v), backgroundColor: sorted.map((_,i) => REV_PALETTE[i % REV_PALETTE.length]), borderRadius: 6, barThickness: 24 }] },
+        options: { responsive: true, maintainAspectRatio: false, indexAxis: "y", plugins: { legend: { display: false } }, scales: { x: { ticks: { color: textColor, stepSize: 1, font: { family: "Satoshi" } }, grid: { color: gridColor } }, y: { ticks: { color: textColor, font: { family: "Satoshi", size: 11 } }, grid: { display: false } } } }
+      });
+    }
+
+    return () => Object.values(chartInstances.current).forEach(c => c?.destroy());
+  }, [data]);
+
+  if (loading) return (
+    <div className="flex items-center justify-center py-24">
+      <div className="w-8 h-8 border-2 border-zinc-300 dark:border-zinc-600 border-t-blue-500 rounded-full animate-spin"></div>
+      <span className="ml-3 text-sm font-medium text-zinc-500">Loading CoE portfolio...</span>
+    </div>
+  );
+
+  if (error) return (
+    <div className="bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-800 rounded-2xl p-6 text-center">
+      <p className="text-sm font-semibold text-amber-700 dark:text-amber-300">{error}</p>
+      <p className="text-xs text-amber-600 dark:text-amber-400 mt-2">The scheduled task pushes data at 8:10 AM weekdays. You can also trigger a manual run.</p>
+    </div>
+  );
+
+  const { summary, projects, flags } = data;
+  const updatedAt = data.updatedAt ? new Date(data.updatedAt) : null;
+
+  // Sorting for table
+  const sortedProjects = [...(projects || [])].filter(p => !["Completed", "Rejected", "Deployed", "Project Support Log"].includes(p.stage)).sort((a, b) => {
+    let va = a[sortCol] || "", vb = b[sortCol] || "";
+    if (sortCol === "daysInPipeline") { va = Number(va) || 0; vb = Number(vb) || 0; }
+    if (typeof va === "number") return sortDir === "asc" ? va - vb : vb - va;
+    return sortDir === "asc" ? String(va).localeCompare(String(vb)) : String(vb).localeCompare(String(va));
+  });
+
+  const flaggedGids = new Set((flags || []).map(f => f.gid));
+  const severityIcon = (r) => {
+    if (r.includes("Risk") || r.includes("Off Track")) return "🔴";
+    if (r.includes("Overdue")) return "🟠";
+    if (r.includes("Stale") || r.includes("Stuck")) return "🟡";
+    return "⚪";
+  };
+
+  const PRIORITY_DOT = { High: "bg-red-500", Medium: "bg-amber-500", Low: "bg-emerald-500" };
+
+  const SortHeader = ({ col, label }) => (
+    <th className="px-3 py-2 text-left text-[10px] font-bold uppercase tracking-wider text-zinc-400 dark:text-zinc-500 cursor-pointer hover:text-zinc-700 dark:hover:text-zinc-300 select-none whitespace-nowrap"
+        onClick={() => { if (sortCol === col) setSortDir(d => d === "asc" ? "desc" : "asc"); else { setSortCol(col); setSortDir("asc"); } }}>
+      {label} {sortCol === col ? (sortDir === "asc" ? "↑" : "↓") : ""}
+    </th>
+  );
+
+  return (
+    <div className="space-y-6 fade-in">
+      {/* Header */}
+      <div className="flex items-center justify-between">
+        <div>
+          <h2 className="text-lg font-extrabold text-zinc-900 dark:text-zinc-50">CoE Portfolio</h2>
+          {updatedAt && <p className="text-xs text-zinc-400 dark:text-zinc-500 mt-0.5">Last updated {updatedAt.toLocaleString("en-US", { weekday: "short", month: "short", day: "numeric", hour: "2-digit", minute: "2-digit" })}</p>}
+        </div>
+        <a href="https://app.asana.com/0/portfolio/1214057614427291/list" target="_blank" rel="noopener"
+           className="px-3 py-1.5 text-xs font-bold rounded-lg bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400 hover:bg-zinc-200 dark:hover:bg-zinc-700 transition-colors">
+          Open in Asana →
+        </a>
+      </div>
+
+      {/* KPI Cards */}
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+        {[
+          { label: "Active Projects", value: summary.totalActive, color: "text-blue-600 dark:text-blue-400" },
+          { label: "Needs Attention", value: summary.needsAttention, color: summary.needsAttention > 0 ? "text-red-500" : "text-emerald-500" },
+          { label: "Avg Days in Pipeline", value: summary.avgDaysInPipeline, color: "text-zinc-700 dark:text-zinc-300" },
+          { label: "Awaiting Sprint", value: summary.awaitingNextSprint, color: "text-amber-600 dark:text-amber-400" },
+        ].map((kpi, i) => (
+          <div key={i} className="bg-white dark:bg-zinc-900 border border-zinc-200/60 dark:border-zinc-800 rounded-xl p-4">
+            <p className="text-[10px] font-bold uppercase tracking-wider text-zinc-400 dark:text-zinc-500">{kpi.label}</p>
+            <p className={`text-2xl font-extrabold mt-1 tabular-nums ${kpi.color}`}>{kpi.value}</p>
+          </div>
+        ))}
+      </div>
+
+      {/* Attention Items */}
+      {flags && flags.length > 0 && (
+        <div className="bg-white dark:bg-zinc-900 border border-zinc-200/60 dark:border-zinc-800 rounded-xl overflow-hidden" style={{ borderLeft: "3px solid #ef4444" }}>
+          <button onClick={() => setExpandFlags(f => !f)} className="w-full flex items-center justify-between px-4 py-3 hover:bg-zinc-50 dark:hover:bg-zinc-800/50 transition-colors">
+            <div className="flex items-center gap-2">
+              <span className="text-sm">⚠️</span>
+              <span className="text-xs font-bold text-zinc-700 dark:text-zinc-300">Attention Required ({flags.length})</span>
+            </div>
+            <span className="text-xs text-zinc-400">{expandFlags ? "▲" : "▼"}</span>
+          </button>
+          {expandFlags && (
+            <div className="px-4 pb-3 space-y-2">
+              {flags.map((f, i) => (
+                <div key={i} className="flex items-start gap-2 py-1.5 border-t border-zinc-100 dark:border-zinc-800 first:border-0">
+                  <span className="text-xs mt-0.5 flex-shrink-0">{severityIcon(f.reason)}</span>
+                  <div className="min-w-0">
+                    <a href={f.url} target="_blank" rel="noopener" className="text-xs font-semibold text-zinc-800 dark:text-zinc-200 hover:text-blue-600 dark:hover:text-blue-400 transition-colors truncate block">{f.project}</a>
+                    <p className="text-[10px] text-zinc-400 dark:text-zinc-500">{f.reason} · {f.stage || "No stage"}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* Charts Row 1: Stage + Priority */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+        <div className="bg-white dark:bg-zinc-900 border border-zinc-200/60 dark:border-zinc-800 rounded-xl p-4">
+          <p className="text-[10px] font-bold uppercase tracking-wider text-zinc-400 dark:text-zinc-500 mb-3">By Stage</p>
+          <div style={{ height: "220px" }}><canvas ref={el => chartRefs.current.stage = el}></canvas></div>
+        </div>
+        <div className="bg-white dark:bg-zinc-900 border border-zinc-200/60 dark:border-zinc-800 rounded-xl p-4">
+          <p className="text-[10px] font-bold uppercase tracking-wider text-zinc-400 dark:text-zinc-500 mb-3">By Priority</p>
+          <div style={{ height: "220px" }}><canvas ref={el => chartRefs.current.priority = el}></canvas></div>
+        </div>
+      </div>
+
+      {/* Charts Row 2: Department + Classification */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+        <div className="bg-white dark:bg-zinc-900 border border-zinc-200/60 dark:border-zinc-800 rounded-xl p-4">
+          <p className="text-[10px] font-bold uppercase tracking-wider text-zinc-400 dark:text-zinc-500 mb-3">By Department</p>
+          <div style={{ height: "260px" }}><canvas ref={el => chartRefs.current.dept = el}></canvas></div>
+        </div>
+        <div className="bg-white dark:bg-zinc-900 border border-zinc-200/60 dark:border-zinc-800 rounded-xl p-4">
+          <p className="text-[10px] font-bold uppercase tracking-wider text-zinc-400 dark:text-zinc-500 mb-3">By Classification</p>
+          <div style={{ height: "260px" }}><canvas ref={el => chartRefs.current.classification = el}></canvas></div>
+        </div>
+      </div>
+
+      {/* Charts Row 3: First Review Type */}
+      <div className="bg-white dark:bg-zinc-900 border border-zinc-200/60 dark:border-zinc-800 rounded-xl p-4">
+        <p className="text-[10px] font-bold uppercase tracking-wider text-zinc-400 dark:text-zinc-500 mb-3">By Request Type (First Review)</p>
+        <div style={{ height: "240px" }}><canvas ref={el => chartRefs.current.review = el}></canvas></div>
+      </div>
+
+      {/* Project Table */}
+      <div className="bg-white dark:bg-zinc-900 border border-zinc-200/60 dark:border-zinc-800 rounded-xl overflow-hidden">
+        <div className="px-4 py-3 border-b border-zinc-100 dark:border-zinc-800">
+          <p className="text-[10px] font-bold uppercase tracking-wider text-zinc-400 dark:text-zinc-500">Active Projects ({sortedProjects.length})</p>
+        </div>
+        <div className="overflow-x-auto">
+          <table className="w-full text-xs">
+            <thead><tr className="border-b border-zinc-100 dark:border-zinc-800">
+              <SortHeader col="name" label="Project" />
+              <SortHeader col="stage" label="Stage" />
+              <SortHeader col="priority" label="Priority" />
+              <SortHeader col="classification" label="Classification" />
+              <SortHeader col="department" label="Dept" />
+              <SortHeader col="owner" label="Owner" />
+              <SortHeader col="daysInPipeline" label="Days" />
+              <SortHeader col="dueOn" label="Due" />
+            </tr></thead>
+            <tbody>
+              {sortedProjects.map((p, i) => {
+                const flagged = flaggedGids.has(p.gid);
+                return (
+                  <tr key={p.gid || i} className={`border-b border-zinc-50 dark:border-zinc-800/50 hover:bg-zinc-50 dark:hover:bg-zinc-800/30 transition-colors ${flagged ? "bg-red-50/50 dark:bg-red-950/10" : ""}`}>
+                    <td className="px-3 py-2.5 max-w-[200px]">
+                      <a href={p.url} target="_blank" rel="noopener" className="font-semibold text-zinc-800 dark:text-zinc-200 hover:text-blue-600 dark:hover:text-blue-400 transition-colors truncate block" title={p.name}>{p.name}</a>
+                    </td>
+                    <td className="px-3 py-2.5 text-zinc-600 dark:text-zinc-400 whitespace-nowrap">{p.stage || "—"}</td>
+                    <td className="px-3 py-2.5 whitespace-nowrap">
+                      {p.priority ? <span className="inline-flex items-center gap-1"><span className={`w-1.5 h-1.5 rounded-full ${PRIORITY_DOT[p.priority] || ""}`}></span>{p.priority}</span> : <span className="text-zinc-400">—</span>}
+                    </td>
+                    <td className="px-3 py-2.5 text-zinc-600 dark:text-zinc-400 whitespace-nowrap">{p.classification || "—"}</td>
+                    <td className="px-3 py-2.5 text-zinc-600 dark:text-zinc-400 whitespace-nowrap">{p.department || "—"}</td>
+                    <td className="px-3 py-2.5 text-zinc-600 dark:text-zinc-400 whitespace-nowrap">{p.owner || "—"}</td>
+                    <td className="px-3 py-2.5 text-zinc-600 dark:text-zinc-400 tabular-nums text-center">{p.daysInPipeline ?? "—"}</td>
+                    <td className="px-3 py-2.5 text-zinc-600 dark:text-zinc-400 whitespace-nowrap tabular-nums">{p.dueOn || "—"}</td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );
@@ -2217,6 +2490,9 @@ function App() {
     { id: "toggl", label: "Toggl", icon: (
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
     ), desc: "Time tracking" },
+    { id: "coe", label: "CoE", icon: (
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+    ), desc: "Portfolio overview" },
   ];
 
   return (
@@ -2556,6 +2832,11 @@ function App() {
             <TogglReviewTab onBack={() => { setActiveModule("digests"); setTypeFilter("all"); }} />
           )}
 
+          {/* ═══ COE MODULE ═══ */}
+          {activeModule === "coe" && (
+            <CoEDashboardTab onBack={() => { setActiveModule("digests"); setTypeFilter("all"); }} />
+          )}
+
           {/* Footer */}
           <div className="mt-16 pt-8 border-t border-zinc-200/60 dark:border-zinc-800 flex flex-col sm:flex-row items-center justify-between gap-4">
             <div className="flex items-center gap-3">
@@ -2565,7 +2846,7 @@ function App() {
               <span className="text-xs font-bold text-zinc-400 dark:text-zinc-500 uppercase tracking-widest">Madison &middot; LLF Automation</span>
             </div>
             <div className="flex items-center gap-2 bg-zinc-100 dark:bg-zinc-800 px-3 py-1.5 rounded-full">
-              <span className="text-xs font-bold text-zinc-500 dark:text-zinc-400">{activeModule === "digests" ? `${digests.length - hidden.length} active briefings` : "Time review"}</span>
+              <span className="text-xs font-bold text-zinc-500 dark:text-zinc-400">{activeModule === "digests" ? `${digests.length - hidden.length} active briefings` : activeModule === "coe" ? "CoE Portfolio" : "Time review"}</span>
             </div>
           </div>
 
