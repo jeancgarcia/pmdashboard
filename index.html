@@ -560,7 +560,33 @@ function TogglReviewTab({ onBack }) {
   );
 }
 
-/* ═══ CoE Portfolio Dashboard ═══ */
+/* ═══ CoE Portfolio Dashboard — Minimalist Card Design ═══ */
+
+/* Mini ring chart component — pure SVG, no Chart.js */
+function MiniRing({ value, total, color, size = 48, stroke = 5 }) {
+  const r = (size - stroke) / 2;
+  const circ = 2 * Math.PI * r;
+  const pct = total > 0 ? value / total : 0;
+  const dk = document.documentElement.classList.contains("dark");
+  return (
+    <svg width={size} height={size} style={{transform:"rotate(-90deg)"}}>
+      <circle cx={size/2} cy={size/2} r={r} fill="none" stroke={dk ? "rgba(255,255,255,0.06)" : "rgba(0,0,0,0.06)"} strokeWidth={stroke}/>
+      <circle cx={size/2} cy={size/2} r={r} fill="none" stroke={color} strokeWidth={stroke} strokeDasharray={circ} strokeDashoffset={circ*(1-pct)} strokeLinecap="round" style={{transition:"stroke-dashoffset 0.6s ease"}}/>
+    </svg>
+  );
+}
+
+/* Mini horizontal bar — pure div */
+function MiniBar({ value, max, color = "#818cf8" }) {
+  const pct = max > 0 ? Math.min((value / max) * 100, 100) : 0;
+  const dk = document.documentElement.classList.contains("dark");
+  return (
+    <div className="h-1.5 rounded-full w-full" style={{background: dk ? "rgba(255,255,255,0.06)" : "rgba(0,0,0,0.05)"}}>
+      <div className="h-1.5 rounded-full" style={{width:`${pct}%`, background:color, transition:"width 0.5s ease"}}/>
+    </div>
+  );
+}
+
 function CoEDashboardTab({ onBack }) {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -568,8 +594,6 @@ function CoEDashboardTab({ onBack }) {
   const [sortCol, setSortCol] = useState("stage");
   const [sortDir, setSortDir] = useState("asc");
   const [showAllDelta, setShowAllDelta] = useState(false);
-  const chartRefs = useRef({});
-  const chartInstances = useRef({});
 
   useEffect(() => {
     supabase.from("app_state").select("data").eq("id", 4).single()
@@ -579,61 +603,6 @@ function CoEDashboardTab({ onBack }) {
         setLoading(false);
       });
   }, []);
-
-  useEffect(() => {
-    if (!data) return;
-    Object.values(chartInstances.current).forEach(c => c?.destroy());
-    chartInstances.current = {};
-    const dk = document.documentElement.classList.contains("dark");
-    const tx = dk ? "#a1a1aa" : "#71717a";
-    const gd = dk ? "rgba(255,255,255,0.05)" : "rgba(0,0,0,0.04)";
-    const common = { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } } };
-    const STAGE_C = { "New Request":"#818cf8","Triage":"#f59e0b","IT Prioritization":"#06b6d4","Scoping Call Scheduled":"#3b82f6","In Progress":"#10b981","Grooming":"#8b5cf6","On Hold":"#6b7280","Awaiting Next Sprint":"#f97316","UAT/Testing":"#14b8a6","Deployed":"#22c55e","Escalated":"#ef4444","Rejected":"#dc2626","Completed":"#059669","Project Support Log":"#9ca3af" };
-    const PR_C = { High:"#ef4444", Medium:"#f59e0b", Low:"#22c55e", Unset:"#d4d4d8" };
-
-    // Stage doughnut
-    if (chartRefs.current.stage) {
-      const s = data.summary.byStage; const l = Object.keys(s).filter(k => s[k]>0);
-      chartInstances.current.stage = new Chart(chartRefs.current.stage, {
-        type:"doughnut", data:{labels:l,datasets:[{data:l.map(k=>s[k]),backgroundColor:l.map(k=>STAGE_C[k]||"#6b7280"),borderWidth:0,hoverOffset:4}]},
-        options:{...common,cutout:"62%",plugins:{legend:{position:"right",labels:{color:tx,font:{size:10,family:"Satoshi"},padding:6,boxWidth:10,usePointStyle:true,pointStyleWidth:8}}}}
-      });
-    }
-    // Priority bar
-    if (chartRefs.current.priority) {
-      const p = data.summary.byPriority; const l = ["High","Medium","Low","Unset"].filter(k=>(p[k]||0)>0);
-      chartInstances.current.priority = new Chart(chartRefs.current.priority, {
-        type:"bar",data:{labels:l,datasets:[{data:l.map(k=>p[k]||0),backgroundColor:l.map(k=>PR_C[k]),borderRadius:4,barThickness:28}]},
-        options:{...common,scales:{x:{ticks:{color:tx,font:{family:"Satoshi",size:11}},grid:{display:false},border:{display:false}},y:{ticks:{color:tx,stepSize:1,font:{family:"Satoshi"}},grid:{color:gd},border:{display:false}}}}
-      });
-    }
-    // Department bar
-    if (chartRefs.current.dept) {
-      const d = data.summary.byDepartment; const sorted = Object.entries(d).filter(([,v])=>v>0).sort((a,b)=>b[1]-a[1]);
-      chartInstances.current.dept = new Chart(chartRefs.current.dept, {
-        type:"bar",data:{labels:sorted.map(([k])=>k),datasets:[{data:sorted.map(([,v])=>v),backgroundColor:"#3b82f6",borderRadius:4,barThickness:20}]},
-        options:{...common,indexAxis:"y",scales:{x:{ticks:{color:tx,stepSize:1,font:{family:"Satoshi"}},grid:{color:gd},border:{display:false}},y:{ticks:{color:tx,font:{family:"Satoshi",size:10}},grid:{display:false},border:{display:false}}}}
-      });
-    }
-    // Classification doughnut
-    if (chartRefs.current.classification) {
-      const c = data.summary.byClassification; const l = Object.keys(c).filter(k=>c[k]>0);
-      const CC = {"CoE Project":"#3b82f6","Admin Request":"#f59e0b","Rejected":"#ef4444","Tier 3":"#8b5cf6","Escalation":"#dc2626","Self-serve guidance":"#10b981","Unset":"#d4d4d8"};
-      chartInstances.current.classification = new Chart(chartRefs.current.classification, {
-        type:"doughnut",data:{labels:l,datasets:[{data:l.map(k=>c[k]),backgroundColor:l.map(k=>CC[k]||"#6b7280"),borderWidth:0,hoverOffset:4}]},
-        options:{...common,cutout:"62%",plugins:{legend:{position:"right",labels:{color:tx,font:{size:10,family:"Satoshi"},padding:6,boxWidth:10,usePointStyle:true,pointStyleWidth:8}}}}
-      });
-    }
-    // Request type bar
-    if (chartRefs.current.review) {
-      const r = data.summary.byFirstReview; const sorted = Object.entries(r).filter(([,v])=>v>0).sort((a,b)=>b[1]-a[1]);
-      chartInstances.current.review = new Chart(chartRefs.current.review, {
-        type:"bar",data:{labels:sorted.map(([k])=>k),datasets:[{data:sorted.map(([,v])=>v),backgroundColor:"#8b5cf6",borderRadius:4,barThickness:20}]},
-        options:{...common,indexAxis:"y",scales:{x:{ticks:{color:tx,stepSize:1,font:{family:"Satoshi"}},grid:{color:gd},border:{display:false}},y:{ticks:{color:tx,font:{family:"Satoshi",size:10}},grid:{display:false},border:{display:false}}}}
-      });
-    }
-    return () => Object.values(chartInstances.current).forEach(c => c?.destroy());
-  }, [data]);
 
   if (loading) return (
     <div className="flex items-center justify-center py-32">
@@ -650,7 +619,11 @@ function CoEDashboardTab({ onBack }) {
   const { summary, projects } = data;
   const updatedAt = data.updatedAt ? new Date(data.updatedAt) : null;
   const delta = data.delta;
-  const hasDelta = delta && (delta.newProjects?.length || delta.stageChanges?.length || delta.removedProjects?.length || delta.priorityChanges?.length);
+  const totalProjects = projects?.length || 0;
+
+  const STAGE_C = {"New Request":"#818cf8","Triage":"#f59e0b","IT Prioritization":"#06b6d4","Scoping Call Scheduled":"#3b82f6","In Progress":"#10b981","Grooming":"#8b5cf6","On Hold":"#6b7280","Awaiting Next Sprint":"#f97316","UAT/Testing":"#14b8a6","Deployed":"#22c55e","Escalated":"#ef4444","Rejected":"#ef4444","Completed":"#059669","Project Support Log":"#9ca3af"};
+  const PR_C = {High:"#ef4444",Medium:"#f59e0b",Low:"#22c55e",Unset:"#d4d4d8"};
+  const CL_C = {"CoE Project":"#3b82f6","Admin Request":"#f59e0b","Rejected":"#ef4444","Unset":"#d4d4d8"};
 
   const sortedProjects = [...(projects || [])].filter(p => !["Completed","Rejected","Deployed","Project Support Log"].includes(p.stage)).sort((a, b) => {
     let va = a[sortCol]||"", vb = b[sortCol]||"";
@@ -668,7 +641,6 @@ function CoEDashboardTab({ onBack }) {
     </th>
   );
 
-  // Collect delta items into a single flat list for clean rendering
   const deltaItems = [];
   if (delta) {
     (delta.newProjects||[]).forEach(p => deltaItems.push({ type:"new", label:p.name, url:p.url, detail:p.stage||"—" }));
@@ -677,12 +649,25 @@ function CoEDashboardTab({ onBack }) {
     (delta.removedProjects||[]).forEach(p => deltaItems.push({ type:"done", label:p.name, detail:p.stage }));
   }
 
-  return (
-    <div className="space-y-5 fade-in">
+  const stageSorted = Object.entries(summary.byStage||{}).filter(([,v])=>v>0).sort((a,b)=>b[1]-a[1]);
+  const stageMax = stageSorted.length > 0 ? stageSorted[0][1] : 1;
+  const deptSorted = Object.entries(summary.byDepartment||{}).filter(([,v])=>v>0).sort((a,b)=>b[1]-a[1]);
+  const deptMax = deptSorted.length > 0 ? deptSorted[0][1] : 1;
+  const reviewSorted = Object.entries(summary.byFirstReview||{}).filter(([k,v])=>v>0 && k!=="Unset").sort((a,b)=>b[1]-a[1]);
+  const reviewMax = reviewSorted.length > 0 ? reviewSorted[0][1] : 1;
 
-      {/* Written Summary — clean card, no collapse machinery */}
+  const prOrder = ["High","Medium","Low","Unset"];
+  const prData = prOrder.map(k => ({label:k, value: summary.byPriority?.[k]||0})).filter(d => d.value > 0);
+  const prTotal = prData.reduce((s,d) => s + d.value, 0);
+  const clData = Object.entries(summary.byClassification||{}).filter(([,v])=>v>0);
+  const clTotal = clData.reduce((s,[,v]) => s + v, 0);
+
+  return (
+    <div className="space-y-4 fade-in">
+
+      {/* Written Summary */}
       {data.writtenSummary && (
-        <div className="rounded-xl bg-white dark:bg-zinc-900 border border-zinc-200/60 dark:border-zinc-800 px-5 py-4">
+        <div className="rounded-2xl bg-white dark:bg-zinc-900 border border-zinc-200/60 dark:border-zinc-800 px-5 py-4">
           <p className="text-[13px] leading-relaxed text-zinc-600 dark:text-zinc-400">{data.writtenSummary}</p>
           <div className="flex items-center gap-3 mt-3 pt-3 border-t border-zinc-100 dark:border-zinc-800">
             {updatedAt && <span className="text-[10px] text-zinc-400 dark:text-zinc-500">{updatedAt.toLocaleString("en-US",{weekday:"short",month:"short",day:"numeric",hour:"2-digit",minute:"2-digit"})}</span>}
@@ -691,29 +676,69 @@ function CoEDashboardTab({ onBack }) {
         </div>
       )}
 
-      {/* KPIs — compact row */}
-      <div className="grid grid-cols-4 gap-2">
-        {[
-          { label:"Active", value:summary.totalActive, delta:delta?.summaryDelta?.totalActive },
-          { label:"Awaiting Sprint", value:summary.awaitingNextSprint, delta:delta?.summaryDelta?.awaitingNextSprint },
-          { label:"Avg Days", value:summary.avgDaysInPipeline, delta:delta?.summaryDelta?.avgDaysInPipeline },
-          { label:"Needs Review", value:summary.needsAttention, delta:delta?.summaryDelta?.needsAttention },
-        ].map((k,i) => (
-          <div key={i} className="rounded-xl bg-white dark:bg-zinc-900 border border-zinc-200/60 dark:border-zinc-800 px-3 py-3">
-            <p className="text-[10px] font-semibold uppercase tracking-wider text-zinc-400 dark:text-zinc-500">{k.label}</p>
-            <div className="flex items-baseline gap-1.5 mt-1">
-              <span className="text-xl font-extrabold tabular-nums text-zinc-900 dark:text-zinc-100">{k.value}</span>
-              {k.delta != null && k.delta !== 0 && (
-                <span className={`text-[10px] font-bold tabular-nums ${k.delta > 0 ? "text-red-500" : "text-emerald-500"}`}>{k.delta>0?"+":""}{k.delta}</span>
+      {/* KPI Cards — 2x2 with mini ring visuals */}
+      <div className="grid grid-cols-2 gap-3">
+        <div className="rounded-2xl bg-white dark:bg-zinc-900 border border-zinc-200/60 dark:border-zinc-800 p-4">
+          <p className="text-[10px] font-semibold uppercase tracking-wider text-zinc-400 dark:text-zinc-500 mb-3">Active projects</p>
+          <div className="flex items-center justify-between">
+            <div>
+              <span className="text-3xl font-extrabold tabular-nums text-zinc-900 dark:text-zinc-100">{summary.totalActive}</span>
+              {delta?.summaryDelta?.totalActive != null && delta.summaryDelta.totalActive !== 0 && (
+                <span className={`ml-2 text-xs font-bold ${delta.summaryDelta.totalActive > 0 ? "text-emerald-500" : "text-red-500"}`}>{delta.summaryDelta.totalActive>0?"+":""}{delta.summaryDelta.totalActive}</span>
               )}
             </div>
+            <MiniRing value={summary.totalActive} total={totalProjects} color="#3b82f6" size={52} stroke={5}/>
           </div>
-        ))}
+          <p className="text-[10px] text-zinc-400 dark:text-zinc-500 mt-2">{totalProjects} total in portfolio</p>
+        </div>
+
+        <div className="rounded-2xl bg-white dark:bg-zinc-900 border border-zinc-200/60 dark:border-zinc-800 p-4">
+          <p className="text-[10px] font-semibold uppercase tracking-wider text-zinc-400 dark:text-zinc-500 mb-3">Awaiting sprint</p>
+          <div className="flex items-center justify-between">
+            <div>
+              <span className="text-3xl font-extrabold tabular-nums text-zinc-900 dark:text-zinc-100">{summary.awaitingNextSprint}</span>
+              {delta?.summaryDelta?.awaitingNextSprint != null && delta.summaryDelta.awaitingNextSprint !== 0 && (
+                <span className={`ml-2 text-xs font-bold ${delta.summaryDelta.awaitingNextSprint > 0 ? "text-amber-500" : "text-emerald-500"}`}>{delta.summaryDelta.awaitingNextSprint>0?"+":""}{delta.summaryDelta.awaitingNextSprint}</span>
+              )}
+            </div>
+            <MiniRing value={summary.awaitingNextSprint} total={summary.totalActive} color="#f97316" size={52} stroke={5}/>
+          </div>
+          <p className="text-[10px] text-zinc-400 dark:text-zinc-500 mt-2">{summary.totalActive > 0 ? Math.round(summary.awaitingNextSprint/summary.totalActive*100) : 0}% of active</p>
+        </div>
+
+        <div className="rounded-2xl bg-white dark:bg-zinc-900 border border-zinc-200/60 dark:border-zinc-800 p-4">
+          <p className="text-[10px] font-semibold uppercase tracking-wider text-zinc-400 dark:text-zinc-500 mb-3">Avg days in pipeline</p>
+          <div className="flex items-center justify-between">
+            <div>
+              <span className="text-3xl font-extrabold tabular-nums text-zinc-900 dark:text-zinc-100">{summary.avgDaysInPipeline}</span>
+              <span className="ml-1 text-sm text-zinc-400 dark:text-zinc-500">days</span>
+              {delta?.summaryDelta?.avgDaysInPipeline != null && delta.summaryDelta.avgDaysInPipeline !== 0 && (
+                <span className={`ml-2 text-xs font-bold ${delta.summaryDelta.avgDaysInPipeline > 0 ? "text-red-500" : "text-emerald-500"}`}>{delta.summaryDelta.avgDaysInPipeline>0?"+":""}{delta.summaryDelta.avgDaysInPipeline}</span>
+              )}
+            </div>
+            <MiniRing value={Math.min(summary.avgDaysInPipeline, 30)} total={30} color={summary.avgDaysInPipeline > 14 ? "#ef4444" : summary.avgDaysInPipeline > 7 ? "#f59e0b" : "#10b981"} size={52} stroke={5}/>
+          </div>
+          <p className="text-[10px] text-zinc-400 dark:text-zinc-500 mt-2">{summary.avgDaysInPipeline <= 7 ? "Healthy pace" : summary.avgDaysInPipeline <= 14 ? "Worth monitoring" : "Needs attention"}</p>
+        </div>
+
+        <div className="rounded-2xl bg-white dark:bg-zinc-900 border border-zinc-200/60 dark:border-zinc-800 p-4">
+          <p className="text-[10px] font-semibold uppercase tracking-wider text-zinc-400 dark:text-zinc-500 mb-3">Flagged</p>
+          <div className="flex items-center justify-between">
+            <div>
+              <span className="text-3xl font-extrabold tabular-nums text-zinc-900 dark:text-zinc-100">{summary.needsAttention}</span>
+              {delta?.summaryDelta?.needsAttention != null && delta.summaryDelta.needsAttention !== 0 && (
+                <span className={`ml-2 text-xs font-bold ${delta.summaryDelta.needsAttention > 0 ? "text-red-500" : "text-emerald-500"}`}>{delta.summaryDelta.needsAttention>0?"+":""}{delta.summaryDelta.needsAttention}</span>
+              )}
+            </div>
+            <MiniRing value={summary.needsAttention} total={totalProjects} color={summary.needsAttention > summary.totalActive * 0.5 ? "#ef4444" : "#f59e0b"} size={52} stroke={5}/>
+          </div>
+          <p className="text-[10px] text-zinc-400 dark:text-zinc-500 mt-2">{totalProjects > 0 ? Math.round(summary.needsAttention/totalProjects*100) : 0}% of portfolio</p>
+        </div>
       </div>
 
       {/* Delta — compact change log */}
       {deltaItems.length > 0 && (
-        <div className="rounded-xl bg-white dark:bg-zinc-900 border border-zinc-200/60 dark:border-zinc-800 px-4 py-3">
+        <div className="rounded-2xl bg-white dark:bg-zinc-900 border border-zinc-200/60 dark:border-zinc-800 px-4 py-3">
           <p className="text-[10px] font-bold uppercase tracking-wider text-zinc-400 dark:text-zinc-500 mb-2">
             Changes {delta.previousDate && <span className="font-normal normal-case">since {new Date(delta.previousDate).toLocaleDateString("en-US",{month:"short",day:"numeric"})}</span>}
           </p>
@@ -732,34 +757,124 @@ function CoEDashboardTab({ onBack }) {
         </div>
       )}
 
-      {/* Charts — 2x2 grid */}
+      {/* Breakdown Cards — 2x2 with inline mini bars */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-        <div className="rounded-xl bg-white dark:bg-zinc-900 border border-zinc-200/60 dark:border-zinc-800 p-4">
-          <p className="text-[10px] font-bold uppercase tracking-wider text-zinc-400 dark:text-zinc-500 mb-2">Stage</p>
-          <div style={{height:"200px"}}><canvas ref={el => chartRefs.current.stage = el}></canvas></div>
+
+        <div className="rounded-2xl bg-white dark:bg-zinc-900 border border-zinc-200/60 dark:border-zinc-800 p-4">
+          <p className="text-[10px] font-bold uppercase tracking-wider text-zinc-400 dark:text-zinc-500 mb-3">By Stage</p>
+          <div className="space-y-2.5">
+            {stageSorted.map(([label, value]) => (
+              <div key={label}>
+                <div className="flex items-center justify-between mb-1">
+                  <span className="text-[11px] text-zinc-600 dark:text-zinc-400">{label}</span>
+                  <span className="text-[11px] font-bold tabular-nums text-zinc-900 dark:text-zinc-100">{value}</span>
+                </div>
+                <MiniBar value={value} max={stageMax} color={STAGE_C[label]||"#6b7280"}/>
+              </div>
+            ))}
+          </div>
         </div>
-        <div className="rounded-xl bg-white dark:bg-zinc-900 border border-zinc-200/60 dark:border-zinc-800 p-4">
-          <p className="text-[10px] font-bold uppercase tracking-wider text-zinc-400 dark:text-zinc-500 mb-2">Priority</p>
-          <div style={{height:"200px"}}><canvas ref={el => chartRefs.current.priority = el}></canvas></div>
+
+        <div className="rounded-2xl bg-white dark:bg-zinc-900 border border-zinc-200/60 dark:border-zinc-800 p-4">
+          <p className="text-[10px] font-bold uppercase tracking-wider text-zinc-400 dark:text-zinc-500 mb-3">By Priority</p>
+          <div className="flex items-center gap-5">
+            <div className="relative flex-shrink-0" style={{width:80,height:80}}>
+              <svg width="80" height="80" style={{transform:"rotate(-90deg)"}}>
+                {(() => {
+                  const r = 33; const circ = 2*Math.PI*r; let offset = 0;
+                  return prData.map((d,i) => {
+                    const pct = prTotal > 0 ? d.value/prTotal : 0;
+                    const dash = circ * pct;
+                    const el = <circle key={i} cx="40" cy="40" r={r} fill="none" stroke={PR_C[d.label]||"#6b7280"} strokeWidth="7" strokeDasharray={`${dash} ${circ-dash}`} strokeDashoffset={-offset} strokeLinecap="round" style={{transition:"all 0.5s ease"}}/>;
+                    offset += dash;
+                    return el;
+                  });
+                })()}
+              </svg>
+              <div className="absolute inset-0 flex items-center justify-center">
+                <span className="text-sm font-extrabold text-zinc-900 dark:text-zinc-100">{prTotal}</span>
+              </div>
+            </div>
+            <div className="space-y-2 flex-1">
+              {prData.map(d => (
+                <div key={d.label} className="flex items-center gap-2">
+                  <span className="w-2 h-2 rounded-full flex-shrink-0" style={{background: PR_C[d.label]}}></span>
+                  <span className="text-[11px] text-zinc-600 dark:text-zinc-400 flex-1">{d.label}</span>
+                  <span className="text-[11px] font-bold tabular-nums text-zinc-900 dark:text-zinc-100">{d.value}</span>
+                  <span className="text-[10px] text-zinc-400 dark:text-zinc-500 tabular-nums w-8 text-right">{prTotal>0?Math.round(d.value/prTotal*100):0}%</span>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
-        <div className="rounded-xl bg-white dark:bg-zinc-900 border border-zinc-200/60 dark:border-zinc-800 p-4">
-          <p className="text-[10px] font-bold uppercase tracking-wider text-zinc-400 dark:text-zinc-500 mb-2">Department</p>
-          <div style={{height:"200px"}}><canvas ref={el => chartRefs.current.dept = el}></canvas></div>
+
+        <div className="rounded-2xl bg-white dark:bg-zinc-900 border border-zinc-200/60 dark:border-zinc-800 p-4">
+          <p className="text-[10px] font-bold uppercase tracking-wider text-zinc-400 dark:text-zinc-500 mb-3">By Department</p>
+          <div className="space-y-2.5">
+            {deptSorted.map(([label, value]) => (
+              <div key={label}>
+                <div className="flex items-center justify-between mb-1">
+                  <span className="text-[11px] text-zinc-600 dark:text-zinc-400">{label}</span>
+                  <span className="text-[11px] font-bold tabular-nums text-zinc-900 dark:text-zinc-100">{value}</span>
+                </div>
+                <MiniBar value={value} max={deptMax} color="#3b82f6"/>
+              </div>
+            ))}
+          </div>
         </div>
-        <div className="rounded-xl bg-white dark:bg-zinc-900 border border-zinc-200/60 dark:border-zinc-800 p-4">
-          <p className="text-[10px] font-bold uppercase tracking-wider text-zinc-400 dark:text-zinc-500 mb-2">Classification</p>
-          <div style={{height:"200px"}}><canvas ref={el => chartRefs.current.classification = el}></canvas></div>
+
+        <div className="rounded-2xl bg-white dark:bg-zinc-900 border border-zinc-200/60 dark:border-zinc-800 p-4">
+          <p className="text-[10px] font-bold uppercase tracking-wider text-zinc-400 dark:text-zinc-500 mb-3">By Classification</p>
+          <div className="flex items-center gap-5">
+            <div className="relative flex-shrink-0" style={{width:80,height:80}}>
+              <svg width="80" height="80" style={{transform:"rotate(-90deg)"}}>
+                {(() => {
+                  const r = 33; const circ = 2*Math.PI*r; let offset = 0;
+                  return clData.map(([label, value],i) => {
+                    const pct = clTotal > 0 ? value/clTotal : 0;
+                    const dash = circ * pct;
+                    const el = <circle key={i} cx="40" cy="40" r={r} fill="none" stroke={CL_C[label]||"#6b7280"} strokeWidth="7" strokeDasharray={`${dash} ${circ-dash}`} strokeDashoffset={-offset} strokeLinecap="round" style={{transition:"all 0.5s ease"}}/>;
+                    offset += dash;
+                    return el;
+                  });
+                })()}
+              </svg>
+              <div className="absolute inset-0 flex items-center justify-center">
+                <span className="text-sm font-extrabold text-zinc-900 dark:text-zinc-100">{clTotal}</span>
+              </div>
+            </div>
+            <div className="space-y-2 flex-1">
+              {clData.map(([label, value]) => (
+                <div key={label} className="flex items-center gap-2">
+                  <span className="w-2 h-2 rounded-full flex-shrink-0" style={{background: CL_C[label]||"#6b7280"}}></span>
+                  <span className="text-[11px] text-zinc-600 dark:text-zinc-400 flex-1">{label}</span>
+                  <span className="text-[11px] font-bold tabular-nums text-zinc-900 dark:text-zinc-100">{value}</span>
+                  <span className="text-[10px] text-zinc-400 dark:text-zinc-500 tabular-nums w-8 text-right">{clTotal>0?Math.round(value/clTotal*100):0}%</span>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
 
-      {/* Request type bar — full width */}
-      <div className="rounded-xl bg-white dark:bg-zinc-900 border border-zinc-200/60 dark:border-zinc-800 p-4">
-        <p className="text-[10px] font-bold uppercase tracking-wider text-zinc-400 dark:text-zinc-500 mb-2">Request Type</p>
-        <div style={{height:"200px"}}><canvas ref={el => chartRefs.current.review = el}></canvas></div>
+      {/* Request Type — full width, clean bars */}
+      <div className="rounded-2xl bg-white dark:bg-zinc-900 border border-zinc-200/60 dark:border-zinc-800 p-4">
+        <p className="text-[10px] font-bold uppercase tracking-wider text-zinc-400 dark:text-zinc-500 mb-3">Request Type</p>
+        <div className="space-y-2.5">
+          {reviewSorted.slice(0,8).map(([label, value]) => (
+            <div key={label}>
+              <div className="flex items-center justify-between mb-1">
+                <span className="text-[11px] text-zinc-600 dark:text-zinc-400">{label}</span>
+                <span className="text-[11px] font-bold tabular-nums text-zinc-900 dark:text-zinc-100">{value}</span>
+              </div>
+              <MiniBar value={value} max={reviewMax} color="#8b5cf6"/>
+            </div>
+          ))}
+        </div>
       </div>
 
       {/* Project table — minimal */}
-      <div className="rounded-xl bg-white dark:bg-zinc-900 border border-zinc-200/60 dark:border-zinc-800 overflow-hidden">
+      <div className="rounded-2xl bg-white dark:bg-zinc-900 border border-zinc-200/60 dark:border-zinc-800 overflow-hidden">
         <div className="px-4 py-3">
           <p className="text-[10px] font-bold uppercase tracking-wider text-zinc-400 dark:text-zinc-500">Projects ({sortedProjects.length})</p>
         </div>
