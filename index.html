@@ -579,6 +579,7 @@ function AvatarHub({ digests, completed, reminders, theme, onThemeToggle }) {
   }, []);
 
   const emailCount = unrepliedEmails.length;
+  const avatarSrc = new Date().getHours() >= 18 ? "avatar-evening.png" : "avatar.png";
 
   // Dismiss a single email — remove locally + update Supabase
   const dismissEmail = useCallback(async (emailId) => {
@@ -2136,7 +2137,6 @@ function App() {
     return "Good evening";
   })();
 
-  const avatarSrc = greeting === "Good evening" ? "avatar-evening.png" : "avatar.png";
 
   const dateStr = time.toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric" });
   const timeStr = time.toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit" });
