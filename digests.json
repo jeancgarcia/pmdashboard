@@ -1,5 +1,205 @@
 [
   {
+    "id": "eod-2026-04-24",
+    "type": "eod",
+    "date": "Friday, April 24 - End of Day",
+    "isoDate": "2026-04-24",
+    "greeting": "Friday delivered, Jean — and you finished strong. Six meetings. Every single reminder cleared. The Expedite Request is officially paused with Yuri’s formal email in the books. The Asana CoE-to-EPMO Touchpoint with Janet happened and she shared the Team Meeting Agenda as a tab. The EPMO Dashboard Review is locked in with Sara for Monday. Jonathan blessed the Scam & Incident Response JD, and Larry says the doc is clean — just needs a decision on who sends it to HR. The weekend is absolutely earned. Rest up, Monday’s got some good momentum to ride.",
+    "sections": [
+      {
+        "title": "Completed Today",
+        "info": true,
+        "items": [
+          {
+            "id": "eod-0424-done-1",
+            "label": "All three reminders cleared — IR notes, Tudo Bem! notes, mobile font fix",
+            "detail": "Sent BCP/Incident Response meeting notes to the group chat. Sent Tudo Bem! meeting notes to the team. Increased mobile font size on the LLF briefings. All three carryover reminders resolved."
+          },
+          {
+            "id": "eod-0424-done-2",
+            "label": "Approved Camilo Vejarano’s service ticket SR-0028298",
+            "detail": "Helpdesk approval request for Camilo’s ticket (reported 4/23) was handled in Halo."
+          },
+          {
+            "id": "eod-0424-done-3",
+            "label": "Phase 2 Weekly IT Projects Sync — ran the meeting (10:00 AM)",
+            "detail": "Jean organized and ran the weekly sync with Yuri, Jhara, Andrea, Camilo, Mar, David, Santiago, and Amelia Puri."
+          },
+          {
+            "id": "eod-0424-done-4",
+            "label": "Buatify CoE user dashboard — reviewed with David Molano (11:00 AM)",
+            "detail": "30-minute meeting with David to review the CoE user dashboard. Jean walked David through the Miro process map tool structure and helped troubleshoot access to the Miro Dev Team."
+          },
+          {
+            "id": "eod-0424-done-5",
+            "label": "Sprint Escalations & UAT Timing — attended and process notes captured (1:00 PM)",
+            "detail": "Io Oliveira shared meeting notes: IT will report delayed UAT items to PMs by Day 7 to get back on track. Leaders escalate through the dedicated chat."
+          },
+          {
+            "id": "eod-0424-done-6",
+            "label": "EPMO EOW Check In — held with Sara, Eunice, Janet, Jorge (2:00 PM)",
+            "detail": "End-of-week EPMO check-in completed. Key outcome: USCIS Expedite Request pause confirmed. UER project in ELT deck flagged by Yuri for Sara’s guidance."
+          },
+          {
+            "id": "eod-0424-done-7",
+            "label": "Executive Project Status Slide Update — ran the Friday session (3:00 PM)",
+            "detail": "Jean organized the weekly exec deck update with Yuri Mendonca and Jhara Ochoa. Now a standing Friday meeting."
+          },
+          {
+            "id": "eod-0424-done-8",
+            "label": "Asana CoE — EPMO Touchpoint with Janet McDowell (4:00 PM)",
+            "detail": "First formal meeting to align on the process when a project is sent back from CoE to EPMO. Janet accepted and also shared the EPMO Team Meeting Agenda as a shared tab in the Teams chat."
+          },
+          {
+            "id": "eod-0424-done-9",
+            "label": "USCIS Expedite Request project — Yuri’s formal ON HOLD pause email sent",
+            "detail": "Yuri Almeida sent the official team email pausing the USCIS Expedite Request project per ELT decision, aligning with broader strategic priorities. Carried item from Thursday resolved."
+          },
+          {
+            "id": "eod-0424-done-10",
+            "label": "Scam & Incident Response JD — Jonathan confirmed supportive, Larry approved the doc",
+            "detail": "Larry Marioth confirmed the job description looks great with no edits needed. Danny Miller confirmed Jonathan was supportive of leveraging an internal resource. Next step: decide who sends to HR."
+          },
+          {
+            "id": "eod-0424-done-11",
+            "label": "EPMO Dashboard Review — scheduled with Sara, new time proposed and accepted",
+            "detail": "Sara proposed a new time for the EPMO Dashboard Review and Jean sent the updated invite. Review is confirmed for Monday."
+          },
+          {
+            "id": "eod-0424-done-12",
+            "label": "Asana EPMO tab — 2 pending projects manually reviewed",
+            "detail": "Jean reviewed the 2 projects in the EPMO queue manually since the Asana tab notification automation has a gap. Items cleared."
+          },
+          {
+            "id": "eod-0424-done-13",
+            "label": "Claude Training moved to Monday — coordinated with the team",
+            "detail": "The 4:30 PM Claude Training session was rescheduled to next week. Jean confirmed in Teams: ‘puede ser next week sin problemas.’"
+          }
+        ]
+      },
+      {
+        "title": "Still Open",
+        "info": false,
+        "items": [
+          {
+            "id": "eod-0424-open-1",
+            "label": "BCP/Incident Response survey — T. Lawrence’s recommendations still need final review",
+            "detail": "T. Lawrence submitted recommended changes and flagged an AI survey was already sent to TMs on 4/20. Review the attachments and determine adjustments before firm-wide distribution. Confirm who hasn’t reviewed yet.",
+            "flag": "carried"
+          },
+          {
+            "id": "eod-0424-open-2",
+            "label": "Denial/RFE dropdown — Shelley’s confirmation still pending",
+            "detail": "Jill confirmed Shelley was back today, but no confirmation has arrived in email or Teams. Follow up Monday in the 1:1 with Shelley.",
+            "flag": "carried"
+          },
+          {
+            "id": "eod-0424-open-3",
+            "label": "Toggl calendar sync — cancelled meetings still showing for team",
+            "detail": "Jhara, Santiago, Andrea, and David all confirmed cancelled meetings don’t clear from their Toggl calendars. Santiago noted reschedules sometimes work but cancellations never do. Needs investigation.",
+            "flag": "attn"
+          },
+          {
+            "id": "eod-0424-open-4",
+            "label": "EOR COL — Andrea Rodriguez leave request (Missing Certificate) — Rippling follow-up",
+            "detail": "Rippling support followed up on Natalia’s leave request connected to Andrea Rodriguez. Missing certificate issue is still unresolved. Review and respond.",
+            "flag": "attn"
+          },
+          {
+            "id": "eod-0424-open-5",
+            "label": "Scam & Incident Response JD — decide who sends to HR for approval",
+            "detail": "Larry Marioth confirmed the JD looks great and Jonathan is supportive. Larry asked: should he send to HR for approval, or will Jean send? A decision and response to Larry is needed.",
+            "flag": "attn"
+          },
+          {
+            "id": "eod-0424-open-6",
+            "label": "UER project in ELT deck — confirm whether it stays since paused",
+            "detail": "Yuri asked whether the USCIS Expedite Request project should remain in the ELT deck now that it’s officially paused. Jean agreed Yuri should check with Sara — confirm this was done or follow up Monday.",
+            "flag": "attn"
+          },
+          {
+            "id": "eod-0424-open-7",
+            "label": "Discovery Workbook Implementation — stakeholder decisions still needed",
+            "detail": "Jhara flagged stakeholder decisions are needed. Meetings with area stakeholders are being scheduled for feedback. No visible progress today — carry forward.",
+            "flag": "carried"
+          }
+        ]
+      },
+      {
+        "title": "Key Decisions",
+        "info": true,
+        "items": [
+          {
+            "id": "eod-0424-decision-1",
+            "label": "USCIS Expedite Request project officially paused — ELT decision",
+            "detail": "Yuri Almeida sent the formal pause email today. Story 1778 passed UAT, Story 1780 failed. Remaining stories on hold aligned with broader strategic priorities."
+          },
+          {
+            "id": "eod-0424-decision-2",
+            "label": "Sprint Escalations cadence locked in — IT reports to PMs by Day 7",
+            "detail": "Per the 1 PM meeting: IT flags delayed UAT items to PMs on Day 7 to get back on track. Leaders escalate via dedicated chat. Meeting notes sent by Io Oliveira."
+          },
+          {
+            "id": "eod-0424-decision-3",
+            "label": "Scam & Incident Response JD — Jonathan supportive, Larry confirmed JD is clean",
+            "detail": "Both Danny Miller and Larry Marioth confirmed Jonathan is supportive of leveraging an internal resource. Larry has no edits to the JD. Pending: who sends to HR."
+          },
+          {
+            "id": "eod-0424-decision-4",
+            "label": "Claude Training rescheduled to Monday",
+            "detail": "The 4:30 PM session was moved to next week, confirmed in Teams."
+          },
+          {
+            "id": "eod-0424-decision-5",
+            "label": "EPMO Dashboard Review confirmed for Monday with Sara",
+            "detail": "Sara proposed a new time and Jean sent the updated invite. The dashboard review is set for Monday."
+          }
+        ]
+      },
+      {
+        "title": "Monday Preview",
+        "info": true,
+        "items": [
+          {
+            "id": "eod-0424-mon-1",
+            "label": "8:00 AM — Approve Timecards & Prepare for the Week",
+            "detail": "Standing Monday morning block to approve timecards and set up the week."
+          },
+          {
+            "id": "eod-0424-mon-2",
+            "label": "11:00 AM — 1:1 Shelley & Jean",
+            "detail": "Follow up on Denial/RFE dropdown confirmation — Shelley was back today but didn’t respond. Good moment to close that loop."
+          },
+          {
+            "id": "eod-0424-mon-3",
+            "label": "11:30 AM — EPMO Dashboard Review with Sara Watson",
+            "detail": "Jean presents the EPMO Dashboard to Sara. Sara accepted and confirmed. This is the big one — make sure the deck is ready."
+          },
+          {
+            "id": "eod-0424-mon-4",
+            "label": "12:00 PM — Blocked Space",
+            "detail": "Protected focus window. Good slot for Scam & Incident Response JD reply to Larry, Toggl investigation, or BCP/IR survey review."
+          },
+          {
+            "id": "eod-0424-mon-5",
+            "label": "2:00 PM — EPMO Portfolio Review",
+            "detail": "Sara Watson’s recurring portfolio review with Danny, Jorge, Eunice, Janet, and Jean. Tentative."
+          },
+          {
+            "id": "eod-0424-mon-6",
+            "label": "4:00 PM — IT Litify Sprint 10 Planning with Stakeholders",
+            "detail": "Io Oliveira organizes Sprint 10 planning — first sprint after the Expedite Request pause. Cross-functional group. Tentative."
+          },
+          {
+            "id": "eod-0424-mon-7",
+            "label": "Claude Training — rescheduled from today",
+            "detail": "The 4:30 PM Claude Training session was moved to Monday. Mar Garcia will confirm the new time. Team includes David, Andrea, Santiago, and Jhara."
+          }
+        ]
+      }
+    ]
+  },
+  {
     "id": "weekly-2026-04-24",
     "type": "weekly",
     "date": "Week of April 20 – April 24",
