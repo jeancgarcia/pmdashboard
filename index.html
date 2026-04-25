@@ -908,7 +908,9 @@ function AvatarHub({ digests, completed, reminders, theme, onThemeToggle }) {
   }, []);
 
   const emailCount = unrepliedEmails.length;
-  const avatarSrc = new Date().getHours() >= 18 ? "avatar-evening.png" : "avatar.png";
+  const _now = new Date();
+  const _isWeekend = _now.getDay() === 0 || _now.getDay() === 6;
+  const avatarSrc = _isWeekend ? "weekend-avatar.png" : (_now.getHours() >= 18 ? "avatar-evening.png" : "avatar.png");
 
   // Dismiss a single email — remove locally + update Supabase
   const dismissEmail = useCallback(async (emailId) => {
