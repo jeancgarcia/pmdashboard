@@ -594,6 +594,7 @@ function CoEDashboardTab({ onBack }) {
   const [sortCol, setSortCol] = useState("stage");
   const [sortDir, setSortDir] = useState("asc");
   const [showAllDelta, setShowAllDelta] = useState(false);
+  const [showAllProjects, setShowAllProjects] = useState(false);
 
   useEffect(() => {
     supabase.from("app_state").select("data").eq("id", 4).single()
@@ -625,12 +626,17 @@ function CoEDashboardTab({ onBack }) {
   const PR_C = {High:"#ef4444",Medium:"#f59e0b",Low:"#22c55e",Unset:"#d4d4d8"};
   const CL_C = {"CoE Project":"#3b82f6","Admin Request":"#f59e0b","Rejected":"#ef4444","Unset":"#d4d4d8"};
 
-  const sortedProjects = [...(projects || [])].filter(p => !["Completed","Rejected","Deployed","Project Support Log"].includes(p.stage)).sort((a, b) => {
+  const PR_RANK = {High:0,Medium:1,Low:2};
+  const activeProjects = [...(projects || [])].filter(p => !["Completed","Rejected","Deployed","Project Support Log"].includes(p.stage));
+  const sortedProjects = activeProjects.sort((a, b) => {
+    const ra = PR_RANK[a.priority] ?? 99, rb = PR_RANK[b.priority] ?? 99;
+    if (ra !== rb) return ra - rb;
     let va = a[sortCol]||"", vb = b[sortCol]||"";
     if (sortCol === "daysInPipeline") { va = Number(va)||0; vb = Number(vb)||0; }
     if (typeof va === "number") return sortDir === "asc" ? va - vb : vb - va;
     return sortDir === "asc" ? String(va).localeCompare(String(vb)) : String(vb).localeCompare(String(va));
   });
+  const visibleProjects = showAllProjects ? sortedProjects : sortedProjects.slice(0, 3);
 
   const PDOT = { High:"bg-red-500", Medium:"bg-amber-400", Low:"bg-emerald-500" };
   const SortH = ({ col, label }) => (
@@ -757,17 +763,17 @@ function CoEDashboardTab({ onBack }) {
         </div>
       )}
 
-      {/* Breakdown Cards — 2x2 with inline mini bars */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+      {/* Breakdown Cards — consistent mini bars for all */}
+      <div className="grid grid-cols-2 gap-3">
 
         <div className="rounded-2xl bg-white dark:bg-zinc-900 border border-zinc-200/60 dark:border-zinc-800 p-4">
           <p className="text-[10px] font-bold uppercase tracking-wider text-zinc-400 dark:text-zinc-500 mb-3">By Stage</p>
-          <div className="space-y-2.5">
+          <div className="space-y-2">
             {stageSorted.map(([label, value]) => (
               <div key={label}>
-                <div className="flex items-center justify-between mb-1">
-                  <span className="text-[11px] text-zinc-600 dark:text-zinc-400">{label}</span>
-                  <span className="text-[11px] font-bold tabular-nums text-zinc-900 dark:text-zinc-100">{value}</span>
+                <div className="flex items-center justify-between mb-0.5">
+                  <span className="text-[11px] text-zinc-600 dark:text-zinc-400 truncate mr-2">{label}</span>
+                  <span className="text-[11px] font-bold tabular-nums text-zinc-900 dark:text-zinc-100 flex-shrink-0">{value}</span>
                 </div>
                 <MiniBar value={value} max={stageMax} color={STAGE_C[label]||"#6b7280"}/>
               </div>
@@ -777,45 +783,27 @@ function CoEDashboardTab({ onBack }) {
 
         <div className="rounded-2xl bg-white dark:bg-zinc-900 border border-zinc-200/60 dark:border-zinc-800 p-4">
           <p className="text-[10px] font-bold uppercase tracking-wider text-zinc-400 dark:text-zinc-500 mb-3">By Priority</p>
-          <div className="flex items-center gap-5">
-            <div className="relative flex-shrink-0" style={{width:80,height:80}}>
-              <svg width="80" height="80" style={{transform:"rotate(-90deg)"}}>
-                {(() => {
-                  const r = 33; const circ = 2*Math.PI*r; let offset = 0;
-                  return prData.map((d,i) => {
-                    const pct = prTotal > 0 ? d.value/prTotal : 0;
-                    const dash = circ * pct;
-                    const el = <circle key={i} cx="40" cy="40" r={r} fill="none" stroke={PR_C[d.label]||"#6b7280"} strokeWidth="7" strokeDasharray={`${dash} ${circ-dash}`} strokeDashoffset={-offset} strokeLinecap="round" style={{transition:"all 0.5s ease"}}/>;
-                    offset += dash;
-                    return el;
-                  });
-                })()}
-              </svg>
-              <div className="absolute inset-0 flex items-center justify-center">
-                <span className="text-sm font-extrabold text-zinc-900 dark:text-zinc-100">{prTotal}</span>
-              </div>
-            </div>
-            <div className="space-y-2 flex-1">
-              {prData.map(d => (
-                <div key={d.label} className="flex items-center gap-2">
-                  <span className="w-2 h-2 rounded-full flex-shrink-0" style={{background: PR_C[d.label]}}></span>
-                  <span className="text-[11px] text-zinc-600 dark:text-zinc-400 flex-1">{d.label}</span>
+          <div className="space-y-2">
+            {prData.map(d => (
+              <div key={d.label}>
+                <div className="flex items-center justify-between mb-0.5">
+                  <span className="text-[11px] text-zinc-600 dark:text-zinc-400">{d.label}</span>
                   <span className="text-[11px] font-bold tabular-nums text-zinc-900 dark:text-zinc-100">{d.value}</span>
-                  <span className="text-[10px] text-zinc-400 dark:text-zinc-500 tabular-nums w-8 text-right">{prTotal>0?Math.round(d.value/prTotal*100):0}%</span>
                 </div>
-              ))}
-            </div>
+                <MiniBar value={d.value} max={prTotal} color={PR_C[d.label]||"#6b7280"}/>
+              </div>
+            ))}
           </div>
         </div>
 
         <div className="rounded-2xl bg-white dark:bg-zinc-900 border border-zinc-200/60 dark:border-zinc-800 p-4">
           <p className="text-[10px] font-bold uppercase tracking-wider text-zinc-400 dark:text-zinc-500 mb-3">By Department</p>
-          <div className="space-y-2.5">
+          <div className="space-y-2">
             {deptSorted.map(([label, value]) => (
               <div key={label}>
-                <div className="flex items-center justify-between mb-1">
-                  <span className="text-[11px] text-zinc-600 dark:text-zinc-400">{label}</span>
-                  <span className="text-[11px] font-bold tabular-nums text-zinc-900 dark:text-zinc-100">{value}</span>
+                <div className="flex items-center justify-between mb-0.5">
+                  <span className="text-[11px] text-zinc-600 dark:text-zinc-400 truncate mr-2">{label}</span>
+                  <span className="text-[11px] font-bold tabular-nums text-zinc-900 dark:text-zinc-100 flex-shrink-0">{value}</span>
                 </div>
                 <MiniBar value={value} max={deptMax} color="#3b82f6"/>
               </div>
@@ -825,34 +813,16 @@ function CoEDashboardTab({ onBack }) {
 
         <div className="rounded-2xl bg-white dark:bg-zinc-900 border border-zinc-200/60 dark:border-zinc-800 p-4">
           <p className="text-[10px] font-bold uppercase tracking-wider text-zinc-400 dark:text-zinc-500 mb-3">By Classification</p>
-          <div className="flex items-center gap-5">
-            <div className="relative flex-shrink-0" style={{width:80,height:80}}>
-              <svg width="80" height="80" style={{transform:"rotate(-90deg)"}}>
-                {(() => {
-                  const r = 33; const circ = 2*Math.PI*r; let offset = 0;
-                  return clData.map(([label, value],i) => {
-                    const pct = clTotal > 0 ? value/clTotal : 0;
-                    const dash = circ * pct;
-                    const el = <circle key={i} cx="40" cy="40" r={r} fill="none" stroke={CL_C[label]||"#6b7280"} strokeWidth="7" strokeDasharray={`${dash} ${circ-dash}`} strokeDashoffset={-offset} strokeLinecap="round" style={{transition:"all 0.5s ease"}}/>;
-                    offset += dash;
-                    return el;
-                  });
-                })()}
-              </svg>
-              <div className="absolute inset-0 flex items-center justify-center">
-                <span className="text-sm font-extrabold text-zinc-900 dark:text-zinc-100">{clTotal}</span>
-              </div>
-            </div>
-            <div className="space-y-2 flex-1">
-              {clData.map(([label, value]) => (
-                <div key={label} className="flex items-center gap-2">
-                  <span className="w-2 h-2 rounded-full flex-shrink-0" style={{background: CL_C[label]||"#6b7280"}}></span>
-                  <span className="text-[11px] text-zinc-600 dark:text-zinc-400 flex-1">{label}</span>
-                  <span className="text-[11px] font-bold tabular-nums text-zinc-900 dark:text-zinc-100">{value}</span>
-                  <span className="text-[10px] text-zinc-400 dark:text-zinc-500 tabular-nums w-8 text-right">{clTotal>0?Math.round(value/clTotal*100):0}%</span>
+          <div className="space-y-2">
+            {clData.map(([label, value]) => (
+              <div key={label}>
+                <div className="flex items-center justify-between mb-0.5">
+                  <span className="text-[11px] text-zinc-600 dark:text-zinc-400 truncate mr-2">{label}</span>
+                  <span className="text-[11px] font-bold tabular-nums text-zinc-900 dark:text-zinc-100 flex-shrink-0">{value}</span>
                 </div>
-              ))}
-            </div>
+                <MiniBar value={value} max={clTotal} color={CL_C[label]||"#6b7280"}/>
+              </div>
+            ))}
           </div>
         </div>
       </div>
@@ -860,12 +830,12 @@ function CoEDashboardTab({ onBack }) {
       {/* Request Type — full width, clean bars */}
       <div className="rounded-2xl bg-white dark:bg-zinc-900 border border-zinc-200/60 dark:border-zinc-800 p-4">
         <p className="text-[10px] font-bold uppercase tracking-wider text-zinc-400 dark:text-zinc-500 mb-3">Request Type</p>
-        <div className="space-y-2.5">
-          {reviewSorted.slice(0,8).map(([label, value]) => (
+        <div className="space-y-2">
+          {reviewSorted.slice(0,6).map(([label, value]) => (
             <div key={label}>
-              <div className="flex items-center justify-between mb-1">
-                <span className="text-[11px] text-zinc-600 dark:text-zinc-400">{label}</span>
-                <span className="text-[11px] font-bold tabular-nums text-zinc-900 dark:text-zinc-100">{value}</span>
+              <div className="flex items-center justify-between mb-0.5">
+                <span className="text-[11px] text-zinc-600 dark:text-zinc-400 truncate mr-2">{label}</span>
+                <span className="text-[11px] font-bold tabular-nums text-zinc-900 dark:text-zinc-100 flex-shrink-0">{value}</span>
               </div>
               <MiniBar value={value} max={reviewMax} color="#8b5cf6"/>
             </div>
@@ -873,10 +843,10 @@ function CoEDashboardTab({ onBack }) {
         </div>
       </div>
 
-      {/* Project table — minimal */}
+      {/* Top Projects — show 3 highest priority, expandable */}
       <div className="rounded-2xl bg-white dark:bg-zinc-900 border border-zinc-200/60 dark:border-zinc-800 overflow-hidden">
-        <div className="px-4 py-3">
-          <p className="text-[10px] font-bold uppercase tracking-wider text-zinc-400 dark:text-zinc-500">Projects ({sortedProjects.length})</p>
+        <div className="px-4 py-3 flex items-center justify-between">
+          <p className="text-[10px] font-bold uppercase tracking-wider text-zinc-400 dark:text-zinc-500">Top Priority ({sortedProjects.length} active)</p>
         </div>
         <div className="overflow-x-auto">
           <table className="w-full text-xs">
@@ -886,10 +856,9 @@ function CoEDashboardTab({ onBack }) {
               <SortH col="priority" label="Priority" />
               <SortH col="department" label="Dept" />
               <SortH col="owner" label="Owner" />
-              <SortH col="daysInPipeline" label="Days" />
             </tr></thead>
             <tbody>
-              {sortedProjects.map((p,i) => (
+              {visibleProjects.map((p,i) => (
                 <tr key={p.gid||i} className="border-t border-zinc-50 dark:border-zinc-800/50 hover:bg-zinc-50/50 dark:hover:bg-zinc-800/20 transition-colors">
                   <td className="px-3 py-2.5 max-w-[220px]">
                     <a href={p.url} target="_blank" rel="noopener" className="font-medium text-zinc-800 dark:text-zinc-200 hover:text-blue-500 transition-colors truncate block" title={p.name}>{p.name}</a>
@@ -900,12 +869,18 @@ function CoEDashboardTab({ onBack }) {
                   </td>
                   <td className="px-3 py-2.5 text-zinc-500 dark:text-zinc-400 whitespace-nowrap">{p.department||"—"}</td>
                   <td className="px-3 py-2.5 text-zinc-500 dark:text-zinc-400 whitespace-nowrap">{p.owner||"—"}</td>
-                  <td className="px-3 py-2.5 text-zinc-500 dark:text-zinc-400 tabular-nums text-center">{p.daysInPipeline??"—"}</td>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
+        {sortedProjects.length > 3 && (
+          <div className="px-4 py-3 border-t border-zinc-100 dark:border-zinc-800">
+            <button onClick={() => setShowAllProjects(!showAllProjects)} className="text-[11px] font-semibold text-blue-500 hover:text-blue-600 transition-colors">
+              {showAllProjects ? "Show less" : `View all ${sortedProjects.length} projects`}
+            </button>
+          </div>
+        )}
       </div>
 
     </div>
