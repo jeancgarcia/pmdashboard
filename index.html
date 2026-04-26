@@ -570,8 +570,8 @@ function MiniRing({ value, total, color, size = 48, stroke = 5 }) {
   const dk = document.documentElement.classList.contains("dark");
   return (
     <svg width={size} height={size} style={{transform:"rotate(-90deg)"}}>
-      <circle cx={size/2} cy={size/2} r={r} fill="none" stroke={dk ? "rgba(255,255,255,0.06)" : "rgba(0,0,0,0.06)"} strokeWidth={stroke}/>
-      <circle cx={size/2} cy={size/2} r={r} fill="none" stroke={color} strokeWidth={stroke} strokeDasharray={circ} strokeDashoffset={circ*(1-pct)} strokeLinecap="round" style={{transition:"stroke-dashoffset 0.6s ease"}}/>
+      <circle cx={size/2} cy={size/2} r={r} fill="none" stroke={dk ? "rgba(255,255,255,0.10)" : "#e5e7eb"} strokeWidth={stroke}/>
+      <circle cx={size/2} cy={size/2} r={r} fill="none" stroke={color} strokeWidth={stroke} strokeDasharray={circ} strokeDashoffset={circ*(1-pct)} strokeLinecap="round" style={{transition:"stroke-dashoffset 0.25s ease-out"}}/>
     </svg>
   );
 }
@@ -657,10 +657,13 @@ function CoEDashboardTab({ onBack }) {
 
   const stageSorted = Object.entries(summary.byStage||{}).filter(([,v])=>v>0).sort((a,b)=>b[1]-a[1]);
   const stageMax = stageSorted.length > 0 ? stageSorted[0][1] : 1;
+  const stageTotal = stageSorted.reduce((s,[,v]) => s + v, 0);
   const deptSorted = Object.entries(summary.byDepartment||{}).filter(([,v])=>v>0).sort((a,b)=>b[1]-a[1]);
   const deptMax = deptSorted.length > 0 ? deptSorted[0][1] : 1;
+  const deptTotal = deptSorted.reduce((s,[,v]) => s + v, 0);
   const reviewSorted = Object.entries(summary.byFirstReview||{}).filter(([k,v])=>v>0 && k!=="Unset").sort((a,b)=>b[1]-a[1]);
   const reviewMax = reviewSorted.length > 0 ? reviewSorted[0][1] : 1;
+  const reviewTotal = reviewSorted.reduce((s,[,v]) => s + v, 0);
 
   const prOrder = ["High","Medium","Low","Unset"];
   const prData = prOrder.map(k => ({label:k, value: summary.byPriority?.[k]||0})).filter(d => d.value > 0);
@@ -779,6 +782,10 @@ function CoEDashboardTab({ onBack }) {
               </div>
             ))}
           </div>
+          <div className="flex items-center justify-between mt-3 pt-2 border-t border-zinc-100 dark:border-zinc-800">
+            <span className="text-[10px] font-bold uppercase tracking-wider text-zinc-400 dark:text-zinc-500">Total</span>
+            <span className="text-[11px] font-bold tabular-nums text-zinc-900 dark:text-zinc-100">{stageTotal}</span>
+          </div>
         </div>
 
         <div className="rounded-2xl bg-white dark:bg-zinc-900 border border-zinc-200/60 dark:border-zinc-800 p-4">
@@ -793,6 +800,10 @@ function CoEDashboardTab({ onBack }) {
                 <MiniBar value={d.value} max={prTotal} color={PR_C[d.label]||"#6b7280"}/>
               </div>
             ))}
+          </div>
+          <div className="flex items-center justify-between mt-3 pt-2 border-t border-zinc-100 dark:border-zinc-800">
+            <span className="text-[10px] font-bold uppercase tracking-wider text-zinc-400 dark:text-zinc-500">Total</span>
+            <span className="text-[11px] font-bold tabular-nums text-zinc-900 dark:text-zinc-100">{prTotal}</span>
           </div>
         </div>
 
@@ -809,6 +820,10 @@ function CoEDashboardTab({ onBack }) {
               </div>
             ))}
           </div>
+          <div className="flex items-center justify-between mt-3 pt-2 border-t border-zinc-100 dark:border-zinc-800">
+            <span className="text-[10px] font-bold uppercase tracking-wider text-zinc-400 dark:text-zinc-500">Total</span>
+            <span className="text-[11px] font-bold tabular-nums text-zinc-900 dark:text-zinc-100">{deptTotal}</span>
+          </div>
         </div>
 
         <div className="rounded-2xl bg-white dark:bg-zinc-900 border border-zinc-200/60 dark:border-zinc-800 p-4">
@@ -823,6 +838,10 @@ function CoEDashboardTab({ onBack }) {
                 <MiniBar value={value} max={clTotal} color={CL_C[label]||"#6b7280"}/>
               </div>
             ))}
+          </div>
+          <div className="flex items-center justify-between mt-3 pt-2 border-t border-zinc-100 dark:border-zinc-800">
+            <span className="text-[10px] font-bold uppercase tracking-wider text-zinc-400 dark:text-zinc-500">Total</span>
+            <span className="text-[11px] font-bold tabular-nums text-zinc-900 dark:text-zinc-100">{clTotal}</span>
           </div>
         </div>
       </div>
@@ -840,6 +859,10 @@ function CoEDashboardTab({ onBack }) {
               <MiniBar value={value} max={reviewMax} color="#8b5cf6"/>
             </div>
           ))}
+        </div>
+        <div className="flex items-center justify-between mt-3 pt-2 border-t border-zinc-100 dark:border-zinc-800">
+          <span className="text-[10px] font-bold uppercase tracking-wider text-zinc-400 dark:text-zinc-500">Total{reviewSorted.length > 6 ? ` (top 6 of ${reviewSorted.length})` : ""}</span>
+          <span className="text-[11px] font-bold tabular-nums text-zinc-900 dark:text-zinc-100">{reviewTotal}</span>
         </div>
       </div>
 
