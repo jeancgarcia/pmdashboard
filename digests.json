@@ -1,5 +1,111 @@
 [
   {
+    "id": "daily-2026-04-29",
+    "type": "daily",
+    "date": "Wednesday, April 29",
+    "isoDate": "2026-04-29",
+    "greeting": "Good morning, Jean! Happy Wednesday — and ServiceCloud Console launch day. Your Blocked Space at noon is basically destiny: the End User Playbook is carried over and now overdue. You start the morning with David at 10:30 (close the Miro board loop right there), Carolina at 11:00 (great window for the Camilo ticket follow-up), and a tentative Jean/Sara 1:1 at 11:30. Four reminders came in last night — including the CoE visual workflow, Mike Rosello loop-in, and the Toggl update. Note: live Outlook and Teams data wasn’t available this run (MS365 auth not active) — schedule below is based on yesterday’s preview. Check your inbox for anything that came in overnight.",
+    "sections": [
+      {
+        "title": "Carried Over",
+        "info": false,
+        "items": [
+          {
+            "id": "co-wed-0429-eod-0428-open-1",
+            "label": "ServiceCloud End User Playbook — complete today",
+            "detail": "Rippling Learning Management flagged this as pending. ServiceCloud Console officially launched today — this training is no longer just ‘due soon.’ Noon Blocked Space is the move.",
+            "flag": "urgent"
+          },
+          {
+            "id": "co-wed-0429-eod-0428-open-5",
+            "label": "David — Miro board conversion to Excel",
+            "detail": "David requested help converting a Miro board to Excel. 1:1 with David is at 10:30 AM — close this one directly in the meeting.",
+            "flag": "carried"
+          }
+        ]
+      },
+      {
+        "title": "Reminders",
+        "info": false,
+        "items": [
+          {
+            "id": "rem-1777402879199",
+            "label": "Create visual workflow for CoE escalated projects",
+            "detail": "Build a visual diagram of the CoE escalation process. Added last night — find a focus window today or tomorrow to make it happen."
+          },
+          {
+            "id": "rem-1777404435726",
+            "label": "Loop in Sara and Danny about Mike Rosello",
+            "detail": "Mike Rosello has not been responsive — reach out to Sara and Danny to ask for help improving communication and getting the team unblocked.",
+            "flag": "attn"
+          },
+          {
+            "id": "rem-1777424685785",
+            "label": "Darle seguimiento al ticket de Camilo (Carolina) con Mar",
+            "detail": "Seguimiento pendiente al ticket de Camilo. La 1:1 con Carolina está hoy a las 11:00 AM — buen momento para revisarlo directamente."
+          },
+          {
+            "id": "rem-1777424849604",
+            "label": "Actualizar Toggl",
+            "detail": "Actualizar registros de tiempo en Toggl. Recordatorio añadido anoche."
+          }
+        ]
+      },
+      {
+        "title": "Today's Schedule",
+        "info": true,
+        "items": [
+          {
+            "id": "wed-0429-cal-1",
+            "label": "10:30 AM — 1:1 David & Jean",
+            "detail": "Ideal window to close the Miro board → Excel conversion. Also good for open CoE items.",
+            "time": "10:30 AM"
+          },
+          {
+            "id": "wed-0429-cal-2",
+            "label": "11:00 AM — 1:1 Carolina and Jean",
+            "detail": "Bi-weekly sync with Carolina Lopez. Carolina’s execution on the Camino IT ticket was noted as pending — use this window for the follow-up on the Camilo ticket too.",
+            "time": "11:00 AM"
+          },
+          {
+            "id": "wed-0429-cal-3",
+            "label": "11:30 AM — Jean/Sara 1:1 (Tentative)",
+            "detail": "Sara’s new weekly 1:1 series. Sara was OOO yesterday — confirm this is still on before planning around it.",
+            "note": "Tentative — Sara was OOO Tuesday",
+            "time": "11:30 AM"
+          },
+          {
+            "id": "wed-0429-cal-4",
+            "label": "12:00 PM — Blocked Space",
+            "detail": "Protected focus window. Prime time for the ServiceCloud End User Playbook — Service Cloud Console is live today.",
+            "time": "12:00 PM"
+          },
+          {
+            "id": "wed-0429-cal-5",
+            "label": "1:00 PM — Training: Reports and Dashboards in Litify (Tentative)",
+            "detail": "Jhara organizing a Litify training on Phase 2 process reports and dashboards. Large group: Jessica, Carolina, Shelley, Mas Ohnuma, Mar Garcia.",
+            "note": "Tentative",
+            "time": "1:00 PM"
+          },
+          {
+            "id": "wed-0429-cal-6",
+            "label": "2:00 PM — Forms Project Review (Tentative)",
+            "detail": "Walk through the forms project and identify where support is needed. Jean and Jo Grijalva are attendees.",
+            "note": "Tentative",
+            "time": "2:00 PM"
+          },
+          {
+            "id": "wed-0429-cal-7",
+            "label": "4:00 PM — 1:1 Andrea/Jean (Tentative)",
+            "detail": "Organized by Andrea Rodriguez.",
+            "note": "Tentative",
+            "time": "4:00 PM"
+          }
+        ]
+      }
+    ]
+  },
+  {
     "id": "eod-2026-04-28",
     "type": "eod",
     "date": "Tuesday, April 28 — End of Day",
