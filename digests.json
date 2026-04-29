@@ -1,5 +1,159 @@
 [
   {
+    "id": "eod-2026-04-29",
+    "type": "eod",
+    "date": "Wednesday, April 29 - End of Day",
+    "isoDate": "2026-04-29",
+    "greeting": "Wednesday delivered, Jean. All four of this morning’s reminders cleared — the CoE visual workflow, the Mike Rosello loop-in, the Camilo ticket follow-up, and Toggl — on a day you also held four 1:1s, ran a Forms Project Review, worked an Incident Response focus block, and stepped into Teams to personally break down Danny’s Venn email for the team. The ServiceCloud playbook is still riding (third day in a row — Thursday is the day), and a couple of new action items from today’s inbox need attention by May 2. But you showed up fully today. Rest. Thursday has a full house.",
+    "sections": [
+      {
+        "title": "Completed Today",
+        "info": true,
+        "items": [
+          {
+            "id": "eod-0429-done-1",
+            "label": "Create visual workflow for CoE escalated projects",
+            "detail": "Carried from Tuesday’s reminders. Jean resolved this today — workflow for CoE escalation process created."
+          },
+          {
+            "id": "eod-0429-done-2",
+            "label": "Loop in Sara and Danny about Mike Rosello",
+            "detail": "Reminder from Tuesday resolved. Jean reached out to Sara and Danny regarding Mike Rosello’s responsiveness."
+          },
+          {
+            "id": "eod-0429-done-3",
+            "label": "Seguimiento al ticket de Camilo (Carolina) con Mar",
+            "detail": "Reminder from last night. Jean followed up with Carolina and Mar on Camilo’s ticket."
+          },
+          {
+            "id": "eod-0429-done-4",
+            "label": "Actualizar Toggl",
+            "detail": "Time records updated in Toggl. Reminder from last night resolved."
+          },
+          {
+            "id": "eod-0429-done-5",
+            "label": "1:1 David & Jean — held, notes shared",
+            "detail": "Jean held the 1:1 with David at 10:30 AM and shared the meeting notes document (‘11 David Jean’) via SharePoint."
+          },
+          {
+            "id": "eod-0429-done-6",
+            "label": "Forms Project Review — attended with Jorge Grijalva",
+            "detail": "Jean participated in the Forms Project Review organized by jlogan. Jorge Grijalva was also in attendance. Focus was identifying where support is needed on the forms project."
+          },
+          {
+            "id": "eod-0429-done-7",
+            "label": "Venn compliance testing — explained Danny’s email to team",
+            "detail": "Jean clarified the Venn compliance pilot (starts May 4) in Teams: access errors are expected — log them, don’t work around them. Remote EOR and non-EOR users will need Venn. May 2 deadline communicated as important."
+          },
+          {
+            "id": "eod-0429-done-8",
+            "label": "Data team issue — Shaun’s plan relayed to team",
+            "detail": "Jean shared an update: Shaun has a plan to fix the data team issue but needs a downtime window. Next step is coordinating the window."
+          }
+        ]
+      },
+      {
+        "title": "Still Open",
+        "info": false,
+        "items": [
+          {
+            "id": "eod-0429-open-1",
+            "label": "ServiceCloud End User Playbook — complete tomorrow",
+            "detail": "Third carry. ServiceCloud Console launched this week — this training is overdue. Thursday’s Blocked Space at 12 PM is the window. No more delays.",
+            "flag": "urgent"
+          },
+          {
+            "id": "eod-0429-open-2",
+            "label": "David — Miro board conversion to Excel",
+            "detail": "Had the 1:1 with David this morning but completion of the Miro→Excel conversion is unconfirmed from data. Follow up if not closed.",
+            "flag": "carried"
+          },
+          {
+            "id": "eod-0429-open-3",
+            "label": "Venn compliance testing — action required by May 2",
+            "detail": "Danny Miller’s email requires a reply by May 2 confirming: authorized users list, testing scope, and data access protocol. PMO, IC, and QA teams are the pilot group.",
+            "flag": "urgent"
+          },
+          {
+            "id": "eod-0429-open-4",
+            "label": "Service Cloud Relaunch — action required before Saturday May 2",
+            "detail": "Andrea Rodriguez forwarded the LLF Communications Service Cloud Relaunch notice. Action is required before the Saturday May 2 launch date. Review and confirm your part.",
+            "flag": "attn"
+          },
+          {
+            "id": "eod-0429-open-5",
+            "label": "Data team issue — downtime window for Shaun’s fix still pending",
+            "detail": "Shaun has a plan but needs a downtime window to execute it. Coordination still needed to schedule and communicate the window.",
+            "flag": "carried"
+          }
+        ]
+      },
+      {
+        "title": "Key Decisions",
+        "info": true,
+        "items": [
+          {
+            "id": "eod-0429-kd-1",
+            "label": "Venn pilot: access errors are expected — log, don’t workaround",
+            "detail": "Jean established the ground rule for the Venn compliance testing week (May 4): any access error encountered is expected behavior and should be logged. Teams should not attempt workarounds. Deadline for pre-testing confirmations is May 2."
+          },
+          {
+            "id": "eod-0429-kd-2",
+            "label": "Data team fix path identified — downtime window needed",
+            "detail": "Shaun came with a concrete plan to resolve the data team issue. Next step is scheduling and communicating a downtime window."
+          },
+          {
+            "id": "eod-0429-kd-3",
+            "label": "New Project Intake submitted to EPMO for TL review",
+            "detail": "A new project was submitted to the EPMO and is now in the TL review queue. Jean received the notification."
+          }
+        ]
+      },
+      {
+        "title": "Tomorrow Preview",
+        "info": true,
+        "items": [
+          {
+            "id": "eod-0429-tmrw-1",
+            "label": "Note: Sara’s OOO appears cancelled — she may be back Thursday",
+            "detail": "The Sara OOO block (April 30–May 6) was cancelled in the calendar. Sara may be returning tomorrow — check in before assuming she’s still out."
+          },
+          {
+            "id": "eod-0429-tmrw-2",
+            "label": "11:00 AM — 1:1 Santiago & Jean",
+            "detail": "Weekly 1:1 with Santiago Arango. Good window to check on the Supplements Dashboards hypercare status and the I-914/I-914A Approval Copy project update Santiago posted today."
+          },
+          {
+            "id": "eod-0429-tmrw-3",
+            "label": "12:00 PM — Blocked Space",
+            "detail": "Use this window for the ServiceCloud End User Playbook. Third carry — this is the day.",
+            "flag": "urgent"
+          },
+          {
+            "id": "eod-0429-tmrw-4",
+            "label": "1:30 PM — Weekly BCP/Incident Response Meeting",
+            "detail": "Jean’s recurring BCP/Incident Response weekly meeting. Full team: T. Lawrence, Danny Miller, Lucia Caamaño, Santiago, and others. jescheffler confirmed attendance today."
+          },
+          {
+            "id": "eod-0429-tmrw-5",
+            "label": "2:00 PM — 1:1 Camilo & Jean",
+            "detail": "Weekly 1:1 with Camilo. Jean followed up on Camilo’s ticket today — good continuity conversation."
+          },
+          {
+            "id": "eod-0429-tmrw-6",
+            "label": "2:30 PM — 1:1 Maria & Jean",
+            "detail": "Weekly 1:1 with Mar Garcia. Portfolio review, roadblocks, and next steps on the agenda."
+          },
+          {
+            "id": "eod-0429-tmrw-7",
+            "label": "4:00 PM — 👍 Tudo Bem! Weekly Meeting",
+            "detail": "Full team meeting: David, Jhara, Mar, Yuri, Andrea, Camilo, and Santiago. Main forum for coordination, roadblocks, and alignment. Thursday is dense — prep talking points in advance."
+          }
+        ]
+      }
+    ]
+  },
+  {
     "id": "daily-2026-04-29",
     "type": "daily",
     "date": "Wednesday, April 29",
