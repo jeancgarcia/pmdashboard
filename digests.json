@@ -1,5 +1,219 @@
 [
   {
+    "id": "eod-2026-04-30",
+    "type": "eod",
+    "date": "Thursday, April 30 — End of Day",
+    "isoDate": "2026-04-30",
+    "greeting": "You showed up and delivered, Jean — even while fighting through a cold. Three 1:1s held, the Venn compliance reply sent to Danny, the vacation situation finally resolved with Rippling, Yuri's TRACE assignment communicated, two big carry-overs closed. Canceling the afternoon group meetings was the right call. Rest tonight. Friday is loaded and the ServiceCloud Playbook still needs its moment.",
+    "sections": [
+      {
+        "title": "Completed Today",
+        "info": true,
+        "items": [
+          {
+            "id": "eod-0430-done-1",
+            "label": "Three 1:1s held — Santiago (11 AM), Camilo (2 PM), Maria (2:30 PM)",
+            "detail": "All three weekly 1:1s completed. Maria's agenda included portfolio review, roadblocks, and next steps."
+          },
+          {
+            "id": "eod-0430-done-2",
+            "label": "Venn compliance formal reply to Danny — sent ✓",
+            "detail": "Formal reply confirming authorized users, testing scope, and data access protocol sent today ahead of the May 2 deadline. Venn pilot starts May 4."
+          },
+          {
+            "id": "eod-0430-done-3",
+            "label": "Service Cloud Relaunch — confirmed (carry closed)",
+            "detail": "Carry item from yesterday. Confirmed before Saturday's launch. Closed."
+          },
+          {
+            "id": "eod-0430-done-4",
+            "label": "Data team downtime window — coordinated (carry closed)",
+            "detail": "Carry item from yesterday. Shaun's fix window scheduled and communicated. Closed."
+          },
+          {
+            "id": "eod-0430-done-5",
+            "label": "Notified Licelot & Laura Cruz — Yuri is PM of TRACE",
+            "detail": "Jean committed yesterday to notify today. Done."
+          },
+          {
+            "id": "eod-0430-done-6",
+            "label": "Ernesto Alvarez SharePoint access — handled",
+            "detail": "Accept/decline decision made on access request for 'SOP Contact CL Re Green Card Approval Notice'."
+          },
+          {
+            "id": "eod-0430-done-7",
+            "label": "Responded to Jhara's 1:1 reschedule proposal",
+            "detail": "Jhara proposed a new 1:1 time on April 29. Jean responded today."
+          },
+          {
+            "id": "eod-0430-done-8",
+            "label": "RingCentral review — team confirmed non-use",
+            "detail": "Jean confirmed the team doesn't use RingCentral. Team can be added to the removal list (review due May 8)."
+          },
+          {
+            "id": "eod-0430-done-9",
+            "label": "Hablar con Evan — Detention Prevention Pilot scope clarified",
+            "detail": "Confirmed whether Detention Prevention Pilot Program is in or out of original project scope. Item closed."
+          },
+          {
+            "id": "eod-0430-done-10",
+            "label": "Rippling vacation call at 4:30 PM — exception granted",
+            "detail": "Call with Jeannie Rodriguez at Rippling. PTO payments were already processed, so Rippling did an exception for the new dates. One last step: Jean needs to send a document confirming the new dates."
+          },
+          {
+            "id": "eod-0430-done-11",
+            "label": "Project status check-in posted in Teams",
+            "detail": "Jean sent status questions on I-90 & DACA (tasksets sent to IT — checking completion), Court EAD Renewal support (no recent update), and COE status/roadblocks."
+          },
+          {
+            "id": "eod-0430-done-12",
+            "label": "Sara Watson back — OOO cancelled",
+            "detail": "Sara's April 30–May 6 OOO block was cancelled. She was available today."
+          }
+        ]
+      },
+      {
+        "title": "Cancelled Today",
+        "info": true,
+        "items": [
+          {
+            "id": "eod-0430-cancel-1",
+            "label": "👍 Tudo Bem! Weekly Meeting — cancelled by Jean",
+            "detail": "Cancelled due to health issues. Team notified."
+          },
+          {
+            "id": "eod-0430-cancel-2",
+            "label": "Weekly BCP/Incident Response — cancelled by Jean",
+            "detail": "Cancelled today. Team notified. Will need reschedule consideration."
+          }
+        ]
+      },
+      {
+        "title": "Still Open",
+        "info": false,
+        "items": [
+          {
+            "id": "eod-0430-open-1",
+            "label": "ServiceCloud End User Playbook — 4th carry",
+            "detail": "This one has followed you all week. Blocked Space at noon tomorrow is the last protected window before the weekend. It does not get to see Monday.",
+            "flag": "urgent"
+          },
+          {
+            "id": "eod-0430-open-2",
+            "label": "David — Miro board conversion to Excel",
+            "detail": "David requested help converting a Miro board to Excel. Follow up to confirm if still needed.",
+            "flag": "carried"
+          },
+          {
+            "id": "eod-0430-open-3",
+            "label": "Venn compliance — verify Danny's loop is fully closed",
+            "detail": "Formal reply was sent today (e1 ✓). This carry wasn't explicitly checked off. Quick verify: confirm Danny received and acknowledged. May 2 is the hard deadline — Friday is the last working day.",
+            "flag": "attn"
+          },
+          {
+            "id": "eod-0430-open-4",
+            "label": "Send document to Rippling — new vacation dates",
+            "detail": "Rippling granted the PTO exception. Jean shared in Teams: the last step is sending a document explaining the new dates. That document still needs to go.",
+            "flag": "attn"
+          },
+          {
+            "id": "eod-0430-open-5",
+            "label": "SOP review — deadline is EOD tomorrow (May 1)",
+            "detail": "Jhara sent a reminder today: SOPs were shared April 6, review must be done by end of day Friday. After that, the team moves to next steps.",
+            "flag": "urgent"
+          },
+          {
+            "id": "eod-0430-open-6",
+            "label": "SharePoint access requests — 9 pending decisions",
+            "detail": "Multiple staff requested access today to 'LLF Travel Guidance April 23 2026', 'SOP CSC-TRAVEL - Copy - English', and 'SOP I693 Received'. Requesters include: Minerva Lopez, Abril Porras, Juan Peguero, Esteban Hernandez, Kevin Ramirez, Yostin Arias, Stephanie Lutz, Yahaira Rishmawy, Majo Tamayo. Accept or decline each.",
+            "flag": "attn"
+          },
+          {
+            "id": "eod-0430-open-7",
+            "label": "Venn Enforcement Pilot — respond to kickoff invite from Nica",
+            "detail": "Nica Cavalcanti sent a kickoff invite for the Venn Enforcement Pilot rollout. Jean was selected as a pilot participant. Review and respond.",
+            "flag": "attn"
+          }
+        ]
+      },
+      {
+        "title": "Key Decisions",
+        "info": true,
+        "items": [
+          {
+            "id": "eod-0430-kd-1",
+            "label": "Rippling PTO exception granted — new vacation dates approved",
+            "detail": "Rippling confirmed the exception after the 4:30 PM call. Jean just needs to send a document with the new dates to finalize."
+          },
+          {
+            "id": "eod-0430-kd-2",
+            "label": "Tudo Bem! and BCP meetings cancelled — health-related",
+            "detail": "Jean cancelled both afternoon group meetings due to being unwell. Reschedule consideration for next week."
+          },
+          {
+            "id": "eod-0430-kd-3",
+            "label": "Venn Enforcement Pilot parameters confirmed — starts May 4",
+            "detail": "Access errors during testing should be logged, not worked around. Remote EOR and non-EOR users will need Venn. Formal reply to Danny sent today."
+          }
+        ]
+      },
+      {
+        "title": "Friday Preview",
+        "info": true,
+        "items": [
+          {
+            "id": "eod-0430-tmrw-1",
+            "label": "10:00 AM — Phase 2 Weekly IT Projects Sync",
+            "detail": "Full team weekly IT projects sync: Yuri, Jhara, Andrea, Viktor, Camilo, Mar, David, Santiago.",
+            "time": "10:00 AM"
+          },
+          {
+            "id": "eod-0430-tmrw-2",
+            "label": "11:00 AM — CoE Sync Jean (tentative)",
+            "detail": "With Mar Garcia and David Molano. Status: tentative.",
+            "time": "11:00 AM"
+          },
+          {
+            "id": "eod-0430-tmrw-3",
+            "label": "12:00 PM — Blocked Space (last window for ServiceCloud Playbook)",
+            "detail": "Protected focus time. ServiceCloud End User Playbook is on its 4th carry. This is the window — no more carries.",
+            "time": "12:00 PM"
+          },
+          {
+            "id": "eod-0430-tmrw-4",
+            "label": "1:00 PM — Scam-related initiatives sync-up (tentative)",
+            "detail": "Santiago organized. Covers: Client Scam Reporting & Grievance Management, Tenacity Scam Awareness 2026, and Incident Response initiatives.",
+            "time": "1:00 PM"
+          },
+          {
+            "id": "eod-0430-tmrw-5",
+            "label": "2:00 PM — EPMO EOW Check In with Sara",
+            "detail": "Sara's end-of-week check-in (moved from Tuesdays). With Sara Watson, Eugenia, Janet McDowell, Jorge Grijalva.",
+            "time": "2:00 PM"
+          },
+          {
+            "id": "eod-0430-tmrw-6",
+            "label": "3:00 PM — Executive Project Status Slide Update",
+            "detail": "Weekly deck update with Jhara and Yuri. Note: Yuri is OOO from noon — confirm the meeting still works.",
+            "time": "3:00 PM"
+          },
+          {
+            "id": "eod-0430-tmrw-7",
+            "label": "⚠️ May 2 deadline — Friday is the last business day",
+            "detail": "Venn compliance reply to Danny was sent (verify closed). Friday is the last day before the Saturday May 2 hard deadline.",
+            "flag": "urgent"
+          },
+          {
+            "id": "eod-0430-tmrw-8",
+            "label": "⚠️ SOP review — absolute deadline EOD Friday",
+            "detail": "Jhara's reminder: reviews must be in by end of day Friday. After that, team moves to next steps.",
+            "flag": "urgent"
+          }
+        ]
+      }
+    ]
+  },
+  {
     "id": "daily-2026-04-30",
     "type": "daily",
     "date": "Thursday, April 30",
