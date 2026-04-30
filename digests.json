@@ -1,5 +1,197 @@
 [
   {
+    "id": "daily-2026-04-30",
+    "type": "daily",
+    "date": "Thursday, April 30",
+    "isoDate": "2026-04-30",
+    "greeting": "Good morning, Jean! Thursday is stacked — six meetings, three reminders to knock out, and five open carry-overs still waiting. Good news: Sara's OOO was cancelled so she should be back today. Noon Blocked Space is your window for the ServiceCloud Playbook (third carry — this is the day). Two May 2 deadlines need attention before Friday closes: Venn compliance reply to Danny and Service Cloud Relaunch confirmation. Let's make Thursday count.",
+    "sections": [
+      {
+        "title": "Carried Over",
+        "info": false,
+        "items": [
+          {
+            "id": "co-thu-0430-eod-0429-open-1",
+            "label": "ServiceCloud End User Playbook — complete today",
+            "detail": "Third carry. ServiceCloud Console is live. The Blocked Space at noon is the window. This one doesn't get to see Friday.",
+            "flag": "urgent"
+          },
+          {
+            "id": "co-thu-0430-eod-0429-open-2",
+            "label": "David — Miro board conversion to Excel",
+            "detail": "David requested help converting a Miro board to Excel. Follow up if not already closed.",
+            "flag": "carried"
+          },
+          {
+            "id": "co-thu-0430-eod-0429-open-3",
+            "label": "Venn compliance testing — action required by May 2",
+            "detail": "Danny Miller's email requires a reply by May 2 confirming: authorized users list, testing scope, and data access protocol. PMO, IC, and QA teams are the pilot group.",
+            "flag": "urgent"
+          },
+          {
+            "id": "co-thu-0430-eod-0429-open-4",
+            "label": "Service Cloud Relaunch — action required before Saturday May 2",
+            "detail": "Andrea Rodriguez forwarded the LLF Communications Service Cloud Relaunch notice. Action required before Saturday's launch. Review and confirm your part.",
+            "flag": "attn"
+          },
+          {
+            "id": "co-thu-0430-eod-0429-open-5",
+            "label": "Data team issue — downtime window for Shaun's fix still pending",
+            "detail": "Shaun has a plan but needs a downtime window to execute. Coordination still needed to schedule and communicate that window.",
+            "flag": "carried"
+          }
+        ]
+      },
+      {
+        "title": "Reminders",
+        "info": false,
+        "items": [
+          {
+            "id": "rem-1777496214687",
+            "label": "Hablar con Evan — Detention Prevention Pilot Program",
+            "detail": "Averiguar si el Detention Prevention Pilot Program es parte del scope del proyecto o si fue agregado sin estar en el plan inicial. Esto estaba fuera del scope original."
+          },
+          {
+            "id": "rem-1777503278261",
+            "label": "Seguimiento a tema de mis vacaciones",
+            "detail": "Pendiente resolver la situación de las vacaciones. Seguimiento necesario."
+          },
+          {
+            "id": "rem-1777503435622",
+            "label": "Notificar a Licelot y Laura Cruz — Yuri es PM de TRACE",
+            "detail": "Jean le dijo al equipo ayer: 'Mañana informo a Laura/Licelot'. Hoy es ese mañana. Confirmar a ambas que Yuri Almeida asume como PM del proyecto TRACE."
+          }
+        ]
+      },
+      {
+        "title": "Today's Schedule",
+        "info": true,
+        "items": [
+          {
+            "id": "thu-0430-cal-1",
+            "label": "11:00 AM — 1:1 Santiago & Jean",
+            "detail": "Weekly 1:1 with Santiago Arango. Good window to check on the I-914/I-914A Approval Copy project (status update posted yesterday) and Supplements Dashboards hypercare.",
+            "time": "11:00 AM"
+          },
+          {
+            "id": "thu-0430-cal-2",
+            "label": "12:00 PM — Blocked Space",
+            "detail": "Protected focus window. Third carry on the ServiceCloud End User Playbook — this is the moment.",
+            "time": "12:00 PM"
+          },
+          {
+            "id": "thu-0430-cal-3",
+            "label": "1:30 PM — Weekly BCP/Incident Response",
+            "detail": "Recurring weekly touchpoint on the BCP/Incident Response project. Team: T. Lawrence, Lucia Caamaño, Danny Miller, Dana Mackey, S. Kenny, Santiago, Ana Briseno, J. Scheffler.",
+            "time": "1:30 PM"
+          },
+          {
+            "id": "thu-0430-cal-4",
+            "label": "2:00 PM — 1:1 Camilo & Jean",
+            "detail": "Weekly 1:1 with Camilo. Jean followed up on his ticket earlier this week — good continuity.",
+            "time": "2:00 PM"
+          },
+          {
+            "id": "thu-0430-cal-5",
+            "label": "2:30 PM — 1:1 Maria & Jean",
+            "detail": "Weekly 1:1 with Mar Garcia. Agenda: portfolio review, roadblocks, next steps.",
+            "time": "2:30 PM"
+          },
+          {
+            "id": "thu-0430-cal-6",
+            "label": "4:00 PM — 👍 Tudo Bem! Weekly Meeting",
+            "detail": "Full team: David, Jhara, Mar, Yuri, Andrea, Camilo, Santiago. Main forum for coordination and roadblock removal.",
+            "time": "4:00 PM"
+          },
+          {
+            "id": "thu-0430-cal-7",
+            "label": "Sara is back — OOO cancelled",
+            "detail": "Sara Watson's OOO block (April 30–May 6) was cancelled in the calendar. She should be available today.",
+            "note": "OOO cancelled"
+          }
+        ]
+      },
+      {
+        "title": "Action Items",
+        "info": false,
+        "items": [
+          {
+            "id": "thu-0430-a1",
+            "label": "Ernesto Alvarez — SharePoint access request needs decision",
+            "detail": "Ernesto Alvarez is requesting access to 'SOP Contact CL Re Green Card Approval Notice' on SharePoint. Accept or decline the request.",
+            "flag": "attn"
+          },
+          {
+            "id": "thu-0430-a2",
+            "label": "Notify Licelot & Laura Cruz — Yuri is the new PM for TRACE",
+            "detail": "Jean committed yesterday ('Mañana informo a Laura/Licelot') to notify both today. Yuri Almeida is taking over as PM for the TRACE project.",
+            "flag": "attn"
+          },
+          {
+            "id": "thu-0430-a3",
+            "label": "Jhara — respond to 1:1 time proposal",
+            "detail": "Jhara Ochoa sent a new time proposal for the 1:1 Jhara & Jean meeting (received April 29 at 1:21 PM). Respond to confirm or counter-propose.",
+            "flag": "attn"
+          }
+        ]
+      },
+      {
+        "title": "Emails Awaiting Reply",
+        "info": false,
+        "items": [
+          {
+            "id": "thu-0430-e1",
+            "label": "Danny Miller — Venn compliance pilot reply due May 2",
+            "detail": "Danny's email requires a reply by May 2 confirming authorized users, testing scope, and data access protocol for the Venn pilot (starts May 4). Jean briefed the team in Teams — the formal reply is still needed.",
+            "flag": "urgent"
+          },
+          {
+            "id": "thu-0430-e2",
+            "label": "Rippling — Time off cancellation thread active",
+            "detail": "Jean replied this morning (April 30, 12:01 PM) noting no firm reschedule date due to her son being sick. Rippling had followed up. Thread may need a final close-out reply."
+          }
+        ]
+      },
+      {
+        "title": "Teams Highlights",
+        "info": false,
+        "items": [
+          {
+            "id": "thu-0430-t1",
+            "label": "TRACE project — Yuri Almeida confirmed as PM",
+            "detail": "In yesterday's Tudo Bem! chat, Mar Garcia asked who would get the TRACE project. Jean confirmed Yuri. Jean said she would notify Laura and Licelot today — action item is in today's digest."
+          },
+          {
+            "id": "thu-0430-t2",
+            "label": "Venn compliance pilot — team fully briefed, May 2 is the deadline",
+            "detail": "Jean walked the team through Danny's Venn email: access errors during testing are expected — log them, don't work around them. Remote EOR and non-EOR users will need Venn. Deadline for pre-testing confirmations is May 2. Several team members flagged Venn performance issues — those will need tickets."
+          },
+          {
+            "id": "thu-0430-t3",
+            "label": "RingCentral review — team confirmed they don't use it",
+            "detail": "In the group chat about the RingCentral access review (due May 8), Jean confirmed the team doesn't use it. Jorge Grijalva, Sara Watson, Eugenia Barragan, and Janet McDowell confirmed the same. Jean can add her team to the removal list."
+          }
+        ]
+      },
+      {
+        "title": "Tomorrow Preview",
+        "info": true,
+        "items": [
+          {
+            "id": "thu-0430-tmrw-1",
+            "label": "Friday, May 1 — Last day before May 2 deadlines",
+            "detail": "Two hard deadlines hit Saturday: Venn compliance reply to Danny and Service Cloud Relaunch confirmation. Friday is the last working day to get both done. Block time early."
+          },
+          {
+            "id": "thu-0430-tmrw-2",
+            "label": "Jhara's Training: Reports & Dashboards in Litify — rescheduled to next week",
+            "detail": "Jhara confirmed the training was rescheduled to next week due to a scheduling conflict. Nothing to prep for Friday, but expect it on next week's calendar."
+          }
+        ]
+      }
+    ]
+  },
+  {
     "id": "eod-2026-04-29",
     "type": "eod",
     "date": "Wednesday, April 29 - End of Day",
