@@ -1335,22 +1335,21 @@ function ReactionPicker({ currentEmoji, anchor, onPick, onRemove, onClose }) {
     };
   }, [onClose]);
 
-  // Clamp position to viewport so picker never overflows.
+  // Clamp position to viewport so picker never overflows. Width estimate covers the
+  // 4 emoji buttons plus the optional Remove pill so reactions-with-Remove still fit.
   const PAD = 8;
-  const W = 220;  // approx popover width
-  const H = 44;   // approx popover height
-  const vw = typeof window !== "undefined" ? window.innerWidth : 1024;
-  const vh = typeof window !== "undefined" ? window.innerHeight : 768;
-  const x = Math.max(PAD, Math.min((anchor?.x ?? PAD), vw - W - PAD));
-  const y = Math.max(PAD, Math.min((anchor?.y ?? PAD), vh - H - PAD));
+  const W = currentEmoji ? 280 : 200;
+  const H = 44;
+  const x = Math.max(PAD, Math.min((anchor?.x ?? PAD), window.innerWidth - W - PAD));
+  const y = Math.max(PAD, Math.min((anchor?.y ?? PAD), window.innerHeight - H - PAD));
 
   return (
     <div
       ref={ref}
-      style={{ position: "fixed", left: x, top: y, zIndex: 50 }}
+      style={{ position: "fixed", left: x, top: y }}
       onClick={e => e.stopPropagation()}
       onContextMenu={e => e.preventDefault()}
-      className="flex items-center gap-1 px-2 py-1.5 rounded-xl bg-white dark:bg-zinc-800 shadow-lg border border-zinc-200 dark:border-zinc-700"
+      className="z-50 flex items-center gap-1 px-2 py-1.5 rounded-xl bg-white dark:bg-zinc-800 shadow-lg border border-zinc-200 dark:border-zinc-700"
     >
       {REACTION_EMOJIS.map(em => (
         <button
@@ -1358,6 +1357,7 @@ function ReactionPicker({ currentEmoji, anchor, onPick, onRemove, onClose }) {
           onClick={() => { onPick(em); onClose(); }}
           className={`text-lg leading-none w-9 h-9 rounded-lg transition-all hover:scale-110 active:scale-95 ${currentEmoji === em ? "bg-zinc-100 dark:bg-zinc-700 ring-1 ring-blue-400" : "hover:bg-zinc-100 dark:hover:bg-zinc-700"}`}
           title={`React with ${em}`}
+          aria-label={`React with ${em}`}
         >
           {em}
         </button>
