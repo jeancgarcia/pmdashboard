@@ -2347,15 +2347,15 @@ function App() {
     } catch {}
 
     remoteRead().then(state => {
-      // completed, hidden, edits: local user actions win if they acted first.
-      // These fields reflect user checkbox interactions — their changes should not be overwritten.
+      // completed, hidden, edits, reactions: local user actions win if they acted first.
+      // These fields reflect user checkbox / reaction interactions — their changes should not be overwritten.
       if (!userActed.current) {
         if (state && state.completed) setCompleted(state.completed);
         if (state && state.hidden) setHidden(state.hidden);
         if (state && state.edits) setEdits(state.edits);
         if (state && state.reactions) setReactions(state.reactions);
       } else {
-        // User already acted — keep their checkbox/edit changes, don't touch completed/hidden/edits
+        // User already acted — keep their checkbox/edit/reaction changes, don't touch completed/hidden/edits/reactions
         if (state && state.edits) setEdits(prev => Object.keys(prev).length ? prev : (state.edits || {}));
         if (state && state.reactions) setReactions(prev => Object.keys(prev).length ? prev : (state.reactions || {}));
       }
