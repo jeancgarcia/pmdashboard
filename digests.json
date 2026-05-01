@@ -1,5 +1,192 @@
 [
   {
+    "id": "weekly-2026-05-01",
+    "type": "weekly",
+    "date": "Week of April 27 – May 1",
+    "isoDate": "2026-05-01",
+    "greeting": "What a week, Jean. Service Cloud launches tomorrow. Jhara's role change to PM is official — with a pay bump effective April 20. The CoE's first full week moved 7 projects forward, and Angel noticed. Santiago closed two projects outright. You battled through a cold, cancelled meetings for the Colombian holiday, and still got the ServiceCloud Playbook and SOP reviews done. Not a bad five days. Enjoy the long weekend — you earned the rest.",
+    "sections": [
+      {
+        "title": "Week in Review",
+        "info": true,
+        "items": [
+          {
+            "id": "wk-0501-review-1",
+            "label": "Service Cloud Relaunch — launches Saturday, May 2",
+            "detail": "Final reminder sent firm-wide on Friday. Sara sent good luck to Javier Vargas, Sinery Tremillo, and the team. Jorge expressed confidence in the rollout. The team is ready."
+          },
+          {
+            "id": "wk-0501-review-2",
+            "label": "Jhara Ochoa role change to PM — officially confirmed",
+            "detail": "Sara confirmed: Jhara's transition from PE to PM is effective April 20 with a 2% pay increase. Jean shared the news with Jhara on Friday. Mar Garcia's promotion to PM I is pending final approval for June 1."
+          },
+          {
+            "id": "wk-0501-review-3",
+            "label": "CoE first operational week — 7 items moved forward",
+            "detail": "5 projects and 2 Halo tickets advanced. Angel took note of the momentum. Jean recognized David and Jhara's effort in the team chat."
+          },
+          {
+            "id": "wk-0501-review-4",
+            "label": "Santiago closed two projects — Supplements Dashboards and Supplements Tasksets Renovation",
+            "detail": "Both projects were marked complete this week. Santiago also posted POCs for scam-related initiatives before signing off for the holiday."
+          },
+          {
+            "id": "wk-0501-review-5",
+            "label": "Venn Enforcement Pilot — confirmed and kickoff scheduled Monday",
+            "detail": "Jean sent the Action Confirmation on Friday morning. Kickoff session is Monday May 4 at 9:00 AM. Danny's compliance loop is closed."
+          },
+          {
+            "id": "wk-0501-review-6",
+            "label": "SOPs approved by Carolina Lopez",
+            "detail": "Both SOPs in review were approved by Carolina on Friday. Jhara received confirmation."
+          },
+          {
+            "id": "wk-0501-review-7",
+            "label": "Scam-related initiatives — POCs assigned",
+            "detail": "Santiago shared POCs for each project in the team chat: Client Scam Reporting (Santiago), Tenacity Scam Awareness, and related workstreams. Janet and Jorge engaged on the topic."
+          }
+        ]
+      },
+      {
+        "title": "Wins",
+        "info": true,
+        "items": [
+          {
+            "id": "wk-0501-win-1",
+            "label": "Jhara's promotion — a moment worth celebrating",
+            "detail": "From PE to PM, effective April 20. Jean shared the news and Jhara responded with gratitude. Sara also flagged that messaging should say 'role change' rather than 'promotion' for team-wide comms."
+          },
+          {
+            "id": "wk-0501-win-2",
+            "label": "CoE making an impact in week one",
+            "detail": "Seven items advanced. Leadership noticed. This is the early traction that validates the entire initiative."
+          },
+          {
+            "id": "wk-0501-win-3",
+            "label": "Service Cloud ready for launch — full team confidence",
+            "detail": "The entire EPMO rallied around Javier and Sinery's team. Jorge's confidence message reflects real team cohesion."
+          },
+          {
+            "id": "wk-0501-win-4",
+            "label": "Two project closures by Santiago",
+            "detail": "Supplements Dashboards and Supplements Tasksets Renovation are done. Clean closures — no loose threads."
+          }
+        ]
+      },
+      {
+        "title": "Key Decisions",
+        "info": true,
+        "items": [
+          {
+            "id": "wk-0501-decision-1",
+            "label": "PM titling — use 'role change' not 'promotion' for team messaging",
+            "detail": "Sara directed: avoid PM I, PM II, PM III labels in full-team communications. Jhara's announcement should reference a transition from PE to PM."
+          },
+          {
+            "id": "wk-0501-decision-2",
+            "label": "CoE escalated projects — empower Mar and David as owners",
+            "detail": "Sara stated: Mar and David have ownership. They should be included in discussions. Sara steps in only for escalations or blockers."
+          },
+          {
+            "id": "wk-0501-decision-3",
+            "label": "BD Bulletin process — standardization in progress",
+            "detail": "Jean communicated to Janet that the team is working to standardize and streamline processes. Further alignment needed."
+          },
+          {
+            "id": "wk-0501-decision-4",
+            "label": "Incident Response survey platform — Rippling recommended",
+            "detail": "Jean suggested using Rippling for the survey, consistent with recent firm-wide surveys. HR (Sarah Kenny / Nikki's team) is the POC for survey creation."
+          }
+        ]
+      },
+      {
+        "title": "Heading into Monday",
+        "info": false,
+        "items": [
+          {
+            "id": "wk-0501-open-1",
+            "label": "Jean OOO Monday (May 4) — Colombian holiday",
+            "detail": "Confirmed with Sara. Phase 2 meeting and 1:1 with Shelley cancelled. Team is aware. Tuesday is the real return day.",
+            "flag": "info"
+          },
+          {
+            "id": "wk-0501-open-2",
+            "label": "David — Miro board conversion to Excel",
+            "detail": "David requested help converting a Miro board to Excel. Follow up to confirm if still needed or already handled.",
+            "flag": "carried"
+          },
+          {
+            "id": "wk-0501-open-3",
+            "label": "Send document to Rippling — new vacation dates",
+            "detail": "Rippling granted the PTO exception after Thursday's call. The last step is sending a document explaining the new vacation dates. This has an ❗ flag from Jean.",
+            "flag": "urgent"
+          },
+          {
+            "id": "wk-0501-open-4",
+            "label": "Service Cloud launch monitoring — Saturday May 2",
+            "detail": "Go-live is tomorrow. No action needed from Jean unless escalations surface, but keep an eye on the team chat over the weekend.",
+            "flag": "attn"
+          },
+          {
+            "id": "wk-0501-open-5",
+            "label": "Venn Enforcement Pilot kickoff — Monday May 4 at 9:00 AM",
+            "detail": "Jean is OOO Monday but may want to attend the 30-minute kickoff session. Nica Cavalcanti is organizing.",
+            "flag": "attn"
+          },
+          {
+            "id": "wk-0501-open-6",
+            "label": "Mar Garcia promotion to PM I — pending final approval",
+            "detail": "Sara is working on getting the final approval. Effective date would be June 1. Jean should not announce until Sara confirms.",
+            "flag": "info"
+          },
+          {
+            "id": "wk-0501-open-7",
+            "label": "New PMs onboarding — meet & greets next week",
+            "detail": "Eugenia scheduled 30-minute sessions for Laura and Andrés to meet Jean. Eugenia is also OOO Monday.",
+            "flag": "info"
+          },
+          {
+            "id": "wk-0501-open-8",
+            "label": "Litify Sprint #10 Review and #11 Planning — meetings next week",
+            "detail": "Igor Oliveira sent calendar invites on Friday. Coordinate attendance with team.",
+            "flag": "info"
+          }
+        ]
+      },
+      {
+        "title": "Monday Preview",
+        "info": true,
+        "items": [
+          {
+            "id": "wk-0501-monday-1",
+            "label": "Jean Garcia — OOO (all day, Colombian holiday)",
+            "detail": "Approved by Sara. Most Colombia-based team members are also off."
+          },
+          {
+            "id": "wk-0501-monday-2",
+            "label": "9:00 AM — Venn Enforcement Pilot Kickoff Session",
+            "detail": "30-minute kickoff organized by Nica Cavalcanti. Pilot participants were selected and briefed. Jean was invited — may attend despite OOO."
+          },
+          {
+            "id": "wk-0501-monday-3",
+            "label": "Eugenia Barragán — OOO Monday",
+            "detail": "Heading to Colombia next week for logistics (including paperwork for team transitions)."
+          },
+          {
+            "id": "wk-0501-monday-4",
+            "label": "2:00 PM — EPMO Portfolio Review",
+            "detail": "Weekly portfolio review with Sara and leadership team. Jean is OOO but should note any updates needed."
+          },
+          {
+            "id": "wk-0501-monday-5",
+            "label": "4:00 PM — Training Report and Dashboard in Litify",
+            "detail": "Rescheduled from last week by Jhara. Covers reports and dashboards in Litify."
+          }
+        ]
+      }
+    ]
+  },
+  {
     "id": "daily-2026-05-01",
     "type": "daily",
     "date": "Friday, May 1",
