@@ -3125,6 +3125,18 @@ function App() {
               </div>
               )}
 
+              {!isRemindersView && (
+                <PinnedSection
+                  digests={digests}
+                  hidden={hidden}
+                  reactions={reactions}
+                  completed={completed}
+                  edits={edits}
+                  onToggle={toggle}
+                  onSetReaction={setReaction}
+                />
+              )}
+
               {/* Digest content */}
               {isRemindersView ? (
                 <RemindersView reminders={reminders} onRemove={removeReminder} reminderHistory={reminderHistory} />
