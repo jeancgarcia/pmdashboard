@@ -2252,6 +2252,7 @@ function App() {
   const [reminders, setReminders] = useState([]);
   const [reminderHistory, setReminderHistory] = useState([]);
   const [edits, setEdits] = useState({});
+  const [reactions, setReactions] = useState({});
   const [stateLoaded, setStateLoaded] = useState(false);
   const userActed = React.useRef(false); // only write after a real user action
   const [activeModule, setActiveModule] = useState("digests");
@@ -2342,6 +2343,7 @@ function App() {
       // consumed reminders to reappear after the automation clears them. We wait
       // for the authoritative remote read instead.
       if (local.edits && Object.keys(local.edits).length) setEdits(local.edits);
+      if (local.reactions && Object.keys(local.reactions).length) setReactions(local.reactions);
     } catch {}
 
     remoteRead().then(state => {
@@ -2351,9 +2353,11 @@ function App() {
         if (state && state.completed) setCompleted(state.completed);
         if (state && state.hidden) setHidden(state.hidden);
         if (state && state.edits) setEdits(state.edits);
+        if (state && state.reactions) setReactions(state.reactions);
       } else {
         // User already acted — keep their checkbox/edit changes, don't touch completed/hidden/edits
         if (state && state.edits) setEdits(prev => Object.keys(prev).length ? prev : (state.edits || {}));
+        if (state && state.reactions) setReactions(prev => Object.keys(prev).length ? prev : (state.reactions || {}));
       }
 
       // reminders + reminderHistory: ALWAYS apply with smart merge, regardless of userActed.
@@ -2381,8 +2385,8 @@ function App() {
   // Persist state to remote — ONLY after a real user action (not on initial load)
   useEffect(() => {
     if (!stateLoaded || !userActed.current) return;
-    debouncedWrite({ completed, hidden, reminders, reminderHistory, edits });
-  }, [completed, hidden, reminders, reminderHistory, edits, stateLoaded]);
+    debouncedWrite({ completed, hidden, reminders, reminderHistory, edits, reactions });
+  }, [completed, hidden, reminders, reminderHistory, edits, reactions, stateLoaded]);
 
   const toggle = useCallback((id) => {
     userActed.current = true;
@@ -2395,6 +2399,19 @@ function App() {
       ...prev,
       [id]: { label, detail, editedAt: new Date().toISOString() }
     }));
+  }, []);
+
+  const setReaction = useCallback((id, emoji) => {
+    userActed.current = true;
+    setReactions(prev => {
+      const next = { ...prev };
+      if (emoji == null) {
+        delete next[id];
+      } else {
+        next[id] = { emoji, ts: Date.now() };
+      }
+      return next;
+    });
   }, []);
 
   const deleteDigest = useCallback((digestId) => {
