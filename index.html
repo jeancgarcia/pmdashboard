@@ -1354,7 +1354,7 @@ function ReactionPicker({ currentEmoji, anchor, onPick, onRemove, onClose }) {
       {REACTION_EMOJIS.map(em => (
         <button
           key={em}
-          onClick={() => { onPick(em); onClose(); }}
+          onClick={() => { if (em !== currentEmoji) onPick(em); onClose(); }}
           className={`text-lg leading-none w-9 h-9 rounded-lg transition-all hover:scale-110 active:scale-95 ${currentEmoji === em ? "bg-zinc-100 dark:bg-zinc-700 ring-1 ring-blue-400" : "hover:bg-zinc-100 dark:hover:bg-zinc-700"}`}
           title={`React with ${em}`}
           aria-label={`React with ${em}`}
@@ -1445,7 +1445,7 @@ function CheckItem({ item, done, onToggle, searchQuery, editOverride, onEdit, re
     if (e) { e.preventDefault(); e.stopPropagation(); }
     setPicker({ x, y });
   };
-  const closePicker = () => setPicker(null);
+  const closePicker = useCallback(() => setPicker(null), []);
 
   const onContextMenu = (e) => {
     if (done) return;
@@ -2401,12 +2401,16 @@ function PinnedSection({ digests, hidden, reactions, completed, edits, onToggle,
     return list;
   }, [digests, hidden, reactions]);
 
-  // Counts per emoji (for chips), not affected by completion or active filter.
+  // Counts per emoji (for chips). Only counts undone items so the chip number matches
+  // what the user actually sees when they click the chip.
   const counts = useMemo(() => {
     const c = {};
-    for (const p of pinned) c[p.emoji] = (c[p.emoji] || 0) + 1;
+    for (const p of pinned) {
+      if (completed[p.item.id]) continue;
+      c[p.emoji] = (c[p.emoji] || 0) + 1;
+    }
     return c;
-  }, [pinned]);
+  }, [pinned, completed]);
 
   // Drop "done" items from the rendered list, then apply the sub-filter.
   const visible = useMemo(() => {
