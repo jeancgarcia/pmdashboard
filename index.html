@@ -2415,10 +2415,12 @@ function PinnedSection({ digests, hidden, reactions, completed, edits, onToggle,
     return undone.filter(p => p.emoji === activeFilter);
   }, [pinned, completed, activeFilter]);
 
-  // If the active emoji has no items left (after completion), reset to All.
+  // If the active emoji has no undone items left, reset to All.
+  // Drives off `visible` (post-completion) so completing the last 🧠 item also resets,
+  // not just removing the last 🧠 reaction.
   useEffect(() => {
-    if (activeFilter !== "all" && !counts[activeFilter]) setActiveFilter("all");
-  }, [activeFilter, counts]);
+    if (activeFilter !== "all" && visible.length === 0) setActiveFilter("all");
+  }, [activeFilter, visible]);
 
   // Hide the entire section when nothing is pinned (counting completed items too).
   if (pinned.length === 0) return null;
@@ -2453,7 +2455,11 @@ function PinnedSection({ digests, hidden, reactions, completed, edits, onToggle,
       </div>
 
       {visible.length === 0 ? (
-        <p className="text-xs text-zinc-400 dark:text-zinc-500 italic px-1 py-2">All caught up — nothing pinned with {activeFilter}.</p>
+        <p className="text-xs text-zinc-400 dark:text-zinc-500 italic px-1 py-2">
+          {activeFilter === "all"
+            ? "All caught up — everything pinned is done."
+            : `All caught up — nothing pinned with ${activeFilter}.`}
+        </p>
       ) : (
         <div className="space-y-1">
           {visible.map(({ item, emoji }) => {
@@ -2465,6 +2471,7 @@ function PinnedSection({ digests, hidden, reactions, completed, edits, onToggle,
                   onClick={() => onToggle(item.id)}
                   className="w-5 h-5 rounded-full flex-shrink-0 border border-zinc-300 dark:border-zinc-600 bg-white dark:bg-zinc-900 hover:border-zinc-400 dark:hover:border-zinc-500 transition-colors"
                   title="Mark as done"
+                  aria-label={`Mark "${label}" as done`}
                 />
                 <span className="flex-1 min-w-0 text-sm text-zinc-800 dark:text-zinc-200 font-medium truncate">{label}</span>
                 <span className="text-base leading-none flex-shrink-0">{emoji}</span>
@@ -2472,6 +2479,7 @@ function PinnedSection({ digests, hidden, reactions, completed, edits, onToggle,
                   onClick={() => onSetReaction(item.id, null)}
                   className="opacity-0 group-hover:opacity-100 transition-all flex-shrink-0 p-1 rounded-md text-zinc-400 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-500/10"
                   title="Remove reaction"
+                  aria-label="Remove reaction"
                 >
                   <Icon.X size={12} />
                 </button>
