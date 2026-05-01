@@ -1,5 +1,213 @@
 [
   {
+    "id": "daily-2026-05-01",
+    "type": "daily",
+    "date": "Friday, May 1",
+    "isoDate": "2026-05-01",
+    "greeting": "Happy Friday and happy May, Jean! Today is stacked — five meetings, the ServiceCloud Playbook on its fifth carry (Blocked Space at noon is it, for real this time), and the SOP review deadline is tonight. The good news: you already confirmed the Venn pilot this morning before most people had coffee, and Santiago officially closed two projects overnight — Supplements Dashboards and Supplements Tasksets Renovation are done. Yuri's OOO from noon, so loop him in on the 3 PM deck update now if needed. Let's close this week out.",
+    "sections": [
+      {
+        "title": "Carried Over",
+        "info": false,
+        "items": [
+          {
+            "id": "co-fri-0501-eod-0430-open-1",
+            "label": "ServiceCloud End User Playbook — 5th carry (noon Blocked Space is the moment)",
+            "detail": "This has followed you every single day this week. Your Blocked Space at 12:00 PM is the last protected window before the weekend. It does not get to see Monday.",
+            "flag": "urgent"
+          },
+          {
+            "id": "co-fri-0501-eod-0430-open-2",
+            "label": "David — Miro board conversion to Excel",
+            "detail": "David requested help converting a Miro board to Excel. Follow up to confirm if still needed or already handled.",
+            "flag": "carried"
+          },
+          {
+            "id": "co-fri-0501-eod-0430-open-3",
+            "label": "Venn compliance — verify Danny's loop is fully closed",
+            "detail": "The formal reply to Danny was sent Thursday (confirmed). Today you also sent an Action Confirmation for the Venn pilot. Quick verify: confirm Danny received and acknowledged. May 2 is tomorrow — today is the last working day.",
+            "flag": "attn"
+          },
+          {
+            "id": "co-fri-0501-eod-0430-open-4",
+            "label": "Send document to Rippling — new vacation dates",
+            "detail": "Rippling granted the PTO exception after Thursday's call. The last step is sending a document explaining the new vacation dates. This needs to go today.",
+            "flag": "attn"
+          },
+          {
+            "id": "co-fri-0501-eod-0430-open-5",
+            "label": "SOP review — absolute deadline is EOD today",
+            "detail": "Jhara reminded the team yesterday: SOPs were shared April 6, and review must be completed by end of day today (Friday). After that, the team moves to next steps. This cannot slip to Monday.",
+            "flag": "urgent"
+          },
+          {
+            "id": "co-fri-0501-eod-0430-open-6",
+            "label": "SharePoint access requests — 9 pending decisions (+ 5 more today)",
+            "detail": "From yesterday: Minerva Lopez, Abril Porras, Juan Peguero, Esteban Hernandez, Kevin Ramirez, and others requesting access to 'LLF Travel Guidance' and 'SOP CSC-TRAVEL'. Accept or decline each.",
+            "flag": "attn"
+          },
+          {
+            "id": "co-fri-0501-eod-0430-open-7",
+            "label": "Venn Enforcement Pilot — kickoff confirmed this morning",
+            "detail": "You sent the Action Confirmation at 7:54 AM and your calendar shows the invite was accepted. This carry is likely resolved — verify once and close it.",
+            "flag": "carried"
+          }
+        ]
+      },
+      {
+        "title": "Today's Schedule",
+        "info": true,
+        "items": [
+          {
+            "id": "fri-0501-cal-1",
+            "label": "10:00 AM — Phase 2 Weekly IT Projects Sync",
+            "detail": "Jean organizer. Full team: Yuri, Jhara, Andrea, Viktor, Camilo, Mar, David, Santiago. Note: Yuri is OOO from noon — be mindful if discussions extend.",
+            "time": "10:00 AM"
+          },
+          {
+            "id": "fri-0501-cal-2",
+            "label": "11:00 AM — CoE Sync Jean (tentative)",
+            "detail": "With Mar Garcia and David Molano. Status: tentative. Organized by Mar.",
+            "time": "11:00 AM"
+          },
+          {
+            "id": "fri-0501-cal-3",
+            "label": "12:00 PM — Blocked Space (ServiceCloud Playbook window)",
+            "detail": "Protected focus time. The ServiceCloud End User Playbook is on its 5th carry. This is the window — treat it as sacred.",
+            "time": "12:00 PM"
+          },
+          {
+            "id": "fri-0501-cal-4",
+            "label": "1:00 PM — Scam-related initiatives sync-up (tentative)",
+            "detail": "Santiago Arango organizer. Agenda: (1) Client Scam Reporting & Grievance Management, (2) Tenacity Scam Awareness 2026, (3) Incident Response initiatives. Status: tentative.",
+            "time": "1:00 PM"
+          },
+          {
+            "id": "fri-0501-cal-5",
+            "label": "2:00 PM — EPMO EOW Check In",
+            "detail": "Sara Watson's end-of-week check-in (moved from Tuesdays). With Sara, Eugenia Barragán, Janet McDowell, and Jorge Grijalva. Note: Eugenia is OOO today.",
+            "time": "2:00 PM"
+          },
+          {
+            "id": "fri-0501-cal-6",
+            "label": "3:00 PM — Executive Project Status Slide Update",
+            "detail": "Weekly deck update with Jhara and Yuri. Yuri is OOO from noon — confirm if this meeting still works or needs to be covered.",
+            "time": "3:00 PM"
+          }
+        ]
+      },
+      {
+        "title": "Action Items",
+        "info": false,
+        "items": [
+          {
+            "id": "fri-0501-a1",
+            "label": "SOP review — complete before EOD today",
+            "detail": "Jhara's reminder yesterday: SOPs were shared April 6. Review must be done by end of day today (Friday, May 1). After that, the team moves to next steps and closes the review window.",
+            "flag": "urgent"
+          },
+          {
+            "id": "fri-0501-a2",
+            "label": "Submit project status updates to Sara — due EOD today",
+            "detail": "Sara Watson sent a Teams reminder yesterday: updates are due by end of day today. Submit your project status before the EPMO EOW Check In or right after.",
+            "flag": "attn"
+          },
+          {
+            "id": "fri-0501-a3",
+            "label": "Review Venn_Testing_CheckSheet shared by Nica",
+            "detail": "Nicolas Cavalcanti shared 'Venn_Testing_CheckSheet' with Jean yesterday (Apr 30). With the Venn pilot starting May 4, this document should be reviewed before the weekend.",
+            "flag": "attn"
+          },
+          {
+            "id": "fri-0501-a4",
+            "label": "Two project closures from Santiago — acknowledgment",
+            "detail": "Santiago formally closed both Supplements Dashboards and Supplements Tasksets Renovation overnight. A brief acknowledgment reply or message would be appropriate — these are real wins for the team.",
+            "flag": "carried"
+          }
+        ]
+      },
+      {
+        "title": "Emails Awaiting Reply",
+        "info": false,
+        "items": [
+          {
+            "id": "fri-0501-e1",
+            "label": "Santiago Arango — two project closure announcements",
+            "detail": "Supplements Dashboards (closed 8:33 PM Apr 30) and Supplements Tasksets Renovation (closed 8:23 PM Apr 30) were both formally declared closed. Both emails are unread. Consider a reply or a Teams note acknowledging the team's work.",
+            "flag": "attn"
+          },
+          {
+            "id": "fri-0501-e2",
+            "label": "Q1 Engagement Survey dashboard — shared by Nikki Adkins via Rippling",
+            "detail": "Nikki Adkins (via Rippling) shared the [WIP] Q1 Engagement Survey dashboard with Jean. Email is unread (received 2:12 AM). Review when you have a moment.",
+            "flag": "carried"
+          }
+        ]
+      },
+      {
+        "title": "Teams Highlights",
+        "info": false,
+        "items": [
+          {
+            "id": "fri-0501-t1",
+            "label": "Sara Watson — status updates due EOD today",
+            "detail": "In the EPMO Teams channel yesterday evening, Sara sent a reminder: project status updates are due by end of day today. This feeds into the weekly executive view — don't miss it.",
+            "flag": "attn"
+          },
+          {
+            "id": "fri-0501-t2",
+            "label": "Camilo — meeting with Jessie on ambitious new project",
+            "detail": "Camilo shared in Teams yesterday: he just came out of a meeting with Jessie about a project he finds very exciting — he believes Claude can optimize many things currently done manually. He said he'll get up to speed on the details since the project is already in motion.",
+            "flag": "carried"
+          },
+          {
+            "id": "fri-0501-t3",
+            "label": "Mar Garcia — project status updates shared",
+            "detail": "Mar shared status updates in Teams: (1) UAT review had errors from the start — she sent corrections; (2) Contacted Anu, Dana confirmed work is in progress as prioritized and UAT should be ready hopefully today; (3) She moved a meeting due to the situation.",
+            "flag": "carried"
+          }
+        ]
+      },
+      {
+        "title": "Out of Office",
+        "info": true,
+        "items": [
+          {
+            "id": "fri-0501-ooo-1",
+            "label": "Eugenia Barragán — OOO today",
+            "detail": "Eugenia sent two OOO notifications yesterday (Apr 30). She is out today. EPMO EOW Check In includes her — Sara may need to adjust accordingly."
+          },
+          {
+            "id": "fri-0501-ooo-2",
+            "label": "Yuri Mendonça — OOO from 12:00 PM today",
+            "detail": "Yuri has an OOO block starting at noon. The 3:00 PM Executive Project Status Slide Update includes Yuri and Jhara — confirm if Yuri will still be available or if it needs rescheduling."
+          }
+        ]
+      },
+      {
+        "title": "Monday Preview",
+        "info": true,
+        "items": [
+          {
+            "id": "fri-0501-mon-1",
+            "label": "Venn Enforcement Pilot begins — May 4 (Monday)",
+            "detail": "The Venn pilot officially starts Monday. Make sure the Venn_Testing_CheckSheet is reviewed before the weekend, and that all access issues are logged (not worked around) from day one."
+          },
+          {
+            "id": "fri-0501-mon-2",
+            "label": "Rippling document — new vacation dates (if not sent today)",
+            "detail": "If the document confirming new vacation dates doesn't go to Rippling today, it's the first item Monday morning."
+          },
+          {
+            "id": "fri-0501-mon-3",
+            "label": "May 2 deadline — Service Cloud Relaunch (Saturday)",
+            "detail": "The Service Cloud Relaunch is Saturday May 2. Any final coordination or confirmation needed before the weekend closes should happen today."
+          }
+        ]
+      }
+    ]
+  },
+  {
     "id": "eod-2026-04-30",
     "type": "eod",
     "date": "Thursday, April 30 — End of Day",
