@@ -1457,9 +1457,11 @@ function CheckItem({ item, done, onToggle, searchQuery, editOverride, onEdit, re
     longPressFired.current = false;
     const t = e.touches[0];
     touchStart.current = { x: t.clientX, y: t.clientY };
+    // Capture currentTarget synchronously — React pools the event, so it may be null after the timeout.
+    const el = e.currentTarget;
     longPressTimer.current = setTimeout(() => {
       longPressFired.current = true;
-      const rect = e.currentTarget.getBoundingClientRect();
+      const rect = el.getBoundingClientRect();
       openPicker(null, rect.left + 16, rect.top + rect.height + 4);
     }, 500);
   };
@@ -1468,6 +1470,7 @@ function CheckItem({ item, done, onToggle, searchQuery, editOverride, onEdit, re
     const t = e.touches[0];
     if (Math.abs(t.clientX - touchStart.current.x) > 10 || Math.abs(t.clientY - touchStart.current.y) > 10) {
       clearTimeout(longPressTimer.current);
+      touchStart.current = null;
     }
   };
   const onTouchEnd = () => {
@@ -1492,6 +1495,8 @@ function CheckItem({ item, done, onToggle, searchQuery, editOverride, onEdit, re
       labelRef.current.select();
     }
   }, [editing]);
+
+  useEffect(() => () => clearTimeout(longPressTimer.current), []);
 
   if (editing) {
     return (
