@@ -1318,6 +1318,63 @@ function CalendarButton({ digests, selectedDate, onSelect }) {
   );
 }
 
+/* ═══ Reactions ═══ */
+const REACTION_EMOJIS = ["🧠", "❗", "⭐", "📌"];
+
+function ReactionPicker({ currentEmoji, anchor, onPick, onRemove, onClose }) {
+  const ref = useRef(null);
+
+  useEffect(() => {
+    const onDown = (e) => { if (ref.current && !ref.current.contains(e.target)) onClose(); };
+    const onKey = (e) => { if (e.key === "Escape") onClose(); };
+    document.addEventListener("mousedown", onDown);
+    document.addEventListener("keydown", onKey);
+    return () => {
+      document.removeEventListener("mousedown", onDown);
+      document.removeEventListener("keydown", onKey);
+    };
+  }, [onClose]);
+
+  // Clamp position to viewport so picker never overflows.
+  const PAD = 8;
+  const W = 220;  // approx popover width
+  const H = 44;   // approx popover height
+  const vw = typeof window !== "undefined" ? window.innerWidth : 1024;
+  const vh = typeof window !== "undefined" ? window.innerHeight : 768;
+  const x = Math.max(PAD, Math.min((anchor?.x ?? PAD), vw - W - PAD));
+  const y = Math.max(PAD, Math.min((anchor?.y ?? PAD), vh - H - PAD));
+
+  return (
+    <div
+      ref={ref}
+      style={{ position: "fixed", left: x, top: y, zIndex: 50 }}
+      onClick={e => e.stopPropagation()}
+      onContextMenu={e => e.preventDefault()}
+      className="flex items-center gap-1 px-2 py-1.5 rounded-xl bg-white dark:bg-zinc-800 shadow-lg border border-zinc-200 dark:border-zinc-700"
+    >
+      {REACTION_EMOJIS.map(em => (
+        <button
+          key={em}
+          onClick={() => { onPick(em); onClose(); }}
+          className={`text-lg leading-none w-9 h-9 rounded-lg transition-all hover:scale-110 active:scale-95 ${currentEmoji === em ? "bg-zinc-100 dark:bg-zinc-700 ring-1 ring-blue-400" : "hover:bg-zinc-100 dark:hover:bg-zinc-700"}`}
+          title={`React with ${em}`}
+        >
+          {em}
+        </button>
+      ))}
+      {currentEmoji && (
+        <button
+          onClick={() => { onRemove(); onClose(); }}
+          className="ml-1 text-[10px] font-bold uppercase tracking-wider text-zinc-500 hover:text-red-500 px-2 h-9 rounded-lg hover:bg-red-50 dark:hover:bg-red-500/10 transition-colors"
+          title="Remove reaction"
+        >
+          Remove
+        </button>
+      )}
+    </div>
+  );
+}
+
 /* ═══ Text highlight helper ═══ */
 function highlight(text, query) {
   if (!query || !text) return text;
