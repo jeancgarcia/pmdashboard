@@ -48,8 +48,12 @@ collect  ->  python3 scripts/generate_epmo_digest.py collect --out /tmp/epmo.jso
              stable sentence on what the project is/delivers, from `description`),
              `aiSummary` (current state: momentum, next gate, blockers — never
              leading with overdue-task counts), `aiDetail` (2-4 bullets for the
-             expanded "Where it stands" section), plus the top-level `aiOverview`;
-             then saves the file back. The payload embeds these expectations as
+             expanded "Where it stands" section), plus the top-level `aiOverview`
+             (a 1-2 sentence HEADLINE — not a recap of every project) and
+             `aiHighlights` (3-6 objects `{kind: "risk"|"win"|"watch", text,
+             projectGid?}`, one tight sentence each, risks first — the dashboard
+             renders them as tagged bullets with jump-to-card links); then saves
+             the file back. The payload embeds these expectations as
              `_aiGuidance` (stripped at publish). `userNotes` are first-hand
              context from the team — often fresher than the Asana status
 publish  ->  python3 scripts/generate_epmo_digest.py publish --in /tmp/epmo.json
@@ -61,21 +65,30 @@ deterministically with **no AI** (fallback); the dashboard then shows the
 rule-based `fallbackSummary` for each project and the raw Asana status
 ("From Asana" badge) in the expanded card. The routine prompt (see the
 Claude Code Remote trigger) drives collect → AI → publish and requires the AI
-fields (`aiScope`, `aiSummary`, `aiDetail`, `aiOverview`) before publishing —
-when `aiDetail` is missing the dashboard falls back to the raw Asana status,
-and when `aiScope` is missing it shows the raw project description (or nothing).
+fields (`aiScope`, `aiSummary`, `aiDetail`, `aiOverview`, `aiHighlights`)
+before publishing — when `aiDetail` is missing the dashboard falls back to the
+raw Asana status, when `aiScope` is missing it shows the raw project
+description (or nothing), and when `aiHighlights` is missing the overview card
+falls back to splitting `aiOverview` into headline + bullets.
 
 ## What the brief contains
 
-- **AI team overview** — a few sentences interpreting the whole team's state.
+- **AI team overview** — a 1-2 sentence headline (`aiOverview`) plus 3-6 tagged
+  highlight bullets (`aiHighlights`: risk / win / watch, each optionally linking
+  to its project card).
 - KPIs: open / needs-attention / at-risk.
 - Charts: open-by-health doughnut + a history line (open, needs-attention, weekly completions).
-- Recent activity feed (task movements in the last 3 days, with actor and time).
+- Latest activity, **grouped by project** (task movements in the last 3 days;
+  each project row expands into its task-level changes with actor and time).
 - Projects completed this week / this month / last month.
 - **Projects grouped by member**, each an expandable card: a fixed scope line
   (what the project is, `aiScope`) followed by a current-state AI summary when
   collapsed, and — when expanded — roadblocks, recent movement, the full Asana
   status update, and the team's notes.
+- **Department filter** — each project carries `department`, the portfolio's
+  "Project Department" enum column (null when unset); the dashboard derives
+  filter chips from whatever values are present, so new departments need no
+  dashboard change. `summary.byDepartment` carries the counts.
 
 ## Run it manually
 

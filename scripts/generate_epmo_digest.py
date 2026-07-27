@@ -53,6 +53,7 @@ HISTORY_RETENTION_DAYS = 120
 RECENT_MOVEMENT_DAYS = 3
 STALE_STATUS_DAYS = 14
 RD_TZ = timezone(timedelta(hours=-4))        # America/Santo_Domingo (UTC-4 all year)
+DEPARTMENT_FIELD_NAME = "Project Department" # portfolio column (enum custom field)
 
 TEAM = {
     "1209512777279096": "Jhara Ochoa",
@@ -155,6 +156,17 @@ def first_sentences(text, limit=280):
     return (cut[:dot + 1] if dot > 80 else cut).rstrip() + " …"
 
 
+def project_department(p):
+    """Value of the portfolio's DEPARTMENT_FIELD_NAME column for a project, or
+    None. Portfolio items carry portfolio-scoped custom fields; for the enum,
+    `display_value` is the option label."""
+    for f in p.get("custom_fields") or []:
+        if (f.get("name") or "").strip().lower() == DEPARTMENT_FIELD_NAME.lower():
+            value = (f.get("display_value") or "").strip()
+            return value or None
+    return None
+
+
 def fetch_user_notes():
     """Notes the team wrote in the dashboard (app_state id=8). Pinned first,
     then newest, capped per project — they ride along in each project's
@@ -188,6 +200,7 @@ def build():
     fields = ",".join([
         "name", "resource_type", "owner.name", "owner.gid", "completed",
         "completed_at", "archived", "due_on", "modified_at", "permalink_url", "notes",
+        "custom_fields.name", "custom_fields.display_value",
         "current_status_update.title", "current_status_update.text",
         "current_status_update.status_type", "current_status_update.created_at",
     ])
@@ -299,6 +312,7 @@ def build():
         project_cards.append({
             "gid": gid, "name": p["name"], "url": p.get("permalink_url"),
             "member": member, "memberGid": p["owner"]["gid"],
+            "department": project_department(p),
             "health": health, "healthLabel": HEALTH_LABEL[health],
             "dueOn": due, "overdue": overdue,
             "openTasks": len(incomplete), "tasksTruncated": len(tasks) >= 100,
@@ -328,6 +342,10 @@ def build():
         by_health[c["health"]] += 1
     needs_attention_total = sum(1 for c in project_cards if c["needsAttention"])
 
+    by_department = defaultdict(int)
+    for c in project_cards:
+        by_department[c["department"] or "No department"] += 1
+
     by_member = {}
     for gid in TEAM_ORDER:
         mine = [c for c in project_cards if c["memberGid"] == gid]
@@ -340,6 +358,7 @@ def build():
 
     summary = {
         "totalOpen": len(open_projects), "byHealth": dict(by_health),
+        "byDepartment": dict(by_department),
         "needsAttention": needs_attention_total,
         "recentMovementCount": len(recent_movements),
         "completedThisWeek": len(ctw), "completedThisMonth": len(ctm),
@@ -351,7 +370,8 @@ def build():
         "portfolioGid": PORTFOLIO_GID,
         "team": [{"gid": g, "name": TEAM[g]} for g in TEAM_ORDER],
         "summary": summary,
-        "aiOverview": None,             # <- written by the AI stage
+        "aiOverview": None,             # <- 1-2 sentence headline, written by the AI stage
+        "aiHighlights": None,           # <- 3-6 tagged bullets {kind, text, projectGid?}, written by the AI stage
         "recentMovements": recent_movements[:40],
         "completed": {"thisWeek": ctw, "thisMonth": ctm, "lastMonth": clm},
         "projects": sorted(project_cards, key=lambda c: (TEAM_ORDER.index(c["memberGid"]), not c["needsAttention"], c["name"])),
@@ -392,8 +412,16 @@ AI_GUIDANCE = (
     "aiDetail = 2-4 bullets with the same current-state focus. "
     "Do NOT lead with or emphasize overdue-task counts anywhere — mention a slipped date only "
     "when it is itself the story. Weigh each project's `userNotes` as first-hand team context, "
-    "often fresher than the Asana status. Also fill the top-level aiOverview (a few sentences "
-    "interpreting the whole team's state)."
+    "often fresher than the Asana status. "
+    "Top level, fill BOTH: "
+    "aiOverview = ONE or TWO sentences max, the single most important takeaway for the team "
+    "today — the dashboard renders it as a headline, so do NOT recap every project in it. "
+    'aiHighlights = 3-6 objects {"kind": "risk"|"win"|"watch", "text": "...", "projectGid": "..."} '
+    "where kind means: risk = blocked, slipping, or needs a decision now; win = shipped, cleared, "
+    "or real momentum; watch = a gate or dependency to keep an eye on. text = ONE tight sentence "
+    "(about 22 words max) naming the project and the so-what. Include projectGid whenever the "
+    "item is about a single project (enables the dashboard's jump-to-card link); omit it for "
+    "cross-portfolio themes. Order by importance, risks first."
 )
 
 
@@ -434,6 +462,8 @@ def stage_publish(in_path):
     missing_scope = [p["name"] for p in live.get("projects", []) if not p.get("aiScope")]
     if missing_scope:
         print(f"  note: {len(missing_scope)} project(s) have no aiScope; dashboard will show the raw project description (or nothing) for those.")
+    if not live.get("aiHighlights"):
+        print("  note: no aiHighlights; dashboard will fall back to splitting aiOverview into bullets.")
     now = datetime.now(RD_TZ)
     live["updatedAt"] = now.isoformat()
     supabase_upsert(LIVE_ROW_ID, live)
