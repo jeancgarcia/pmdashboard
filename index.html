@@ -1401,19 +1401,24 @@ function EpmoDashboardTab() {
             )}
             <button onClick={() => setMemberFilter("all")} className={`text-xs font-bold px-3 py-1.5 rounded-full ${memberFilter === "all" ? "bg-blue-600 text-white" : "bg-zinc-100 dark:bg-zinc-800 text-zinc-500 dark:text-zinc-400"}`}>All</button>
             {team.map(t => (<button key={t.gid} onClick={() => setMemberFilter(t.gid)} className={`text-xs font-bold px-3 py-1.5 rounded-full ${memberFilter === t.gid ? "bg-blue-600 text-white" : "bg-zinc-100 dark:bg-zinc-800 text-zinc-500 dark:text-zinc-400"}`}>{t.name.split(" ")[0]}</button>))}
+            {deptKeys.length > 0 && (
+              <span className="relative inline-flex">
+                <select
+                  value={deptFilter}
+                  onChange={(e) => setDeptFilter(e.target.value)}
+                  aria-label="Filter by department"
+                  className={`appearance-none cursor-pointer text-xs font-bold rounded-full pl-3 pr-7 py-1.5 border-0 focus:outline-none focus:ring-2 focus:ring-blue-400/60 ${deptFilter === "all" ? "bg-zinc-100 dark:bg-zinc-800 text-zinc-500 dark:text-zinc-400" : "bg-blue-600 text-white"}`}
+                >
+                  <option value="all">All departments</option>
+                  {deptKeys.map(d => (
+                    <option key={d} value={d}>{d === EPMO_NO_DEPT ? "No department" : d} ({deptCounts[d]})</option>
+                  ))}
+                </select>
+                <svg className={`w-3 h-3 absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none ${deptFilter === "all" ? "text-zinc-400 dark:text-zinc-500" : "text-white"}`} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+              </span>
+            )}
           </div>
         </div>
-        {deptKeys.length > 0 && (
-          <div className={`epmo-dimmable ${dim} flex items-center gap-1.5 flex-wrap justify-end mb-1`}>
-            <span className="text-[10px] font-bold uppercase tracking-wider text-zinc-400 dark:text-zinc-500 mr-1">Department</span>
-            <button onClick={() => setDeptFilter("all")} className={`text-xs font-bold px-3 py-1.5 rounded-full ${deptFilter === "all" ? "bg-blue-600 text-white" : "bg-zinc-100 dark:bg-zinc-800 text-zinc-500 dark:text-zinc-400"}`}>All</button>
-            {deptKeys.map(d => (
-              <button key={d} onClick={() => setDeptFilter(f => (f === d ? "all" : d))} className={`text-xs font-bold px-3 py-1.5 rounded-full ${deptFilter === d ? "bg-blue-600 text-white" : "bg-zinc-100 dark:bg-zinc-800 text-zinc-500 dark:text-zinc-400"}`}>
-                {d === EPMO_NO_DEPT ? "No department" : d} <span className="font-semibold opacity-60">{deptCounts[d]}</span>
-              </button>
-            ))}
-          </div>
-        )}
         {shownTeam.map(t => {
           const mine = visibleByMember[t.gid] || [];
           if (mine.length === 0) return null;
