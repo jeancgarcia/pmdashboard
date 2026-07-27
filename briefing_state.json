@@ -316,7 +316,28 @@
     }
   },
   "edits": {},
-  "reminders": [],
+  "reminders": [
+    {
+      "id": "rem-1785187322347",
+      "text": "Continuar testeo de Latent Variables AI",
+      "addedAt": "2026-07-27T21:22:02.347Z"
+    },
+    {
+      "id": "rem-1785187335705",
+      "text": "Crear artifact sobre cumpleaños de DAnny",
+      "addedAt": "2026-07-27T21:22:15.705Z"
+    },
+    {
+      "id": "rem-1785187535023",
+      "text": "crear algo visual usando el transcript de la reunion de CoE con los PCs",
+      "addedAt": "2026-07-27T21:25:35.023Z"
+    },
+    {
+      "id": "rem-1785187911973",
+      "text": "Escribirle a Ashley de Saltclick - Due date Amazon connect es 17 abril and we're flying blind",
+      "addedAt": "2026-07-27T21:31:51.973Z"
+    }
+  ],
   "reminderHistory": [
     {
       "id": "rem-1748998800000",
@@ -560,5 +581,5 @@
     }
   ],
   "assigneeOverrides": {},
-  "lastModified": 1785155842236
+  "lastModified": 1785187911976
 }
