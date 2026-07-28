@@ -1,5 +1,129 @@
 [
   {
+    "id": "eod-2026-07-28",
+    "type": "eod",
+    "date": "Tuesday, July 28 - End of Day",
+    "isoDate": "2026-07-28",
+    "greeting": "Good evening, Jean. Tuesday closed with two dashboard items completed: the Danny birthday artifact and the Ashley/SaltClick Amazon Connect follow-up. The rest of the carry-forward is mostly Amazon Connect readiness, Latent Variables testing, Legal Change Management owners, and tomorrow's meeting stack.",
+    "sections": [
+      {
+        "title": "Completed Today",
+        "info": true,
+        "items": [
+          {
+            "id": "eod-0728-done-1",
+            "label": "Completed the Danny birthday artifact",
+            "detail": "The birthday artifact reminder for Danny is complete for today."
+          },
+          {
+            "id": "eod-0728-done-2",
+            "label": "Closed the Ashley/SaltClick Amazon Connect follow-up",
+            "detail": "The SaltClick follow-up tied to Amazon Connect timing and missing implementation clarity is complete for today."
+          }
+        ]
+      },
+      {
+        "title": "Still Open",
+        "info": false,
+        "items": [
+          {
+            "id": "eod-0728-open-1",
+            "taskId": "task-20260724-reply-latent-variables-platform-questions",
+            "label": "Continue Latent Variables testing and reply to Yash",
+            "detail": "Access and testing were the live next steps from the Juniper/Latent Variables thread. Finish the evaluation note or decide whether Yash's offered call is the faster path.",
+            "urgent": true
+          },
+          {
+            "id": "eod-0728-open-2",
+            "taskId": "task-20260728-prepare-amazon-connect-escalation",
+            "label": "Prepare the Amazon Connect escalation path",
+            "detail": "Today's calendar had the AC Update and a SaltClick deployment-plan meeting. Keep the blocked implementation points, owner questions, and Danny-ready escalation story tight while Sara remains out.",
+            "urgent": true
+          },
+          {
+            "id": "eod-0728-open-3",
+            "taskId": "task-20260728-resolve-1030-conflict",
+            "label": "Confirm the earlier 10:30 AM conflict is fully handled",
+            "detail": "The morning brief flagged Firstfire and Jhara at the same time, while the latest calendar shows Firstfire at 10:30 AM and Jhara later in the day. Confirm coverage or follow-up notes are closed so nothing is left ambiguous.",
+            "urgent": true
+          },
+          {
+            "id": "eod-0728-open-4",
+            "taskId": "task-20260727-review-levelpath-go-live",
+            "label": "Review LevelPath Phase 1 go-live readiness",
+            "detail": "Review Laura's go-live readiness update for workflow cleanup, field governance, contract-request flow, and any PMO follow-up before it becomes a launch issue."
+          },
+          {
+            "id": "eod-0728-open-5",
+            "taskId": "task-20260728-coe-pcs-visual",
+            "label": "Draft the CoE/PC transcript visual",
+            "detail": "Use the CoE and project-coordinator transcript to create the requested visual artifact. Tomorrow's focus windows may be the cleanest place to finish it."
+          },
+          {
+            "id": "eod-0728-open-6",
+            "taskId": "task-20260728-track-ipp-sales-plan-confirmations",
+            "label": "Track IPP pilot sales-plan confirmations",
+            "detail": "Watch for John and Matthew's answers on sequencing, cadence, re-offer timing, derivative discount, virtual-intake capacity, and Manager Special targeting before requirements go to IT."
+          },
+          {
+            "id": "eod-0728-open-7",
+            "taskId": "task-20260728-clear-legal-change-management-owners",
+            "label": "Clear Legal Change Management owners and next steps",
+            "detail": "Today's IT/EPMO sync was scoped to doubts, action items, and clarifications. Capture any remaining owners or unresolved decisions so this does not become another rolling follow-up."
+          },
+          {
+            "id": "eod-0728-open-8",
+            "taskId": "task-20260728-monitor-client-comms-feedback",
+            "label": "Monitor Client Comms charter feedback",
+            "detail": "Laura followed up with Lucia for feedback after removing SMS-overlapping scope. Jean is copied, so step in only if the feedback path stalls or Chelsea sign-off needs acceleration."
+          }
+        ]
+      },
+      {
+        "title": "Cancelled Today",
+        "info": true,
+        "items": [
+          {
+            "id": "eod-0728-cancel-1",
+            "label": "EPMO TL Weekly Catch Up was canceled",
+            "detail": "Outlook shows the 2:00 PM EPMO TL Weekly Catch Up as canceled today."
+          }
+        ]
+      },
+      {
+        "title": "Tomorrow Preview",
+        "info": true,
+        "items": [
+          {
+            "id": "eod-0728-wed-1",
+            "label": "Sara remains out of office",
+            "detail": "Tomorrow's calendar shows Sara OOO, so Amazon Connect and EPMO follow-through may need to move without waiting for Sara live."
+          },
+          {
+            "id": "eod-0728-wed-2",
+            "label": "10:00 AM - Amazon Connect Training Touchpoint",
+            "detail": "The first named meeting tomorrow is an Amazon Connect training touchpoint with Evelin, Thiago, Jose Pena, Nadia, Ryan, and Jose Motta."
+          },
+          {
+            "id": "eod-0728-wed-3",
+            "label": "10:30 AM - 1:1 Thiago & Jean",
+            "detail": "Use the Thiago 1:1 for any Amazon Connect or portfolio follow-through coming out of today's escalation work."
+          },
+          {
+            "id": "eod-0728-wed-4",
+            "label": "Protected work time runs from noon through early afternoon",
+            "detail": "Blocked Space appears at 12:00 PM, followed by Focus time at 2:00 PM. This is the cleanest window for Latent Variables testing, the CoE/PC visual, or open follow-ups."
+          },
+          {
+            "id": "eod-0728-wed-5",
+            "label": "Court and Laura touchpoints anchor the afternoon",
+            "detail": "Court Projects Touchpoint is at 3:00 PM, followed by 1:1 Laura & Jean at 3:30 PM and prep focus time at 4:00 PM."
+          }
+        ]
+      }
+    ]
+  },
+  {
     "id": "daily-2026-07-28-morning",
     "type": "daily",
     "date": "Morning - Tuesday, July 28",
