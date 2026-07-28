@@ -1,0 +1,183 @@
+{
+  "digest": {
+    "id": "daily-2026-07-28-morning",
+    "type": "daily",
+    "date": "Morning - Tuesday, July 28",
+    "isoDate": "2026-07-28",
+    "greeting": "Good morning, Jean. Today is Tuesday, July 28, and the operating shape is six meetings plus a protected block, with Amazon Connect escalation readiness, Legal Change Management follow-through, and the 10:30 AM conflict as the main anchors. There are two carried-over items, four active reminders, and two urgent items: Amazon Connect/Saltclick timing and the Latent Variables test path. Recent email was partially available, while Teams and the unread-email view were rate-limited, so this brief relies on calendar, recent mail, reminders, and dashboard history rather than chat-only signals.",
+    "sections": [
+      {
+        "title": "Carried Over",
+        "info": false,
+        "items": [
+          {
+            "id": "tue-0728-co-01",
+            "taskId": "task-20260724-reply-latent-variables-platform-questions",
+            "label": "Reply to Yash on the Latent Variables platform questions",
+            "detail": "The thread moved forward yesterday with login access confirmed and testing promised for today. Decide whether the next step is a direct reply after testing or a short call with Yash so the Juniper/Latent Variables evaluation keeps moving.",
+            "flag": "carried",
+            "urgent": true
+          },
+          {
+            "id": "tue-0728-co-02",
+            "taskId": "task-20260727-review-levelpath-go-live",
+            "label": "Review LevelPath Phase 1 go-live readiness",
+            "detail": "Still open from the prior digest. Review Laura's go-live readiness update for workflow cleanup, field governance, contract-request flow, and any PMO follow-up before it becomes a launch issue.",
+            "flag": "carried"
+          }
+        ]
+      },
+      {
+        "title": "Reminders",
+        "info": false,
+        "items": [
+          {
+            "id": "tue-0728-rem-01",
+            "taskId": "task-20260728-continue-latent-variables-ai",
+            "label": "Continuar testeo de Latent Variables AI",
+            "detail": "Use the open testing commitment from yesterday's Juniper/Latent Variables email thread to move from access confirmed to a clear evaluation note today.",
+            "urgent": true
+          },
+          {
+            "id": "tue-0728-rem-02",
+            "taskId": "task-20260728-danny-birthday-artifact",
+            "label": "Crear artifact sobre cumpleaños de DAnny",
+            "detail": "The EPMO Summer Fun meeting at noon is a natural deadline if this is meant for the team moment around Danny.",
+            "urgent": true
+          },
+          {
+            "id": "tue-0728-rem-03",
+            "taskId": "task-20260728-coe-pcs-visual",
+            "label": "crear algo visual usando el transcript de la reunion de CoE con los PCs",
+            "detail": "Set aside the 1:00 PM protected block if the CoE/PC transcript visual should be drafted before the afternoon leadership catch-up.",
+            "urgent": false
+          },
+          {
+            "id": "tue-0728-rem-04",
+            "taskId": "task-20260728-ashley-saltclick-amazon-connect",
+            "label": "Escribirle a Ashley de Saltclick - Due date Amazon connect es 17 abril and we're flying blind",
+            "detail": "Tie this to the 8:30 AM Amazon Connect escalation briefing; confirm the April 17 due-date concern and what Ashley can clarify about timing, ownership, or missing information.",
+            "urgent": true
+          }
+        ]
+      },
+      {
+        "title": "Today's Schedule",
+        "info": true,
+        "items": [
+          {
+            "id": "tue-0728-sch-01",
+            "label": "8:30 AM - AC Update",
+            "detail": "Nadia and Thiago want to brief Danny before escalating concerns around ongoing Amazon Connect implementation work while Sara is unavailable, making this the day's first decision-worthy anchor."
+          },
+          {
+            "id": "tue-0728-sch-02",
+            "label": "10:30 AM - Firstfire usage follow-up and Jhara 1:1 conflict",
+            "detail": "Firstfire - Usage Follow-up and 1:1 Jhara & Jean both occupy 10:30 AM, so decide early which one needs live attention and which can be covered asynchronously or moved."
+          },
+          {
+            "id": "tue-0728-sch-03",
+            "label": "11:00 AM - Legal Change Management - IT & EPMO Sync",
+            "detail": "The sync is explicitly for EPMO and IT SharePoint doubts, action items, and clarifications; use it to close ownership and next-step ambiguity."
+          },
+          {
+            "id": "tue-0728-sch-04",
+            "label": "12:00 PM - EPMO Team Meeting - SUMMER FUN!",
+            "detail": "Team meeting anchor; keep the Danny birthday artifact reminder in mind if it belongs in this moment."
+          },
+          {
+            "id": "tue-0728-sch-05",
+            "label": "1:00 PM - Blocked Space",
+            "detail": "Best protected block for Latent Variables testing, Saltclick/Amazon Connect follow-up, or the CoE/PC visual artifact."
+          },
+          {
+            "id": "tue-0728-sch-06",
+            "label": "2:00 PM - EPMO TL Weekly Catch Up",
+            "detail": "Use this to surface any unresolved Amazon Connect, Legal Change Management, or LevelPath follow-ups that need leadership alignment."
+          },
+          {
+            "id": "tue-0728-sch-07",
+            "label": "3:30 PM - 1:1 Nicolas & Jean",
+            "detail": "Final named anchor of the day; good place to close portfolio handoffs or owner questions that survive the earlier meetings."
+          }
+        ]
+      },
+      {
+        "title": "Action Items",
+        "info": false,
+        "items": [
+          {
+            "id": "tue-0728-ai-01",
+            "taskId": "task-20260728-prepare-amazon-connect-escalation",
+            "label": "Prepare the Amazon Connect escalation path",
+            "detail": "Before the 8:30 AM AC Update, be ready to name what is blocked in implementation, what Danny needs to know, and what should be escalated while Sara is unavailable.",
+            "urgent": true
+          },
+          {
+            "id": "tue-0728-ai-02",
+            "taskId": "task-20260728-resolve-1030-conflict",
+            "label": "Resolve the 10:30 AM calendar conflict",
+            "detail": "Firstfire usage follow-up and the Jhara 1:1 overlap exactly. Pick the meeting that needs Jean live and set expectations on the other before the conflict hits.",
+            "urgent": true
+          },
+          {
+            "id": "tue-0728-ai-03",
+            "taskId": "task-20260728-track-ipp-sales-plan-confirmations",
+            "label": "Track IPP pilot sales-plan confirmations",
+            "detail": "Jhara sent John and Matthew the draft ICE Preparedness Plan pilot sales plan and asked them to confirm sequencing, cadence, re-offer timing, derivative discount, virtual-intake capacity, and Manager Special targeting before requirements go to IT. Watch for whether that answer lands or needs help."
+          },
+          {
+            "id": "tue-0728-ai-04",
+            "taskId": "task-20260728-clear-legal-change-management-owners",
+            "label": "Use Legal Change Management to settle owner questions",
+            "detail": "The recurring sync is still positioned around doubts, action items, and clarifications. Capture owners and unresolved decisions so this does not become another rolling follow-up."
+          }
+        ]
+      },
+      {
+        "title": "Emails Awaiting Reply",
+        "info": false,
+        "items": [
+          {
+            "id": "tue-0728-em-01",
+            "taskId": "task-20260728-monitor-client-comms-feedback",
+            "label": "Monitor Client Comms charter feedback",
+            "detail": "Laura followed up with Lucia for feedback on the updated Client Comms charter after removing SMS-overlapping scope. Jean is copied, so only step in if the feedback path stalls or Chelsea sign-off needs acceleration."
+          }
+        ]
+      },
+      {
+        "title": "Out of Office",
+        "info": true,
+        "items": [
+          {
+            "id": "tue-0728-ooo-01",
+            "label": "Sara availability is constrained around Amazon Connect",
+            "detail": "The AC Update invite says Sara is out, and tomorrow's calendar also shows Sara OOO. Treat Amazon Connect decisions as needing Danny/Nadia/Thiago clarity without waiting on Sara live."
+          }
+        ]
+      },
+      {
+        "title": "Tomorrow Preview",
+        "info": true,
+        "items": [
+          {
+            "id": "tue-0728-tom-01",
+            "label": "Wednesday starts with 1:1 Thiago & Jean",
+            "detail": "10:30 AM is the first named calendar anchor and may be useful for any Amazon Connect or portfolio follow-through from today."
+          },
+          {
+            "id": "tue-0728-tom-02",
+            "label": "Protected time sits at noon before the afternoon stack",
+            "detail": "Blocked Space at 12:00 PM is the cleanest visible focus window."
+          },
+          {
+            "id": "tue-0728-tom-03",
+            "label": "Operations Town Hall overlaps with Laura 1:1",
+            "detail": "Operations Town Hall runs 3:00-4:00 PM, while 1:1 Laura & Jean starts at 3:30 PM. Decide which needs live attention before the afternoon."
+          }
+        ]
+      }
+    ]
+  }
+}
