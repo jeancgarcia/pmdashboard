@@ -53,6 +53,7 @@
     "task-20260722-discuss-pc-handoff-plan": true,
     "task-20260727-amazon-connect-venn-uat": true,
     "task-20260727-court-ct-intake-routing": true,
+    "task-20260728-danny-birthday-artifact": true,
     "task-20260616-case-change-overlap-path": true,
     "task-20260617-reply-craftio-beta-scope": true,
     "task-20260622-confirm-slq-baesman-path": true,
@@ -147,6 +148,7 @@
     "task-20260713-review-universal-intake-changes": true,
     "task-20260716-review-supabase-vulnerabilities": true,
     "task-20260724-triage-coe-portal-asana-refresh": true,
+    "task-20260728-ashley-saltclick-amazon-connect": true,
     "task-20260617-prepare-friday-epmo-presentation": true,
     "task-20260622-prepare-mental-health-touchpoint": true,
     "task-20260624-camilo-structure-mhe-rfe-support": true,
@@ -581,5 +583,5 @@
     }
   ],
   "assigneeOverrides": {},
-  "lastModified": 1785187911976
+  "lastModified": 1785251289112
 }
