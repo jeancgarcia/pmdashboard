@@ -1,5 +1,231 @@
 [
   {
+    "id": "daily-2026-07-29-morning",
+    "type": "daily",
+    "date": "Morning - Wednesday, July 29",
+    "isoDate": "2026-07-29",
+    "greeting": "Good morning, Jean. Today is Wednesday, July 29, and the day is shaped by seven visible calendar commitments: Sara remains OOO, Amazon Connect training opens the meeting stack, and the afternoon runs through Court Projects, Laura, Thiago, and weekly-meeting prep. There are five carried-over operating items and four active reminders, with the main priorities being Amazon Connect coverage while Sara/Nadia availability is constrained, fresh Court and Phase 2 intake triage, Latent Variables testing, and keeping Legal Change Management/IPP loose ends from drifting. Direct Teams and SharePoint reads were rate-limited; this brief uses the calendar, recent/unread email, dashboard history, and a Teams email notification as grounded fallback context.",
+    "sections": [
+      {
+        "title": "Carried Over",
+        "info": false,
+        "items": [
+          {
+            "id": "wed-0729-co-01",
+            "taskId": "task-20260728-prepare-amazon-connect-escalation",
+            "label": "Keep the Amazon Connect escalation path tight",
+            "detail": "The escalation story remains open after yesterday's AC Update and SaltClick follow-up. Use today's Amazon Connect training and Thiago touchpoint to clarify implementation blockers, ownership, and what Danny or leadership still needs to hear while Sara is OOO.",
+            "flag": "carried",
+            "urgent": true
+          },
+          {
+            "id": "wed-0729-co-02",
+            "taskId": "task-20260728-resolve-1030-conflict",
+            "label": "Confirm yesterday's 10:30 AM conflict is closed",
+            "detail": "The prior brief and EOD still treated the Firstfire/Jhara overlap as open. Confirm any notes, coverage, or follow-up expectations are settled so it does not remain ambiguous in the dashboard.",
+            "flag": "carried"
+          },
+          {
+            "id": "wed-0729-co-03",
+            "taskId": "task-20260728-track-ipp-sales-plan-confirmations",
+            "label": "Track IPP pilot sales-plan confirmations",
+            "detail": "Keep watching for John and Matthew's answers on sequencing, cadence, re-offer timing, derivative discount, virtual-intake capacity, and Manager Special targeting before requirements move to IT.",
+            "flag": "carried"
+          },
+          {
+            "id": "wed-0729-co-04",
+            "taskId": "task-20260728-clear-legal-change-management-owners",
+            "label": "Clear Legal Change Management owners and next steps",
+            "detail": "Legal Change Management still needs owner and decision cleanup after the IT/EPMO sync. Tomorrow's walkthrough makes this more time-sensitive if unresolved questions still sit with EPMO or IT.",
+            "flag": "carried"
+          },
+          {
+            "id": "wed-0729-co-05",
+            "taskId": "task-20260728-monitor-client-comms-feedback",
+            "label": "Monitor Client Comms charter feedback",
+            "detail": "Laura's feedback path with Lucia and Chelsea sign-off remains a watch item. Step in only if feedback stalls or the updated charter needs PMO acceleration.",
+            "flag": "carried"
+          }
+        ]
+      },
+      {
+        "title": "Reminders",
+        "info": false,
+        "items": [
+          {
+            "id": "wed-0729-rem-01",
+            "taskId": "task-20260724-reply-latent-variables-platform-questions",
+            "label": "Continuar testeo de Latent Variables AI",
+            "detail": "Use today's protected time to finish enough testing to decide whether to reply to Yash directly or take the offered call.",
+            "urgent": true
+          },
+          {
+            "id": "wed-0729-rem-02",
+            "taskId": "task-20260728-danny-birthday-artifact",
+            "label": "Crear artifact sobre cumpleaños de DAnny",
+            "detail": "This reminder is still active in the dashboard state even though the EOD marked the underlying birthday artifact complete; archive it through the publish state if the workflow accepts the state payload.",
+            "urgent": false
+          },
+          {
+            "id": "wed-0729-rem-03",
+            "taskId": "task-20260728-coe-pcs-visual",
+            "label": "crear algo visual usando el transcript de la reunion de CoE con los PCs",
+            "detail": "The noon blocked space or 2:00 PM focus block is the cleanest window to draft the CoE/project-coordinator visual if the transcript is available outside this run.",
+            "urgent": false
+          },
+          {
+            "id": "wed-0729-rem-04",
+            "taskId": "task-20260728-ashley-saltclick-amazon-connect",
+            "label": "Escribirle a Ashley de Saltclick - Due date Amazon connect es 17 abril and we're flying blind",
+            "detail": "A Teams email notification says Nadia had a long conversation with Ashley; use that context before sending any further SaltClick follow-up.",
+            "urgent": true
+          }
+        ]
+      },
+      {
+        "title": "Today's Schedule",
+        "info": true,
+        "items": [
+          {
+            "id": "wed-0729-sch-01",
+            "label": "Sara OOO continues today",
+            "detail": "The all-day calendar entry runs through Friday, so Amazon Connect and EPMO follow-through may need to move without waiting for Sara live."
+          },
+          {
+            "id": "wed-0729-sch-02",
+            "label": "10:00 AM - Amazon Connect Training Touchpoint",
+            "detail": "Evelin owns the session; Thiago has declined, Nadia is tentative, and Jean has not responded. Treat it as both training and a signal check on implementation readiness."
+          },
+          {
+            "id": "wed-0729-sch-03",
+            "label": "12:00 PM - Blocked Space",
+            "detail": "First protected work window after the morning Amazon Connect touchpoint; useful for Latent Variables testing, intake triage, or the CoE/PC visual."
+          },
+          {
+            "id": "wed-0729-sch-04",
+            "label": "2:00 PM - Focus time",
+            "detail": "Second clean focus window before the afternoon meeting stack."
+          },
+          {
+            "id": "wed-0729-sch-05",
+            "label": "3:00 PM - Court Projects Touchpoint",
+            "detail": "Use this to route the overnight Court intake alerts from Janet and prevent the new CT work from sitting in the queue."
+          },
+          {
+            "id": "wed-0729-sch-06",
+            "label": "3:30 PM - 1:1 Laura & Jean",
+            "detail": "Good place to check Client Comms charter feedback, SMS Automation status, and any PMO follow-up from Laura-owned threads."
+          },
+          {
+            "id": "wed-0729-sch-07",
+            "label": "4:00 PM - Thiago 1:1 overlaps with prep focus time",
+            "detail": "1:1 Thiago & Jean and Focus Time: prepare for the weekly meeting both start at 4:00 PM. Decide whether Thiago needs the live slot or whether prep time should stay protected."
+          }
+        ]
+      },
+      {
+        "title": "Action Items",
+        "info": false,
+        "items": [
+          {
+            "id": "wed-0729-ai-01",
+            "taskId": "task-20260729-triage-court-phase2-intakes",
+            "label": "Triage the new Court and Phase 2 intake alerts",
+            "detail": "Janet sent multiple unread New Intake Alert Court emails from Valeria Celedon and one Phase 2 intake from Conor Brennan overnight. Use the Court Projects touchpoint to confirm ownership, priority, and whether anything needs same-day routing.",
+            "urgent": true
+          },
+          {
+            "id": "wed-0729-ai-02",
+            "taskId": "task-20260729-confirm-amazon-connect-coverage",
+            "label": "Confirm Amazon Connect coverage while Nadia and Sara are constrained",
+            "detail": "Sara is OOO and Nadia sent a PTO note to the Amazon Connect/SaltClick group this morning. Confirm who owns today's open blockers, training follow-through, and any Ashley/SaltClick next step.",
+            "urgent": true
+          },
+          {
+            "id": "wed-0729-ai-03",
+            "taskId": "task-20260729-review-ice-preparedness-miro",
+            "label": "Review the ICE Preparedness Plan Miro update",
+            "detail": "Miro flagged new highlighted content on the ICE Preparedness Plan board, recently edited by Santiago. Check whether the update changes IPP pilot sequencing, requirements, or tomorrow's discussion points."
+          },
+          {
+            "id": "wed-0729-ai-04",
+            "taskId": "task-20260729-check-roles-queues-analysis",
+            "label": "Check whether the roles-and-queues analysis needs Jean input",
+            "detail": "Nadia forwarded the Roles & Titles queue analysis to Hilary and Thiago with Jean copied. It appears operational rather than directly reply-worthy, but scan it for queue-routing risks or decisions tied to Service Cloud coverage."
+          }
+        ]
+      },
+      {
+        "title": "Emails Awaiting Reply",
+        "info": false,
+        "items": [
+          {
+            "id": "wed-0729-em-01",
+            "taskId": "task-20260729-read-nadia-pto-note",
+            "label": "Read Nadia's PTO note for Amazon Connect impact",
+            "detail": "Nadia's unread PTO email went to Sara, Shannon, Javier, Thiago, Jean, Ben, Ashley, and Deepak. Treat it as a coverage signal for Amazon Connect and SaltClick follow-through, not just an FYI."
+          },
+          {
+            "id": "wed-0729-em-02",
+            "taskId": "task-20260729-review-new-intake-alerts",
+            "label": "Review Janet's overnight intake alerts",
+            "detail": "Several unread intake notifications landed overnight, mostly Court items from Valeria Celedon plus one Phase 2 item from Conor Brennan. Decide whether to route them in the Court Projects block or flag any that require PMO prioritization."
+          }
+        ]
+      },
+      {
+        "title": "Teams Highlights",
+        "info": false,
+        "items": [
+          {
+            "id": "wed-0729-tm-01",
+            "taskId": "task-20260729-ashley-saltclick-context",
+            "label": "Use Nadia's Ashley/SaltClick context before following up",
+            "detail": "A Teams email notification says Nadia had a long, good conversation with Ashley and that Ashley acknowledged Jacob's comment was not mindful. Direct Teams thread reads were throttled, so verify the full thread before acting on the nuance.",
+            "urgent": true
+          }
+        ]
+      },
+      {
+        "title": "Out of Office",
+        "info": true,
+        "items": [
+          {
+            "id": "wed-0729-ooo-01",
+            "label": "Sara is out through Friday",
+            "detail": "The calendar shows Sara OOO from today through July 31, which affects Amazon Connect escalation paths and any Sara-dependent EPMO follow-through."
+          },
+          {
+            "id": "wed-0729-ooo-02",
+            "label": "Nadia PTO appears in unread email",
+            "detail": "Nadia's morning PTO note includes the Amazon Connect/SaltClick distribution, so coverage should be explicit before relying on her for today's follow-through."
+          }
+        ]
+      },
+      {
+        "title": "Tomorrow Preview",
+        "info": true,
+        "items": [
+          {
+            "id": "wed-0729-tom-01",
+            "label": "Thursday starts with protected time and Amazon Connect",
+            "detail": "Blocked Space and Amazon Connect Weekly Project Sync both sit at noon, so decide whether the project sync takes priority over the focus block."
+          },
+          {
+            "id": "wed-0729-tom-02",
+            "label": "BCP/Incident Response follows at 1:30 PM",
+            "detail": "The weekly meeting agenda is open items, blockers, prior action items, and decisions needed."
+          },
+          {
+            "id": "wed-0729-tom-03",
+            "label": "Legal Change Management walkthrough closes the day",
+            "detail": "The 4:00 PM walkthrough introduces the legal guidance repository and intake form to the Legal team; clear owners and unresolved EPMO/IT questions before then."
+          }
+        ]
+      }
+    ]
+  },
+  {
     "id": "eod-2026-07-28",
     "type": "eod",
     "date": "Tuesday, July 28 - End of Day",
