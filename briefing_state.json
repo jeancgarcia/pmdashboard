@@ -333,28 +333,7 @@
     }
   },
   "edits": {},
-  "reminders": [
-    {
-      "id": "rem-1785187322347",
-      "text": "Continuar testeo de Latent Variables AI",
-      "addedAt": "2026-07-27T21:22:02.347Z"
-    },
-    {
-      "id": "rem-1785187335705",
-      "text": "Crear artifact sobre cumpleaños de DAnny",
-      "addedAt": "2026-07-27T21:22:15.705Z"
-    },
-    {
-      "id": "rem-1785187535023",
-      "text": "crear algo visual usando el transcript de la reunion de CoE con los PCs",
-      "addedAt": "2026-07-27T21:25:35.023Z"
-    },
-    {
-      "id": "rem-1785187911973",
-      "text": "Escribirle a Ashley de Saltclick - Due date Amazon connect es 17 abril and we're flying blind",
-      "addedAt": "2026-07-27T21:31:51.973Z"
-    }
-  ],
+  "reminders": [],
   "reminderHistory": [
     {
       "id": "rem-1748998800000",
@@ -595,8 +574,36 @@
       "addedAt": "2026-07-22T23:06:16.432Z",
       "shownInDigestId": "daily-2026-07-23-morning",
       "archivedAt": "2026-07-23T12:05:42Z"
+    },
+    {
+      "id": "rem-1785187322347",
+      "text": "Continuar testeo de Latent Variables AI",
+      "addedAt": "2026-07-27T21:22:02.347Z",
+      "shownInDigestId": "daily-2026-07-30-morning",
+      "archivedAt": "2026-07-30T12:38:26Z"
+    },
+    {
+      "id": "rem-1785187335705",
+      "text": "Crear artifact sobre cumpleaños de DAnny",
+      "addedAt": "2026-07-27T21:22:15.705Z",
+      "shownInDigestId": "daily-2026-07-30-morning",
+      "archivedAt": "2026-07-30T12:38:26Z"
+    },
+    {
+      "id": "rem-1785187535023",
+      "text": "crear algo visual usando el transcript de la reunion de CoE con los PCs",
+      "addedAt": "2026-07-27T21:25:35.023Z",
+      "shownInDigestId": "daily-2026-07-30-morning",
+      "archivedAt": "2026-07-30T12:38:26Z"
+    },
+    {
+      "id": "rem-1785187911973",
+      "text": "Escribirle a Ashley de Saltclick - Due date Amazon connect es 17 abril and we're flying blind",
+      "addedAt": "2026-07-27T21:31:51.973Z",
+      "shownInDigestId": "daily-2026-07-30-morning",
+      "archivedAt": "2026-07-30T12:38:26Z"
     }
   ],
   "assigneeOverrides": {},
-  "lastModified": 1785339583658
+  "lastModified": 1785415106313
 }
