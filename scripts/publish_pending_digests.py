@@ -1,0 +1,210 @@
+#!/usr/bin/env python3
+"""Publish pending digest payloads into digests.json / briefing_state.json.
+
+Invoked by .github/workflows/publish-pending-digest.yml from the repo root
+(pass a different root as argv[1] for local testing). For each
+pending-digests/*.json payload it:
+
+1. Validates the taskId contract (docs/digest-taskid-contract.md) — hard fail.
+2. Prepends the digest to digests.json unless its id already exists.
+3. Overwrites briefing_state.json with the payload's `state`, when present.
+4. Auto-consumes reminders (safety net): any ACTIVE reminder whose text
+   matches an item label in the digest's "Reminders" section is moved to
+   reminderHistory, whether or not the payload included a `state`. Without
+   this, a state-less payload leaves consumption unrecorded, so the same
+   reminders stay in the dashboard queue and re-appear in every subsequent
+   briefing (this is exactly what happened 2026-07-28..30).
+5. Deletes the pending file.
+
+Auto-consumption mirrors the lifecycle rules in the daily-digest skill:
+- persistent reminders (`expiresAt` after the digest date) stay active —
+  they are meant to show every morning until expiry;
+- scheduled reminders (`scheduledFor` after the digest date) stay active —
+  if one was shown early by mistake it must still fire on its real date;
+- everything else shown in the digest is moved to reminderHistory with
+  `shownInDigestId` + `archivedAt`, and `lastModified` is bumped so older
+  Supabase state cannot resurrect it.
+"""
+
+import json
+import pathlib
+import re
+import sys
+from datetime import datetime, timezone
+
+REQUIRED_STATE_KEYS = {'completed', 'hidden', 'reactions', 'edits',
+                       'reminders', 'reminderHistory'}
+REMINDER_SECTION_RE = re.compile(r'reminder|recordator', re.IGNORECASE)
+
+
+def normalize(text):
+    """Whitespace-insensitive form of a reminder text / item label."""
+    return ' '.join(str(text).split())
+
+
+def validate_task_ids(pending_file, digest):
+    """Contract: every action item (non-info section) must carry a stable
+    taskId so carry-over completion survives across days. The display `id`
+    is per-day and disposable; taskId is the canonical key."""
+    seen_task_ids = set()
+    for section in digest.get('sections', []):
+        if not isinstance(section, dict) or section.get('info'):
+            continue
+        for item in section.get('items', []):
+            if not isinstance(item, dict):
+                continue
+            task_id = item.get('taskId')
+            if not task_id or not isinstance(task_id, str) or not task_id.strip():
+                raise SystemExit(
+                    f"{pending_file} item {item.get('id')!r} in section "
+                    f"{section.get('title')!r} is missing a taskId"
+                )
+            if not re.match(r'^task-\d{8}-', task_id):
+                print(f'WARNING: taskId {task_id!r} does not match expected '
+                      f'format task-YYYYMMDD-<slug> ({pending_file})')
+            if task_id in seen_task_ids:
+                print(f"WARNING: duplicate taskId {task_id!r} within {digest.get('id')}")
+            seen_task_ids.add(task_id)
+
+
+def shown_reminder_labels(digest):
+    """Normalized labels of every item in the digest's Reminders section(s)."""
+    labels = set()
+    for section in digest.get('sections', []):
+        if not isinstance(section, dict):
+            continue
+        if not REMINDER_SECTION_RE.search(section.get('title') or ''):
+            continue
+        for item in section.get('items', []):
+            if isinstance(item, dict) and item.get('label'):
+                labels.add(normalize(item['label']))
+    return labels
+
+
+def auto_consume_reminders(state, digest, now_iso):
+    """Move active reminders shown in `digest` into reminderHistory.
+
+    Returns the ids consumed. Mutates `state` in place."""
+    labels = shown_reminder_labels(digest)
+    if not labels:
+        return []
+
+    digest_date = digest.get('isoDate') or ''
+    history = state.setdefault('reminderHistory', [])
+    history_ids = {r.get('id') for r in history if isinstance(r, dict)}
+    kept, consumed = [], []
+    for rem in state.get('reminders', []):
+        if not isinstance(rem, dict) or normalize(rem.get('text', '')) not in labels:
+            kept.append(rem)
+            continue
+        expires = rem.get('expiresAt')
+        if expires and (not digest_date or digest_date < expires):
+            kept.append(rem)  # persistent: shows daily until expiry
+            continue
+        scheduled = rem.get('scheduledFor')
+        if scheduled and digest_date and digest_date < scheduled:
+            kept.append(rem)  # not due yet: must still fire on its real date
+            continue
+        consumed.append(rem.get('id'))
+        if rem.get('id') not in history_ids:
+            entry = dict(rem)
+            entry['shownInDigestId'] = digest.get('id')
+            entry['archivedAt'] = now_iso
+            history.append(entry)
+    state['reminders'] = kept
+    return consumed
+
+
+def write_json(path, value):
+    path.write_text(json.dumps(value, ensure_ascii=False, indent=2) + '\n',
+                    encoding='utf-8')
+
+
+def main(root):
+    pending_dir = root / 'pending-digests'
+    pending_files = sorted(pending_dir.glob('*.json')) if pending_dir.exists() else []
+    if not pending_files:
+        print('No pending digest files found.')
+        return
+
+    digests_path = root / 'digests.json'
+    state_path = root / 'briefing_state.json'
+
+    digests = json.loads(digests_path.read_text(encoding='utf-8'))
+    if not isinstance(digests, list):
+        raise SystemExit('digests.json must contain a JSON array')
+
+    existing_ids = {item.get('id') for item in digests if isinstance(item, dict)}
+    new_digests = []
+    parsed_digests = []
+    state_update = None
+
+    for pending_file in pending_files:
+        payload = json.loads(pending_file.read_text(encoding='utf-8'))
+        digest = payload.get('digest', payload)
+        if not isinstance(digest, dict):
+            raise SystemExit(f'{pending_file} does not contain a digest object')
+        digest_id = digest.get('id')
+        if not digest_id:
+            raise SystemExit(f'{pending_file} digest is missing id')
+        validate_task_ids(pending_file, digest)
+        # A duplicate id is skipped for digests.json, but its reminders are
+        # still auto-consumed below — re-queueing an already-published digest
+        # is the sanctioned way to record consumption it missed.
+        if digest_id in existing_ids:
+            print(f'Skipping duplicate digest {digest_id}')
+        else:
+            new_digests.append(digest)
+            existing_ids.add(digest_id)
+        parsed_digests.append(digest)
+        if isinstance(payload, dict) and isinstance(payload.get('state'), dict):
+            missing = REQUIRED_STATE_KEYS - set(payload['state'])
+            if missing:
+                raise SystemExit(
+                    f'{pending_file} state update is missing required keys: {sorted(missing)}')
+            state_update = payload['state']
+        else:
+            print(f'WARNING: {pending_file} has no state payload; relying on '
+                  f'reminder auto-consumption. The generator should include '
+                  f'the full state (see the daily-digest skill).')
+
+    if new_digests:
+        digests = new_digests + digests
+        write_json(digests_path, digests)
+        print(f'Prepended {len(new_digests)} digest(s).')
+    else:
+        print('No new digests to prepend.')
+
+    # Safety net: consume shown reminders against the effective state — the
+    # payload's state when provided (a no-op if the generator already consumed
+    # them there), the current briefing_state.json otherwise.
+    effective_state = state_update
+    if effective_state is None:
+        effective_state = json.loads(state_path.read_text(encoding='utf-8'))
+
+    now = datetime.now(timezone.utc)
+    now_iso = now.strftime('%Y-%m-%dT%H:%M:%SZ')
+    consumed_any = False
+    for digest in parsed_digests:
+        consumed = auto_consume_reminders(effective_state, digest, now_iso)
+        if consumed:
+            consumed_any = True
+            print(f"Auto-consumed {len(consumed)} reminder(s) shown in "
+                  f"{digest.get('id')}: {', '.join(map(str, consumed))}")
+
+    if consumed_any:
+        # Newer than any pre-publish Supabase write, so the sync workflow's
+        # newest-wins fields can't roll this consumption back.
+        effective_state['lastModified'] = int(now.timestamp() * 1000)
+
+    if state_update is not None or consumed_any:
+        write_json(state_path, effective_state)
+        print('Updated briefing_state.json.')
+
+    for pending_file in pending_files:
+        pending_file.unlink()
+        print(f'Removed {pending_file}')
+
+
+if __name__ == '__main__':
+    main(pathlib.Path(sys.argv[1] if len(sys.argv) > 1 else '.'))
