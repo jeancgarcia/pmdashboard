@@ -1,5 +1,135 @@
 [
   {
+    "id": "daily-2026-07-30-morning",
+    "type": "daily",
+    "date": "Morning - Thursday, July 30",
+    "isoDate": "2026-07-30",
+    "greeting": "Good morning, Jean. Today is Thursday, July 30, and the operating day is anchored by Amazon Connect at noon, BCP/Incident Response at 1:30 PM, SMS Automation at 2:30 PM, and the Legal Change Management walkthrough at 4:00 PM. I see one carried-over item, four active reminders, and three urgent priorities: settle Amazon Connect blockers and quota inputs, keep the Court/Phase 2 intake batch from drifting, and decide the next step on Latent Variables and the CoE/project-coordinator visual. Outlook Calendar and Teams reads were rate-limited this morning, so the schedule view uses last night's published Thursday preview plus live email; email was available and strong enough to ground the main actions.",
+    "sections": [
+      {
+        "title": "Carried Over",
+        "info": false,
+        "items": [
+          {
+            "id": "thu-0730-co-01",
+            "taskId": "task-20260729-triage-court-phase2-intakes",
+            "label": "Finish routing the Court and Phase 2 intake batch",
+            "detail": "Several Court intake items were forwarded to Mar yesterday, but the broader Court and Phase 2 triage item remains open. Confirm ownership, priority, and whether any item needs PMO escalation before the batch gets stale.",
+            "flag": "carried",
+            "urgent": true
+          }
+        ]
+      },
+      {
+        "title": "Reminders",
+        "info": false,
+        "items": [
+          {
+            "id": "thu-0730-rem-01",
+            "taskId": "task-20260724-reply-latent-variables-platform-questions",
+            "label": "Continuar testeo de Latent Variables AI",
+            "detail": "Finish enough testing today to decide whether to reply to Yash directly or take the offered call.",
+            "urgent": true
+          },
+          {
+            "id": "thu-0730-rem-02",
+            "taskId": "task-20260728-danny-birthday-artifact",
+            "label": "Crear artifact sobre cumpleaños de DAnny",
+            "detail": "This one-shot reminder is still active in dashboard state, though the related task is already marked complete; confirm it can stay closed.",
+            "urgent": false
+          },
+          {
+            "id": "thu-0730-rem-03",
+            "taskId": "task-20260728-coe-pcs-visual",
+            "label": "crear algo visual usando el transcript de la reunion de CoE con los PCs",
+            "detail": "Use a protected work window to turn the CoE/project-coordinator transcript into the visual artifact if the transcript is available outside this run.",
+            "urgent": true
+          },
+          {
+            "id": "thu-0730-rem-04",
+            "taskId": "task-20260728-ashley-saltclick-amazon-connect",
+            "label": "Escribirle a Ashley de Saltclick - Due date Amazon connect es 17 abril and we're flying blind",
+            "detail": "Use the newest Amazon Connect daily-update context before sending anything else to Ashley or SaltClick.",
+            "urgent": true
+          }
+        ]
+      },
+      {
+        "title": "Today's Schedule",
+        "info": true,
+        "items": [
+          {
+            "id": "thu-0730-sch-01",
+            "label": "Sara remains out through Friday",
+            "detail": "Last night's preview shows Sara OOO continuing through July 31, so keep Sara-dependent follow-through moving through other owners where possible."
+          },
+          {
+            "id": "thu-0730-sch-02",
+            "label": "12:00 PM - Amazon Connect weekly sync",
+            "detail": "This conflicts with a protected block in the prior preview. Use the project window to settle quota, user-count, WBS, and blocker questions now visible in email."
+          },
+          {
+            "id": "thu-0730-sch-03",
+            "label": "1:30 PM - Weekly Meeting: BCP/Incident Response",
+            "detail": "Use the weekly touchpoint for open items, blockers, prior action items, and decisions that need a clear owner."
+          },
+          {
+            "id": "thu-0730-sch-04",
+            "label": "2:30 PM - SMS Automation Optimization Weekly Project Status",
+            "detail": "Laura's recurring status meeting is the place to check progress, upcoming priorities, risks, blockers, and next steps."
+          },
+          {
+            "id": "thu-0730-sch-05",
+            "label": "4:00 PM - Legal Change Management walkthrough",
+            "detail": "The walkthrough introduces the legal guidance repository and intake form to Legal users, so unresolved ownership or IT/EPMO questions should be clean before then."
+          }
+        ]
+      },
+      {
+        "title": "Action Items",
+        "info": false,
+        "items": [
+          {
+            "id": "thu-0730-ai-01",
+            "taskId": "task-20260729-answer-amazon-connect-quota-inputs",
+            "label": "Answer the Amazon Connect quota and user-count questions",
+            "detail": "Jennifer Gold asked for user-list and average concurrent-call inputs after Firstfire requested phone-number, peak concurrent-call, and go-live user counts. The daily update still shows many build, queue, Salesforce-flow, AI, UAT, and sign-off steps blocked, so use today's sync to lock owners and dates.",
+            "urgent": true
+          },
+          {
+            "id": "thu-0730-ai-02",
+            "taskId": "task-20260730-review-bonus-restructure-charter",
+            "label": "Review Thiago's Bonus Restructure charter",
+            "detail": "Thiago sent the project charter directly to Jean this morning with an attachment and offered to provide more information. Scan it for decision points, missing scope, and whether it needs a reply before the day fills up."
+          },
+          {
+            "id": "thu-0730-ai-03",
+            "taskId": "task-20260730-complete-levelpath-procurement-course",
+            "label": "Plan the Levelpath procurement course before the new deadline",
+            "detail": "Rippling says the Levelpath: How to Submit a Procurement Request course is now due August 8 at 3:37 PM. It is not same-day urgent, but it should be placed before the deadline gets buried."
+          },
+          {
+            "id": "thu-0730-ai-04",
+            "taskId": "task-20260730-check-ds-ws-proposal-miro",
+            "label": "Check the DS+WS Proposal Miro update",
+            "detail": "Miro highlighted new activity on the DS+WS Proposal board, edited recently by Carolina Lopez. Review only if it affects portfolio, scope, or stakeholder timing today."
+          }
+        ]
+      },
+      {
+        "title": "Out of Office",
+        "info": true,
+        "items": [
+          {
+            "id": "thu-0730-ooo-01",
+            "label": "Sara is out through Friday",
+            "detail": "The prior dashboard preview shows Sara OOO through July 31, which affects Amazon Connect escalation paths and Sara-dependent EPMO follow-through."
+          }
+        ]
+      }
+    ]
+  },
+  {
     "id": "eod-2026-07-29",
     "type": "eod",
     "date": "Wednesday, July 29 - End of Day",
