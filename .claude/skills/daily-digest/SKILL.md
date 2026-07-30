@@ -104,12 +104,24 @@ Write `pending-digests/<digest-id>.json`:
   change only what this digest changes (reminder consumption, `lastModified`).
 - Set `lastModified` to now (epoch ms). This is what prevents older Supabase
   state from clobbering the consumption you just recorded.
-- The workflow validates taskIds, prepends the digest to `digests.json`,
-  overwrites `briefing_state.json`, deletes the pending file, commits, and
-  syncs the published state to Supabase.
+- The workflow (`scripts/publish_pending_digests.py`, main-branch pushes
+  only) validates taskIds, prepends the digest to `digests.json`, overwrites
+  `briefing_state.json`, deletes the pending file, commits, and syncs the
+  published state to Supabase.
+- **Safety net — do not rely on it:** the publish script also auto-consumes
+  reminders. Any active reminder whose text matches an item label in the
+  digest's "Reminders" section is moved to `reminderHistory` (honoring
+  `expiresAt`/`scheduledFor`), even when the payload has no `state`. This
+  exists because state-less payloads on 2026-07-28..30 left consumed
+  reminders stuck in the queue. It covers reminders ONLY — a payload without
+  `state` still loses `completed` updates and the `lastModified` bump, so
+  always include the full state.
 
-**Duplicate ids are silently skipped.** To REPUBLISH a digest (fix a bad one),
-a pending file is not enough — the existing entry must be removed from
+**Duplicate digest ids are skipped for `digests.json`**, but their reminders
+are still auto-consumed — re-queueing an already-published digest (digest
+object verbatim, no `state`) is the sanctioned way to record consumption a
+bad payload missed. To REPUBLISH a digest's CONTENT (fix a bad one), a
+pending file is not enough — the existing entry must be removed from
 `digests.json` in the same change. Prefer a direct commit that rewrites the
 entry in place.
 
@@ -145,3 +157,13 @@ instead of the 4 active ones. Fixed by reconciling state, republishing the
 digest, and adding the `sync-supabase-state` workflow. The freshness sanity
 check, the completed-taskId filter, and the exact-reminders rule above are the
 guardrails from that incident.
+
+**2026-07-28 → 30:** three consecutive morning digests showed the SAME 4
+reminders, which also never left the dashboard's reminder queue: the pending
+payloads had been queued with only a `digest` key — no `state` — and the
+publish workflow silently skipped the `briefing_state.json` update, so
+consumption was never recorded anywhere. Fixed by extracting the publish
+logic to `scripts/publish_pending_digests.py`, adding the reminder
+auto-consumption safety net, warning loudly on state-less payloads, and
+restricting the workflow trigger to main. The full `state` payload is still
+mandatory — auto-consumption cannot reconstruct `completed` or anything else.

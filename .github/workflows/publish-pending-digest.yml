@@ -2,6 +2,10 @@ name: Publish pending digest
 
 on:
   push:
+    # main only: this workflow commits published data and PATCHes the
+    # production Supabase row, so a pending file pushed to a feature branch
+    # must never trigger it.
+    branches: [main]
     paths:
       - 'pending-digests/*.json'
   workflow_dispatch:
@@ -18,92 +22,14 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v4
 
+      # Validates the taskId contract, prepends new digests, applies the
+      # payload state, and auto-consumes reminders shown in each digest's
+      # Reminders section (so a payload missing `state` can no longer leave
+      # consumed reminders sitting in the dashboard queue).
       - name: Publish pending digest files
         run: |
-          python - <<'PY'
-          import json
-          import pathlib
-          import re
-          import subprocess
-          import sys
-
-          root = pathlib.Path('.')
-          pending_dir = root / 'pending-digests'
-          pending_files = sorted(pending_dir.glob('*.json')) if pending_dir.exists() else []
-          if not pending_files:
-              print('No pending digest files found.')
-              sys.exit(0)
-
-          digests_path = root / 'digests.json'
-          state_path = root / 'briefing_state.json'
-
-          digests = json.loads(digests_path.read_text(encoding='utf-8'))
-          if not isinstance(digests, list):
-              raise SystemExit('digests.json must contain a JSON array')
-
-          existing_ids = {item.get('id') for item in digests if isinstance(item, dict)}
-          new_digests = []
-          state_update = None
-
-          for pending_file in pending_files:
-              payload = json.loads(pending_file.read_text(encoding='utf-8'))
-              digest = payload.get('digest', payload)
-              if not isinstance(digest, dict):
-                  raise SystemExit(f'{pending_file} does not contain a digest object')
-              digest_id = digest.get('id')
-              if not digest_id:
-                  raise SystemExit(f'{pending_file} digest is missing id')
-              # Contract: every action item (non-info section) must carry a stable
-              # taskId so carry-over completion survives across days. The display
-              # `id` is per-day and disposable; taskId is the canonical key.
-              seen_task_ids = set()
-              for section in digest.get('sections', []):
-                  if not isinstance(section, dict) or section.get('info'):
-                      continue
-                  for item in section.get('items', []):
-                      if not isinstance(item, dict):
-                          continue
-                      task_id = item.get('taskId')
-                      if not task_id or not isinstance(task_id, str) or not task_id.strip():
-                          raise SystemExit(
-                              f"{pending_file} item {item.get('id')!r} in section "
-                              f"{section.get('title')!r} is missing a taskId"
-                          )
-                      if not re.match(r'^task-\d{8}-', task_id):
-                          print(f'WARNING: taskId {task_id!r} does not match expected '
-                                f'format task-YYYYMMDD-<slug> ({pending_file})')
-                      if task_id in seen_task_ids:
-                          print(f'WARNING: duplicate taskId {task_id!r} within {digest_id}')
-                      seen_task_ids.add(task_id)
-              if digest_id in existing_ids:
-                  print(f'Skipping duplicate digest {digest_id}')
-              else:
-                  new_digests.append(digest)
-                  existing_ids.add(digest_id)
-              if isinstance(payload, dict) and isinstance(payload.get('state'), dict):
-                  state_update = payload['state']
-
-          if new_digests:
-              digests = new_digests + digests
-              digests_path.write_text(json.dumps(digests, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
-              print(f'Prepended {len(new_digests)} digest(s).')
-          else:
-              print('No new digests to prepend.')
-
-          if state_update is not None:
-              required = {'completed', 'hidden', 'reactions', 'edits', 'reminders', 'reminderHistory'}
-              missing = required - set(state_update)
-              if missing:
-                  raise SystemExit(f'Pending state update is missing required keys: {sorted(missing)}')
-              state_path.write_text(json.dumps(state_update, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
-              print('Updated briefing_state.json from pending payload.')
-
-          for pending_file in pending_files:
-              pending_file.unlink()
-              print(f'Removed {pending_file}')
-
-          subprocess.run(['git', 'status', '--short'], check=True)
-          PY
+          python scripts/publish_pending_digests.py
+          git status --short
 
       - name: Commit published digest
         run: |
