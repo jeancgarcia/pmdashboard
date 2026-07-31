@@ -1,0 +1,161 @@
+{
+  "digest": {
+    "id": "eod-2026-07-31",
+    "type": "eod",
+    "date": "Friday, July 31 - End of Day",
+    "isoDate": "2026-07-31",
+    "greeting": "Good evening, Jean. The day ended with clearer direction for the SMS program and several intake-routing updates, though nothing is marked complete in today's dashboard yet. Monday opens with timecards and a dense run from the SMS touchpoint through portfolio reviews.",
+    "sections": [
+      {
+        "title": "Completed Today",
+        "info": true,
+        "items": []
+      },
+      {
+        "title": "Still Open",
+        "info": false,
+        "items": [
+          {
+            "id": "eod-0731-open-1",
+            "taskId": "task-20260729-triage-court-phase2-intakes",
+            "label": "Finish routing the Court and Phase 2 intake batch",
+            "detail": "Jean routed several new Court requests to the CM-CoE this afternoon. Confirm ownership, priority, and the escalation path for the remaining Court and Phase 2 items.",
+            "urgent": true
+          },
+          {
+            "id": "eod-0731-open-2",
+            "taskId": "task-20260729-answer-amazon-connect-quota-inputs",
+            "label": "Answer the Amazon Connect quota and user-count questions",
+            "detail": "Lock owners for the user list, concurrent-call estimates, phone numbers, peak volume, and go-live counts so setup can move forward.",
+            "urgent": true
+          },
+          {
+            "id": "eod-0731-open-3",
+            "taskId": "task-20260724-reply-latent-variables-platform-questions",
+            "label": "Continue Latent Variables testing and reply to Yash",
+            "detail": "Finish enough testing to decide whether to answer by email or take the offered call, so the Juniper/Latent Variables evaluation does not sit idle.",
+            "urgent": true
+          },
+          {
+            "id": "eod-0731-open-4",
+            "taskId": "task-20260728-coe-pcs-visual",
+            "label": "Draft the CoE/project-coordinator transcript visual",
+            "detail": "The CoE touchpoint was canceled this afternoon. If the source transcript is available elsewhere, finish the visual and carry any ownership questions into the next CoE discussion.",
+            "urgent": true
+          },
+          {
+            "id": "eod-0731-open-5",
+            "taskId": "task-20260731-review-sms-consent-framework",
+            "label": "Turn the agreed SMS program structure into a charter and sign-off path",
+            "detail": "The proposal is to use one shared legal-compliance workstream with channel-specific execution, starting with SMS. Confirm the IT stakeholders, draft the project charter, and route it for sign-off.",
+            "urgent": true
+          },
+          {
+            "id": "eod-0731-open-6",
+            "taskId": "task-20260730-review-bonus-restructure-charter",
+            "label": "Review Thiago's Bonus Restructure charter",
+            "detail": "Scan the charter for decisions, missing scope, and whether Thiago needs a reply before next week's project work begins."
+          },
+          {
+            "id": "eod-0731-open-7",
+            "taskId": "task-20260730-complete-levelpath-procurement-course",
+            "label": "Plan the Levelpath procurement course before the new deadline",
+            "detail": "The Rippling course is due August 8 at 3:37 PM. Block time or delegate the follow-through before next week's project stack takes over."
+          },
+          {
+            "id": "eod-0731-open-8",
+            "taskId": "task-20260731-bio-appt-access-request",
+            "label": "Decide the Bio Appointment Reschedule access request",
+            "detail": "Approve or route Elimar Del Valle Toro Vera's Asana access request if it supports the EPMO handoff ahead of the August portfolio path."
+          },
+          {
+            "id": "eod-0731-open-9",
+            "taskId": "task-20260731-bcp-recording-expired",
+            "label": "Decide whether to restore the expired BCP/Incident Response recording",
+            "detail": "Restore the April 2 recording only if it still supports current Incident Response evidence or handoff needs."
+          },
+          {
+            "id": "eod-0731-open-10",
+            "taskId": "task-20260731-review-ice-preparedness-miro",
+            "label": "Check the ICE Preparedness Plan Miro update",
+            "detail": "Review the new activity if it affects launch readiness, risk language, or a stakeholder decision."
+          }
+        ]
+      },
+      {
+        "title": "Cancelled Today",
+        "info": true,
+        "items": [
+          {
+            "id": "eod-0731-cancel-1",
+            "label": "Jean/Sara 1:1 was canceled",
+            "detail": "Sara remained out today, and the 11:00 AM 1:1 did not go forward."
+          },
+          {
+            "id": "eod-0731-cancel-2",
+            "label": "CoE Touchpoint was canceled",
+            "detail": "The 3:30 PM CoE discussion was canceled this afternoon, leaving its visual and ownership follow-through to carry forward."
+          },
+          {
+            "id": "eod-0731-cancel-3",
+            "label": "SMS Automation Optimization weekly status was canceled",
+            "detail": "The weekly project-status meeting was canceled; the SMS discussion continued through email and Teams updates instead."
+          }
+        ]
+      },
+      {
+        "title": "Key Decisions",
+        "info": true,
+        "items": [
+          {
+            "id": "eod-0731-decision-1",
+            "label": "Use one compliance workstream with channel-specific SMS execution",
+            "detail": "The team aligned on the broader program structure: one shared legal-compliance workstream, channel-specific implementation beginning with SMS, and a project charter followed by sign-off."
+          }
+        ]
+      },
+      {
+        "title": "Monday Preview",
+        "info": true,
+        "items": [
+          {
+            "id": "eod-0731-mon-1",
+            "label": "8:00 AM - Approve Timecards & Prepare for the Week",
+            "detail": "Monday opens with the regular timecard and weekly setup block.",
+            "time": "8:00 AM"
+          },
+          {
+            "id": "eod-0731-mon-2",
+            "label": "10:00 AM - Legal Change Management - IT & EPMO Sync",
+            "detail": "Use the recurring sync to work through IT and EPMO questions, actions, and clarifications.",
+            "time": "10:00 AM"
+          },
+          {
+            "id": "eod-0731-mon-3",
+            "label": "11:30 AM - SMS Journey Project Touchpoint",
+            "detail": "Align on the initiative's scope, phases, risks, charter, and stakeholder path.",
+            "time": "11:30 AM"
+          },
+          {
+            "id": "eod-0731-mon-4",
+            "label": "12:00 PM blocked space overlaps the 12:30 PM Salesforce steering committee",
+            "detail": "The steering committee will review red projects and the program timeline. Decide how to protect the focus block while covering the committee.",
+            "time": "12:00 PM"
+          },
+          {
+            "id": "eod-0731-mon-5",
+            "label": "2:00 PM - BD Portfolio Review",
+            "detail": "Review active-project status, risks, blockers, and new intake priorities.",
+            "time": "2:00 PM"
+          },
+          {
+            "id": "eod-0731-mon-6",
+            "label": "3:00 PM - 1:1 Maria & Jean",
+            "detail": "Use the 1:1 for portfolio review, roadblocks, and next steps.",
+            "time": "3:00 PM"
+          }
+        ]
+      }
+    ]
+  }
+}
