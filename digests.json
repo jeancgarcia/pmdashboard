@@ -1,5 +1,206 @@
 [
   {
+    "id": "daily-2026-07-31-morning",
+    "type": "daily",
+    "date": "Morning - Friday, July 31",
+    "isoDate": "2026-07-31",
+    "greeting": "Good morning, Jean. Today is Friday, July 31, and the day is anchored by Legal Change Management at 10:00 AM, a shifted EPMO EOW check-in at 1:00 PM, the Salesforce/project-pipeline block, and a 3:00 PM overlap between IT Litify Sprint #14 and the Executive Project Status update. I see eight meetings or protected blocks, no active reminders, and seven carried-over items; the top priorities are keeping Court/Phase 2 routing and Amazon Connect inputs moving, using the SMS consent-management update before the project discussion, and deciding coverage for the afternoon overlap. Teams returned only thread previews and SharePoint transcript fetches were rate-limited, so transcript context is limited this morning.",
+    "sections": [
+      {
+        "title": "Carried Over",
+        "info": false,
+        "items": [
+          {
+            "id": "fri-0731-co-01",
+            "taskId": "task-20260729-triage-court-phase2-intakes",
+            "label": "Finish routing the Court and Phase 2 intake batch",
+            "detail": "Confirm ownership, priority, and any PMO escalation path for the remaining Court and Phase 2 items before today's pipeline and portfolio conversations make the batch harder to unwind.",
+            "flag": "carried",
+            "urgent": true
+          },
+          {
+            "id": "fri-0731-co-02",
+            "taskId": "task-20260729-answer-amazon-connect-quota-inputs",
+            "label": "Answer the Amazon Connect quota and user-count questions",
+            "detail": "The project still needs user-list, average concurrent-call, phone-number, peak concurrent-call, and go-live user-count inputs. Use any Amazon Connect chat follow-through to lock owners and unblock setup.",
+            "flag": "carried",
+            "urgent": true
+          },
+          {
+            "id": "fri-0731-co-03",
+            "taskId": "task-20260724-reply-latent-variables-platform-questions",
+            "label": "Continue Latent Variables testing and reply to Yash",
+            "detail": "Finish enough testing to decide whether to answer Yash by email or take the offered call, so the Juniper/Latent Variables evaluation does not sit idle through the weekend.",
+            "flag": "carried",
+            "urgent": true
+          },
+          {
+            "id": "fri-0731-co-04",
+            "taskId": "task-20260728-coe-pcs-visual",
+            "label": "Draft the CoE/project-coordinator transcript visual",
+            "detail": "The source transcript was not available through SharePoint this morning. If the transcript is available elsewhere, turn it into the visual artifact before the 3:30 PM CoE Touchpoint.",
+            "flag": "carried",
+            "urgent": true
+          },
+          {
+            "id": "fri-0731-co-05",
+            "taskId": "task-20260730-review-bonus-restructure-charter",
+            "label": "Review Thiago's Bonus Restructure charter",
+            "detail": "Scan the charter for decisions, missing scope, and whether Thiago needs a reply before the afternoon project stack starts.",
+            "flag": "carried"
+          },
+          {
+            "id": "fri-0731-co-06",
+            "taskId": "task-20260730-complete-levelpath-procurement-course",
+            "label": "Plan the Levelpath procurement course before the new deadline",
+            "detail": "The Rippling course is due August 8 at 3:37 PM. Block time or delegate the follow-through before it disappears under next week's project work.",
+            "flag": "carried"
+          },
+          {
+            "id": "fri-0731-co-07",
+            "taskId": "task-20260730-check-ds-ws-proposal-miro",
+            "label": "Check the DS+WS Proposal Miro update",
+            "detail": "Review the board only if Carolina's update changes portfolio scope, stakeholder timing, or a decision that belongs in the executive project update.",
+            "flag": "carried"
+          }
+        ]
+      },
+      {
+        "title": "Today's Schedule",
+        "info": true,
+        "items": [
+          {
+            "id": "fri-0731-sch-01",
+            "label": "Sara is out, and the Jean/Sara 1:1 is canceled",
+            "detail": "Sara's OOO block runs through today, and the 11:00 AM Jean/Sara 1:1 was canceled. Route Sara-dependent follow-through through other owners where needed."
+          },
+          {
+            "id": "fri-0731-sch-02",
+            "label": "10:00 AM - Legal Change Management - IT & EPMO Sync",
+            "detail": "Use this recurring sync to work through EPMO and IT SharePoint doubts, action items, and clarifications before the afternoon project stack."
+          },
+          {
+            "id": "fri-0731-sch-03",
+            "label": "12:00 PM - Blocked Space",
+            "detail": "This is the cleanest focus window before the afternoon run. Use it for Amazon Connect inputs, the SMS framework review, or the 3:00 PM overlap decision."
+          },
+          {
+            "id": "fri-0731-sch-04",
+            "label": "1:00 PM - EPMO EOW Check In",
+            "detail": "The invite was moved one hour earlier and adds Nadia so programmatic updates can be included."
+          },
+          {
+            "id": "fri-0731-sch-05",
+            "label": "2:00 PM - Salesforce Program Standup",
+            "detail": "Review project health, next milestones, key risks, dependencies, and decisions that should feed the leadership brief."
+          },
+          {
+            "id": "fri-0731-sch-06",
+            "label": "2:30 PM - Project pipeline (EPMO/IT weekly sync)",
+            "detail": "This is the best slot for new intake prioritization, BA assignment, active-project changes, UAT status, and remaining workflow items."
+          },
+          {
+            "id": "fri-0731-sch-07",
+            "label": "3:00 PM - IT Litify Sprint #14 conflicts with Executive Project Status",
+            "detail": "The sprint review and executive deck update run at the same time. Decide which needs Jean live and which can be covered or handled async."
+          },
+          {
+            "id": "fri-0731-sch-08",
+            "label": "3:30 PM - CoE Touchpoint",
+            "detail": "This is scoped to EPMO requests being re-routed to the CM-CoE. Bring any Court, CoE visual, or ownership questions that need closure before the week ends."
+          }
+        ]
+      },
+      {
+        "title": "Action Items",
+        "info": false,
+        "items": [
+          {
+            "id": "fri-0731-ai-01",
+            "taskId": "task-20260731-resolve-3pm-sprint-deck-overlap",
+            "label": "Decide coverage for the 3:00 PM overlap",
+            "detail": "IT Litify Sprint #14 and the Executive Project Status update both start at 3:00 PM. Choose the live priority or assign coverage before the afternoon stack begins.",
+            "urgent": true
+          },
+          {
+            "id": "fri-0731-ai-02",
+            "taskId": "task-20260731-review-sms-consent-framework",
+            "label": "Review Lucia's SMS consent-management update",
+            "detail": "Lucia shared an updated SMS framework after speaking with Chelsea, including consent-management language across Litify/Salesforce and SMS Magic. Review it before the SMS call or next project-status discussion so compliance and platform dependencies are clear.",
+            "urgent": true
+          },
+          {
+            "id": "fri-0731-ai-03",
+            "taskId": "task-20260731-prepare-eow-program-readout",
+            "label": "Prepare the EOW program readout around Nadia's updates",
+            "detail": "The EPMO EOW check-in was moved earlier and expanded to include Nadia's programmatic updates. Have the top risks, decisions, and leadership asks ready before 1:00 PM."
+          },
+          {
+            "id": "fri-0731-ai-04",
+            "taskId": "task-20260731-bio-appt-access-request",
+            "label": "Decide the Bio Appointment Reschedule access request",
+            "detail": "Elimar Del Valle Toro Vera requested Asana access to Bio Appt Reschedule. Approve or route the request if it supports the EPMO handoff ahead of the August portfolio path."
+          }
+        ]
+      },
+      {
+        "title": "Emails Awaiting Reply",
+        "info": false,
+        "items": [
+          {
+            "id": "fri-0731-em-01",
+            "taskId": "task-20260731-bcp-recording-expired",
+            "label": "Decide whether to restore the expired BCP/Incident Response recording",
+            "detail": "SharePoint notified Jean that the April 2 BCP/Incident Response recording expired and was deleted. Restore it only if it still supports current Incident Response evidence or handoff needs."
+          },
+          {
+            "id": "fri-0731-em-02",
+            "taskId": "task-20260731-review-ice-preparedness-miro",
+            "label": "Check the ICE Preparedness Plan Miro update",
+            "detail": "Miro highlighted new activity on Jhara's ICE Preparedness Plan board, recently edited by Santiago Arango. Review it if the board affects launch readiness, risk language, or a stakeholder decision."
+          }
+        ]
+      },
+      {
+        "title": "Out of Office",
+        "info": true,
+        "items": [
+          {
+            "id": "fri-0731-ooo-01",
+            "label": "Sara remains out through today",
+            "detail": "Sara's OOO block continues through July 31 and her 1:1 with Jean is canceled, which may affect Amazon Connect, EPMO EOW, and Sara-dependent follow-through."
+          }
+        ]
+      },
+      {
+        "title": "Monday Preview",
+        "info": true,
+        "items": [
+          {
+            "id": "fri-0731-mon-01",
+            "label": "8:00 AM - Approve Timecards & Prepare for the Week",
+            "detail": "Monday opens with the usual week setup block before the project syncs begin."
+          },
+          {
+            "id": "fri-0731-mon-02",
+            "label": "10:00 AM - Legal Change Management - IT & EPMO Sync",
+            "detail": "The recurring IT/EPMO sync continues Monday, with doubts, action items, and clarifications as the named purpose."
+          },
+          {
+            "id": "fri-0731-mon-03",
+            "label": "1:00 PM - BD Portfolio Review",
+            "detail": "Use the portfolio review for active-project status, key risks, blockers, and new intake prioritization."
+          },
+          {
+            "id": "fri-0731-mon-04",
+            "label": "3:00 PM - 1:1 Maria & Jean",
+            "detail": "The 1:1 agenda is portfolio review, roadblocks, and next steps, making it a natural follow-through point for any Court or CoE routing items left open today."
+          }
+        ]
+      }
+    ]
+  },
+  {
     "id": "eod-2026-07-30",
     "type": "eod",
     "date": "Thursday, July 30 - End of Day",
