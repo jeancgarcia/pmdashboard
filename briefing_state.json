@@ -45,6 +45,7 @@
     "task-20260619-work-smart-goals-kpis": true,
     "task-20260708-send-pm-meeting-notes": true,
     "task-20260728-resolve-1030-conflict": true,
+    "task-20260803-review-scv-uat-update": true,
     "task-20260616-coe-playbook-follow-up": true,
     "task-20260616-staff-aug-it-alignment": true,
     "task-20260625-track-baesman-slq-path": true,
@@ -95,6 +96,7 @@
     "task-20260721-align-skills-amazon-connect": true,
     "task-20260723-resolve-noon-amazon-overlap": true,
     "task-20260729-check-roles-queues-analysis": true,
+    "task-20260729-triage-court-phase2-intakes": true,
     "task-20260624-track-mar-mhe-angel-response": true,
     "task-20260625-align-court-pm-pe-transition": true,
     "task-20260625-prepare-chicago-debrief-epmo": true,
@@ -139,6 +141,7 @@
     "task-20260629-review-cio-transition-workbook": true,
     "task-20260708-align-thiago-bonus-restructure": true,
     "task-20260720-shape-amazon-connect-one-pager": true,
+    "task-20260803-address-firstfire-aws-concerns": true,
     "task-20260609-check-supabase-security-warning": true,
     "task-20260612-prepare-epmo-eow-executive-deck": true,
     "task-20260612-reply-eugenia-danny-venn-issues": true,
@@ -191,6 +194,7 @@
     "task-20260706-validar-ownership-portafolio-legal": true,
     "task-20260724-clear-legal-change-management-sync": true,
     "task-20260728-track-ipp-sales-plan-confirmations": true,
+    "task-20260729-answer-amazon-connect-quota-inputs": true,
     "task-20260610-resolve-dp-trace-staff-aug-coverage": true,
     "task-20260611-confirm-epmo-offers-and-recognition": true,
     "task-20260611-review-phase-2-projects-nadia-reply": true,
@@ -327,10 +331,6 @@
     "task-20260618-prepare-send-letters-queue-timeline": {
       "ts": 1781786202372,
       "emoji": "📌"
-    },
-    "task-20260724-reply-latent-variables-platform-questions": {
-      "ts": 1784896540913,
-      "emoji": "❗"
     }
   },
   "edits": {},
@@ -606,5 +606,5 @@
     }
   ],
   "assigneeOverrides": {},
-  "lastModified": 1785769503148
+  "lastModified": 1785775304051
 }
