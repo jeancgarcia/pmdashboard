@@ -219,6 +219,7 @@
     "task-20260703-check-dashboard-pages-deploy-failures": true,
     "task-20260707-prepare-levelpath-adoption-assessment": true,
     "task-20260707-reschedule-marketing-portfolio-review": true,
+    "task-20260803-prepare-salesforce-red-project-review": true,
     "task-20260609-complete-nadias-affected-areas-request": true,
     "task-20260609-review-staff-aug-prd-and-queue-impacts": true,
     "task-20260622-use-staff-aug-touchpoint-for-open-asks": true,
@@ -605,5 +606,5 @@
     }
   ],
   "assigneeOverrides": {},
-  "lastModified": 1785415106313
+  "lastModified": 1785769503148
 }
