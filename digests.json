@@ -1,5 +1,144 @@
 [
   {
+    "id": "daily-2026-08-04-morning",
+    "type": "daily",
+    "date": "Morning - Tuesday, August 4",
+    "isoDate": "2026-08-04",
+    "greeting": "Good morning, Jean. Today is Tuesday, August 4, with five meetings plus a 90-minute focus block. The main anchors are the EPMO leadership catch-up and the 3:30-5:00 PM portfolio/Amazon Connect run. Five items are urgent and three carry over: secure the fast Compliance handoffs, use the 4:30 PM Amazon Connect update to reset a program now projected two weeks late, and close the VAWA transition before Jessie's Wednesday PTO. The clearest pending decision is whether to pause both SMS Automation and the Client Compliance Framework to free capacity.",
+    "sections": [
+      {
+        "title": "Carried Over",
+        "info": false,
+        "items": [
+          {
+            "id": "tue-0804-co-01",
+            "taskId": "task-20260731-review-sms-consent-framework",
+            "label": "Lock the SMS and Client Compliance pause decision",
+            "detail": "Danny is seeking confirmation from ELT on pausing both projects. Close the decision today so Laura's capacity can be redirected without leaving scope, phone/email compliance, or fallback-system work ambiguous.",
+            "flag": "carried",
+            "urgent": true
+          },
+          {
+            "id": "tue-0804-co-02",
+            "taskId": "task-20260803-lock-bd-maria-roadblock-owners",
+            "label": "Close the remaining portfolio and staffing roadblocks",
+            "detail": "Use the Jhara 1:1 and EPMO leadership catch-up to settle the few open owners, escalation paths, and checkpoints left after Monday's portfolio discussions.",
+            "flag": "carried"
+          },
+          {
+            "id": "tue-0804-co-03",
+            "taskId": "task-20260724-reply-latent-variables-platform-questions",
+            "label": "Finish the Latent Variables team test",
+            "detail": "Yash confirmed the four stakeholder groups are ready and Jean committed to share feedback with Sara and Danny later this week. Complete enough testing to approve fieldwork or identify the remaining friction.",
+            "flag": "carried",
+            "urgent": true
+          }
+        ]
+      },
+      {
+        "title": "Today's Schedule",
+        "info": true,
+        "items": [
+          {
+            "id": "tue-0804-sch-01",
+            "label": "10:30 AM - 1:1 Jhara & Jean",
+            "detail": "Start with portfolio status, roadblocks, and next steps; use it to tighten Legal Change Management and Compliance ownership before the leadership meeting."
+          },
+          {
+            "id": "tue-0804-sch-02",
+            "label": "12:00 PM - Blocked Space",
+            "detail": "This 90-minute focus window is the best time to close the Compliance handoffs and prepare the Amazon Connect recovery questions."
+          },
+          {
+            "id": "tue-0804-sch-03",
+            "label": "2:00 PM - EPMO TL Weekly Catch Up",
+            "detail": "The recreated cadence is scoped to portfolio updates, risks, milestones, dependencies, and escalations. Bring the project-pause and urgent staffing decisions."
+          },
+          {
+            "id": "tue-0804-sch-04",
+            "label": "3:30 PM - 1:1 Nicolas & Jean",
+            "detail": "Use the first step in the afternoon run to confirm Nicolas's capacity and any technical project tradeoffs created by the Compliance work."
+          },
+          {
+            "id": "tue-0804-sch-05",
+            "label": "4:00 PM - CSC Portfolio initial review",
+            "detail": "A focused 30-minute portfolio review with Hassan immediately before the Amazon Connect update."
+          },
+          {
+            "id": "tue-0804-sch-06",
+            "label": "4:30 PM - Amazon Connect MVP Updates",
+            "detail": "Primary risk meeting for AWS provisioning, policy blockers, the projected two-week Wave 1 delay, and the recovery path."
+          }
+        ]
+      },
+      {
+        "title": "Action Items",
+        "info": false,
+        "items": [
+          {
+            "id": "tue-0804-ai-01",
+            "taskId": "task-20260804-launch-preparers-certification",
+            "label": "Launch the Preparer's Certification response",
+            "detail": "Operations are paused after the App Spec Call Team step, and the bulk of the work is due this week for an outside-counsel litigation request. Confirm Javier as PM, Luis as PE, the attorney point of contact, and the urgent IT path Deepak was asked to support.",
+            "urgent": true
+          },
+          {
+            "id": "tue-0804-ai-02",
+            "taskId": "task-20260804-amazon-connect-delay-recovery",
+            "label": "Set the Amazon Connect recovery plan",
+            "detail": "The steering readout projects Wave 1 about two weeks beyond August 17, while AWS provisioning and policy configuration still block nearly every UAT step. At 4:30 PM, require a resolution owner and date, a revised critical path, and a decision on using the June 25 demo until the login blocker allows a new recording.",
+            "urgent": true
+          },
+          {
+            "id": "tue-0804-ai-03",
+            "taskId": "task-20260804-secure-vawa-post21-handoff",
+            "label": "Secure the VAWA Post-21 handoff",
+            "detail": "Jessie is advancing the urgent request through today, then starts PTO Wednesday. Name the PM who will take it to completion and capture the handoff before she signs off.",
+            "urgent": true
+          },
+          {
+            "id": "tue-0804-ai-04",
+            "taskId": "task-20260804-clear-laura-sprint15-details",
+            "label": "Clear the Laura-dependent Sprint 15 details",
+            "detail": "The story was prepared with partial information while Laura was out, but the remaining details were needed for grooming and sprint selection. Confirm the missing inputs on her return today and decide whether the story can still enter Sprint 15."
+          }
+        ]
+      },
+      {
+        "title": "Out of Office",
+        "info": true,
+        "items": [
+          {
+            "id": "tue-0804-ooo-01",
+            "label": "Jessie Logan starts PTO Wednesday",
+            "detail": "Her urgent VAWA Post-21 work needs a documented owner and handoff by the end of today."
+          }
+        ]
+      },
+      {
+        "title": "Tomorrow Preview",
+        "info": true,
+        "items": [
+          {
+            "id": "tue-0804-tom-01",
+            "label": "10:00 AM - Legal Change Management; 10:30 AM - Thiago 1:1",
+            "detail": "The morning opens with two short alignment points, followed by a 90-minute blocked space at noon."
+          },
+          {
+            "id": "tue-0804-tom-02",
+            "label": "3:30 PM portfolio conflict needs coverage",
+            "detail": "Legal Initial Project Portfolio Review and the Laura 1:1 overlap at 3:30 PM. Decide which requires Jean live or move one before tomorrow."
+          },
+          {
+            "id": "tue-0804-tom-03",
+            "label": "4:00 PM - CoE Biweekly Touchpoint",
+            "detail": "Use the CoE session to close any progress, direction, or ownership questions that remain after the portfolio review."
+          }
+        ]
+      }
+    ]
+  },
+  {
     "id": "eod-2026-08-03",
     "type": "eod",
     "date": "Monday, August 3 - End of Day",
