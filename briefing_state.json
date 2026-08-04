@@ -115,6 +115,7 @@
     "task-20260721-prepare-csc-portfolio-review": true,
     "task-20260721-resolve-230-calendar-overlap": true,
     "task-20260729-review-ice-preparedness-miro": true,
+    "task-20260804-clear-laura-sprint15-details": true,
     "task-20260610-review-court-ead-deliverables": true,
     "task-20260615-prepare-epmo-portfolio-review": true,
     "task-20260617-check-litify-field-audit-path": true,
@@ -142,6 +143,7 @@
     "task-20260708-align-thiago-bonus-restructure": true,
     "task-20260720-shape-amazon-connect-one-pager": true,
     "task-20260803-address-firstfire-aws-concerns": true,
+    "task-20260804-launch-preparers-certification": true,
     "task-20260609-check-supabase-security-warning": true,
     "task-20260612-prepare-epmo-eow-executive-deck": true,
     "task-20260612-reply-eugenia-danny-venn-issues": true,
@@ -283,6 +285,10 @@
     "task-20260708-nicolas-owner-timestamp-ba": {
       "ts": 1783513880877,
       "emoji": "❗"
+    },
+    "task-20260804-secure-vawa-post21-handoff": {
+      "ts": 1785846876245,
+      "emoji": "⭐"
     },
     "task-20260612-follow-up-hr-survey-results": {
       "ts": 1781301182670,
@@ -606,5 +612,5 @@
     }
   ],
   "assigneeOverrides": {},
-  "lastModified": 1785775304051
+  "lastModified": 1785846881224
 }
