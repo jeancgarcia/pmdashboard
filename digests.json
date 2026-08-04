@@ -1,5 +1,117 @@
 [
   {
+    "id": "eod-2026-08-04",
+    "type": "eod",
+    "date": "Tuesday, August 4 - End of Day",
+    "isoDate": "2026-08-04",
+    "greeting": "Good evening, Jean. Two priority items were completed today, while the remaining follow-through stays centered on the project pause decision, Amazon Connect recovery, the VAWA handoff, and the Latent Variables test. Today also clarified who should own the recurring urgent client communications process.",
+    "sections": [
+      {
+        "title": "Completed Today",
+        "info": true,
+        "items": [
+          {
+            "id": "eod-0804-done-1",
+            "label": "Launched the Preparer's Certification response",
+            "detail": "The urgent response setup for the outside-counsel request was completed today."
+          },
+          {
+            "id": "eod-0804-done-2",
+            "label": "Cleared the Laura-dependent Sprint 15 details",
+            "detail": "The missing Sprint 15 inputs and grooming follow-through were completed today."
+          }
+        ]
+      },
+      {
+        "title": "Still Open",
+        "info": false,
+        "items": [
+          {
+            "id": "eod-0804-open-1",
+            "taskId": "task-20260731-review-sms-consent-framework",
+            "label": "Lock the SMS and Client Compliance pause decision",
+            "detail": "Confirm whether both projects will pause so Laura's capacity can be redirected without leaving scope, compliance work, or fallback systems unclear.",
+            "urgent": true
+          },
+          {
+            "id": "eod-0804-open-2",
+            "taskId": "task-20260724-reply-latent-variables-platform-questions",
+            "label": "Finish the Latent Variables team test",
+            "detail": "Complete enough testing to approve fieldwork or identify the remaining friction before sharing feedback with Sara and Danny later this week.",
+            "urgent": true
+          },
+          {
+            "id": "eod-0804-open-3",
+            "taskId": "task-20260804-amazon-connect-delay-recovery",
+            "label": "Set the Amazon Connect recovery plan",
+            "detail": "Wave 1 is projected about two weeks beyond August 17. Confirm the resolution owner and date, revised critical path, and interim demo approach.",
+            "urgent": true
+          },
+          {
+            "id": "eod-0804-open-4",
+            "taskId": "task-20260804-secure-vawa-post21-handoff",
+            "label": "Secure the VAWA Post-21 handoff",
+            "detail": "Jessie starts PTO Wednesday. Confirm the PM who will carry the urgent request through completion and capture the handoff."
+          },
+          {
+            "id": "eod-0804-open-5",
+            "taskId": "task-20260803-lock-bd-maria-roadblock-owners",
+            "label": "Close the remaining portfolio and staffing roadblocks",
+            "detail": "Settle the remaining owners, escalation paths, and checkpoints from the portfolio discussions."
+          }
+        ]
+      },
+      {
+        "title": "Cancelled Today",
+        "info": true,
+        "items": [
+          {
+            "id": "eod-0804-cancel-1",
+            "label": "The previous EPMO TL Weekly Catch Up occurrence was cancelled",
+            "detail": "The regular cadence still continued through the recreated 2:00 PM meeting on the calendar."
+          }
+        ]
+      },
+      {
+        "title": "Key Decisions",
+        "info": true,
+        "items": [
+          {
+            "id": "eod-0804-decision-1",
+            "label": "Recurring urgent client communications will be owned outside EPMO",
+            "detail": "Jean confirmed that the department owning the process should coordinate each activation. EPMO can help refine the SOP, RACI, decision gates, handoffs, and training for the designated Marketing owner."
+          }
+        ]
+      },
+      {
+        "title": "Tomorrow Preview",
+        "info": true,
+        "items": [
+          {
+            "id": "eod-0804-wed-1",
+            "label": "10:00 AM conflict: Case Withdrawal validation and Legal Change Management",
+            "detail": "Both meetings start at 10:00 AM, so decide which one needs Jean live or arrange coverage."
+          },
+          {
+            "id": "eod-0804-wed-2",
+            "label": "11:00 AM - 1:1 Thiago & Jean; 12:00 PM - Blocked Space",
+            "detail": "The Thiago touchpoint is followed by a protected block through 2:30 PM."
+          },
+          {
+            "id": "eod-0804-wed-3",
+            "label": "Afternoon portfolio sequence starts at 2:30 PM",
+            "detail": "The calendar runs from the Astrid 1:1 to the rescheduled BD Portfolio Review and then the Legal Initial Project Portfolio Review at 3:30 PM."
+          },
+          {
+            "id": "eod-0804-wed-4",
+            "label": "4:00 PM - CoE Biweekly Touchpoint; 4:30 PM - Laura 1:1",
+            "detail": "Use the final two meetings to close any remaining CoE ownership questions and Laura-dependent follow-through."
+          }
+        ]
+      }
+    ]
+  },
+  {
     "id": "daily-2026-08-04-morning",
     "type": "daily",
     "date": "Morning - Tuesday, August 4",
