@@ -69,6 +69,8 @@
     "task-20260617-staff-aug-touchpoint-prep": true,
     "task-20260622-approve-pending-timecards": true,
     "task-20260720-prepare-court-ead-scoping": true,
+    "task-20260805-confirm-thiago-reschedule": true,
+    "task-20260805-resolve-meeting-conflicts": true,
     "task-20260609-close-coe-guide-follow-ups": true,
     "task-20260609-confirm-kpi-final-approval": true,
     "task-20260610-land-coe-owners-next-steps": true,
@@ -118,6 +120,7 @@
     "task-20260729-review-ice-preparedness-miro": true,
     "task-20260731-review-sms-consent-framework": true,
     "task-20260804-clear-laura-sprint15-details": true,
+    "task-20260805-set-agentforce-capacity-plan": true,
     "task-20260610-review-court-ead-deliverables": true,
     "task-20260615-prepare-epmo-portfolio-review": true,
     "task-20260617-check-litify-field-audit-path": true,
@@ -618,5 +621,5 @@
     }
   ],
   "assigneeOverrides": {},
-  "lastModified": 1785933415281
+  "lastModified": 1785944313637
 }
