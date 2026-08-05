@@ -78,6 +78,7 @@
     "task-20260708-run-legal-portfolio-review": true,
     "task-20260716-triage-phase1-intake-alert": true,
     "task-20260717-lock-eow-project-decisions": true,
+    "task-20260804-secure-vawa-post21-handoff": true,
     "task-20260611-submit-mid-year-touchpoints": true,
     "task-20260612-follow-up-hr-survey-results": true,
     "task-20260615-collect-venn-ticket-numbers": true,
@@ -115,6 +116,7 @@
     "task-20260721-prepare-csc-portfolio-review": true,
     "task-20260721-resolve-230-calendar-overlap": true,
     "task-20260729-review-ice-preparedness-miro": true,
+    "task-20260731-review-sms-consent-framework": true,
     "task-20260804-clear-laura-sprint15-details": true,
     "task-20260610-review-court-ead-deliverables": true,
     "task-20260615-prepare-epmo-portfolio-review": true,
@@ -134,6 +136,8 @@
     "task-20260716-deploy-no-travel-client-comms": true,
     "task-20260722-triage-cmcoe-follow-up-intake": true,
     "task-20260728-monitor-client-comms-feedback": true,
+    "task-20260804-amazon-connect-delay-recovery": true,
+    "task-20260805-resolve-supabase-rls-exposure": true,
     "task-20260612-approve-camilo-corrected-leave": true,
     "task-20260615-confirm-staff-aug-at-risk-path": true,
     "task-20260616-confirm-joe-azul-waiting-items": true,
@@ -143,6 +147,7 @@
     "task-20260708-align-thiago-bonus-restructure": true,
     "task-20260720-shape-amazon-connect-one-pager": true,
     "task-20260803-address-firstfire-aws-concerns": true,
+    "task-20260803-lock-bd-maria-roadblock-owners": true,
     "task-20260804-launch-preparers-certification": true,
     "task-20260609-check-supabase-security-warning": true,
     "task-20260612-prepare-epmo-eow-executive-deck": true,
@@ -239,6 +244,7 @@
     "task-20260618-unblock-staff-augmentation-it-ownership": true,
     "task-20260722-capture-privilege-training-implications": true,
     "task-20260610-review-detention-prevention-pilot-package": true,
+    "task-20260724-reply-latent-variables-platform-questions": true,
     "task-20260622-clarify-incident-response-bucket-six-owner": true,
     "task-20260709-track-legal-change-management-requirements": true,
     "task-20260701-review-product-salesforce-roadmap-materials": true,
@@ -612,5 +618,5 @@
     }
   ],
   "assigneeOverrides": {},
-  "lastModified": 1785846881224
+  "lastModified": 1785933415281
 }
