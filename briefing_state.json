@@ -42,6 +42,7 @@
     "task-20260708-ask-janet-ba-process": true,
     "task-20260727-leadup-module-survey": true,
     "task-20260727-travel-docs-sms-halo": true,
+    "task-20260806-replan-vawa-pa21-uat": true,
     "task-20260619-work-smart-goals-kpis": true,
     "task-20260708-send-pm-meeting-notes": true,
     "task-20260728-resolve-1030-conflict": true,
@@ -81,6 +82,7 @@
     "task-20260716-triage-phase1-intake-alert": true,
     "task-20260717-lock-eow-project-decisions": true,
     "task-20260804-secure-vawa-post21-handoff": true,
+    "task-20260806-resolve-thursday-conflicts": true,
     "task-20260611-submit-mid-year-touchpoints": true,
     "task-20260612-follow-up-hr-survey-results": true,
     "task-20260615-collect-venn-ticket-numbers": true,
@@ -170,6 +172,7 @@
     "task-20260724-triage-coe-portal-asana-refresh": true,
     "task-20260728-ashley-saltclick-amazon-connect": true,
     "task-20260729-confirm-amazon-connect-coverage": true,
+    "task-20260806-route-court-a-number-escalation": true,
     "task-20260617-prepare-friday-epmo-presentation": true,
     "task-20260622-prepare-mental-health-touchpoint": true,
     "task-20260624-camilo-structure-mhe-rfe-support": true,
@@ -226,6 +229,7 @@
     "task-20260720-use-bd-portfolio-review-for-blockers": true,
     "task-20260720-watch-ice-preparedness-critical-path": true,
     "task-20260728-clear-legal-change-management-owners": true,
+    "task-20260806-confirm-amazon-connect-uat-readiness": true,
     "task-20260612-check-weekly-executive-project-thread": true,
     "task-20260623-review-aos-rejection-downstream-tasks": true,
     "task-20260626-review-slq-baesman-amendment-language": true,
@@ -621,5 +625,5 @@
     }
   ],
   "assigneeOverrides": {},
-  "lastModified": 1785944313637
+  "lastModified": 1786022101802
 }
