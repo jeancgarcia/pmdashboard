@@ -1,0 +1,104 @@
+{
+  "digest": {
+    "id": "eod-2026-08-06",
+    "type": "eod",
+    "date": "Thursday, August 6 - End of Day",
+    "isoDate": "2026-08-06",
+    "greeting": "Good evening, Jean. Four priorities closed in the dashboard today, leaving a focused two-item carry-forward. The strongest same-day updates were clearer escalation and sequencing decisions across Amazon Connect, Send Letters, and IPP.",
+    "sections": [
+      {
+        "title": "Completed Today",
+        "info": true,
+        "items": [
+          {
+            "id": "eod-0806-done-1",
+            "label": "Completed the Amazon Connect readiness checkpoint",
+            "detail": "The readiness review was completed today. Later email traffic escalated outstanding Amazon provisioning dependencies so owners, impacts, and resolution dates can be made explicit."
+          },
+          {
+            "id": "eod-0806-done-2",
+            "label": "Re-planned VAWA PA 21 testing after the legal change",
+            "detail": "The testing-plan follow-up was completed after Legal removed a previously required UI section."
+          },
+          {
+            "id": "eod-0806-done-3",
+            "label": "Routed the critical Court A-number visibility item",
+            "detail": "The critical Court escalation was routed for ownership and follow-through."
+          },
+          {
+            "id": "eod-0806-done-4",
+            "label": "Resolved Thursday's meeting overlaps",
+            "detail": "Coverage for today's competing meeting blocks was resolved."
+          }
+        ]
+      },
+      {
+        "title": "Still Open",
+        "info": false,
+        "items": [
+          {
+            "id": "eod-0806-open-1",
+            "taskId": "task-20260806-align-oaa-brain-governance",
+            "label": "Set the governance path for OAA Brain",
+            "detail": "Align with Jim on the required Legal and IT review path for the overlapping initiative, and keep current work anchored to the approved Legal Change Management solution until the gaps are resolved.",
+            "urgent": true
+          },
+          {
+            "id": "eod-0806-open-2",
+            "taskId": "task-20260806-review-yash-latent-reply",
+            "label": "Review Yash's Latent Variables reply",
+            "detail": "Check whether the unread reply changes the fieldwork decision or needs a concise response."
+          }
+        ]
+      },
+      {
+        "title": "Cancelled Today",
+        "info": true,
+        "items": [
+          {
+            "id": "eod-0806-cancel-1",
+            "label": "Weekly BCP/Incident Response meeting was cancelled",
+            "detail": "Jean cancelled this week's meeting and noted that the weekly session would be skipped."
+          }
+        ]
+      },
+      {
+        "title": "Key Decisions",
+        "info": true,
+        "items": [
+          {
+            "id": "eod-0806-decision-1",
+            "label": "Move Send Letters Queue IT development to Sprint 17",
+            "detail": "Jhara confirmed that Legal's template and guideline work shifts IT development to Sprint 17, August 31 through September 11, with requirements due August 26."
+          },
+          {
+            "id": "eod-0806-decision-2",
+            "label": "Use Contigo Plan as the approved IPP service name",
+            "detail": "Jhara shared that the service name is final following the ELT and Angel review of the naming survey."
+          }
+        ]
+      },
+      {
+        "title": "Tomorrow Preview",
+        "info": true,
+        "items": [
+          {
+            "id": "eod-0806-fri-1",
+            "label": "9:00 AM - BD Comp/Bonus Restructure PM introduction",
+            "detail": "The handoff covers scope, current work, timeline, known risks, and next steps, with Jhara assigned as project manager."
+          },
+          {
+            "id": "eod-0806-fri-2",
+            "label": "10:00 AM-noon - Project updates, interview, and Service Cloud overlap",
+            "detail": "Project Updates starts at 10:00 AM; the 10:30 AM PM III interview overlaps the 11:00 AM Service Cloud Q&A and protected focus time, so coverage needs to be clear. Mar is out for the day."
+          },
+          {
+            "id": "eod-0806-fri-3",
+            "label": "12:00-3:30 PM - Continuous EPMO and Salesforce run",
+            "detail": "Blocked Space is followed by EPMO EOW, Laura's 1:1, Salesforce standup, project pipeline, and the executive status slide update."
+          }
+        ]
+      }
+    ]
+  }
+}
