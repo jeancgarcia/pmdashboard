@@ -1,0 +1,146 @@
+{
+  "digest": {
+    "id": "eod-2026-08-05",
+    "type": "eod",
+    "date": "Wednesday, August 5 - End of Day",
+    "isoDate": "2026-08-05",
+    "greeting": "Good evening, Jean. Today closed the full morning checklist, including the critical security, delivery, capacity, and scheduling items. The Legal Change Management rollout also advanced, while tomorrow opens with Amazon Connect training and another meeting-heavy afternoon.",
+    "sections": [
+      {
+        "title": "Completed Today",
+        "info": true,
+        "items": [
+          {
+            "id": "eod-0805-done-1",
+            "label": "Confirmed the SMS operating path and pause decision",
+            "detail": "The remaining SMS Optimization and Detention Prevention direction was closed out for the day."
+          },
+          {
+            "id": "eod-0805-done-2",
+            "label": "Closed the remaining portfolio and staffing roadblocks",
+            "detail": "The ownership and escalation work tied to the BD and Legal portfolio reviews was completed."
+          },
+          {
+            "id": "eod-0805-done-3",
+            "label": "Finished the Latent Variables team test",
+            "detail": "The stakeholder testing and feedback item was completed."
+          },
+          {
+            "id": "eod-0805-done-4",
+            "label": "Reset the Amazon Connect critical path",
+            "detail": "The recovery item covering the deployed environments, UAT setup, and delivery milestones was completed."
+          },
+          {
+            "id": "eod-0805-done-5",
+            "label": "Secured the VAWA Post-21 handoff",
+            "detail": "The handoff was completed, with Jean and Nicolas identified for UAT coverage and Daniela positioned to begin training after testing."
+          },
+          {
+            "id": "eod-0805-done-6",
+            "label": "Closed the critical Supabase exposure",
+            "detail": "The urgent security item was completed today."
+          },
+          {
+            "id": "eod-0805-done-7",
+            "label": "Resolved today's meeting conflicts and Thiago's reschedule",
+            "detail": "The two calendar collisions were handled, and Thiago's 1:1 now appears on Thursday's calendar."
+          },
+          {
+            "id": "eod-0805-done-8",
+            "label": "Set the Agentforce capacity plan",
+            "detail": "The capacity-planning item for the Salesforce cloud launches and Agentforce was completed."
+          },
+          {
+            "id": "eod-0805-done-9",
+            "label": "Completed the Legal Change Management walkthroughs",
+            "detail": "The repository and request-tracker sessions are complete, the repository is ready to explore, and the remaining flows will be covered next week."
+          }
+        ]
+      },
+      {
+        "title": "Still Open",
+        "info": false,
+        "items": []
+      },
+      {
+        "title": "Cancelled Today",
+        "info": true,
+        "items": [
+          {
+            "id": "eod-0805-cancel-1",
+            "label": "CoE Biweekly Touchpoint was cancelled",
+            "detail": "The cancellation was sent from Jean's calendar."
+          },
+          {
+            "id": "eod-0805-cancel-2",
+            "label": "Legal Initial Project Portfolio Review was cancelled",
+            "detail": "A replacement Legal Projects Portfolio Review was scheduled separately."
+          },
+          {
+            "id": "eod-0805-cancel-3",
+            "label": "Sara/EPMO leadership was cancelled",
+            "detail": "Sara moved the EPMO end-of-week check-in back to Friday."
+          }
+        ]
+      },
+      {
+        "title": "Key Decisions",
+        "info": true,
+        "items": [
+          {
+            "id": "eod-0805-decision-1",
+            "label": "VAWA Post-21 UI scope was reduced",
+            "detail": "Legal guidance removed the need for one planned section of UI questions, and Isabella confirmed the user story will be updated."
+          },
+          {
+            "id": "eod-0805-decision-2",
+            "label": "EPMO's end-of-week check-in returns to Friday",
+            "detail": "Sara moved the meeting back to Friday and plans to connect with Nadia separately."
+          }
+        ]
+      },
+      {
+        "title": "Tomorrow Preview",
+        "info": true,
+        "items": [
+          {
+            "id": "eod-0805-thu-1",
+            "label": "10:00 AM - Amazon Connect Training Touchpoint",
+            "detail": "The day starts with the Amazon Connect training session.",
+            "time": "10:00 AM"
+          },
+          {
+            "id": "eod-0805-thu-2",
+            "label": "11:00 AM - Armando 1:1; 11:30 AM - Thiago 1:1",
+            "detail": "Thiago's rescheduled meeting now follows the Armando check-in.",
+            "time": "11:00 AM"
+          },
+          {
+            "id": "eod-0805-thu-3",
+            "label": "12:00 PM - Amazon Connect sync overlaps Blocked Space",
+            "detail": "Choose whether to preserve the focus block or attend the weekly project sync.",
+            "time": "12:00 PM"
+          },
+          {
+            "id": "eod-0805-thu-4",
+            "label": "1:00 PM - Case Withdrawal validation; 1:30 PM - BCP/Incident Response",
+            "detail": "The two meetings overlap for 15 minutes and will need coverage or a quick handoff.",
+            "time": "1:00 PM"
+          },
+          {
+            "id": "eod-0805-thu-5",
+            "label": "2:00 PM - Service Cloud Q&A overlaps SMS Automation status",
+            "detail": "Both meetings are scheduled for the same start time.",
+            "time": "2:00 PM"
+          },
+          {
+            "id": "eod-0805-thu-6",
+            "label": "3:00 PM - Focus time; 4:00 PM - Tudo Bem weekly meeting",
+            "detail": "Protect the prep hour before the final meeting of the day.",
+            "time": "3:00 PM"
+          }
+        ]
+      }
+    ]
+  }
+}
