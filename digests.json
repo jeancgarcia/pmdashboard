@@ -1,5 +1,95 @@
 [
   {
+    "id": "eod-2026-08-07",
+    "type": "eod",
+    "date": "Friday, August 7 - End of Day",
+    "isoDate": "2026-08-07",
+    "greeting": "Good evening, Jean. Friday closes with all eight tracked priorities still open, six of them urgent, so Monday's value will come from turning today's meeting-heavy work into clear ownership and dates.",
+    "sections": [
+      {
+        "title": "Completed Today",
+        "info": true,
+        "items": []
+      },
+      {
+        "title": "Still Open",
+        "info": false,
+        "items": [
+          {
+            "id": "eod-0807-open-1",
+            "taskId": "task-20260806-align-oaa-brain-governance",
+            "label": "Set the governance path for OAA Brain",
+            "detail": "Align with Jim on the Legal and IT approval path, required development, and which solution remains authoritative before more work advances.",
+            "urgent": true
+          },
+          {
+            "id": "eod-0807-open-2",
+            "taskId": "task-20260807-unblock-preparer-change-production",
+            "label": "Restore the paused Preparer Change production line",
+            "detail": "Confirm the Business Application ticket includes the script, machine, errors, and requested work; assign the technical owner; and hold further task-set launches until Legal approves the revised process.",
+            "urgent": true
+          },
+          {
+            "id": "eod-0807-open-3",
+            "taskId": "task-20260807-reset-amazon-connect-go-live",
+            "label": "Reset the Amazon Connect critical path and go-live",
+            "detail": "Secure the dependency-linked plan, AWS response and mitigation, daily standup time, and one leadership-ready go-live date.",
+            "urgent": true
+          },
+          {
+            "id": "eod-0807-open-4",
+            "taskId": "task-20260807-lead-bd-bonus-kickoff",
+            "label": "Close the Bonus Restructure kickoff follow-through",
+            "detail": "Confirm the project scope, current work, timeline, known risks, and owner of the next milestone after today's PM introduction.",
+            "urgent": true
+          },
+          {
+            "id": "eod-0807-open-5",
+            "taskId": "task-20260807-resolve-service-cloud-collision",
+            "label": "Capture the missed Service Cloud decisions",
+            "detail": "Close any coverage gaps from the 11:00 AM conflict and capture the decisions or follow-ups missed across the interview, launch-readiness Q&A, and spreadsheet work.",
+            "urgent": true
+          },
+          {
+            "id": "eod-0807-open-6",
+            "taskId": "task-20260807-prioritize-critical-court-work",
+            "label": "Prioritize the new critical Court work",
+            "detail": "Rank the Court hearing notifications and Attorney Recommendation field work, assign owners, and confirm what moves first alongside the high-priority CLR items.",
+            "urgent": true
+          },
+          {
+            "id": "eod-0807-open-7",
+            "taskId": "task-20260806-review-yash-latent-reply",
+            "label": "Close the Latent Variables reply",
+            "detail": "Review Yash's response and decide whether it changes the fieldwork decision or needs a concise reply."
+          },
+          {
+            "id": "eod-0807-open-8",
+            "taskId": "task-20260807-prepare-sms-legal-handoff",
+            "label": "Prepare the SMS scripts for Monday's legal path",
+            "detail": "Clarify the Bucket 1 checkbox, confirm Ariel's review and the Legal approval owner, and set the handoff sequence before templates go to IT."
+          }
+        ]
+      },
+      {
+        "title": "Monday Preview",
+        "info": true,
+        "items": [
+          {
+            "id": "eod-0807-mon-1",
+            "label": "8:00 AM-noon - Week setup, Legal alignment, and focus time",
+            "detail": "Timecards begin the day, Legal Change Management follows at 10:00 AM, and the noon Blocked Space is the cleanest window for unresolved governance and SMS follow-through."
+          },
+          {
+            "id": "eod-0807-mon-2",
+            "label": "2:00-4:30 PM - Portfolio reviews, Maria's 1:1, and EPMO check-in",
+            "detail": "BD Portfolio Review, Legal Projects Portfolio Review, Maria's 1:1, and the EPMO EOW check-in run consecutively. Prepare the ranked Court and intake decisions before the sequence begins."
+          }
+        ]
+      }
+    ]
+  },
+  {
     "id": "daily-2026-08-07-morning",
     "type": "daily",
     "date": "Morning - Friday, August 7",
