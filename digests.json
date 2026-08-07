@@ -1,5 +1,253 @@
 [
   {
+    "id": "daily-2026-08-07-morning",
+    "type": "daily",
+    "date": "Morning - Friday, August 7",
+    "isoDate": "2026-08-07",
+    "greeting": "Good morning, Jean. Today is Friday, August 7, with nine scheduled meetings, a three-way collision at 11:00 AM, six urgent items, and two carry-overs. The day turns first on restoring the paused Preparer Change production line affecting roughly 3,000 matters, then on resetting the Amazon Connect critical path after the latest plan showed schedule slippage. Use the 9:00 AM Bonus Restructure kickoff and the 1:00-3:30 PM portfolio run to lock owners, protect the critical Court work, and prevent the compressed calendar from deferring decisions into next week.",
+    "sections": [
+      {
+        "title": "Carried Over",
+        "info": false,
+        "items": [
+          {
+            "id": "fri-0807-co-01",
+            "taskId": "task-20260806-align-oaa-brain-governance",
+            "label": "Set the governance path for OAA Brain",
+            "detail": "The overlap with Legal Change Management still needs a clear review path. Align with Jim on Legal and IT approval, required development, and which solution remains authoritative before more work advances.",
+            "flag": "carried",
+            "urgent": true
+          },
+          {
+            "id": "fri-0807-co-02",
+            "taskId": "task-20260806-review-yash-latent-reply",
+            "label": "Close the Latent Variables reply",
+            "detail": "Review Yash's response and decide whether it changes the fieldwork decision or needs a concise reply before the weekend.",
+            "flag": "carried"
+          }
+        ]
+      },
+      {
+        "title": "Today's Schedule",
+        "info": true,
+        "items": [
+          {
+            "id": "fri-0807-sch-01",
+            "label": "9:00 AM - BD Comp/Bonus Restructure PM intro",
+            "detail": "Sara will not attend. Use the kickoff with Dave, John, and Jhara to confirm scope, work in progress, timeline, known risks, and the next decision owner."
+          },
+          {
+            "id": "fri-0807-sch-02",
+            "label": "10:00-11:15 AM - Project update and PM III interview",
+            "detail": "Project Updates leads directly into Spencer Huffman's interview. Capture interview feedback promptly because the final 15 minutes collide with the Service Cloud session and protected spreadsheet work."
+          },
+          {
+            "id": "fri-0807-sch-03",
+            "label": "11:00 AM - Three-way Service Cloud collision",
+            "detail": "The Service Cloud Phase 2 leader Q&A overlaps both the interview until 11:15 AM and the full Jorge spreadsheet focus hour. Choose the live priority and preserve an owner for the other two commitments."
+          },
+          {
+            "id": "fri-0807-sch-04",
+            "label": "12:00 PM - Last protected hour before the meeting run",
+            "detail": "Use Blocked Space to close the production-pause and Amazon escalation decisions before five consecutive meetings begin at 1:00 PM."
+          },
+          {
+            "id": "fri-0807-sch-05",
+            "label": "1:00-3:30 PM - EPMO, Laura, Salesforce, pipeline, and executive deck",
+            "detail": "This continuous sequence is the day's main portfolio decision block. Carry forward only the material risks, assign owners in the pipeline review, and finish with a leadership-ready status deck."
+          }
+        ]
+      },
+      {
+        "title": "Action Items",
+        "info": false,
+        "items": [
+          {
+            "id": "fri-0807-ai-01",
+            "taskId": "task-20260807-unblock-preparer-change-production",
+            "label": "Restore the paused Preparer Change production line",
+            "detail": "Teams reports that removing Angel's wet-signature path requires a new Python script and has paused production for roughly 3,000 matters. Confirm the Business Application ticket contains the script, machine, errors, and requested work; assign the technical owner; and hold additional task-set launches until Legal approves the revised process.",
+            "urgent": true
+          },
+          {
+            "id": "fri-0807-ai-02",
+            "taskId": "task-20260807-reset-amazon-connect-go-live",
+            "label": "Reset the Amazon Connect critical path and go-live",
+            "detail": "The latest UAT plan is already about two business days behind, AWS timing remains unresolved, and Danny's sequence points to a possible September 3-7 go-live. Require the dependency-linked plan, AWS response and mitigation, daily standup time, and one leadership-ready date before EOD.",
+            "urgent": true
+          },
+          {
+            "id": "fri-0807-ai-03",
+            "taskId": "task-20260807-lead-bd-bonus-kickoff",
+            "label": "Set the Bonus Restructure project path at 9:00 AM",
+            "detail": "Sara is absent from the PM introduction, and Jhara has been assigned because the work is urgent. Confirm the true scope, current work, timeline, known risks, and who owns the next milestone before the meeting closes.",
+            "urgent": true
+          },
+          {
+            "id": "fri-0807-ai-04",
+            "taskId": "task-20260807-resolve-service-cloud-collision",
+            "label": "Resolve the 11:00 AM Service Cloud collision",
+            "detail": "Decide whether Jean stays in the PM III interview, attends the launch-readiness Q&A, or protects Jorge's spreadsheet work. Route coverage and capture the missed decisions before the afternoon meeting stack.",
+            "urgent": true
+          },
+          {
+            "id": "fri-0807-ai-05",
+            "taskId": "task-20260807-prioritize-critical-court-work",
+            "label": "Prioritize the new critical Court work in the pipeline",
+            "detail": "Maria raised Court hearing notifications and the Attorney Recommendation field to Critical, with CLR visibility and the unresponsive CLR workflow now High. Use the 2:30 PM pipeline review to rank them, assign owners, and state what must move first.",
+            "urgent": true
+          }
+        ]
+      },
+      {
+        "title": "Teams Highlights",
+        "info": false,
+        "items": [
+          {
+            "id": "fri-0807-tm-01",
+            "taskId": "task-20260807-prepare-sms-legal-handoff",
+            "label": "Prepare the SMS scripts for Monday's legal path",
+            "detail": "The appointment-reminder and marketing opt-in flow still needs the Bucket 1 checkbox clarified, Ariel's Monday review, and Legal approval before templates go to IT. Use Laura's 1:1 to confirm the review owner and the handoff sequence."
+          }
+        ]
+      },
+      {
+        "title": "Out of Office",
+        "info": true,
+        "items": [
+          {
+            "id": "fri-0807-ooo-01",
+            "label": "Mar is out today",
+            "detail": "Her all-day OOO block runs through 5:30 PM; route any portfolio dependencies to alternate coverage before the afternoon reviews."
+          },
+          {
+            "id": "fri-0807-ooo-02",
+            "label": "Sara is in the Dublin office and misses the 9:00 AM kickoff",
+            "detail": "Her travel block continues through today, and the Bonus Restructure invite explicitly says she will not attend. Make the kickoff self-contained and leave a concise decision record."
+          }
+        ]
+      },
+      {
+        "title": "Monday Preview",
+        "info": true,
+        "items": [
+          {
+            "id": "fri-0807-mon-01",
+            "label": "Monday opens with timecards, Legal alignment, and a noon focus hour",
+            "detail": "Week setup starts at 8:00 AM, Legal Change Management follows at 10:00 AM, and Blocked Space at noon is the cleanest window for unresolved governance and SMS follow-through."
+          },
+          {
+            "id": "fri-0807-mon-02",
+            "label": "2:00-3:30 PM - Three-part portfolio and roadblock run",
+            "detail": "BD Portfolio Review, Legal Projects Portfolio Review, and Maria's 1:1 run back-to-back. Prepare the ranked Court and intake decisions before the sequence begins."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "eod-2026-08-06",
+    "type": "eod",
+    "date": "Thursday, August 6 - End of Day",
+    "isoDate": "2026-08-06",
+    "greeting": "Good evening, Jean. Four priorities closed in the dashboard today, leaving a focused two-item carry-forward. The strongest same-day updates were clearer escalation and sequencing decisions across Amazon Connect, Send Letters, and IPP.",
+    "sections": [
+      {
+        "title": "Completed Today",
+        "info": true,
+        "items": [
+          {
+            "id": "eod-0806-done-1",
+            "label": "Completed the Amazon Connect readiness checkpoint",
+            "detail": "The readiness review was completed today. Later email traffic escalated outstanding Amazon provisioning dependencies so owners, impacts, and resolution dates can be made explicit."
+          },
+          {
+            "id": "eod-0806-done-2",
+            "label": "Re-planned VAWA PA 21 testing after the legal change",
+            "detail": "The testing-plan follow-up was completed after Legal removed a previously required UI section."
+          },
+          {
+            "id": "eod-0806-done-3",
+            "label": "Routed the critical Court A-number visibility item",
+            "detail": "The critical Court escalation was routed for ownership and follow-through."
+          },
+          {
+            "id": "eod-0806-done-4",
+            "label": "Resolved Thursday's meeting overlaps",
+            "detail": "Coverage for today's competing meeting blocks was resolved."
+          }
+        ]
+      },
+      {
+        "title": "Still Open",
+        "info": false,
+        "items": [
+          {
+            "id": "eod-0806-open-1",
+            "taskId": "task-20260806-align-oaa-brain-governance",
+            "label": "Set the governance path for OAA Brain",
+            "detail": "Align with Jim on the required Legal and IT review path for the overlapping initiative, and keep current work anchored to the approved Legal Change Management solution until the gaps are resolved.",
+            "urgent": true
+          },
+          {
+            "id": "eod-0806-open-2",
+            "taskId": "task-20260806-review-yash-latent-reply",
+            "label": "Review Yash's Latent Variables reply",
+            "detail": "Check whether the unread reply changes the fieldwork decision or needs a concise response."
+          }
+        ]
+      },
+      {
+        "title": "Cancelled Today",
+        "info": true,
+        "items": [
+          {
+            "id": "eod-0806-cancel-1",
+            "label": "Weekly BCP/Incident Response meeting was cancelled",
+            "detail": "Jean cancelled this week's meeting and noted that the weekly session would be skipped."
+          }
+        ]
+      },
+      {
+        "title": "Key Decisions",
+        "info": true,
+        "items": [
+          {
+            "id": "eod-0806-decision-1",
+            "label": "Move Send Letters Queue IT development to Sprint 17",
+            "detail": "Jhara confirmed that Legal's template and guideline work shifts IT development to Sprint 17, August 31 through September 11, with requirements due August 26."
+          },
+          {
+            "id": "eod-0806-decision-2",
+            "label": "Use Contigo Plan as the approved IPP service name",
+            "detail": "Jhara shared that the service name is final following the ELT and Angel review of the naming survey."
+          }
+        ]
+      },
+      {
+        "title": "Tomorrow Preview",
+        "info": true,
+        "items": [
+          {
+            "id": "eod-0806-fri-1",
+            "label": "9:00 AM - BD Comp/Bonus Restructure PM introduction",
+            "detail": "The handoff covers scope, current work, timeline, known risks, and next steps, with Jhara assigned as project manager."
+          },
+          {
+            "id": "eod-0806-fri-2",
+            "label": "10:00 AM-noon - Project updates, interview, and Service Cloud overlap",
+            "detail": "Project Updates starts at 10:00 AM; the 10:30 AM PM III interview overlaps the 11:00 AM Service Cloud Q&A and protected focus time, so coverage needs to be clear. Mar is out for the day."
+          },
+          {
+            "id": "eod-0806-fri-3",
+            "label": "12:00-3:30 PM - Continuous EPMO and Salesforce run",
+            "detail": "Blocked Space is followed by EPMO EOW, Laura's 1:1, Salesforce standup, project pipeline, and the executive status slide update."
+          }
+        ]
+      }
+    ]
+  },
+  {
     "id": "daily-2026-08-06-morning",
     "type": "daily",
     "date": "Morning - Thursday, August 6",
