@@ -353,7 +353,13 @@
     }
   },
   "edits": {},
-  "reminders": [],
+  "reminders": [
+    {
+      "id": "rem-1786137661331",
+      "text": "Terminar Hoja de Jorge",
+      "addedAt": "2026-08-07T21:21:01.331Z"
+    }
+  ],
   "reminderHistory": [
     {
       "id": "rem-1748998800000",
@@ -625,5 +631,5 @@
     }
   ],
   "assigneeOverrides": {},
-  "lastModified": 1786022101802
+  "lastModified": 1786137661337
 }
