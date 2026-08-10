@@ -1,5 +1,165 @@
 [
   {
+    "id": "daily-2026-08-10-morning",
+    "type": "daily",
+    "date": "Morning - Monday, August 10",
+    "isoDate": "2026-08-10",
+    "greeting": "Good morning, Jean. Today is Monday, August 10, with seven meetings, one protected focus hour, six urgent items, and eight carry-overs. The day turns on the 10:00 AM Legal sync for OAA Brain and SMS governance, the noon block for Jorge's sheet and overdue people work, and the 2:00-4:30 PM portfolio run to lock Court, Bonus Restructure, and Amazon Connect decisions. The repository state timestamp is still Friday evening, so carry-over reflects the latest recorded checklist state.",
+    "sections": [
+      {
+        "title": "Carried Over",
+        "info": false,
+        "items": [
+          {
+            "id": "mon-0810-co-01",
+            "taskId": "task-20260806-align-oaa-brain-governance",
+            "label": "Set the governance path for OAA Brain",
+            "detail": "Use the 10:00 AM Legal Change Management sync to align with Jim on the Legal and IT approval path, required development, and which solution remains authoritative before more work advances.",
+            "flag": "carried",
+            "urgent": true
+          },
+          {
+            "id": "mon-0810-co-02",
+            "taskId": "task-20260807-unblock-preparer-change-production",
+            "label": "Restore the paused Preparer Change production line",
+            "detail": "Confirm the Business Application work has a technical owner and the required script, machine, errors, and scope. The related SUPP Fix Taskset story is now logged, but Legal approval and a safe production path still need to be explicit before further launches.",
+            "flag": "carried",
+            "urgent": true
+          },
+          {
+            "id": "mon-0810-co-03",
+            "taskId": "task-20260807-reset-amazon-connect-go-live",
+            "label": "Reset the Amazon Connect critical path and go-live",
+            "detail": "Friday's tracker says the AWS quota approval must land by August 11 to preserve the schedule, with Salesforce queue association due August 12 and phone provisioning due August 14. Lock dependencies, mitigation, and one leadership-ready date during today's portfolio reviews.",
+            "flag": "carried",
+            "urgent": true
+          },
+          {
+            "id": "mon-0810-co-04",
+            "taskId": "task-20260807-prioritize-critical-court-work",
+            "label": "Prioritize the critical Court work",
+            "detail": "Use the 2:30 PM Legal Projects Portfolio Review and 3:00 PM Maria 1:1 to rank hearing notifications and the Attorney Recommendation field, assign owners, and state what moves first.",
+            "flag": "carried",
+            "urgent": true
+          },
+          {
+            "id": "mon-0810-co-05",
+            "taskId": "task-20260807-prepare-sms-legal-handoff",
+            "label": "Prepare the SMS scripts for the legal path",
+            "detail": "Use the 10:00 AM sync to clarify the Bucket 1 checkbox, confirm Ariel's review and Legal approval sequence, and resolve how newly signed clients enter SMS Magic before templates move to IT.",
+            "flag": "carried"
+          },
+          {
+            "id": "mon-0810-co-06",
+            "taskId": "task-20260807-lead-bd-bonus-kickoff",
+            "label": "Lock the Bonus Restructure scope and next milestone",
+            "detail": "The Friday kickoff remains unchecked. Use the 2:00 PM BD Portfolio Review to confirm the true scope, current work, timeline, risks, and owner of the next milestone.",
+            "flag": "carried",
+            "urgent": true
+          },
+          {
+            "id": "mon-0810-co-07",
+            "taskId": "task-20260807-resolve-service-cloud-collision",
+            "label": "Close the Service Cloud launch follow-ups",
+            "detail": "Phase 2 is now live. Confirm the missed launch-readiness decisions were captured and that affected team members completed training and know to mark themselves Available in Omni-Channel.",
+            "flag": "carried",
+            "urgent": true
+          },
+          {
+            "id": "mon-0810-co-08",
+            "taskId": "task-20260806-review-yash-latent-reply",
+            "label": "Close the Latent Variables reply",
+            "detail": "Review Yash's response and decide whether it changes the fieldwork direction or needs a concise reply before the week's decisions accelerate.",
+            "flag": "carried"
+          }
+        ]
+      },
+      {
+        "title": "Reminders",
+        "info": false,
+        "items": [
+          {
+            "id": "mon-0810-rem-01",
+            "taskId": "task-20260810-finish-jorge-sheet",
+            "label": "Terminar Hoja de Jorge",
+            "detail": "Use the protected 12:00-1:00 PM block to finish the sheet before tomorrow's EPMO team-lead catch-up."
+          }
+        ]
+      },
+      {
+        "title": "Today's Schedule",
+        "info": true,
+        "items": [
+          {
+            "id": "mon-0810-sch-01",
+            "label": "8:00-9:00 AM - Timecards and week setup",
+            "detail": "Approve timecards, scan the week's commitments, and identify any owner gaps before the first meeting."
+          },
+          {
+            "id": "mon-0810-sch-02",
+            "label": "10:00-10:30 AM - Legal Change Management sync",
+            "detail": "This is the day's first decision anchor. Resolve the OAA Brain governance path and the SMS review and handoff sequence while Legal and EPMO are together."
+          },
+          {
+            "id": "mon-0810-sch-03",
+            "label": "11:00-11:30 AM - Start-the-week team meeting",
+            "detail": "Keep the meeting focused on the few decisions and dependencies that must be clear before the afternoon portfolio reviews."
+          },
+          {
+            "id": "mon-0810-sch-04",
+            "label": "12:00-1:00 PM - Protected focus hour",
+            "detail": "Use Blocked Space for Jorge's sheet, the reopened Laura review, and any executive-report cleanup. A second open hour from 1:00-2:00 PM can absorb spillover."
+          },
+          {
+            "id": "mon-0810-sch-05",
+            "label": "2:00-4:30 PM - Portfolio and leadership run",
+            "detail": "BD, Legal Projects, Maria's 1:1, and the EPMO check-in run back-to-back. Enter with ranked Court, Bonus Restructure, Amazon Connect, and preparer-production decisions so the sequence produces owners and dates."
+          }
+        ]
+      },
+      {
+        "title": "Action Items",
+        "info": false,
+        "items": [
+          {
+            "id": "mon-0810-ai-01",
+            "taskId": "task-20260810-verify-executive-report-aug10",
+            "label": "Verify the Weekly Executive Report is current",
+            "detail": "Teams asked PMs to update their slides and change every slide date to August 10. Confirm the deck is leadership-ready before the 3:30 PM EPMO check-in."
+          },
+          {
+            "id": "mon-0810-ai-02",
+            "taskId": "task-20260810-resubmit-laura-review",
+            "label": "Update and resubmit Laura's 90-day review",
+            "detail": "Sasha reopened the review in Rippling. Use the noon focus block to make the requested update and resubmit it."
+          },
+          {
+            "id": "mon-0810-ai-03",
+            "taskId": "task-20260810-clear-harassment-training",
+            "label": "Clear the overdue harassment-prevention training",
+            "detail": "Rippling still lists the Dominican Republic EOR course as overdue since December 9, 2025. Complete it or resolve the enrollment so the compliance item stops aging."
+          }
+        ]
+      },
+      {
+        "title": "Tomorrow Preview",
+        "info": true,
+        "items": [
+          {
+            "id": "mon-0810-tmr-01",
+            "label": "10:30 AM-1:00 PM - Jhara 1:1 and protected work",
+            "detail": "Review portfolio roadblocks and next steps with Jhara, then use the noon focus hour to close any decisions that survive today's meeting stack."
+          },
+          {
+            "id": "mon-0810-tmr-02",
+            "label": "2:00-4:00 PM - EPMO leads and Nicolas",
+            "detail": "The EPMO team-lead catch-up runs 2:00-3:00 PM, followed by Nicolas at 3:30 PM. Bring concise portfolio risks, dependencies, and ownership changes; Jorge has not yet responded to the team-lead invite."
+          }
+        ]
+      }
+    ]
+  },
+  {
     "id": "eod-2026-08-07",
     "type": "eod",
     "date": "Friday, August 7 - End of Day",

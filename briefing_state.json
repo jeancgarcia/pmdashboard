@@ -353,13 +353,7 @@
     }
   },
   "edits": {},
-  "reminders": [
-    {
-      "id": "rem-1786137661331",
-      "text": "Terminar Hoja de Jorge",
-      "addedAt": "2026-08-07T21:21:01.331Z"
-    }
-  ],
+  "reminders": [],
   "reminderHistory": [
     {
       "id": "rem-1748998800000",
@@ -628,8 +622,15 @@
       "addedAt": "2026-07-27T21:31:51.973Z",
       "shownInDigestId": "daily-2026-07-30-morning",
       "archivedAt": "2026-07-30T12:38:26Z"
+    },
+    {
+      "id": "rem-1786137661331",
+      "text": "Terminar Hoja de Jorge",
+      "addedAt": "2026-08-07T21:21:01.331Z",
+      "shownInDigestId": "daily-2026-08-10-morning",
+      "archivedAt": "2026-08-10T12:07:24.208Z"
     }
   ],
   "assigneeOverrides": {},
-  "lastModified": 1786137661337
+  "lastModified": 1786363644208
 }
