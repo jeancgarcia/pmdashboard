@@ -47,6 +47,8 @@
     "task-20260708-send-pm-meeting-notes": true,
     "task-20260728-resolve-1030-conflict": true,
     "task-20260803-review-scv-uat-update": true,
+    "task-20260807-lead-bd-bonus-kickoff": true,
+    "task-20260810-resubmit-laura-review": true,
     "task-20260616-coe-playbook-follow-up": true,
     "task-20260616-staff-aug-it-alignment": true,
     "task-20260625-track-baesman-slq-path": true,
@@ -72,6 +74,7 @@
     "task-20260720-prepare-court-ead-scoping": true,
     "task-20260805-confirm-thiago-reschedule": true,
     "task-20260805-resolve-meeting-conflicts": true,
+    "task-20260810-clear-harassment-training": true,
     "task-20260609-close-coe-guide-follow-ups": true,
     "task-20260609-confirm-kpi-final-approval": true,
     "task-20260610-land-coe-owners-next-steps": true,
@@ -82,6 +85,7 @@
     "task-20260716-triage-phase1-intake-alert": true,
     "task-20260717-lock-eow-project-decisions": true,
     "task-20260804-secure-vawa-post21-handoff": true,
+    "task-20260806-align-oaa-brain-governance": true,
     "task-20260806-resolve-thursday-conflicts": true,
     "task-20260611-submit-mid-year-touchpoints": true,
     "task-20260612-follow-up-hr-survey-results": true,
@@ -123,6 +127,7 @@
     "task-20260731-review-sms-consent-framework": true,
     "task-20260804-clear-laura-sprint15-details": true,
     "task-20260805-set-agentforce-capacity-plan": true,
+    "task-20260807-reset-amazon-connect-go-live": true,
     "task-20260610-review-court-ead-deliverables": true,
     "task-20260615-prepare-epmo-portfolio-review": true,
     "task-20260617-check-litify-field-audit-path": true,
@@ -173,6 +178,7 @@
     "task-20260728-ashley-saltclick-amazon-connect": true,
     "task-20260729-confirm-amazon-connect-coverage": true,
     "task-20260806-route-court-a-number-escalation": true,
+    "task-20260807-resolve-service-cloud-collision": true,
     "task-20260617-prepare-friday-epmo-presentation": true,
     "task-20260622-prepare-mental-health-touchpoint": true,
     "task-20260624-camilo-structure-mhe-rfe-support": true,
@@ -208,6 +214,7 @@
     "task-20260724-clear-legal-change-management-sync": true,
     "task-20260728-track-ipp-sales-plan-confirmations": true,
     "task-20260729-answer-amazon-connect-quota-inputs": true,
+    "task-20260807-unblock-preparer-change-production": true,
     "task-20260610-resolve-dp-trace-staff-aug-coverage": true,
     "task-20260611-confirm-epmo-offers-and-recognition": true,
     "task-20260611-review-phase-2-projects-nadia-reply": true,
@@ -632,5 +639,5 @@
     }
   ],
   "assigneeOverrides": {},
-  "lastModified": 1786363644208
+  "lastModified": 1786365061176
 }
