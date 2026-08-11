@@ -74,6 +74,7 @@
     "task-20260720-prepare-court-ead-scoping": true,
     "task-20260805-confirm-thiago-reschedule": true,
     "task-20260805-resolve-meeting-conflicts": true,
+    "task-20260807-prepare-sms-legal-handoff": true,
     "task-20260810-clear-harassment-training": true,
     "task-20260609-close-coe-guide-follow-ups": true,
     "task-20260609-confirm-kpi-final-approval": true,
@@ -148,6 +149,7 @@
     "task-20260728-monitor-client-comms-feedback": true,
     "task-20260804-amazon-connect-delay-recovery": true,
     "task-20260805-resolve-supabase-rls-exposure": true,
+    "task-20260810-verify-executive-report-aug10": true,
     "task-20260612-approve-camilo-corrected-leave": true,
     "task-20260615-confirm-staff-aug-at-risk-path": true,
     "task-20260616-confirm-joe-azul-waiting-items": true,
@@ -159,6 +161,7 @@
     "task-20260803-address-firstfire-aws-concerns": true,
     "task-20260803-lock-bd-maria-roadblock-owners": true,
     "task-20260804-launch-preparers-certification": true,
+    "task-20260807-prioritize-critical-court-work": true,
     "task-20260609-check-supabase-security-warning": true,
     "task-20260612-prepare-epmo-eow-executive-deck": true,
     "task-20260612-reply-eugenia-danny-venn-issues": true,
@@ -639,5 +642,5 @@
     }
   ],
   "assigneeOverrides": {},
-  "lastModified": 1786365061176
+  "lastModified": 1786454819210
 }
