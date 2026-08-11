@@ -1,5 +1,104 @@
 [
   {
+    "id": "eod-2026-08-11",
+    "type": "eod",
+    "date": "Tuesday, August 11 - End of Day",
+    "isoDate": "2026-08-11",
+    "greeting": "Good evening, Jean. Three dashboard priorities closed today, while five focused follow-ups remain. Today’s updates also clarified the status of two project workstreams ahead of a meeting-heavy Wednesday.",
+    "sections": [
+      {
+        "title": "Completed Today",
+        "info": true,
+        "items": [
+          {
+            "id": "eod-0811-done-1",
+            "label": "Prioritized the critical Court work",
+            "detail": "The Court ranking and ownership follow-up was completed today."
+          },
+          {
+            "id": "eod-0811-done-2",
+            "label": "Prepared the SMS scripts for the legal path",
+            "detail": "The SMS and Legal handoff follow-up was completed today."
+          },
+          {
+            "id": "eod-0811-done-3",
+            "label": "Verified the Weekly Executive Report",
+            "detail": "The August 10 portfolio update was reviewed and confirmed current today."
+          }
+        ]
+      },
+      {
+        "title": "Still Open",
+        "info": false,
+        "items": [
+          {
+            "id": "eod-0811-open-1",
+            "taskId": "task-20260811-check-colombia-team",
+            "label": "Check in with the Colombia team",
+            "detail": "Confirm team members are safe and supported after the earthquake, and escalate any immediate needs.",
+            "urgent": true
+          },
+          {
+            "id": "eod-0811-open-2",
+            "taskId": "task-20260811-submit-spencer-feedback",
+            "label": "Submit the Spencer Huffman interview feedback",
+            "detail": "Complete the Project Manager III interview assessment so the hiring process is not waiting on the response."
+          },
+          {
+            "id": "eod-0811-open-3",
+            "taskId": "task-20260806-review-yash-latent-reply",
+            "label": "Close the Latent Variables reply",
+            "detail": "Set the recommendation and close the reply while the external cohort spot is still being held."
+          },
+          {
+            "id": "eod-0811-open-4",
+            "taskId": "task-20260810-finish-jorge-sheet",
+            "label": "Terminar Hoja de Jorge",
+            "detail": "Finish the sheet and have it ready for the next EPMO leadership discussion."
+          },
+          {
+            "id": "eod-0811-open-5",
+            "taskId": "task-20260811-decide-incidents-template-access",
+            "label": "Resolve the Incidents Template access requests",
+            "detail": "Review the pending access need and decide the appropriate document access. A new request from Amy Loesch arrived today."
+          }
+        ]
+      },
+      {
+        "title": "Key Decisions",
+        "info": true,
+        "items": [
+          {
+            "id": "eod-0811-decision-1",
+            "label": "Universal Intake owner and timestamp work remains a departmental project",
+            "detail": "Jean clarified that the work already belonged to Nicolas before he joined Jean’s team, so it is not a new project."
+          },
+          {
+            "id": "eod-0811-decision-2",
+            "label": "The Supplement Fix Taskset will leave the CM CoE list",
+            "detail": "Jessica Richburg confirmed it can be removed because Javier Vargas is handling the work separately with Sergio."
+          }
+        ]
+      },
+      {
+        "title": "Tomorrow Preview",
+        "info": true,
+        "items": [
+          {
+            "id": "eod-0811-wed-1",
+            "label": "10:00 AM - Salesforce and Legal collision",
+            "detail": "The Salesforce Program Timeline Walkthrough and Legal Change Management sync occupy the same 30 minutes, followed immediately by Thiago and Sara 1:1s. Choose the live priority and arrange coverage."
+          },
+          {
+            "id": "eod-0811-wed-2",
+            "label": "Noon-4:00 PM - Multiple calendar conflicts",
+            "detail": "The Legal repository walkthrough overlaps blocked time at noon; the EPMO team meeting overlaps Astrid at 2:30 PM; and the 3:00 PM operations events overlap Laura at 3:30 PM. Resolve attendance before the calendar stack starts."
+          }
+        ]
+      }
+    ]
+  },
+  {
     "id": "daily-2026-08-11-morning",
     "type": "daily",
     "date": "Morning - Tuesday, August 11",
