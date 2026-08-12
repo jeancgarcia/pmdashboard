@@ -1,0 +1,115 @@
+{
+  "digest": {
+    "id": "eod-2026-08-12",
+    "type": "eod",
+    "date": "Wednesday, August 12 - End of Day",
+    "isoDate": "2026-08-12",
+    "greeting": "Good evening, Jean. Two priorities were closed today, while the remaining work is concentrated around Amazon Connect, UAT follow-through, and a handful of carry-overs. Thursday opens with another tightly packed project schedule, so the clearest next move is to protect ownership and decision follow-through early.",
+    "sections": [
+      {
+        "title": "Completed Today",
+        "info": true,
+        "items": [
+          {
+            "id": "eod-0812-done-1",
+            "label": "Checked in with the Colombia team",
+            "detail": "The team check-in is complete after the earthquake-related follow-up."
+          },
+          {
+            "id": "eod-0812-done-2",
+            "label": "Resolved the Incidents Template access requests",
+            "detail": "The outstanding access decisions for the incident-response template were completed today."
+          }
+        ]
+      },
+      {
+        "title": "Still Open",
+        "info": false,
+        "items": [
+          {
+            "id": "eod-0812-open-1",
+            "taskId": "task-20260812-lock-amazon-connect-plan",
+            "label": "Lock the Amazon Connect operating plan",
+            "detail": "Confirm the source-of-truth plan, remaining production quotas, training dependencies, owners, and next readiness date. The employee calling-needs assessment also needs a complete response trail.",
+            "urgent": true
+          },
+          {
+            "id": "eod-0812-open-2",
+            "taskId": "task-20260812-prepare-uat-rca",
+            "label": "Turn the UAT RCA into a corrective plan",
+            "detail": "Close the failure timeline, downstream impact, prevention actions, owners, and dates. Jean also asked for the UAT completion table to be corrected with SaltClick because the current percentages are not accurate enough.",
+            "urgent": true
+          },
+          {
+            "id": "eod-0812-open-3",
+            "taskId": "task-20260812-resolve-calendar-collisions",
+            "label": "Close the outputs from today's meeting collisions",
+            "detail": "Confirm that delegated meetings produced the expected decisions and follow-ups, especially across Salesforce, Legal Change Management, EPMO, and Operations.",
+            "urgent": true
+          },
+          {
+            "id": "eod-0812-open-4",
+            "taskId": "task-20260806-review-yash-latent-reply",
+            "label": "Close the Latent Variables reply",
+            "detail": "Decide the path for the held external cohort spot and send the response before the opportunity ages further."
+          },
+          {
+            "id": "eod-0812-open-5",
+            "taskId": "task-20260810-finish-jorge-sheet",
+            "label": "Terminar Hoja de Jorge",
+            "detail": "Finish the sheet so it is ready for the next UAT and portfolio discussion."
+          },
+          {
+            "id": "eod-0812-open-6",
+            "taskId": "task-20260811-submit-spencer-feedback",
+            "label": "Submit the Spencer Huffman interview feedback",
+            "detail": "Send the Project Manager III assessment so the hiring process is no longer waiting on Jean's feedback."
+          },
+          {
+            "id": "eod-0812-open-7",
+            "taskId": "task-20260812-review-supabase-security-alert",
+            "label": "Review the new Supabase security alert",
+            "detail": "Verify the affected project and severity, then assign remediation without assuming it is the same issue previously closed."
+          }
+        ]
+      },
+      {
+        "title": "Cancelled Today",
+        "info": true,
+        "items": [
+          {
+            "id": "eod-0812-cancel-1",
+            "label": "Two Legal Change Management sessions were cancelled",
+            "detail": "The 10:00 AM IT and EPMO sync and the noon repository and intake-form walkthrough were cancelled. The walkthrough cancellation was tied to Santiago being out."
+          }
+        ]
+      },
+      {
+        "title": "Tomorrow Preview",
+        "info": true,
+        "items": [
+          {
+            "id": "eod-0812-thu-1",
+            "label": "10:45 AM-noon - Amazon Connect standups",
+            "detail": "The SCV daily standup begins at 10:45 AM, followed by the EPMO Amazon Connect daily standup at 11:30 AM."
+          },
+          {
+            "id": "eod-0812-thu-2",
+            "label": "Noon-1:30 PM - Legal Guidance, Amazon Connect, and capacity",
+            "detail": "Legal Guidance training, the Amazon Connect weekly sync, and blocked time overlap at noon. PM Capacity follows at 1:00 PM, so settle attendance and ownership before the morning ends."
+          },
+          {
+            "id": "eod-0812-thu-3",
+            "label": "1:30-2:45 PM - BCP, focus time, and SMS",
+            "detail": "The BCP and Incident Response touchpoint starts at 1:30 PM. At 2:00 PM, the SMS status meeting overlaps protected focus time."
+          },
+          {
+            "id": "eod-0812-thu-4",
+            "label": "4:00-5:00 PM - EPMO weekly meeting",
+            "detail": "Use the weekly team meeting to carry forward unresolved project decisions and owners from today's Amazon Connect and UAT work."
+          }
+        ]
+      }
+    ]
+  }
+}
