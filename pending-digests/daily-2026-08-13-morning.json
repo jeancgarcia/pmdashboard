@@ -1,0 +1,124 @@
+{
+  "digest": {
+    "id": "daily-2026-08-13-morning",
+    "type": "daily",
+    "date": "Morning - Thursday, August 13",
+    "isoDate": "2026-08-13",
+    "greeting": "Good morning, Jean. Today is Thursday, August 13, with 12 calendar entries, two overlap points, three urgent items, and seven carry-overs. Amazon Connect is the day’s anchor from the 10:00 AM training touchpoint through the noon weekly sync and 1:00 PM capacity review. Lock the operating plan and ownership model, turn the UAT RCA into dated corrective actions, and settle the Re-Open Cases decisions that are blocking the SOP and handoff. The main execution risk is meeting compression: protect decisions at noon and 2:00 PM, and plan the first half of the 4:00 PM team meeting without Jhara.",
+    "sections": [
+      {
+        "title": "Carried Over",
+        "info": false,
+        "items": [
+          {
+            "id": "thu-0813-co-01",
+            "taskId": "task-20260812-lock-amazon-connect-plan",
+            "label": "Lock the Amazon Connect operating plan",
+            "detail": "Use today’s training, standups, weekly sync, and capacity review to confirm the source-of-truth plan, production quotas, training dependencies, Smartsheet ownership, RAID cadence, and the next readiness date. Nadia also raised the need to clarify Jenn’s role and the open voicemail issue.",
+            "flag": "carried",
+            "urgent": true
+          },
+          {
+            "id": "thu-0813-co-02",
+            "taskId": "task-20260812-prepare-uat-rca",
+            "label": "Turn the UAT RCA into a corrective plan",
+            "detail": "Close the failure timeline, downstream impact, prevention actions, owners, and dates. Correct the UAT completion view with SaltClick and make sure yesterday’s RCA produces a durable follow-through path.",
+            "flag": "carried",
+            "urgent": true
+          },
+          {
+            "id": "thu-0813-co-03",
+            "taskId": "task-20260812-resolve-calendar-collisions",
+            "label": "Close the outputs from yesterday’s meeting collisions",
+            "detail": "Confirm the expected decisions and follow-ups were captured across Salesforce, Legal Change Management, EPMO, and Operations, then assign any missing owners before today’s schedule accelerates.",
+            "flag": "carried",
+            "urgent": true
+          },
+          {
+            "id": "thu-0813-co-04",
+            "taskId": "task-20260806-review-yash-latent-reply",
+            "label": "Close the Latent Variables reply",
+            "detail": "Decide the path for the held external cohort spot and send the response before the opportunity ages further.",
+            "flag": "carried"
+          },
+          {
+            "id": "thu-0813-co-05",
+            "taskId": "task-20260810-finish-jorge-sheet",
+            "label": "Terminar Hoja de Jorge",
+            "detail": "Finish the sheet so it is ready for the next UAT and portfolio discussion.",
+            "flag": "carried"
+          },
+          {
+            "id": "thu-0813-co-06",
+            "taskId": "task-20260811-submit-spencer-feedback",
+            "label": "Submit the Spencer Huffman interview feedback",
+            "detail": "Send the Project Manager III assessment so the hiring process is no longer waiting on Jean’s feedback.",
+            "flag": "carried"
+          },
+          {
+            "id": "thu-0813-co-07",
+            "taskId": "task-20260812-review-supabase-security-alert",
+            "label": "Review the new Supabase security alert",
+            "detail": "Verify the affected project and severity, then assign remediation without assuming it is the same issue previously closed.",
+            "flag": "carried"
+          }
+        ]
+      },
+      {
+        "title": "Today's Schedule",
+        "info": true,
+        "items": [
+          {
+            "id": "thu-0813-sch-01",
+            "label": "10:00-11:30 AM - Amazon Connect training and standups",
+            "detail": "Training starts at 10:00 AM, the SCV standup follows at 10:45 AM, Armando’s 1:1 begins at 11:00 AM, and the EPMO Amazon Connect standup starts at 11:30 AM. Carry one decision log through the full sequence."
+          },
+          {
+            "id": "thu-0813-sch-02",
+            "label": "Noon-1:30 PM - Amazon Connect versus protected time, then capacity",
+            "detail": "The weekly Amazon Connect sync overlaps the first 30 minutes of blocked space. Choose the live priority, then use the 1:00 PM PM Capacity review to assign available PM coverage and dates."
+          },
+          {
+            "id": "thu-0813-sch-03",
+            "label": "1:30-2:00 PM - BCP and Incident Response",
+            "detail": "Use the weekly touchpoint to close any ownership gaps and carry forward only the incidents that need executive escalation."
+          },
+          {
+            "id": "thu-0813-sch-04",
+            "label": "2:00-3:30 PM - SMS conflict, focus time, and Astrid",
+            "detail": "The SMS project status meeting overlaps protected focus time until 2:45 PM. Decide whether the current risks require live attendance, then use Astrid’s 3:00 PM 1:1 for the portfolio and resourcing follow-through."
+          },
+          {
+            "id": "thu-0813-sch-05",
+            "label": "4:00-5:00 PM - Tudo Bem weekly meeting",
+            "detail": "Jhara said she will miss the first 30 minutes for a Detention Prevention meeting. Sequence the agenda so her topics land in the second half and use the first half for decisions that do not require her."
+          }
+        ]
+      },
+      {
+        "title": "Action Items",
+        "info": false,
+        "items": [
+          {
+            "id": "thu-0813-ai-01",
+            "taskId": "task-20260813-set-pm-capacity",
+            "label": "Set PM capacity and near-term project coverage",
+            "detail": "At 1:00 PM, identify who has capacity, when it becomes available, and which work receives it. Tie the decision to the Amazon Connect, UAT, and current portfolio owner gaps rather than leaving the meeting with a generic capacity view."
+          },
+          {
+            "id": "thu-0813-ai-02",
+            "taskId": "task-20260813-decide-reopen-cases-path",
+            "label": "Resolve the Re-Open Cases decision path",
+            "detail": "The SOP and handoff are blocked by the new contract structure, treatment of prior payments, price changes, and the reopened-case process. Confirm the decision owners and the sequence needed to close those questions."
+          },
+          {
+            "id": "thu-0813-ai-03",
+            "taskId": "task-20260813-review-vendor-document-quality",
+            "label": "Review the vendor document concern with Laura",
+            "detail": "Laura flagged questionable work quality while correcting a document for the vendor and said the issue should be reviewed today. Confirm what needs correction, whether escalation is warranted, and who owns the vendor-ready version."
+          }
+        ]
+      }
+    ]
+  }
+}
