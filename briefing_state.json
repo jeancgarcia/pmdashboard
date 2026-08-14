@@ -68,6 +68,7 @@
     "task-20260723-triage-new-intake-alerts": true,
     "task-20260729-ashley-saltclick-context": true,
     "task-20260729-review-new-intake-alerts": true,
+    "task-20260806-review-yash-latent-reply": true,
     "task-20260616-overdue-rippling-training": true,
     "task-20260617-schedule-next-pm-workshop": true,
     "task-20260617-staff-aug-touchpoint-prep": true,
@@ -644,5 +645,5 @@
     }
   ],
   "assigneeOverrides": {},
-  "lastModified": 1786566828125
+  "lastModified": 1786718000786
 }
