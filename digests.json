@@ -1,5 +1,152 @@
 [
   {
+    "id": "daily-2026-08-14-morning",
+    "type": "daily",
+    "date": "Morning - Friday, August 14",
+    "isoDate": "2026-08-14",
+    "greeting": "Good morning, Jean. Today is Friday, August 14, with 12 calendar entries, two major conflict clusters, three urgent items, and ten carry-overs. The day turns on the 10:00 AM Juniper decision, the Amazon Connect UAT escalation, and the 3:00 PM choice between the Litify sprint review and the executive status update. First, set the internal SaltClick response and unblock the voicemail path affecting roughly half of UAT; then close the Juniper go/no-go and Re-Open Cases decisions before the weekend. The clearest new risk is confidence in the Amazon Connect delivery path: communication with SaltClick is paused pending direction, the project plan still needs a revised UAT date, and only about half of the queues have phone numbers. Repository state was last modified Wednesday afternoon, so carry-over completion may lag the dashboard.",
+    "sections": [
+      {
+        "title": "Carried Over",
+        "info": false,
+        "items": [
+          {
+            "id": "fri-0814-co-01",
+            "taskId": "task-20260812-lock-amazon-connect-plan",
+            "label": "Set the internal Amazon Connect response and operating plan",
+            "detail": "Communication with SaltClick is paused pending direction. Align with Nadia and Thiago on the leadership escalation, source-of-truth plan, RAID ownership, revised UAT date, and the message that can go back to the vendor. The trust and communication breakdown is now an executive delivery risk.",
+            "flag": "carried",
+            "urgent": true
+          },
+          {
+            "id": "fri-0814-co-02",
+            "taskId": "task-20260812-prepare-uat-rca",
+            "label": "Unblock Amazon Connect UAT and date the corrective plan",
+            "detail": "The timed handoff from an active call to voicemail is not working and Nadia reports it is blocking roughly half of UAT. Confirm when the requirement was communicated, assign the fix, replace the unavailable tester, finish phone numbers for the remaining queues, and publish a credible revised UAT target.",
+            "flag": "carried",
+            "urgent": true
+          },
+          {
+            "id": "fri-0814-co-03",
+            "taskId": "task-20260812-resolve-calendar-collisions",
+            "label": "Protect Friday's decisions and delegate the conflicts",
+            "detail": "Choose between Legal Change Management and Juniper at 10:00 AM, preserve the Laura and MHE handoffs through 11:30 AM, and assign coverage for the exact 3:00 PM collision between the Litify sprint review and executive status update.",
+            "flag": "carried",
+            "urgent": true
+          },
+          {
+            "id": "fri-0814-co-04",
+            "taskId": "task-20260806-review-yash-latent-reply",
+            "label": "Make the Juniper Labs go/no-go decision",
+            "detail": "Sara scheduled 10:00 AM to review Jean's feedback and reach a decision on the pilot. Confirm the path, required security or SOW follow-up, and the response to Hector so the external opportunity stops slipping.",
+            "flag": "carried"
+          },
+          {
+            "id": "fri-0814-co-05",
+            "taskId": "task-20260813-decide-reopen-cases-path",
+            "label": "Resolve the Re-Open Cases decision path",
+            "detail": "Use the 3:30 PM alignment to settle the new contract structure, treatment of prior payments, price changes, and reopened-case process so the SOP and handoff can move forward.",
+            "flag": "carried"
+          },
+          {
+            "id": "fri-0814-co-06",
+            "taskId": "task-20260813-review-vendor-document-quality",
+            "label": "Review the vendor document concern with Laura",
+            "detail": "Use the 10:30 AM 1:1 to confirm the quality problem, decide whether escalation is warranted, and assign ownership for the vendor-ready version.",
+            "flag": "carried"
+          },
+          {
+            "id": "fri-0814-co-07",
+            "taskId": "task-20260813-set-pm-capacity",
+            "label": "Close the PM capacity and project-coverage decisions",
+            "detail": "Turn yesterday's capacity discussion into named owners and availability dates for Amazon Connect, UAT, and the portfolio gaps that still need coverage.",
+            "flag": "carried"
+          },
+          {
+            "id": "fri-0814-co-08",
+            "taskId": "task-20260810-finish-jorge-sheet",
+            "label": "Terminar Hoja de Jorge",
+            "detail": "Finish the sheet so it is ready for the next UAT and portfolio discussion.",
+            "flag": "carried"
+          },
+          {
+            "id": "fri-0814-co-09",
+            "taskId": "task-20260811-submit-spencer-feedback",
+            "label": "Submit the Spencer Huffman interview feedback",
+            "detail": "Send the Project Manager III assessment so the hiring process is no longer waiting on Jean's feedback.",
+            "flag": "carried"
+          },
+          {
+            "id": "fri-0814-co-10",
+            "taskId": "task-20260812-review-supabase-security-alert",
+            "label": "Review the new Supabase security alert",
+            "detail": "Verify the affected project and severity, then assign remediation without assuming it is the same issue previously closed.",
+            "flag": "carried"
+          }
+        ]
+      },
+      {
+        "title": "Today's Schedule",
+        "info": true,
+        "items": [
+          {
+            "id": "fri-0814-sch-01",
+            "label": "10:00-11:30 AM - Decision collision chain",
+            "detail": "Juniper Labs and Legal Change Management overlap at 10:00 AM. Laura's 1:1 starts at 10:30 AM, the SCV standup joins at 10:45 AM, and the MHE Timeline Review begins at 11:00 AM. Choose the live decision meetings and delegate the rest before the first call starts."
+          },
+          {
+            "id": "fri-0814-sch-02",
+            "label": "11:30 AM-1:00 PM - Protected focus window",
+            "detail": "Use the blocked space to document the Amazon Connect escalation, finish executive materials, and reset before the afternoon run."
+          },
+          {
+            "id": "fri-0814-sch-03",
+            "label": "1:00-3:00 PM - EOW, Salesforce, and pipeline",
+            "detail": "The EPMO end-of-week check-in leads directly into the Salesforce program standup and EPMO/IT pipeline sync. Carry one concise decision and owner log through all three."
+          },
+          {
+            "id": "fri-0814-sch-04",
+            "label": "3:00-4:00 PM - Exact conflict, then Re-Open Cases",
+            "detail": "The Litify Sprint 15 review and Executive Project Status Slide Update occupy the same 3:00 PM slot. Assign coverage, then enter the 3:30 PM Re-Open Cases alignment ready to close the blocked decisions."
+          }
+        ]
+      },
+      {
+        "title": "Action Items",
+        "info": false,
+        "items": [
+          {
+            "id": "fri-0814-ai-01",
+            "taskId": "task-20260814-route-csc-lc-green-approval",
+            "label": "Decide the home for CSC/LC Green Approval",
+            "detail": "Mar's review says the new intake does not fit CoE scope and should return to PMO as a standard project. Confirm the routing and owner so the request does not sit between portfolios."
+          }
+        ]
+      },
+      {
+        "title": "Monday Preview",
+        "info": true,
+        "items": [
+          {
+            "id": "fri-0814-mon-01",
+            "label": "Sara is out and Nadia is on PTO",
+            "detail": "Plan Monday's decision coverage with both leaders unavailable and avoid leaving Amazon Connect or portfolio escalations without an explicit owner."
+          },
+          {
+            "id": "fri-0814-mon-02",
+            "label": "8:00-10:30 AM - Weekly setup and Legal Change Management",
+            "detail": "Approve timecards and prepare the week at 8:00 AM, then use the 10:00 AM Legal Change Management sync to close any ownership or IT follow-through left from Friday."
+          },
+          {
+            "id": "fri-0814-mon-03",
+            "label": "Noon-3:30 PM - Focus time, BD review, and Maria",
+            "detail": "Protect the noon blocked hour, use the 2:00 PM BD Portfolio Review for dependency decisions, and carry the resulting owners into the 3:00 PM 1:1 with Maria."
+          }
+        ]
+      }
+    ]
+  },
+  {
     "id": "daily-2026-08-13-morning",
     "type": "daily",
     "date": "Morning - Thursday, August 13",
