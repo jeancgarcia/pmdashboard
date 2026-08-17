@@ -1,5 +1,154 @@
 [
   {
+    "id": "daily-2026-08-17-morning",
+    "type": "daily",
+    "date": "Morning - Monday, August 17",
+    "isoDate": "2026-08-17",
+    "greeting": "Good morning, Jean. Today is Monday, August 17, with five working blocks, three immediate availability constraints, three urgent items, and eight carry-overs. The day turns on completing the Amazon Connect WBS and RAID package by 4:00 PM ET for Tuesday's SaltClick leadership meeting, protecting Salesforce coverage while Sara, Nadia, Mar, and Shannon have limited availability, and converting the incident-response trigger work into one owner map after Tuesday's submissions. The new Service Cloud Voice plan is now shared, but UAT, phone-number provisioning, manual wave configuration, and ownership dates remain the clearest delivery risk. Repository state was last modified Friday morning, so carry-over completion may lag the live dashboard.",
+    "sections": [
+      {
+        "title": "Carried Over",
+        "info": false,
+        "items": [
+          {
+            "id": "mon-0817-co-01",
+            "taskId": "task-20260812-lock-amazon-connect-plan",
+            "label": "Finish the Amazon Connect leadership package",
+            "detail": "Complete the WBS and RAID updates by 4:00 PM ET so Tuesday's SaltClick leadership meeting has one current operating view. Confirm owners, dates, the production work breakdown, daily update cadence, and the forecast now being added to the newly shared Service Cloud Voice plan.",
+            "flag": "carried",
+            "urgent": true
+          },
+          {
+            "id": "mon-0817-co-02",
+            "taskId": "task-20260812-prepare-uat-rca",
+            "label": "Unblock Amazon Connect UAT and reset readiness",
+            "detail": "UAT items remain open, the 1,600-phone-number request is still in progress, and the proposed large wave creates manual-configuration and failure-management risk. Lock the tester coverage, voicemail and access fixes, remaining queue setup, wave sizing, and a credible revised UAT date.",
+            "flag": "carried",
+            "urgent": true
+          },
+          {
+            "id": "mon-0817-co-03",
+            "taskId": "task-20260813-set-pm-capacity",
+            "label": "Name owners for this week's coverage gaps",
+            "detail": "Sara and Nadia are out today, Mar is unavailable through 1:00 PM, and Shannon is expected to be out through the week. Confirm who covers Revenue and Sales Cloud, Agentforce, Amazon Connect decisions, and any portfolio escalation that cannot wait.",
+            "flag": "carried",
+            "urgent": true
+          },
+          {
+            "id": "mon-0817-co-04",
+            "taskId": "task-20260813-decide-reopen-cases-path",
+            "label": "Close the Re-Open Cases SOP and handoff path",
+            "detail": "Confirm when Leo will return the requested SOP feedback and set the final due date. Gustavo is expected to be able to exit the project within a week after the feedback arrives.",
+            "flag": "carried"
+          },
+          {
+            "id": "mon-0817-co-05",
+            "taskId": "task-20260810-finish-jorge-sheet",
+            "label": "Terminar Hoja de Jorge",
+            "detail": "Use the noon focus block to finish the sheet so it is ready for the next UAT and portfolio discussion.",
+            "flag": "carried"
+          },
+          {
+            "id": "mon-0817-co-06",
+            "taskId": "task-20260811-submit-spencer-feedback",
+            "label": "Submit the Spencer Huffman interview feedback",
+            "detail": "Send the Project Manager III assessment so the hiring process is no longer waiting on Jean's response.",
+            "flag": "carried"
+          },
+          {
+            "id": "mon-0817-co-07",
+            "taskId": "task-20260812-review-supabase-security-alert",
+            "label": "Review the Supabase security alert",
+            "detail": "Verify the affected project and severity, then assign remediation without assuming it is the same issue previously closed.",
+            "flag": "carried"
+          },
+          {
+            "id": "mon-0817-co-08",
+            "taskId": "task-20260814-route-csc-lc-green-approval",
+            "label": "Decide the home for CSC/LC Green Approval",
+            "detail": "Confirm whether the intake returns to PMO as a standard project and name the owner so it does not remain between portfolios.",
+            "flag": "carried"
+          }
+        ]
+      },
+      {
+        "title": "Today's Schedule",
+        "info": true,
+        "items": [
+          {
+            "id": "mon-0817-sch-01",
+            "label": "8:00-9:00 AM - Timecards and week setup",
+            "detail": "Approve timecards, review the reduced coverage plan, and send any ownership asks before the first sync."
+          },
+          {
+            "id": "mon-0817-sch-02",
+            "label": "9:00-10:00 AM - Clean decision-prep window",
+            "detail": "Use the open hour to set the Amazon Connect owner list and prepare the Legal Change Management questions that require IT follow-through."
+          },
+          {
+            "id": "mon-0817-sch-03",
+            "label": "10:00-10:30 AM - Legal Change Management sync",
+            "detail": "Close repository, intake-form, and IT ownership questions while EPMO and the SharePoint team are together."
+          },
+          {
+            "id": "mon-0817-sch-04",
+            "label": "12:00-1:00 PM - Protected focus hour",
+            "detail": "Finish the Amazon Connect leadership package and Jorge's sheet before the afternoon portfolio sequence."
+          },
+          {
+            "id": "mon-0817-sch-05",
+            "label": "2:00-3:30 PM - BD review and Maria 1:1",
+            "detail": "Use the BD Portfolio Review to rank dependencies, then carry the owners and roadblocks directly into the 3:00 PM conversation with Maria."
+          }
+        ]
+      },
+      {
+        "title": "Action Items",
+        "info": false,
+        "items": [
+          {
+            "id": "mon-0817-ai-01",
+            "taskId": "task-20260817-launch-security-technology",
+            "label": "Set the Security Technology Launch path",
+            "detail": "Jean was assigned the new firmwide physical-security intake. Confirm the Workplace Services and IT scoping group, sponsor path, first milestone, and the Salt Lake City deployment sequence needed before the end of September."
+          },
+          {
+            "id": "mon-0817-ai-02",
+            "taskId": "task-20260817-map-incident-triggers",
+            "label": "Prepare the incident-trigger owner map",
+            "detail": "Bucket owners owe their trigger and notification workflows by Tuesday, August 18. Set the consolidation format now so Jean can map each bucket to its trigger contact and communication path immediately after submissions arrive."
+          }
+        ]
+      },
+      {
+        "title": "Out of Office",
+        "info": true,
+        "items": [
+          {
+            "id": "mon-0817-ooo-01",
+            "label": "Sara is out today",
+            "detail": "Route leadership decisions through the named backup instead of leaving Amazon Connect or portfolio escalations waiting."
+          },
+          {
+            "id": "mon-0817-ooo-02",
+            "label": "Nadia is on PTO",
+            "detail": "Confirm who owns today's Amazon Connect and Salesforce follow-through while she is unavailable."
+          },
+          {
+            "id": "mon-0817-ooo-03",
+            "label": "Mar is out from 9:00 AM to 1:00 PM",
+            "detail": "Hold non-urgent questions for the 3:00 PM 1:1 and protect the morning from avoidable dependencies."
+          },
+          {
+            "id": "mon-0817-ooo-04",
+            "label": "Shannon is expected out through the week",
+            "detail": "Her project coverage is shifting toward Nadia on Revenue and Sales Cloud and Nicolas on Agentforce; surface any remaining gaps early."
+          }
+        ]
+      }
+    ]
+  },
+  {
     "id": "eod-2026-08-14",
     "type": "eod",
     "date": "Friday, August 14 - End of Day",
