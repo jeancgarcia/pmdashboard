@@ -1653,20 +1653,39 @@ function CoEDashboardTab({ onBack }) {
 
       {/* Pipeline Flow — full-width rows with inline bar */}
       {(() => {
+        // summary.byStage only counts ACTIVE projects — the sync automation
+        // drops terminal stages entirely, so Completed/Deployed would always
+        // read 0 from it. Recount every stage from the full project list and
+        // fall back to summary.byStage only when the payload has no projects.
+        const stageCounts = (projects && projects.length)
+          ? projects.reduce((acc, p) => { const k = p.stage || "Unknown"; acc[k] = (acc[k] || 0) + 1; return acc; }, {})
+          : (summary.byStage || {});
+        // Optional stages only render when they hold projects; stages found in
+        // the data but not listed here are appended so none are ever hidden.
         const PIPELINE = [
-          { key: "New Request",          label: "New Request",          color: "#818cf8" },
-          { key: "Triage",               label: "Triage",               color: "#f59e0b" },
-          { key: "IT Prioritization",    label: "IT Prioritization",    color: "#06b6d4" },
-          { key: "In Progress",          label: "In Progress",          color: "#10b981" },
-          { key: "On Hold",              label: "On Hold",              color: "#6b7280" },
-          { key: "Awaiting Next Sprint", label: "Awaiting Next Sprint", color: "#f97316" },
-          { key: "UAT/Testing",          label: "UAT / Testing",        color: "#14b8a6" },
-          { key: "Deployed",             label: "Deployed",             color: "#22c55e" },
-          { key: "Completed",            label: "Completed",            color: "#059669" },
+          { key: "New Request",           label: "New Request",           color: "#818cf8" },
+          { key: "Triage",                label: "Triage",                color: "#f59e0b" },
+          { key: "IT Prioritization",     label: "IT Prioritization",     color: "#06b6d4" },
+          { key: "Scoping Call Scheduled",label: "Scoping Call Scheduled",color: "#3b82f6", optional: true },
+          { key: "In Progress",           label: "In Progress",           color: "#10b981" },
+          { key: "Grooming",              label: "Grooming",              color: "#8b5cf6", optional: true },
+          { key: "On Hold",               label: "On Hold",               color: "#6b7280" },
+          { key: "Awaiting Next Sprint",  label: "Awaiting Next Sprint",  color: "#f97316" },
+          { key: "UAT/Testing",           label: "UAT / Testing",         color: "#14b8a6" },
+          { key: "Deployed",              label: "Deployed",              color: "#22c55e" },
+          { key: "Completed",             label: "Completed",             color: "#059669" },
+          { key: "Pushed to EPMO",        label: "Pushed to EPMO",        color: "#a78bfa", optional: true },
+          { key: "Escalated",             label: "Escalated",             color: "#ef4444", optional: true },
+          { key: "Rejected",              label: "Rejected",              color: "#ef4444", optional: true },
+          { key: "Project Support Log",   label: "Project Support Log",   color: "#9ca3af", optional: true },
         ];
+        const knownStages = new Set(PIPELINE.map(s => s.key));
+        const unknownStages = Object.keys(stageCounts).filter(k => !knownStages.has(k)).sort()
+          .map(k => ({ key: k, label: k, color: "#6b7280", optional: true }));
+        const stages = [...PIPELINE, ...unknownStages].filter(s => !s.optional || (stageCounts[s.key] || 0) > 0);
         const prevByStage = delta?.previousByStage || {};
         const hasDelta = delta?.previousByStage != null;
-        const maxCount = Math.max(...PIPELINE.map(s => (summary.byStage || {})[s.key] || 0), 1);
+        const maxCount = Math.max(...stages.map(s => stageCounts[s.key] || 0), 1);
         return (
           <div className="rounded-2xl bg-white dark:bg-zinc-900 border border-zinc-200/60 dark:border-zinc-800 overflow-hidden">
             {/* Header */}
@@ -1674,7 +1693,7 @@ function CoEDashboardTab({ onBack }) {
               <div className="flex items-baseline gap-2">
                 <span className="text-[13px] font-bold uppercase tracking-wider text-zinc-400 dark:text-zinc-500">Pipeline</span>
                 <span className="text-xl font-extrabold tabular-nums text-zinc-900 dark:text-zinc-100">{summary.totalActive}</span>
-                <span className="text-[13px] text-zinc-400 dark:text-zinc-500">/ {totalProjects}</span>
+                <span className="text-[13px] text-zinc-400 dark:text-zinc-500">active / {totalProjects} total</span>
                 {delta?.summaryDelta?.totalActive != null && delta.summaryDelta.totalActive !== 0 && (
                   <span className={`text-[13px] font-bold ${delta.summaryDelta.totalActive > 0 ? "text-emerald-500" : "text-red-400"}`}>{delta.summaryDelta.totalActive>0?"+":""}{delta.summaryDelta.totalActive}</span>
                 )}
@@ -1686,10 +1705,12 @@ function CoEDashboardTab({ onBack }) {
 
             {/* Stage rows — each is a full-width block with colored fill as background */}
             <div className="border-t border-zinc-100 dark:border-zinc-800">
-              {PIPELINE.map((s) => {
-                const cur = (summary.byStage || {})[s.key] || 0;
-                const prev = prevByStage[s.key] || 0;
-                const diff = cur - prev;
+              {stages.map((s) => {
+                const cur = stageCounts[s.key] || 0;
+                // previousByStage is active-only too — skip the delta chip for
+                // stages it never tracked instead of showing a bogus +N.
+                const prev = prevByStage[s.key];
+                const diff = prev != null ? cur - prev : 0;
                 const isEmpty = cur === 0;
                 const barPct = maxCount > 0 ? (cur / maxCount) * 100 : 0;
                 return (
