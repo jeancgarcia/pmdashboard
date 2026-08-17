@@ -1,0 +1,124 @@
+{
+  "digest": {
+    "id": "eod-2026-08-17",
+    "type": "eod",
+    "date": "Monday, August 17 - End of Day",
+    "isoDate": "2026-08-17",
+    "greeting": "Good evening, Jean. Today closed with six dashboard priorities complete, while the remaining work centers on a few handoffs, incident-response mapping, and new operational follow-ups from email. Tuesday has a dense run from the late morning through 4:30 PM.",
+    "sections": [
+      {
+        "title": "Completed Today",
+        "info": true,
+        "items": [
+          {
+            "id": "eod-0817-done-1",
+            "label": "Completed the Amazon Connect leadership package",
+            "detail": "The WBS and RAID leadership package was completed for Tuesday's SaltClick discussion."
+          },
+          {
+            "id": "eod-0817-done-2",
+            "label": "Reset Amazon Connect UAT readiness",
+            "detail": "The UAT readiness and recovery follow-up was completed today."
+          },
+          {
+            "id": "eod-0817-done-3",
+            "label": "Named coverage for this week's availability gaps",
+            "detail": "Coverage planning was completed for the reduced availability across the Salesforce and Amazon Connect workstreams."
+          },
+          {
+            "id": "eod-0817-done-4",
+            "label": "Submitted the Spencer Huffman interview feedback",
+            "detail": "The Project Manager III interview assessment was completed today."
+          },
+          {
+            "id": "eod-0817-done-5",
+            "label": "Reviewed the Supabase security alert",
+            "detail": "The security-alert review was completed and no longer remains on today's open list."
+          },
+          {
+            "id": "eod-0817-done-6",
+            "label": "Routed CSC/LC Green Approval to CM-CoE",
+            "detail": "The intake was routed to the Case Management Center of Excellence and added to the active evaluation process."
+          }
+        ]
+      },
+      {
+        "title": "Still Open",
+        "info": false,
+        "items": [
+          {
+            "id": "eod-0817-open-1",
+            "taskId": "task-20260817-approve-outstanding-timecards",
+            "label": "Approve the outstanding timecards",
+            "detail": "Maureen Brown's email says outstanding Dominican Republic EOR timecards still require review and approval today.",
+            "urgent": true
+          },
+          {
+            "id": "eod-0817-open-2",
+            "taskId": "task-20260817-triage-coe-portal-refresh-failure",
+            "label": "Triage the failed CoE Portal refresh",
+            "detail": "The automated CoE Portal refresh failed this morning. Review the failed run before portal data becomes stale.",
+            "urgent": true
+          },
+          {
+            "id": "eod-0817-open-3",
+            "taskId": "task-20260817-locate-talent-calibration-results",
+            "label": "Locate the Talent Calibration results",
+            "detail": "Hassan asked in Teams where the results were saved if separate working copies were used, and the notification was marked urgent.",
+            "urgent": true
+          },
+          {
+            "id": "eod-0817-open-4",
+            "taskId": "task-20260817-map-incident-triggers",
+            "label": "Prepare the incident-trigger owner map",
+            "detail": "Bucket owners owe their trigger and notification workflows Tuesday. Set the consolidation format so each bucket can be mapped to its trigger contact and communication path as submissions arrive."
+          },
+          {
+            "id": "eod-0817-open-5",
+            "taskId": "task-20260813-decide-reopen-cases-path",
+            "label": "Close the Re-Open Cases SOP and handoff path",
+            "detail": "The decision-alignment email still lists open contract structure, prior-payment, pricing, and reopened-case questions. Confirm the answers, the SOP feedback date, and the final handoff date."
+          },
+          {
+            "id": "eod-0817-open-6",
+            "taskId": "task-20260810-finish-jorge-sheet",
+            "label": "Terminar Hoja de Jorge",
+            "detail": "Finish the sheet so it is ready for the next UAT and portfolio discussion."
+          },
+          {
+            "id": "eod-0817-open-7",
+            "taskId": "task-20260817-launch-security-technology",
+            "label": "Set the Security Technology Launch path",
+            "detail": "Confirm the Workplace Services and IT scoping group, sponsor path, first milestone, and the Salt Lake City deployment sequence needed before the end of September."
+          }
+        ]
+      },
+      {
+        "title": "Tomorrow Preview",
+        "info": true,
+        "items": [
+          {
+            "id": "eod-0817-tue-1",
+            "label": "10:30 AM - 1:1 Jhara & Jean",
+            "detail": "Use the portfolio review to surface roadblocks and define the next steps."
+          },
+          {
+            "id": "eod-0817-tue-2",
+            "label": "11:00 AM-1:00 PM - Focus Time and Compliance Portfolio Review",
+            "detail": "A protected focus hour leads directly into the noon portfolio review, which is intended to identify cross-project dependencies."
+          },
+          {
+            "id": "eod-0817-tue-3",
+            "label": "1:00-3:30 PM - Blocked Space, EPMO TL, and RFE MHE",
+            "detail": "Blocked Space is followed by the EPMO TL Weekly Catch Up at 2:00 PM and the RFE MHE Timeline Review at 3:00 PM."
+          },
+          {
+            "id": "eod-0817-tue-4",
+            "label": "3:30-4:30 PM - Nicolas 1:1 and CSC Portfolio review",
+            "detail": "The afternoon closes with the Nicolas touchpoint and the CSC Portfolio initial review."
+          }
+        ]
+      }
+    ]
+  }
+}
