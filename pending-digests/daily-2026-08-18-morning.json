@@ -1,0 +1,118 @@
+{
+  "digest": {
+    "id": "daily-2026-08-18-morning",
+    "type": "daily",
+    "date": "Morning - Tuesday, August 18",
+    "isoDate": "2026-08-18",
+    "greeting": "Good morning, Jean. Today is Tuesday, August 18, with eight calendar entries, two urgent items, and four carry-overs. The day turns on consolidating the incident-trigger submissions due today, using the Compliance Portfolio Review and EPMO lead catch-up to lock dependencies and owners, and setting clear paths for the FirstFire risk and VAWA Post-21 launch. FirstFire is the clearest new blocker: the September 15 data-usage date is at risk, and AWS funding and potential cost exposure need to be confirmed before the engagement changes. The morning still offers a clean focus window before meetings begin at 10:30 AM.",
+    "sections": [
+      {
+        "title": "Carried Over",
+        "info": false,
+        "items": [
+          {
+            "id": "tue-0818-co-01",
+            "taskId": "task-20260817-map-incident-triggers",
+            "label": "Consolidate the incident-trigger owner map",
+            "detail": "Bucket-owner submissions are due today. Combine each trigger, notification owner, and communication path into one operating map, and follow up early on any missing response.",
+            "flag": "carried",
+            "urgent": true
+          },
+          {
+            "id": "tue-0818-co-02",
+            "taskId": "task-20260813-decide-reopen-cases-path",
+            "label": "Close the Re-Open Cases SOP and handoff path",
+            "detail": "This has remained open since August 13. Confirm the feedback date from Leo, settle the remaining contractual and financial questions, and set the handoff date so Gustavo can exit the project cleanly.",
+            "flag": "carried"
+          },
+          {
+            "id": "tue-0818-co-03",
+            "taskId": "task-20260817-launch-security-technology",
+            "label": "Set the Security Technology Launch path",
+            "detail": "Confirm the Workplace Services and IT scoping group, sponsor path, first milestone, and Salt Lake City deployment sequence needed before the end of September.",
+            "flag": "carried"
+          },
+          {
+            "id": "tue-0818-co-04",
+            "taskId": "task-20260810-finish-jorge-sheet",
+            "label": "Terminar Hoja de Jorge",
+            "detail": "This has remained open since August 10. Use the morning focus window to finish the sheet before the Compliance Portfolio Review and afternoon leadership sequence.",
+            "flag": "carried"
+          }
+        ]
+      },
+      {
+        "title": "Today's Schedule",
+        "info": true,
+        "items": [
+          {
+            "id": "tue-0818-sch-01",
+            "label": "8:00-10:30 AM - Clean focus window",
+            "detail": "Use the longest open block to consolidate incident triggers, finish Jorge's sheet, and frame the FirstFire decision before meetings begin."
+          },
+          {
+            "id": "tue-0818-sch-02",
+            "label": "10:30 AM-1:00 PM - Jhara, focus time, and Compliance",
+            "detail": "Use the Jhara 1:1 for portfolio roadblocks, protect the 11:00 AM focus hour, then enter the noon Compliance Portfolio Review ready to identify dependencies. The invite says no meeting prep is required."
+          },
+          {
+            "id": "tue-0818-sch-03",
+            "label": "1:00-2:00 PM - Protected decision block",
+            "detail": "This is the last uninterrupted hour before the afternoon stack; close the few owner and date decisions created by the morning."
+          },
+          {
+            "id": "tue-0818-sch-04",
+            "label": "2:00-4:30 PM - EPMO, MHE, Nicolas, and CSC",
+            "detail": "The EPMO lead catch-up flows directly into the MHE timeline review, Nicolas 1:1, and CSC initial review. Carry one concise dependency and owner log through the full sequence."
+          }
+        ]
+      },
+      {
+        "title": "Action Items",
+        "info": false,
+        "items": [
+          {
+            "id": "tue-0818-ai-01",
+            "taskId": "task-20260818-firstfire-aws-funding-risk",
+            "label": "Set the FirstFire and AWS decision path",
+            "detail": "Nadia says the September 15 data-usage date is at risk because of project delays. Confirm with IT and AWS what funding is approved, what sign-offs remain, and whether costs could shift to Lisinski before considering payment holds, termination, or other engagement changes.",
+            "urgent": true
+          },
+          {
+            "id": "tue-0818-ai-02",
+            "taskId": "task-20260818-date-vawa-post21-launch",
+            "label": "Date the VAWA Post-21 production launch",
+            "detail": "Jessie says the change is ready for production aside from the dependent-visibility question. Confirm whether that small addition changes story points, name the final UAT approver, and publish the launch date."
+          }
+        ]
+      },
+      {
+        "title": "Out of Office",
+        "info": true,
+        "items": [
+          {
+            "id": "tue-0818-ooo-01",
+            "label": "Shannon remains out this week",
+            "detail": "Nicolas has Agentforce under his radar and reported no EPMO-side work pending; route any new coverage issue to the named backup instead of waiting for Shannon."
+          }
+        ]
+      },
+      {
+        "title": "Tomorrow Preview",
+        "info": true,
+        "items": [
+          {
+            "id": "tue-0818-tmr-01",
+            "label": "10:00 AM-noon - Legal, Thiago, and Astrid",
+            "detail": "Legal Change Management starts the day, followed by Thiago and Astrid 1:1s. Carry forward any ownership questions that do not close today."
+          },
+          {
+            "id": "tue-0818-tmr-02",
+            "label": "Noon-5:00 PM - One conflict and a continuous leadership stack",
+            "detail": "The Legal repository walkthrough overlaps protected time at noon, followed by Danny's quarterly skip-level, the EPMO team meeting, focus time, Laura, CoE, and Sara. Resolve the noon attendance choice today."
+          }
+        ]
+      }
+    ]
+  }
+}
