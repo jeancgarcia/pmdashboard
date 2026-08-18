@@ -1,5 +1,107 @@
 [
   {
+    "id": "eod-2026-08-18",
+    "type": "eod",
+    "date": "Tuesday, August 18 - End of Day",
+    "isoDate": "2026-08-18",
+    "greeting": "Good evening, Jean. Today closed with one project formally wrapped up, while the main carry-forward pressure remains around ownership, launch readiness, and vendor risk. Tomorrow is a dense leadership day with a noon calendar conflict to resolve.",
+    "sections": [
+      {
+        "title": "Completed Today",
+        "info": true,
+        "items": [
+          {
+            "id": "eod-0818-done-1",
+            "label": "Closed Project TRACE",
+            "detail": "The formal project-closure thread confirmed that Project TRACE was closed today."
+          }
+        ]
+      },
+      {
+        "title": "Still Open",
+        "info": false,
+        "items": [
+          {
+            "id": "eod-0818-open-1",
+            "taskId": "task-20260817-map-incident-triggers",
+            "label": "Consolidate the incident-trigger owner map",
+            "detail": "Bucket-owner submissions were due today. Combine each trigger, notification owner, and communication path into one operating map, and follow up on any missing response.",
+            "urgent": true
+          },
+          {
+            "id": "eod-0818-open-2",
+            "taskId": "task-20260818-firstfire-aws-funding-risk",
+            "label": "Set the FirstFire and AWS decision path",
+            "detail": "The September 15 data-usage date remains at risk. Josh confirmed that current costs are visible in AWS Billing and Cost Management and that no training is needed; confirm the remaining funding approval, sign-offs, and any cost exposure before changing the engagement.",
+            "urgent": true
+          },
+          {
+            "id": "eod-0818-open-3",
+            "taskId": "task-20260818-date-vawa-post21-launch",
+            "label": "Date the VAWA Post-21 production launch",
+            "detail": "Acceptance criteria and admin notes changed today, and Nadia asked Jessie to confirm any intake-process impact. Resolve the dependent-visibility question, name the final UAT approver, and publish the launch date."
+          },
+          {
+            "id": "eod-0818-open-4",
+            "taskId": "task-20260813-decide-reopen-cases-path",
+            "label": "Close the Re-Open Cases SOP and handoff path",
+            "detail": "Confirm the feedback date from Leo, settle the remaining contractual and financial questions, and set the handoff date so Gustavo can exit the project cleanly."
+          },
+          {
+            "id": "eod-0818-open-5",
+            "taskId": "task-20260817-launch-security-technology",
+            "label": "Set the Security Technology Launch path",
+            "detail": "Confirm the Workplace Services and IT scoping group, sponsor path, first milestone, and Salt Lake City deployment sequence needed before the end of September."
+          },
+          {
+            "id": "eod-0818-open-6",
+            "taskId": "task-20260810-finish-jorge-sheet",
+            "label": "Terminar Hoja de Jorge",
+            "detail": "Finish the sheet and carry forward any open inputs that did not close during today's Compliance Portfolio Review and leadership meetings."
+          }
+        ]
+      },
+      {
+        "title": "Cancelled Today",
+        "info": true,
+        "items": [
+          {
+            "id": "eod-0818-cancel-1",
+            "label": "CSC Portfolio initial review was cancelled",
+            "detail": "Outlook sent an explicit cancellation for today's CSC Portfolio initial review."
+          }
+        ]
+      },
+      {
+        "title": "Key Decisions",
+        "info": true,
+        "items": [
+          {
+            "id": "eod-0818-decision-1",
+            "label": "Amazon Connect production number capacity was approved",
+            "detail": "Josh confirmed approval for 1,600 production numbers. The team can choose the numbers, with a preference to avoid the 380 and 614 area codes."
+          }
+        ]
+      },
+      {
+        "title": "Tomorrow Preview",
+        "info": true,
+        "items": [
+          {
+            "id": "eod-0818-wed-1",
+            "label": "10:00 AM-noon - Legal, Thiago, and Astrid",
+            "detail": "Legal Change Management starts at 10:00 AM, followed by Thiago at 10:30 AM and Astrid at 11:30 AM. Carry forward any ownership questions that did not close today."
+          },
+          {
+            "id": "eod-0818-wed-2",
+            "label": "Noon-5:00 PM - Resolve the conflict before the leadership stack",
+            "detail": "The Legal repository walkthrough overlaps blocked space at noon. Danny's quarterly skip-level begins at 1:30 PM, followed by the EPMO team meeting on the new IT delivery process, focus time, Laura, CoE, and Sara."
+          }
+        ]
+      }
+    ]
+  },
+  {
     "id": "daily-2026-08-18-morning",
     "type": "daily",
     "date": "Morning - Tuesday, August 18",
