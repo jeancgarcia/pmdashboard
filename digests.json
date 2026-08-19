@@ -1,5 +1,103 @@
 [
   {
+    "id": "eod-2026-08-19",
+    "type": "eod",
+    "date": "Wednesday, August 19 - End of Day",
+    "isoDate": "2026-08-19",
+    "greeting": "Good evening, Jean. The dashboard shows no new completions today, with eight priorities carrying forward. Outlook confirms one cancellation and a tightly stacked Thursday schedule.",
+    "sections": [
+      {
+        "title": "Completed Today",
+        "info": true,
+        "items": []
+      },
+      {
+        "title": "Still Open",
+        "info": false,
+        "items": [
+          {
+            "id": "eod-0819-open-1",
+            "taskId": "task-20260817-map-incident-triggers",
+            "label": "Consolidate the incident-trigger owner map",
+            "detail": "Owner submissions were due yesterday and the next BCP meeting is Thursday. Combine each trigger, notification owner, and communication path today, then follow up on any missing bucket response.",
+            "urgent": true
+          },
+          {
+            "id": "eod-0819-open-2",
+            "taskId": "task-20260818-firstfire-aws-funding-risk",
+            "label": "Lock the SCV and FirstFire go-live path",
+            "detail": "Today's SCV update set UAT Round I to one week, kept September 18 as the target for UAT sign-off and go-live, and added FirstFire and Hilary to the knowledge-transfer plan. Confirm the remaining production-readiness dates, quota status, funding, sign-offs, and CloudWatch monitoring decisions.",
+            "urgent": true
+          },
+          {
+            "id": "eod-0819-open-3",
+            "taskId": "task-20260818-date-vawa-post21-launch",
+            "label": "Date the VAWA Post-21 production launch",
+            "detail": "Admin and acceptance-criteria updates landed yesterday. Confirm the mistreatment-question visibility, final UAT approval, and any intake-process impact, then publish the deployment date."
+          },
+          {
+            "id": "eod-0819-open-4",
+            "taskId": "task-20260813-decide-reopen-cases-path",
+            "label": "Close the Re-Open Cases SOP and handoff path",
+            "detail": "This has remained open since August 13 and has a decision-alignment meeting Thursday. Confirm Leo's feedback date and settle the contractual, financial, and handoff questions before that meeting."
+          },
+          {
+            "id": "eod-0819-open-5",
+            "taskId": "task-20260817-launch-security-technology",
+            "label": "Set the Security Technology Launch path",
+            "detail": "Confirm the Workplace Services and IT scoping group, sponsor path, first milestone, and Salt Lake City deployment sequence needed before the end of September."
+          },
+          {
+            "id": "eod-0819-open-6",
+            "taskId": "task-20260810-finish-jorge-sheet",
+            "label": "Terminar Hoja de Jorge",
+            "detail": "This has remained open since August 10. Finish the outstanding inputs in the morning focus window or name the dependency preventing closure."
+          },
+          {
+            "id": "eod-0819-open-7",
+            "taskId": "task-20260819-resolve-legal-noon-conflict",
+            "label": "Resolve the noon Legal walkthrough conflict",
+            "detail": "Decide whether to attend Repository and Intake Form Walkthrough Session 3 or protect the existing blocked time, and arrange coverage for the path not taken.",
+            "urgent": true
+          },
+          {
+            "id": "eod-0819-open-8",
+            "taskId": "task-20260819-complete-leadup-3a",
+            "label": "Complete LeadUp Module 3A",
+            "detail": "Rippling lists Leading with a Growth Mindset as due Friday, August 21. Use a protected block today or tomorrow so it does not become another overdue training item."
+          }
+        ]
+      },
+      {
+        "title": "Cancelled Today",
+        "info": true,
+        "items": [
+          {
+            "id": "eod-0819-cancel-1",
+            "label": "CoE Biweekly Touchpoint was canceled",
+            "detail": "Jean canceled today's touchpoint because of a double booking and no major discussion topics, returning the 30-minute block."
+          }
+        ]
+      },
+      {
+        "title": "Tomorrow Preview",
+        "info": true,
+        "items": [
+          {
+            "id": "eod-0819-thu-1",
+            "label": "10:00 AM-noon - Amazon Connect, Armando, and a three-way noon conflict",
+            "detail": "Amazon Connect training starts at 10:00 AM, followed by Armando at 11:00 AM. At noon, the Legal Guidance rollout and Amazon Connect project sync overlap the blocked-space hold; settle coverage before the morning begins."
+          },
+          {
+            "id": "eod-0819-thu-2",
+            "label": "1:30-5:00 PM - Re-Open Cases conflicts with BCP before the afternoon project stack",
+            "detail": "Re-Open Cases decision alignment and the BCP/Incident Response meeting both start at 1:30 PM. SMS Automation follows at 2:00 PM, RFE MHE at 3:00 PM, and the weekly team meeting at 4:00 PM; decide the 1:30 priority and send context to the other meeting in advance."
+          }
+        ]
+      }
+    ]
+  },
+  {
     "id": "daily-2026-08-19-morning",
     "type": "daily",
     "date": "Morning - Wednesday, August 19",
