@@ -4,7 +4,7 @@
     "type": "daily",
     "date": "Morning - Thursday, August 20",
     "isoDate": "2026-08-20",
-    "greeting": "Good morning, Jean. Thursday, August 20 has 10 meetings, two schedule conflicts, three urgent items, and seven carried priorities. First, protect the August 25 SCV UAT start: user setup is only 11% complete and tomorrow is the current finish gate. Then resolve the noon triple booking and use the 1:30 decision slot to close Re-Open Cases while preserving BCP coverage. The dashboard state snapshot is three days old, so the carry-over list may include work already completed.",
+    "greeting": "Good morning, Jean. Thursday, August 20 has 10 meetings, two schedule conflicts, five urgent items, and seven carried priorities. First, protect the August 25 SCV UAT start: user setup is only 11% complete and tomorrow is the current finish gate. Then resolve the noon triple booking and use the 1:30 decision slot to close Re-Open Cases while preserving BCP coverage. The dashboard state snapshot is three days old, so the carry-over list may include work already completed.",
     "sections": [
       {
         "title": "Carried Over",
