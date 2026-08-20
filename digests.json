@@ -1,5 +1,163 @@
 [
   {
+    "id": "daily-2026-08-20-morning",
+    "type": "daily",
+    "date": "Morning - Thursday, August 20",
+    "isoDate": "2026-08-20",
+    "greeting": "Good morning, Jean. Thursday, August 20 has 10 meetings, two schedule conflicts, three urgent items, and seven carried priorities. First, protect the August 25 SCV UAT start: user setup is only 11% complete and tomorrow is the current finish gate. Then resolve the noon triple booking and use the 1:30 decision slot to close Re-Open Cases while preserving BCP coverage. The dashboard state snapshot is three days old, so the carry-over list may include work already completed.",
+    "sections": [
+      {
+        "title": "Carried Over",
+        "info": false,
+        "items": [
+          {
+            "id": "thu-0820-co-01",
+            "taskId": "task-20260818-firstfire-aws-funding-risk",
+            "label": "Protect the SCV UAT start",
+            "detail": "User setup is only 11% complete, the remaining effort and finish date are still unknown, and missing the August 21 setup target is expected to put the August 25 UAT start at risk. Use the 10:00 AM training touchpoint and noon project sync to confirm the recovery owner, UAT personas, outstanding-user count, and a dated mitigation plan.",
+            "flag": "carried",
+            "urgent": true
+          },
+          {
+            "id": "thu-0820-co-02",
+            "taskId": "task-20260813-decide-reopen-cases-path",
+            "label": "Close the Re-Open Cases SOP and handoff path",
+            "detail": "The 1:30 PM decision-alignment meeting is meant to settle the contract structure, treatment of prior payments, price changes, and operational handoff. It conflicts with BCP, so choose coverage before the meeting and leave with decisions and owners.",
+            "flag": "carried",
+            "urgent": true
+          },
+          {
+            "id": "thu-0820-co-03",
+            "taskId": "task-20260817-map-incident-triggers",
+            "label": "Consolidate the incident-trigger owner map",
+            "detail": "Use the 1:30 PM BCP touchpoint, or delegated coverage if Re-Open Cases takes precedence, to close missing trigger owners, notification paths, and communication responsibilities.",
+            "flag": "carried",
+            "urgent": true
+          },
+          {
+            "id": "thu-0820-co-04",
+            "taskId": "task-20260818-date-vawa-post21-launch",
+            "label": "Date the VAWA Post-21 production launch",
+            "detail": "Developer and admin updates continued yesterday. Confirm the mistreatment-question behavior, final UAT approval, and intake-process impact, then publish the production date.",
+            "flag": "carried"
+          },
+          {
+            "id": "thu-0820-co-05",
+            "taskId": "task-20260817-launch-security-technology",
+            "label": "Set the Security Technology Launch path",
+            "detail": "Confirm the Workplace Services and IT scoping group, sponsor path, first milestone, and Salt Lake City deployment sequence needed before the end of September.",
+            "flag": "carried"
+          },
+          {
+            "id": "thu-0820-co-06",
+            "taskId": "task-20260810-finish-jorge-sheet",
+            "label": "Terminar Hoja de Jorge",
+            "detail": "This has remained open since August 10. Finish the outstanding inputs in the morning focus window or name the dependency preventing closure.",
+            "flag": "carried"
+          },
+          {
+            "id": "thu-0820-co-07",
+            "taskId": "task-20260819-complete-leadup-3a",
+            "label": "Complete LeadUp Module 3A",
+            "detail": "The Rippling course is due Friday, August 21, and tomorrow's live LeadUp session conflicts with the Executive Project Status slide update. Complete the course today and decide which Friday commitment to protect.",
+            "flag": "carried"
+          }
+        ]
+      },
+      {
+        "title": "Today's Schedule",
+        "info": true,
+        "items": [
+          {
+            "id": "thu-0820-sch-01",
+            "label": "8:00-10:00 AM - Primary focus window",
+            "detail": "Use the cleanest block of the day for SCV mitigation, the incident-owner map, or the oldest carry-over."
+          },
+          {
+            "id": "thu-0820-sch-02",
+            "label": "10:00-11:30 AM - Amazon Connect and Armando",
+            "detail": "Amazon Connect Training runs 10:00-10:30, followed by the Armando 1:1 at 11:00; there is a 30-minute reset window between them."
+          },
+          {
+            "id": "thu-0820-sch-03",
+            "label": "Noon-1:00 PM - Three-way conflict",
+            "detail": "Legal Guidance Request Tool training and Blocked Space both run noon-1:00, while the Amazon Connect weekly sync occupies noon-12:30. Decide the primary room and delegate or reschedule the others."
+          },
+          {
+            "id": "thu-0820-sch-04",
+            "label": "1:30-2:00 PM - Re-Open Cases conflicts with BCP",
+            "detail": "Both meetings require decisions. Re-Open Cases has explicit contractual and financial questions; ensure the incident-response work has coverage if that meeting takes priority."
+          },
+          {
+            "id": "thu-0820-sch-05",
+            "label": "2:00-5:00 PM - Project review stack",
+            "detail": "SMS Automation runs 2:00-2:45, RFE MHE Timeline Review 3:00-3:30, and Tudo Bem's weekly meeting 4:00-5:00, leaving only short transition windows."
+          }
+        ]
+      },
+      {
+        "title": "Action Items",
+        "info": false,
+        "items": [
+          {
+            "id": "thu-0820-ai-01",
+            "taskId": "task-20260820-resolve-noon-triple-conflict",
+            "label": "Resolve the noon triple booking",
+            "detail": "Choose between the Legal Guidance rollout, Amazon Connect weekly sync, and the existing blocked hour before the meetings start; arrange coverage and define what decision or output is expected from each path.",
+            "urgent": true
+          },
+          {
+            "id": "thu-0820-ai-02",
+            "taskId": "task-20260820-decide-slq-it-approach",
+            "label": "Set the SLQ 2.0 IT decision path",
+            "detail": "Jhara needs confirmation on whether IT is proceeding with the universal Blueprint model or separate Docrio templates. Clarify the decision owner and secure direction early enough to avoid rework before Sprint 17 grooming on August 26.",
+            "urgent": true
+          },
+          {
+            "id": "thu-0820-ai-03",
+            "taskId": "task-20260820-install-docrio-290",
+            "label": "Install Docrio 2.9.0",
+            "detail": "Complete the upgrade by Friday, August 21. Version 2.8.4 stops working Monday, August 24, so delaying the install risks losing Docrio access."
+          }
+        ]
+      },
+      {
+        "title": "Emails Awaiting Reply",
+        "info": false,
+        "items": [
+          {
+            "id": "thu-0820-em-01",
+            "taskId": "task-20260820-decide-gary-sop-edit-access",
+            "label": "Decide Gary Blanco's SOP edit access",
+            "detail": "Gary currently has view access to the CSC Contact Info SOP and requested edit rights. Approve or decline the SharePoint request after confirming that he should be able to change, share, and download the file."
+          },
+          {
+            "id": "thu-0820-em-02",
+            "taskId": "task-20260820-reply-admin-candidate",
+            "label": "Reply on the administrative candidates",
+            "detail": "Innesa asked for feedback on the Finance Controller candidate and proposed an Executive Assistant profile targeting $85-90K. Reply with whether either profile fits current needs and whether a call is warranted."
+          }
+        ]
+      },
+      {
+        "title": "Tomorrow Preview",
+        "info": true,
+        "items": [
+          {
+            "id": "thu-0820-tmr-01",
+            "label": "10:00 AM - Program standup conflicts with Legal Change Management",
+            "detail": "Salesforce Program Standup and the Legal Change Management IT/EPMO sync occupy the same 30-minute slot; choose coverage today."
+          },
+          {
+            "id": "thu-0820-tmr-02",
+            "label": "Noon-4:30 PM - EOW stack with a 3:00 PM conflict",
+            "detail": "Blocked Space, EPMO EOW, Project Pipeline, LeadUp Module 3, and the Executive Project Status slide update create a dense afternoon; LeadUp and the slide review overlap at 3:00 PM."
+          }
+        ]
+      }
+    ]
+  },
+  {
     "id": "eod-2026-08-19",
     "type": "eod",
     "date": "Wednesday, August 19 - End of Day",
