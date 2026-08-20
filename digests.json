@@ -1,5 +1,126 @@
 [
   {
+    "id": "eod-2026-08-20",
+    "type": "eod",
+    "date": "Thursday, August 20 - End of Day",
+    "isoDate": "2026-08-20",
+    "greeting": "Good evening, Jean. Ten of today's checkable priorities are complete, leaving two focused carry-forwards for Friday. The day also closed with approval of the finalized SMS charter.",
+    "sections": [
+      {
+        "title": "Completed Today",
+        "info": true,
+        "items": [
+          {
+            "id": "eod-0820-done-1",
+            "label": "Protected the SCV UAT start",
+            "detail": "The recovery work for the August 25 UAT start was completed today."
+          },
+          {
+            "id": "eod-0820-done-2",
+            "label": "Closed the Re-Open Cases SOP and handoff path",
+            "detail": "The contractual, payment, pricing, and operational handoff alignment was completed today."
+          },
+          {
+            "id": "eod-0820-done-3",
+            "label": "Dated the VAWA Post-21 production launch",
+            "detail": "The launch-date follow-through was completed as the user story advanced to Ready for PROD."
+          },
+          {
+            "id": "eod-0820-done-4",
+            "label": "Set the Security Technology Launch path",
+            "detail": "The scoping, sponsorship, milestone, and deployment-sequence follow-through was completed today."
+          },
+          {
+            "id": "eod-0820-done-5",
+            "label": "Finished Jorge's project sheet",
+            "detail": "The outstanding project-sheet work was completed today."
+          },
+          {
+            "id": "eod-0820-done-6",
+            "label": "Resolved the noon schedule conflict",
+            "detail": "Coverage for the Legal Guidance rollout, Amazon Connect sync, and blocked hour was settled."
+          },
+          {
+            "id": "eod-0820-done-7",
+            "label": "Set the SLQ 2.0 IT approach",
+            "detail": "The path for the universal Blueprint model versus separate Docrio templates was completed today."
+          },
+          {
+            "id": "eod-0820-done-8",
+            "label": "Installed Docrio 2.9.0",
+            "detail": "The required upgrade was completed ahead of the August 24 access cutoff."
+          },
+          {
+            "id": "eod-0820-done-9",
+            "label": "Decided Gary Blanco's SOP access",
+            "detail": "The CSC Contact Info SOP access request was handled today."
+          },
+          {
+            "id": "eod-0820-done-10",
+            "label": "Responded on the administrative candidates",
+            "detail": "The candidate-profile follow-up was completed today."
+          }
+        ]
+      },
+      {
+        "title": "Still Open",
+        "info": false,
+        "items": [
+          {
+            "id": "eod-0820-open-1",
+            "taskId": "task-20260817-map-incident-triggers",
+            "label": "Consolidate the incident-trigger owner map",
+            "detail": "Close the remaining trigger owners, notification paths, and communication responsibilities, using the BCP touchpoint follow-through as needed.",
+            "urgent": true
+          },
+          {
+            "id": "eod-0820-open-2",
+            "taskId": "task-20260819-complete-leadup-3a",
+            "label": "Complete LeadUp Module 3A",
+            "detail": "The Rippling course is due Friday, August 21. Complete it before the live LeadUp session and the overlapping executive-slide review."
+          }
+        ]
+      },
+      {
+        "title": "Key Decisions",
+        "info": true,
+        "items": [
+          {
+            "id": "eod-0820-decision-1",
+            "label": "The finalized SMS charter was approved",
+            "detail": "A same-day email confirmed approval of the finalized charter."
+          }
+        ]
+      },
+      {
+        "title": "Tomorrow Preview",
+        "info": true,
+        "items": [
+          {
+            "id": "eod-0820-fri-1",
+            "label": "10:00 AM - Salesforce and Legal Change Management conflict",
+            "detail": "Salesforce Program Standup and the Legal Change Management IT/EPMO sync occupy the same 30-minute slot, so confirm coverage."
+          },
+          {
+            "id": "eod-0820-fri-2",
+            "label": "Noon-3:00 PM - Protected time leads into the EOW stack",
+            "detail": "Blocked Space starts at noon, followed by the EPMO EOW check-in at 1:00 PM and Project Pipeline at 2:30 PM."
+          },
+          {
+            "id": "eod-0820-fri-3",
+            "label": "3:00 PM - LeadUp conflicts with the executive slide update",
+            "detail": "LeadUp Module 3 and the Executive Project Status Slide Update start together; choose which commitment gets live attention."
+          },
+          {
+            "id": "eod-0820-fri-4",
+            "label": "4:00 PM - Amazon Connect VOIP check-in is canceled",
+            "detail": "The calendar explicitly marks the VOIP Team Check-in as canceled."
+          }
+        ]
+      }
+    ]
+  },
+  {
     "id": "daily-2026-08-20-morning",
     "type": "daily",
     "date": "Morning - Thursday, August 20",
