@@ -1,0 +1,100 @@
+{
+  "digest": {
+    "id": "daily-2026-08-21-morning",
+    "type": "daily",
+    "date": "Morning - Friday, August 21",
+    "isoDate": "2026-08-21",
+    "greeting": "Good morning, Jean. Friday, August 21 has seven active meetings, two schedule collisions, four urgent items, and two carried priorities. First, close the Amazon Connect UAT dependencies before the August 25 kickoff, especially call forwarding, tester personas, queue routing, and the unresolved voicemail path. Then protect the incident-trigger owner map and finish LeadUp 3A before the 3:00 PM session. The 10:00 AM and 3:00 PM conflicts need coverage decisions early so the EOW review stack can stay focused.",
+    "sections": [
+      {
+        "title": "Carried Over",
+        "info": false,
+        "items": [
+          {
+            "id": "fri-0821-co-01",
+            "taskId": "task-20260817-map-incident-triggers",
+            "label": "Consolidate the incident-trigger owner map",
+            "detail": "Close the remaining trigger owners, notification paths, and communication responsibilities. Use yesterday's BCP follow-through to assign any missing owner before the weekend.",
+            "flag": "carried",
+            "urgent": true
+          },
+          {
+            "id": "fri-0821-co-02",
+            "taskId": "task-20260819-complete-leadup-3a",
+            "label": "Complete LeadUp Module 3A",
+            "detail": "The Rippling course is due today and should be finished before the 3:00 PM live session. Download the participant handout as part of the preparation, then decide how the overlapping executive-slide review will be covered.",
+            "flag": "carried",
+            "urgent": true
+          }
+        ]
+      },
+      {
+        "title": "Today's Schedule",
+        "info": true,
+        "items": [
+          {
+            "id": "fri-0821-sch-01",
+            "label": "8:00-10:00 AM - Primary focus window",
+            "detail": "Use the cleanest block of the day for Amazon Connect UAT decisions, LeadUp preparation, and the remaining incident-owner map."
+          },
+          {
+            "id": "fri-0821-sch-02",
+            "label": "10:00-10:30 AM - Salesforce and Legal Change Management conflict",
+            "detail": "Salesforce Program Standup and the Legal Change Management IT/EPMO sync start together. Choose the primary meeting and send coverage or inputs to the other before 10:00 AM."
+          },
+          {
+            "id": "fri-0821-sch-03",
+            "label": "Noon-3:00 PM - Protected time leads into the EOW stack",
+            "detail": "Blocked Space runs noon-1:00 PM, EPMO EOW follows at 1:00 PM, and Project Pipeline starts at 2:30 PM. Use the EOW discussion to settle program risks and next owners."
+          },
+          {
+            "id": "fri-0821-sch-04",
+            "label": "3:00 PM - LeadUp conflicts with the executive slide review",
+            "detail": "LeadUp Module 3 runs 3:00-4:00 PM while the Executive Project Status Slide Update occupies 3:00-3:30 PM. Confirm which commitment gets live attention and who will keep the deck current."
+          },
+          {
+            "id": "fri-0821-sch-05",
+            "label": "4:00 PM - Amazon Connect VOIP check-in is canceled",
+            "detail": "The canceled meeting returns a 30-minute closeout window after LeadUp."
+          }
+        ]
+      },
+      {
+        "title": "Action Items",
+        "info": false,
+        "items": [
+          {
+            "id": "fri-0821-ai-01",
+            "taskId": "task-20260821-lock-amazon-uat-readiness",
+            "label": "Lock Amazon Connect UAT readiness",
+            "detail": "Before the August 25 kickoff, confirm which RingCentral numbers must forward to Amazon, map tester personas and supervisor roles, settle direct-number and queue routing, and name the owner for the voicemail issue. The project thread also needs a clear answer on whether the current tester set is broad enough for the planned working sessions.",
+            "urgent": true
+          },
+          {
+            "id": "fri-0821-ai-02",
+            "taskId": "task-20260821-resolve-friday-conflicts",
+            "label": "Set coverage for both Friday conflicts",
+            "detail": "Resolve the 10:00 AM Salesforce/Legal overlap and the 3:00 PM LeadUp/executive-slide overlap before the first meeting starts. Protect the decision-bearing sessions and give each delegated path a concrete expected output.",
+            "urgent": true
+          }
+        ]
+      },
+      {
+        "title": "Monday Preview",
+        "info": true,
+        "items": [
+          {
+            "id": "fri-0821-mon-01",
+            "label": "Sara is out of office next week",
+            "detail": "Her calendar marks Monday, August 24 through Friday, August 28 as out of office. Clarify any approvals, EOW follow-ups, or escalation coverage that should move before she steps away."
+          },
+          {
+            "id": "fri-0821-mon-02",
+            "label": "8:00 AM-4:30 PM - Six Monday anchors",
+            "detail": "Timecard approval opens the day, followed by Legal Change Management at 10:00 AM, a noon protected block, BD Portfolio Review at 2:00 PM, Maria at 3:00 PM, RFE MHE at 3:30 PM, and Contigo Plan alignment at 4:30 PM."
+          }
+        ]
+      }
+    ]
+  }
+}
