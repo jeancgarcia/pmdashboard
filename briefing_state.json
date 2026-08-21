@@ -80,6 +80,7 @@
     "task-20260806-review-yash-latent-reply": true,
     "task-20260812-lock-amazon-connect-plan": true,
     "task-20260813-decide-reopen-cases-path": true,
+    "task-20260821-resolve-friday-conflicts": true,
     "task-20260616-overdue-rippling-training": true,
     "task-20260617-schedule-next-pm-workshop": true,
     "task-20260617-staff-aug-touchpoint-prep": true,
@@ -666,5 +667,5 @@
     }
   ],
   "assigneeOverrides": {},
-  "lastModified": 1787318423726
+  "lastModified": 1787319985519
 }
