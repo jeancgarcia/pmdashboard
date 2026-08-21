@@ -1,5 +1,103 @@
 [
   {
+    "id": "eod-2026-08-21",
+    "type": "eod",
+    "date": "Friday, August 21 - End of Day",
+    "isoDate": "2026-08-21",
+    "greeting": "Good evening, Jean. LeadUp preparation and today's conflict coverage are complete, and the Termination Taskset formally closed. Two focused priorities carry into next week, with Amazon Connect readiness still the main near-term pressure.",
+    "sections": [
+      {
+        "title": "Completed Today",
+        "info": true,
+        "items": [
+          {
+            "id": "eod-0821-done-1",
+            "label": "Completed LeadUp Module 3A",
+            "detail": "The required prework was completed before the live LeadUp session."
+          },
+          {
+            "id": "eod-0821-done-2",
+            "label": "Settled Friday's meeting coverage",
+            "detail": "Coverage for today's schedule conflicts was completed."
+          },
+          {
+            "id": "eod-0821-done-3",
+            "label": "Closed the Termination Taskset project",
+            "detail": "A same-day closure notice confirmed the solution completed its post-launch stabilization period and formally moved to standard support."
+          }
+        ]
+      },
+      {
+        "title": "Still Open",
+        "info": false,
+        "items": [
+          {
+            "id": "eod-0821-open-1",
+            "taskId": "task-20260817-map-incident-triggers",
+            "label": "Consolidate the incident-trigger owner map",
+            "detail": "Close the remaining trigger owners, notification paths, and communication responsibilities before next week's BCP follow-through.",
+            "urgent": true
+          },
+          {
+            "id": "eod-0821-open-2",
+            "taskId": "task-20260821-lock-amazon-uat-readiness",
+            "label": "Lock Amazon Connect UAT readiness",
+            "detail": "The queues are built and the participant roster was shared. Confirm the RingCentral and Amazon Connect scenarios, tester coverage, forwarding and transfer paths, queue routing, and voicemail handling before the August 25 kickoff.",
+            "urgent": true
+          }
+        ]
+      },
+      {
+        "title": "Cancelled Today",
+        "info": true,
+        "items": [
+          {
+            "id": "eod-0821-cancel-1",
+            "label": "Salesforce Program Standup was canceled",
+            "detail": "The organizer canceled today's standup and said the Program Brief would be sent by end of day."
+          },
+          {
+            "id": "eod-0821-cancel-2",
+            "label": "Amazon Connect VOIP Team Check-in was canceled",
+            "detail": "Outlook explicitly marked the 4:00 PM check-in as canceled."
+          }
+        ]
+      },
+      {
+        "title": "Key Decisions",
+        "info": true,
+        "items": [
+          {
+            "id": "eod-0821-decision-1",
+            "label": "Do-not-contact handling must cover every communication channel",
+            "detail": "Today's follow-up confirmed the restriction is not limited to SMS, the banner does not automatically block outreach, and the filtering logic must stay current as the list changes."
+          }
+        ]
+      },
+      {
+        "title": "Monday Preview",
+        "info": true,
+        "items": [
+          {
+            "id": "eod-0821-mon-1",
+            "label": "Sara is out of office next week",
+            "detail": "Her calendar marks Monday, August 24 through Friday, August 28 as out of office; route approvals and escalations through the available coverage path."
+          },
+          {
+            "id": "eod-0821-mon-2",
+            "label": "8:00-11:00 AM - Timecards and morning syncs",
+            "detail": "Approve Timecards opens the day, followed by Legal Change Management at 10:00 AM and the SVC Daily Standup at 10:30 AM."
+          },
+          {
+            "id": "eod-0821-mon-3",
+            "label": "Noon-5:00 PM - Portfolio and service-line stack",
+            "detail": "Blocked Space starts at noon, followed by BD Portfolio Review at 2:00 PM, Maria at 3:00 PM, RFE MHE at 3:30 PM, and Contigo Plan alignment at 4:30 PM."
+          }
+        ]
+      }
+    ]
+  },
+  {
     "id": "daily-2026-08-21-morning",
     "type": "daily",
     "date": "Morning - Friday, August 21",
