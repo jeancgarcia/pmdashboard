@@ -1,0 +1,73 @@
+{
+  "digest": {
+    "id": "eod-2026-08-24",
+    "type": "eod",
+    "date": "Monday, August 24 - End of Day",
+    "isoDate": "2026-08-24",
+    "greeting": "Good evening, Jean. The day closed with concrete movement on operational readiness and the Contigo pilot, while coverage planning during Sara's absence remains the main carry-forward. Tomorrow has two overlapping meeting pairs that need clear attendance coverage.",
+    "sections": [
+      {
+        "title": "Completed Today",
+        "info": true,
+        "items": [
+          {
+            "id": "eod-0824-done-1",
+            "label": "Set the Contigo pilot routing and coverage model",
+            "detail": "The Contigo pilot routing, attorney handoff, coverage, and monitoring task was completed today."
+          },
+          {
+            "id": "eod-0824-done-2",
+            "label": "Reported the suspicious security email",
+            "detail": "The suspicious external message was handled through the firm's security process without using its download link."
+          }
+        ]
+      },
+      {
+        "title": "Still Open",
+        "info": false,
+        "items": [
+          {
+            "id": "eod-0824-open-1",
+            "taskId": "task-20260824-assign-sara-project-coverage",
+            "label": "Set project coverage while Sara is out",
+            "detail": "With Jorge and Eugenia, confirm Preparers' Certification capacity before assigning Criminal Research, choose a PM for Knowledge Management, and keep Biometrics in assessment until Jill's priority guidance is clear.",
+            "urgent": true
+          },
+          {
+            "id": "eod-0824-open-2",
+            "taskId": "task-20260824-complete-leadup-module-2-survey",
+            "label": "Complete the LeadUp Module 2 follow-up survey",
+            "detail": "The Learning team sent the Team Development follow-up survey today to check how the training is being applied on the job."
+          }
+        ]
+      },
+      {
+        "title": "Key Decisions",
+        "info": true,
+        "items": [
+          {
+            "id": "eod-0824-decision-1",
+            "label": "Proceed with tomorrow's Amazon Connect UAT",
+            "detail": "The team agreed that the missing Barge function is a known limitation, not a blocker. Merge and conference coverage remains in the test approach, the roster is split across RingCentral and AWS/Salesforce, and production flows will stay untouched until the UAT contact flows are solidified."
+          }
+        ]
+      },
+      {
+        "title": "Tomorrow Preview",
+        "info": true,
+        "items": [
+          {
+            "id": "eod-0824-tue-1",
+            "label": "10:30 AM - Jhara 1:1 conflicts with the SVC standup",
+            "detail": "Choose which meeting needs Jean's live attendance and arrange coverage for the other before the morning begins."
+          },
+          {
+            "id": "eod-0824-tue-2",
+            "label": "2:00 PM - Amazon Connect UAT kickoff conflicts with the EPMO lead catch-up",
+            "detail": "The UAT kickoff is confirmed for one hour and will cover the test approach, platform assignments, scripts, and issue reporting. The Nicolas 1:1 at 3:30 PM and Asana checkpoint at 4:00 PM follow."
+          }
+        ]
+      }
+    ]
+  }
+}
