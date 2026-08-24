@@ -406,6 +406,11 @@
       "id": "rem-1787607439606",
       "text": "Enviar correo a stakeholders de Incident Response",
       "addedAt": "2026-08-24T21:37:19.606Z"
+    },
+    {
+      "id": "rem-1787610206364",
+      "text": "Hacer seguimiento a proyecto de Hassan de NTA",
+      "addedAt": "2026-08-24T22:23:26.364Z"
     }
   ],
   "reminderHistory": [
@@ -686,5 +691,5 @@
     }
   ],
   "assigneeOverrides": {},
-  "lastModified": 1787607449457
+  "lastModified": 1787610209418
 }
