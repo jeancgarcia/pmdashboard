@@ -7,8 +7,11 @@ portfolio from Asana, keeps only OPEN projects (not completed, not archived)
 whose OWNER is one of the EPMO team members, reads each project's status update
 and tasks, and writes two Supabase rows the dashboard reads live:
 
-  - app_state id = 6  -> live snapshot (EPMO dashboard tab)
-  - app_state id = 7  -> rolling history (historical charts)
+  - app_state id = 6  -> live snapshot (EPMO dashboard tab), including the
+                         deterministic `weekPlan` (built fresh on Mondays,
+                         carried forward unchanged Tue-Fri)
+  - app_state id = 7  -> rolling history (kept for data continuity; the
+                         dashboard no longer renders a history chart)
 
 Because the per-project "how it's going" summary must be written by AI (Claude)
 rather than copied from the raw status update, generation is split into stages:
@@ -52,6 +55,7 @@ NOTES_PER_PROJECT = 5                        # most recent notes handed to the A
 HISTORY_RETENTION_DAYS = 120
 RECENT_MOVEMENT_DAYS = 3
 STALE_STATUS_DAYS = 14
+WEEK_PLAN_TASKS_PER_PROJECT = 5              # dated tasks listed per project in the week plan
 RD_TZ = timezone(timedelta(hours=-4))        # America/Santo_Domingo (UTC-4 all year)
 DEPARTMENT_FIELD_NAME = "Project Department" # portfolio column (enum custom field)
 
@@ -193,6 +197,7 @@ def build():
     now = datetime.now(RD_TZ)
     today = now.date()
     week_start = today - timedelta(days=today.weekday())
+    week_end = week_start + timedelta(days=6)
     month_start = today.replace(day=1)
     last_month_end = month_start - timedelta(days=1)
     last_month_start = last_month_end.replace(day=1)
@@ -231,6 +236,7 @@ def build():
             clm.append(comp_entry(p))
 
     project_cards, recent_movements = [], []
+    week_tasks_by_gid = {}
     recent_cutoff = now - timedelta(days=RECENT_MOVEMENT_DAYS)
 
     for p in open_projects:
@@ -257,6 +263,12 @@ def build():
 
         incomplete = [t for t in tasks if not t.get("completed")]
         overdue_tasks = [t for t in incomplete if t.get("due_on") and t["due_on"] < str(today)]
+        # Open tasks dated inside the current week (Mon-Sun) — feeds the week
+        # plan. ISO date strings compare correctly as plain strings.
+        week_tasks_by_gid[gid] = sorted(
+            (t for t in incomplete
+             if t.get("due_on") and str(week_start) <= t["due_on"] <= str(week_end)),
+            key=lambda t: (t["due_on"], t.get("name") or ""))
 
         moved = []
         for t in tasks:
@@ -372,11 +384,91 @@ def build():
         "summary": summary,
         "aiOverview": None,             # <- 1-2 sentence headline, written by the AI stage
         "aiHighlights": None,           # <- 3-6 tagged bullets {kind, text, projectGid?}, written by the AI stage
+        "weekPlan": resolve_week_plan(
+            build_week_plan(project_cards, week_tasks_by_gid, week_start, week_end, now),
+            today, week_start),
         "recentMovements": recent_movements[:40],
         "completed": {"thisWeek": ctw, "thisMonth": ctm, "lastMonth": clm},
         "projects": sorted(project_cards, key=lambda c: (TEAM_ORDER.index(c["memberGid"]), not c["needsAttention"], c["name"])),
     }
     return live
+
+
+def build_week_plan(project_cards, week_tasks_by_gid, week_start, week_end, now):
+    """Deterministic "what's on our plate this week" list: overdue projects,
+    projects due inside the week, health flagged at-risk/off-track, and open
+    tasks dated Mon-Sun. One item per project; `flags` is priority-ordered so
+    flags[0] is the item's primary reason. No AI involved — the plan must be
+    reproducible and safe to regenerate."""
+    items = []
+    for c in project_cards:
+        flags = []
+        if c["overdue"]:
+            flags.append("overdue")
+        elif c["dueOn"] and str(week_start) <= c["dueOn"] <= str(week_end):
+            flags.append("due_this_week")
+        if c["health"] in ATTENTION_HEALTH:
+            flags.append("at_risk")
+        tasks = week_tasks_by_gid.get(c["gid"]) or []
+        if tasks:
+            flags.append("tasks_due")
+        if not flags:
+            continue
+        items.append({
+            "projectGid": c["gid"], "project": c["name"], "url": c["url"],
+            "member": c["member"], "memberGid": c["memberGid"],
+            "health": c["health"], "dueOn": c["dueOn"],
+            "flags": flags,
+            "tasksDue": [{"name": t.get("name") or "(untitled)", "dueOn": t["due_on"],
+                          "assignee": (t.get("assignee") or {}).get("name")}
+                         for t in tasks[:WEEK_PLAN_TASKS_PER_PROJECT]],
+            "tasksDueTotal": len(tasks),
+        })
+
+    prio = {"overdue": 0, "due_this_week": 1, "at_risk": 2, "tasks_due": 3}
+
+    def sort_key(it):
+        # Urgency first, then the date that made it urgent, then name.
+        if it["flags"][0] in ("overdue", "due_this_week"):
+            anchor = it["dueOn"] or "9999-12-31"
+        elif it["tasksDue"]:
+            anchor = it["tasksDue"][0]["dueOn"]
+        else:
+            anchor = it["dueOn"] or "9999-12-31"
+        return (prio[it["flags"][0]], anchor, it["project"])
+
+    items.sort(key=sort_key)
+    return {
+        "weekOf": str(week_start), "weekEnd": str(week_end),
+        "generatedAt": now.isoformat(),
+        "counts": {
+            "overdue": sum(1 for i in items if "overdue" in i["flags"]),
+            "dueThisWeek": sum(1 for i in items if "due_this_week" in i["flags"]),
+            "atRisk": sum(1 for i in items if "at_risk" in i["flags"]),
+            "tasksDue": sum(i["tasksDueTotal"] for i in items),
+        },
+        "items": items,
+    }
+
+
+def resolve_week_plan(fresh_plan, today, week_start):
+    """The week plan is generated ONLY on Mondays (RD time): a Monday run
+    always publishes the fresh plan, and Tue-Sun runs keep the plan already
+    published for this week so the list stays a stable weekly anchor instead
+    of shifting daily. If no plan exists for this week (Monday run missed,
+    feature just shipped) or the carry-forward read fails, fall back to the
+    fresh plan — still anchored to this week's Monday — rather than leaving
+    the section empty all week. Never fatal."""
+    if today.weekday() == 0:
+        return fresh_plan
+    try:
+        prev_plan = (supabase_get_data(LIVE_ROW_ID) or {}).get("weekPlan")
+    except Exception as exc:                           # noqa: BLE001
+        print(f"  ! week-plan carry-forward read failed (regenerating): {exc}", file=sys.stderr)
+        return fresh_plan
+    if isinstance(prev_plan, dict) and prev_plan.get("weekOf") == str(week_start):
+        return prev_plan
+    return fresh_plan
 
 
 def update_history(summary, date_str, now):
@@ -421,7 +513,9 @@ AI_GUIDANCE = (
     "or real momentum; watch = a gate or dependency to keep an eye on. text = ONE tight sentence "
     "(about 22 words max) naming the project and the so-what. Include projectGid whenever the "
     "item is about a single project (enables the dashboard's jump-to-card link); omit it for "
-    "cross-portfolio themes. Order by importance, risks first."
+    "cross-portfolio themes. Order by importance, risks first. "
+    "Leave `weekPlan` exactly as it is — it is deterministic (generated Mondays, carried "
+    "forward the rest of the week) and must never be rewritten by the AI stage."
 )
 
 
@@ -442,6 +536,9 @@ def stage_collect(out_path):
     print(f"  open: {s['totalOpen']} | attention: {s['needsAttention']} | "
           f"movements: {s['recentMovementCount']} | "
           f"completed w/m/lm: {s['completedThisWeek']}/{s['completedThisMonth']}/{s['completedLastMonth']}")
+    wp = live.get("weekPlan") or {}
+    print(f"  week plan: week of {wp.get('weekOf')} | {len(wp.get('items') or [])} item(s) | "
+          f"generated {wp.get('generatedAt', '')[:10]}")
     with open(out_path, "w", encoding="utf-8") as fh:
         json.dump(live, fh, ensure_ascii=False, indent=2)
     print(f"  wrote raw payload -> {out_path}")
