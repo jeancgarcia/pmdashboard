@@ -1,0 +1,114 @@
+{
+  "digest": {
+    "id": "daily-2026-08-24-morning",
+    "type": "daily",
+    "date": "Morning - Monday, August 24",
+    "isoDate": "2026-08-24",
+    "greeting": "Good morning, Jean. Today is Monday, August 24, with eight timed calendar entries, three urgent items, and one carry-over. The day turns on making the Amazon Connect UAT go/no-go call in the 10:30 AM standup, assigning coverage for Sara's Criminal Research and Knowledge Management work, and entering the late portfolio and Contigo meetings ready to name owners and decisions. Amazon Connect remains the clearest blocker: technical fixes, skills-based routing, production user/security ownership, and the FirstFire scope still need a single decision path before tomorrow's UAT kickoff. A suspicious external security email should be reported without opening its link. Dashboard state was last modified Friday, so completion signals may not reflect any weekend changes.",
+    "sections": [
+      {
+        "title": "Carried Over",
+        "info": false,
+        "items": [
+          {
+            "id": "mon-0824-co-01",
+            "taskId": "task-20260821-lock-amazon-uat-readiness",
+            "label": "Make the Amazon Connect UAT go/no-go decision",
+            "detail": "Use the 10:30 AM SVC standup to confirm whether Salesforce Support's technical fixes and skills-based routing are ready for tomorrow's kickoff. The tester roster and queues exist, but production user/security ownership, the FirstFire task list, personas, and remaining routing dependencies still need a single accountable plan.",
+            "flag": "carried",
+            "urgent": true
+          }
+        ]
+      },
+      {
+        "title": "Today's Schedule",
+        "info": true,
+        "items": [
+          {
+            "id": "mon-0824-sch-01",
+            "label": "8:00-9:00 AM - Approve timecards and set the week",
+            "detail": "Close timecard approvals and frame the decisions that must be settled while Sara is out."
+          },
+          {
+            "id": "mon-0824-sch-02",
+            "label": "9:00-10:00 AM - Focus window",
+            "detail": "Use the clean hour for Sara's project assignments and Amazon Connect go/no-go preparation."
+          },
+          {
+            "id": "mon-0824-sch-03",
+            "label": "10:00-11:00 AM - Legal and SVC back-to-back",
+            "detail": "Legal Change Management flows directly into the SVC standup. Carry a short owner-and-dependency list, with the UAT readiness decision as the priority output."
+          },
+          {
+            "id": "mon-0824-sch-04",
+            "label": "Noon-2:00 PM - Protected work window",
+            "detail": "Blocked space at noon plus an open 1:00 PM hour provide the best runway to close morning follow-ups and prepare the portfolio stack."
+          },
+          {
+            "id": "mon-0824-sch-05",
+            "label": "2:00-4:00 PM - Portfolio, Maria, and MHE",
+            "detail": "BD Portfolio Review is followed by Maria at 3:00 PM and the RFE MHE timeline review at 3:30 PM. Capture blockers, owner decisions, and timeline changes in one running log."
+          },
+          {
+            "id": "mon-0824-sch-06",
+            "label": "4:30 PM - Contigo Plan pilot alignment",
+            "detail": "Set the interim routing, 30-minute attorney handoff, coverage, language support, volume thresholds, and owners for the detention-prevention pilot."
+          }
+        ]
+      },
+      {
+        "title": "Action Items",
+        "info": false,
+        "items": [
+          {
+            "id": "mon-0824-ai-01",
+            "taskId": "task-20260824-assign-sara-project-coverage",
+            "label": "Set project coverage while Sara is out",
+            "detail": "With Jorge and Eugenia, confirm Preparers' Certification capacity before assigning Criminal Research, choose a PM for Knowledge Management, and keep Biometrics in assessment until Jill's priority guidance establishes whether inflight work must move.",
+            "urgent": true
+          },
+          {
+            "id": "mon-0824-ai-02",
+            "taskId": "task-20260824-set-contigo-pilot-model",
+            "label": "Lock the Contigo pilot routing and coverage model",
+            "detail": "Use the 4:30 PM alignment to confirm the interim Detention IVR route, the CSC-to-Phase 2 attorney handoff within 30 minutes, hours and language coverage, volume monitoring, and the threshold for revisiting staffing."
+          },
+          {
+            "id": "mon-0824-ai-03",
+            "taskId": "task-20260824-report-suspicious-security-email",
+            "label": "Report the suspicious security email",
+            "detail": "An unread external message titled 'Microsoft Security Update' urges a software download from an unrelated sender domain. Do not open its link; report it through the firm's phishing or security process.",
+            "urgent": true
+          }
+        ]
+      },
+      {
+        "title": "Out of Office",
+        "info": true,
+        "items": [
+          {
+            "id": "mon-0824-ooo-01",
+            "label": "Sara Watson is out through Friday",
+            "detail": "Her calendar shows August 24-28 out of office. Route project assignments and approval questions through the coverage decisions named in her Friday email."
+          }
+        ]
+      },
+      {
+        "title": "Tomorrow Preview",
+        "info": true,
+        "items": [
+          {
+            "id": "mon-0824-tmr-01",
+            "label": "10:30 AM - Jhara 1:1 conflicts with SVC standup",
+            "detail": "Both meetings occupy the same 30-minute slot. Decide today whether UAT stabilization or the portfolio-roadblock discussion gets Jean's attendance and arrange coverage for the other."
+          },
+          {
+            "id": "mon-0824-tmr-02",
+            "label": "2:00 PM - Amazon UAT kickoff conflicts with EPMO lead catch-up",
+            "detail": "The one-hour UAT launch overlaps the EPMO TL Weekly Catch Up. Resolve attendance and decision coverage before the kickoff, then preserve the 3:30 PM Nicolas 1:1 and 4:00 PM Asana checkpoint."
+          }
+        ]
+      }
+    ]
+  }
+}
