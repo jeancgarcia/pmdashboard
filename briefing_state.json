@@ -90,6 +90,7 @@
     "task-20260805-resolve-meeting-conflicts": true,
     "task-20260807-prepare-sms-legal-handoff": true,
     "task-20260810-clear-harassment-training": true,
+    "task-20260821-lock-amazon-uat-readiness": true,
     "task-20260609-close-coe-guide-follow-ups": true,
     "task-20260609-confirm-kpi-final-approval": true,
     "task-20260610-land-coe-owners-next-steps": true,
@@ -667,5 +668,5 @@
     }
   ],
   "assigneeOverrides": {},
-  "lastModified": 1787319985519
+  "lastModified": 1787576125052
 }
