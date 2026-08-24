@@ -70,6 +70,7 @@
     "task-20260728-danny-birthday-artifact": true,
     "task-20260811-submit-spencer-feedback": true,
     "task-20260818-date-vawa-post21-launch": true,
+    "task-20260824-set-contigo-pilot-model": true,
     "task-20260616-case-change-overlap-path": true,
     "task-20260617-reply-craftio-beta-scope": true,
     "task-20260622-confirm-slq-baesman-path": true,
@@ -212,6 +213,7 @@
     "task-20260722-janet-nicolas-salesforce-support": true,
     "task-20260724-prepare-epmo-eow-program-updates": true,
     "task-20260811-decide-incidents-template-access": true,
+    "task-20260824-report-suspicious-security-email": true,
     "task-20260610-monitor-docusign-taskset-guidance": true,
     "task-20260611-decide-deleted-recording-restores": true,
     "task-20260611-prepare-bcp-ir-and-portfolio-1-1s": true,
@@ -350,6 +352,10 @@
     "task-20260717-follow-up-katie-file-release": {
       "ts": 1784579373025,
       "emoji": "📌"
+    },
+    "task-20260824-assign-sara-project-coverage": {
+      "ts": 1787578018233,
+      "emoji": "❗"
     },
     "task-20260624-follow-up-reorg-conversations": {
       "ts": 1782344501021,
@@ -668,5 +674,5 @@
     }
   ],
   "assigneeOverrides": {},
-  "lastModified": 1787576125052
+  "lastModified": 1787578018238
 }
