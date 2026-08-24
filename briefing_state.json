@@ -291,7 +291,8 @@
     "task-20260701-review-product-salesforce-roadmap-materials": true,
     "task-20260723-forward-legal-change-management-walkthrough": true,
     "task-20260630-follow-up-incident-response-irg-implementation": true,
-    "task-20260609-resolve-phase-2-ownership-and-tool-support-follow-ups": true
+    "task-20260609-resolve-phase-2-ownership-and-tool-support-follow-ups": true,
+    "task-20260824-complete-leadup-module-2-survey": true
   },
   "hidden": [
     "tue-0602-co-1",
@@ -685,5 +686,5 @@
     }
   ],
   "assigneeOverrides": {},
-  "lastModified": 1787607441612
+  "lastModified": 1787607449457
 }
