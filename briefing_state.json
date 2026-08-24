@@ -395,7 +395,13 @@
     }
   },
   "edits": {},
-  "reminders": [],
+  "reminders": [
+    {
+      "id": "rem-1787607430811",
+      "text": "Revisar intake en el que Eugenia dejo comentario",
+      "addedAt": "2026-08-24T21:37:10.811Z"
+    }
+  ],
   "reminderHistory": [
     {
       "id": "rem-1748998800000",
@@ -674,5 +680,5 @@
     }
   ],
   "assigneeOverrides": {},
-  "lastModified": 1787578018238
+  "lastModified": 1787607433643
 }
