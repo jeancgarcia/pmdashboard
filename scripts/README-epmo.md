@@ -12,8 +12,8 @@ run time).
 |---|---|
 | Generator | `scripts/generate_epmo_digest.py` |
 | Dashboard tab | `EpmoDashboardTab` in `index.html` (nav id `epmo`) |
-| Live data | Supabase `app_state` row **id = 6** |
-| History (charts) | Supabase `app_state` row **id = 7**, rolling 120 days |
+| Live data | Supabase `app_state` row **id = 6** — includes the Monday-set `weekPlan` |
+| History | Supabase `app_state` row **id = 7**, rolling 120 days — still written every publish for data continuity, but the dashboard's History chart was removed (Aug 2026: it sat blank whenever the row had ≤1 snapshot) |
 | Project notes | Supabase `app_state` row **id = 8** — written by the dashboard, keyed by project gid; `collect` reads it (never writes) to hand the AI stage each project's `userNotes` |
 | Schedule | Claude Code Remote trigger `EPMO Daily Brief`, cron `5 12 * * 1-5` |
 
@@ -43,7 +43,9 @@ one:
 collect  ->  python3 scripts/generate_epmo_digest.py collect --out /tmp/epmo.json
              (fetches Asana + the team's dashboard notes from row 8 — read-only,
              never writes Supabase; each project gets a `userNotes` list,
-             pinned note first, capped at 5)
+             pinned note first, capped at 5. Also reads row 6 on Tue-Fri to
+             carry the current week's `weekPlan` forward — see "Week plan"
+             below)
  (AI)    ->  Claude reads /tmp/epmo.json and fills, per project: `aiScope` (ONE
              stable sentence on what the project is/delivers, from `description`),
              `aiSummary` (current state: momentum, next gate, blockers — never
@@ -76,8 +78,20 @@ falls back to splitting `aiOverview` into headline + bullets.
 - **AI team overview** — a 1-2 sentence headline (`aiOverview`) plus 3-6 tagged
   highlight bullets (`aiHighlights`: risk / win / watch, each optionally linking
   to its project card).
+- **Week plan** (`weekPlan`, rendered right below the overview) — what the team
+  has on its plate this week: overdue projects, projects due inside the week
+  (Mon-Sun), health flagged at-risk/off-track, and open tasks dated inside the
+  week (expand a row to see them; ≤5 listed per project, sorted by due date).
+  **Deterministic, no AI** — the AI stage is explicitly told to leave it alone.
+  It is generated fresh **only on Monday's run** (RD time); Tue-Fri publishes
+  carry Monday's plan forward untouched from the current row 6, so the list is
+  a stable weekly anchor. Projects completed since Monday pick up a live ✓ in
+  the dashboard via `completed.thisWeek`. Self-healing: if no plan exists for
+  the current week (missed Monday run) or the carry-forward read fails, the run
+  regenerates one anchored to that week's Monday instead of leaving it empty.
+  Dashboards reading payloads that predate the field simply hide the section.
 - KPIs: open / needs-attention / at-risk.
-- Charts: open-by-health doughnut + a history line (open, needs-attention, weekly completions).
+- Chart: open-by-health doughnut (the history line chart was removed Aug 2026).
 - Latest activity, **grouped by project** (task movements in the last 3 days;
   each project row expands into its task-level changes with actor and time).
 - Projects completed this week / this month / last month.
