@@ -1,5 +1,128 @@
 [
   {
+    "id": "eod-2026-08-25",
+    "type": "eod",
+    "date": "Tuesday, August 25 - End of Day",
+    "isoDate": "2026-08-25",
+    "greeting": "Good evening, Jean. Amazon Connect UAT moved into its first testing round, while today’s messages clarified the NTA route and the staffing setup needed for change management. Tomorrow is crowded, so the biggest carry-forward is clearing ownership and overlapping meetings before the afternoon stack.",
+    "sections": [
+      {
+        "title": "Completed Today",
+        "info": true,
+        "items": [
+          {
+            "id": "eod-0825-done-1",
+            "label": "Launched the first Amazon Connect UAT round",
+            "detail": "The launch is marked complete, and the 2:00 PM kickoff plus Teams follow-up show testing moved into the first round."
+          }
+        ]
+      },
+      {
+        "title": "Still Open",
+        "info": false,
+        "items": [
+          {
+            "id": "eod-0825-open-1",
+            "taskId": "task-20260824-assign-sara-project-coverage",
+            "label": "Set project coverage while Sara is out",
+            "detail": "With Jorge and Eugenia, confirm Preparers’ Certification capacity before assigning Criminal Research, choose a PM for Knowledge Management, and keep Biometrics in assessment until Jill’s priority guidance is clear.",
+            "urgent": true
+          },
+          {
+            "id": "eod-0825-open-2",
+            "taskId": "task-20260825-resolve-tuesday-conflicts",
+            "label": "Close out the two Tuesday attendance conflicts",
+            "detail": "Confirm which Amazon Connect and EPMO updates were captured or delegated, and carry any missed decisions into Wednesday’s follow-up.",
+            "urgent": true
+          },
+          {
+            "id": "eod-0825-open-3",
+            "taskId": "task-20260825-follow-up-hassan-nta",
+            "label": "Move the NTA automated task through the CoE intake",
+            "detail": "Hassan confirmed the automated CSC task is the only new support needed and the Referrals Program will handle reporting and workflow. The intake has been routed to Mar; keep the requested September 1 timing visible until delivery is confirmed."
+          },
+          {
+            "id": "eod-0825-open-4",
+            "taskId": "task-20260825-decide-change-management-staffing",
+            "label": "Finalize change-management staffing",
+            "detail": "Confirm the process engineer and Nicolas’s part-time PM allocation before Wednesday’s initial touchpoint so the team can leave with clear ownership."
+          },
+          {
+            "id": "eod-0825-open-5",
+            "taskId": "task-20260825-set-contigo-permanent-ivr",
+            "label": "Set the permanent Contigo IVR owner and target date",
+            "detail": "Hilary estimated that a complete IVR call-flow redesign would take about three weeks. The pilot remains on interim RingCentral routing, so lock the owner and delivery target."
+          },
+          {
+            "id": "eod-0825-open-6",
+            "taskId": "task-20260825-email-incident-response-stakeholders",
+            "label": "Track Incident Response bucket-owner follow-through",
+            "detail": "Jean sent the stakeholder guidance today. Capture owner responses and outstanding trigger or implementation decisions as they come back."
+          },
+          {
+            "id": "eod-0825-open-7",
+            "taskId": "task-20260825-review-eugenia-intake",
+            "label": "Review the 100% Team Lead Suspensions intake",
+            "detail": "Review the intake Eugenia flagged and decide whether removing the team-lead review tasks belongs in the CoE path."
+          }
+        ]
+      },
+      {
+        "title": "Cancelled Today",
+        "info": true,
+        "items": [
+          {
+            "id": "eod-0825-cancel-1",
+            "label": "Sales/Revenue Cloud commercialization review was canceled",
+            "detail": "Nadia canceled the review that was intended to assess Nicolas’s part-time PM support for the workstream."
+          }
+        ]
+      },
+      {
+        "title": "Key Decisions",
+        "info": true,
+        "items": [
+          {
+            "id": "eod-0825-decision-1",
+            "label": "NTA outreach will use one automated CSC task",
+            "detail": "Hassan confirmed that the Referrals Program can handle the downstream reporting and workflow, so the request was routed through the CoE intake instead of becoming a separate project."
+          },
+          {
+            "id": "eod-0825-decision-2",
+            "label": "Change management needs a process engineer for SOP work",
+            "detail": "Jean identified the process-engineer requirement, and Nadia agreed to set an initial discussion with Jean and Nicolas; that touchpoint is on Wednesday’s calendar."
+          }
+        ]
+      },
+      {
+        "title": "Tomorrow Preview",
+        "info": true,
+        "items": [
+          {
+            "id": "eod-0825-wed-1",
+            "label": "10:00 AM-noon - Four back-to-back alignment points",
+            "detail": "Legal Change Management starts at 10:00 AM, followed by the SVC standup, Thiago 1:1, and the Change Management Initial Touchpoint."
+          },
+          {
+            "id": "eod-0825-wed-2",
+            "label": "1:30-3:00 PM - Service Cloud Q&A flows into the Astrid 1:1",
+            "detail": "The leader Q&A runs until 2:30 PM and the Astrid 1:1 starts immediately after it. The EPMO Team Meeting scheduled for 2:00 PM is canceled."
+          },
+          {
+            "id": "eod-0825-wed-3",
+            "label": "3:00-4:00 PM - LeadUp overlaps focus time and the Laura 1:1",
+            "detail": "LeadUp runs from 3:00 to 4:00 PM, overlapping the 3:00 PM focus block and the 3:30 PM Laura touchpoint. Decide attendance and coverage before the afternoon stack."
+          },
+          {
+            "id": "eod-0825-wed-4",
+            "label": "4:00-5:00 PM - Amazon Connect UAT working session needs protected time",
+            "detail": "The UAT working session overlaps meeting-prep focus time and the Sara 1:1 still on the calendar. Sara is out through Friday, so clear the stale hold and protect the testing window."
+          }
+        ]
+      }
+    ]
+  },
+  {
     "id": "daily-2026-08-25-morning",
     "type": "daily",
     "date": "Morning - Tuesday, August 25",
