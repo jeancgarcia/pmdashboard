@@ -1,5 +1,142 @@
 [
   {
+    "id": "daily-2026-08-25-morning",
+    "type": "daily",
+    "date": "Morning - Tuesday, August 25",
+    "isoDate": "2026-08-25",
+    "greeting": "Good morning, Jean. Today is Tuesday, August 25, with eight timed calendar entries, two direct meeting collisions, three urgent items, and one carry-over. Protect the 2:00 PM Amazon Connect UAT kickoff, settle coverage for Sara’s open project assignments, and use the morning to resolve the NTA delivery path and change-management staffing. Amazon UAT is moving forward with roughly 80% of functionality in the first round, but tester roles, cross-platform call scenarios, and the remaining later-round work need crisp ownership.",
+    "sections": [
+      {
+        "title": "Carried Over",
+        "info": false,
+        "items": [
+          {
+            "id": "tue-0825-co-01",
+            "taskId": "task-20260824-assign-sara-project-coverage",
+            "label": "Set project coverage while Sara is out",
+            "detail": "With Jorge and Eugenia, confirm Preparers’ Certification capacity before assigning Criminal Research, choose a PM for Knowledge Management, and keep Biometrics in assessment until Jill’s priority guidance is clear.",
+            "flag": "carried",
+            "urgent": true
+          }
+        ]
+      },
+      {
+        "title": "Reminders",
+        "info": false,
+        "items": [
+          {
+            "id": "tue-0825-rem-01",
+            "taskId": "task-20260825-review-eugenia-intake",
+            "label": "Revisar intake en el que Eugenia dejo comentario",
+            "detail": "Review the “100% Team Lead Suspensions” intake Eugenia flagged in PMO Team Leads and decide whether removing the TL-review tasks belongs in the CoE path."
+          },
+          {
+            "id": "tue-0825-rem-02",
+            "taskId": "task-20260825-email-incident-response-stakeholders",
+            "label": "Enviar correo a stakeholders de Incident Response",
+            "detail": "Use the proposed tier-level IRG trigger approach to frame the stakeholder note and make the next owner or decision explicit."
+          },
+          {
+            "id": "tue-0825-rem-03",
+            "taskId": "task-20260825-follow-up-hassan-nta",
+            "label": "Hacer seguimiento a proyecto de Hassan de NTA",
+            "detail": "Jorge asked Hassan and Jim to confirm whether the CSC task is a Referrals Program dependency and the only required system change. Treat September 1 as requested, not committed, until effort and routing are confirmed."
+          }
+        ]
+      },
+      {
+        "title": "Today's Schedule",
+        "info": true,
+        "items": [
+          {
+            "id": "tue-0825-sch-01",
+            "label": "10:30-11:00 AM - Jhara 1:1 conflicts with SVC standup",
+            "detail": "Choose the live priority before the overlap. The standup is the last clean checkpoint before today’s Amazon Connect kickoff; Jhara has also proposed a new time."
+          },
+          {
+            "id": "tue-0825-sch-02",
+            "label": "11:00 AM-noon - Slide work and open preparation time",
+            "detail": "Use the 11:00 AM EPMO slide block and the open half-hour after it to close conflict coverage and prepare the UAT decision list."
+          },
+          {
+            "id": "tue-0825-sch-03",
+            "label": "Noon-1:00 PM - Protected focus block",
+            "detail": "Use the longest uninterrupted window for Sara’s coverage decisions, the NTA follow-up, and the Incident Response stakeholder email."
+          },
+          {
+            "id": "tue-0825-sch-04",
+            "label": "2:00-3:00 PM - Amazon UAT kickoff conflicts with EPMO leads",
+            "detail": "Prioritize the UAT launch or delegate a clear EPMO update. The kickoff needs the three-group tester model, platform assignments, scripts, and issue-reporting path confirmed."
+          },
+          {
+            "id": "tue-0825-sch-05",
+            "label": "3:30-4:30 PM - Nicolas 1:1 and Asana checkpoint",
+            "detail": "Use the Nicolas discussion to test the proposed part-time change-management assignment, then carry the decision into the project-plan checkpoint."
+          }
+        ]
+      },
+      {
+        "title": "Action Items",
+        "info": false,
+        "items": [
+          {
+            "id": "tue-0825-ai-01",
+            "taskId": "task-20260825-resolve-tuesday-conflicts",
+            "label": "Resolve both Tuesday attendance conflicts",
+            "detail": "Set coverage for the 10:30 AM Jhara/SVC overlap and the 2:00 PM Amazon UAT/EPMO lead overlap before the first collision begins.",
+            "urgent": true
+          },
+          {
+            "id": "tue-0825-ai-02",
+            "taskId": "task-20260825-run-amazon-connect-uat",
+            "label": "Launch Amazon Connect UAT with a firm test model",
+            "detail": "Confirm the one RingCentral queue and two AWS queue groups, then test AWS user-to-user calls, AWS-to-RingCentral calls, and cross-platform queue transfers. Keep Barge as a known limitation, use merge/conference as the alternative, and leave SIP-enabled devices out of this round.",
+            "urgent": true
+          },
+          {
+            "id": "tue-0825-ai-03",
+            "taskId": "task-20260825-decide-change-management-staffing",
+            "label": "Decide the change-management staffing assignments",
+            "detail": "Nadia needs assignments quickly for a large Process Engineer and part-time PM effort. Confirm whether Nicolas can take the PM allocation and whether Camilo is the Process Engineer before tomorrow’s initial touchpoint."
+          },
+          {
+            "id": "tue-0825-ai-04",
+            "taskId": "task-20260825-set-contigo-permanent-ivr",
+            "label": "Set the permanent Contigo IVR target",
+            "detail": "The pilot is proceeding on interim RingCentral routing. Name the owner and firm target date for the permanent IVR so the open implementation dependency does not drift."
+          }
+        ]
+      },
+      {
+        "title": "Out of Office",
+        "info": true,
+        "items": [
+          {
+            "id": "tue-0825-ooo-01",
+            "label": "Sara Watson is out through Friday",
+            "detail": "Her automatic reply says she returns Monday, August 31 and directs immediate assistance to Danny Miller. Route urgent coverage and NTA questions accordingly."
+          }
+        ]
+      },
+      {
+        "title": "Tomorrow Preview",
+        "info": true,
+        "items": [
+          {
+            "id": "tue-0825-tmr-01",
+            "label": "10:30 AM - Thiago 1:1 conflicts with SVC standup",
+            "detail": "Choose the primary meeting or arrange coverage before Wednesday starts; both are likely to carry Amazon UAT follow-through."
+          },
+          {
+            "id": "tue-0825-tmr-02",
+            "label": "3:00-5:00 PM - LeadUp, Laura, UAT, and focus blocks collide",
+            "detail": "LeadUp overlaps the Laura 1:1, and the 4:00 PM UAT working session overlaps both focus time and the Sara 1:1 still on the calendar. Clear attendance and remove stale holds today."
+          }
+        ]
+      }
+    ]
+  },
+  {
     "id": "eod-2026-08-24",
     "type": "eod",
     "date": "Monday, August 24 - End of Day",
