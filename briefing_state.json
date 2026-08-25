@@ -63,6 +63,7 @@
     "task-20260717-incident-response-bill": true,
     "task-20260722-project-folders-friday": true,
     "task-20260820-decide-slq-it-approach": true,
+    "task-20260825-run-amazon-connect-uat": true,
     "task-20260611-align-sara-timeline-kpi": true,
     "task-20260722-discuss-pc-handoff-plan": true,
     "task-20260727-amazon-connect-venn-uat": true,
@@ -204,6 +205,7 @@
     "task-20260729-confirm-amazon-connect-coverage": true,
     "task-20260806-route-court-a-number-escalation": true,
     "task-20260807-resolve-service-cloud-collision": true,
+    "task-20260824-complete-leadup-module-2-survey": true,
     "task-20260617-prepare-friday-epmo-presentation": true,
     "task-20260622-prepare-mental-health-touchpoint": true,
     "task-20260624-camilo-structure-mhe-rfe-support": true,
@@ -291,8 +293,7 @@
     "task-20260701-review-product-salesforce-roadmap-materials": true,
     "task-20260723-forward-legal-change-management-walkthrough": true,
     "task-20260630-follow-up-incident-response-irg-implementation": true,
-    "task-20260609-resolve-phase-2-ownership-and-tool-support-follow-ups": true,
-    "task-20260824-complete-leadup-module-2-survey": true
+    "task-20260609-resolve-phase-2-ownership-and-tool-support-follow-ups": true
   },
   "hidden": [
     "tue-0602-co-1",
@@ -696,5 +697,5 @@
     }
   ],
   "assigneeOverrides": {},
-  "lastModified": 1787659555468
+  "lastModified": 1787662684123
 }
