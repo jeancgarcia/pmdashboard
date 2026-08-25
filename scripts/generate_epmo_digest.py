@@ -39,6 +39,7 @@ Usage:
 
 import json
 import os
+import re
 import ssl
 import sys
 import urllib.parse
@@ -394,12 +395,71 @@ def build():
     return live
 
 
+def _week_short_name(name):
+    """Mirror of the dashboard's epmoShortName: trim "EPMO_0221 "-style
+    portfolio prefixes so action sentences read naturally."""
+    n = str(name or "")
+    return re.sub(r"^EPMO[_ ]?\d+\s*[-:–]?\s*", "", n, flags=re.I).strip() or n
+
+
+def _week_monthday(iso):
+    d = datetime.strptime(str(iso)[:10], "%Y-%m-%d")
+    return f"{d.strftime('%b')} {d.day}"
+
+
+def _week_weekday(iso):
+    d = datetime.strptime(str(iso)[:10], "%Y-%m-%d")
+    return f"{d.strftime('%a')} {d.strftime('%b')} {d.day}"
+
+
+def _week_trunc(text, limit=70):
+    text = " ".join(str(text or "").split())
+    return text if len(text) <= limit else text[:limit].rstrip() + "…"
+
+
+def build_week_actions(items):
+    """Deterministic fallback for the week plan's action bullets — one
+    imperative sentence per item, verb chosen by the item's primary flag.
+    The AI stage rewrites these into a curated list (aiActions) on Mondays;
+    these guarantee the section always says something actionable even when
+    the AI stage never runs."""
+    actions = []
+    for it in items:
+        first = (it["member"] or "").split(" ")[0]
+        short = _week_short_name(it["project"])
+        primary = it["flags"][0]
+        n = it["tasksDueTotal"]
+        if primary == "overdue":
+            kind = "overdue"
+            text = f"Close out or re-plan {short} with {first} — overdue since {_week_monthday(it['dueOn'])}"
+            if n:
+                text += f"; {n} task(s) dated this week"
+        elif primary == "due_this_week":
+            kind = "due"
+            text = f"Get {short} over the line with {first} — due {_week_weekday(it['dueOn'])}"
+        elif primary == "at_risk":
+            kind = "risk"
+            label = HEALTH_LABEL.get(it["health"], "At risk").lower()
+            text = f"Support {first} on {short} — flagged {label}"
+            if it["dueOn"]:
+                text += f", due {_week_monthday(it['dueOn'])}"
+        else:
+            kind = "followup"
+            text = f'Follow up with {first} on {short} — "{_week_trunc(it["tasksDue"][0]["name"])}"'
+            if n > 1:
+                text += f" +{n - 1} more due this week"
+        actions.append({"kind": kind, "text": text, "projectGid": it["projectGid"],
+                        "member": it["member"], "memberGid": it["memberGid"]})
+    return actions
+
+
 def build_week_plan(project_cards, week_tasks_by_gid, week_start, week_end, now):
     """Deterministic "what's on our plate this week" list: overdue projects,
     projects due inside the week, health flagged at-risk/off-track, and open
     tasks dated Mon-Sun. One item per project; `flags` is priority-ordered so
-    flags[0] is the item's primary reason. No AI involved — the plan must be
-    reproducible and safe to regenerate."""
+    flags[0] is the item's primary reason. `actions` are the template-written
+    bullets the dashboard shows (superseded by `aiActions` when the Monday AI
+    stage writes them). Reproducible and safe to regenerate."""
     items = []
     for c in project_cards:
         flags = []
@@ -441,12 +501,18 @@ def build_week_plan(project_cards, week_tasks_by_gid, week_start, week_end, now)
     return {
         "weekOf": str(week_start), "weekEnd": str(week_end),
         "generatedAt": now.isoformat(),
+        # True only on the run that built this plan — the AI stage's cue to
+        # write aiActions. resolve_week_plan() flips it off on carry-forward
+        # days so Tue-Fri AI runs leave the plan alone.
+        "freshlyGenerated": True,
         "counts": {
             "overdue": sum(1 for i in items if "overdue" in i["flags"]),
             "dueThisWeek": sum(1 for i in items if "due_this_week" in i["flags"]),
             "atRisk": sum(1 for i in items if "at_risk" in i["flags"]),
             "tasksDue": sum(i["tasksDueTotal"] for i in items),
         },
+        "actions": build_week_actions(items),
+        "aiActions": None,   # <- 5-9 curated imperative bullets, written by the AI stage on Mondays
         "items": items,
     }
 
@@ -467,7 +533,9 @@ def resolve_week_plan(fresh_plan, today, week_start):
         print(f"  ! week-plan carry-forward read failed (regenerating): {exc}", file=sys.stderr)
         return fresh_plan
     if isinstance(prev_plan, dict) and prev_plan.get("weekOf") == str(week_start):
-        return prev_plan
+        # Carried forward: mark it stale so the AI stage knows not to rewrite
+        # aiActions mid-week.
+        return {**prev_plan, "freshlyGenerated": False}
     return fresh_plan
 
 
@@ -514,8 +582,16 @@ AI_GUIDANCE = (
     "(about 22 words max) naming the project and the so-what. Include projectGid whenever the "
     "item is about a single project (enables the dashboard's jump-to-card link); omit it for "
     "cross-portfolio themes. Order by importance, risks first. "
-    "Leave `weekPlan` exactly as it is — it is deterministic (generated Mondays, carried "
-    "forward the rest of the week) and must never be rewritten by the AI stage."
+    "weekPlan: ONLY when weekPlan.freshlyGenerated is true (Monday / first run of the week), "
+    'fill weekPlan.aiActions with 5-9 objects {"kind": "overdue"|"due"|"risk"|"followup", '
+    '"text": "...", "projectGid": "..."} — the team\'s marching orders for the week as short '
+    "imperative bullets, e.g. 'Support Maria on X — decision session Tuesday', 'Follow up with "
+    "Jhara on Y — all five workstreams land Friday', 'Close out Z — seven weeks overdue'. One "
+    "tight sentence each (about 22 words max), grounded ONLY in weekPlan.items (never invent "
+    "work), most urgent first; curate — merge or drop minor items rather than listing all. "
+    "Include projectGid when the bullet is about one project; omit it for grouped bullets. "
+    "NEVER modify weekPlan.items, weekPlan.actions, dates, or counts, and when "
+    "weekPlan.freshlyGenerated is false leave weekPlan entirely untouched."
 )
 
 

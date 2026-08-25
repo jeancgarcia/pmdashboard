@@ -560,14 +560,6 @@ function epmoMonthDay(s) {
   return new Date(y, m - 1, d).toLocaleDateString("en-US", { month: "short", day: "numeric" });
 }
 
-// "2026-08-27" → "Thu, Aug 27" (the weekday is what makes the week plan scannable)
-function epmoWeekday(s) {
-  if (!s) return "";
-  const [y, m, d] = String(s).slice(0, 10).split("-").map(Number);
-  if (!y || !m || !d) return s;
-  return new Date(y, m - 1, d).toLocaleDateString("en-US", { weekday: "short", month: "short", day: "numeric" });
-}
-
 /* One slow or hung Supabase read must never strand a tab on its loading
    spinner (happened live Jul 2026: the EPMO history row stalled server-side
    and the whole tab froze). Timebox each row read and treat a timeout like a
@@ -1105,108 +1097,64 @@ function EpmoOverviewCard({ overview, highlights, projectsByGid, onFocus, classN
   );
 }
 
-/* Week plan: the week's dated commitments — overdue projects, projects due
-   inside the week, health flagged at-risk/off-track, plus open tasks dated
-   Mon-Sun (expand a row to see them). The generator builds this ONLY on
-   Mondays and carries it forward through the week, so it reads as a stable
-   weekly anchor instead of shifting every day; projects completed since
-   Monday pick up a live ✓ from completed.thisWeek. Hidden entirely on
-   payloads that predate the field. */
-const EPMO_WEEK_CHIPS = {
-  overdue:  "text-red-700 dark:text-red-400 bg-red-100/80 dark:bg-red-500/15",
-  due:      "text-blue-700 dark:text-blue-400 bg-blue-100/80 dark:bg-blue-500/15",
-  risk:     "text-amber-700 dark:text-amber-400 bg-amber-100/80 dark:bg-amber-500/15",
-  offtrack: "text-red-700 dark:text-red-400 bg-red-100/80 dark:bg-red-500/15",
-  done:     "text-emerald-700 dark:text-emerald-400 bg-emerald-100/80 dark:bg-emerald-500/15",
+/* Week plan: the team's marching orders for the week as imperative action
+   bullets — "Support Maria on X", "Follow up with Jhara on Y", "Close out Z".
+   Rendered from weekPlan.aiActions (curated by the Monday AI stage) with
+   weekPlan.actions (deterministic template sentences) as the fallback, so the
+   card always says something actionable. The generator builds the plan ONLY
+   on Mondays and carries it forward through the week; bullets whose project
+   completes mid-week pick up a live ✓ from completed.thisWeek. Hidden
+   entirely on payloads that predate the field. */
+const EPMO_WEEK_ACTION_KINDS = {
+  overdue:  { label: "Urgent",    cls: "text-red-700 dark:text-red-400 bg-red-100/80 dark:bg-red-500/15" },
+  due:      { label: "This week", cls: "text-blue-700 dark:text-blue-400 bg-blue-100/80 dark:bg-blue-500/15" },
+  risk:     { label: "Support",   cls: "text-amber-700 dark:text-amber-400 bg-amber-100/80 dark:bg-amber-500/15" },
+  followup: { label: "Follow up", cls: "text-violet-700 dark:text-violet-400 bg-violet-100/80 dark:bg-violet-500/15" },
 };
 
 function EpmoWeekPlanCard({ plan, projectsByGid, completedThisWeek, onFocus, className }) {
-  const [open, setOpen] = useState({});
-  if (!plan || !Array.isArray(plan.items)) return null;
-  const items = plan.items;
+  if (!plan) return null;
+  // Tolerate sloppy AI output the same way the overview does: plain strings,
+  // unknown kinds, missing gids all render fine.
+  const raw = (Array.isArray(plan.aiActions) && plan.aiActions.length > 0) ? plan.aiActions : (plan.actions || []);
+  const actions = raw
+    .map(a => (typeof a === "string" ? { text: a } : a))
+    .filter(a => a && typeof a.text === "string" && a.text.trim());
   const doneGids = new Set((completedThisWeek || []).map(c => c.gid));
-  const doneCount = items.filter(i => doneGids.has(i.projectGid)).length;
-
-  // Badges derive from the priority-ordered `flags`; tasks_due renders as the
-  // expandable count instead of a chip.
-  const chipsFor = (it) => {
-    const chips = [];
-    (it.flags || []).forEach(f => {
-      if (f === "overdue") chips.push({ key: f, label: it.dueOn ? `Overdue · ${epmoMonthDay(it.dueOn)}` : "Overdue", cls: EPMO_WEEK_CHIPS.overdue });
-      else if (f === "due_this_week") chips.push({ key: f, label: `Due ${epmoWeekday(it.dueOn)}`, cls: EPMO_WEEK_CHIPS.due });
-      else if (f === "at_risk") chips.push({ key: f, label: (EPMO_HEALTH[it.health] || EPMO_HEALTH.none).label, cls: it.health === "off_track" ? EPMO_WEEK_CHIPS.offtrack : EPMO_WEEK_CHIPS.risk });
-    });
-    return chips;
-  };
+  const doneCount = actions.filter(a => a.projectGid && doneGids.has(a.projectGid)).length;
 
   return (
-    <div className={`${className} bg-white dark:bg-zinc-800 rounded-2xl border border-zinc-200/60 dark:border-zinc-700/60 px-4 py-3.5`}>
-      <div className="flex items-center justify-between gap-2 flex-wrap mb-1">
+    <div className={`${className} bg-white dark:bg-zinc-800 rounded-2xl border border-zinc-200/60 dark:border-zinc-700/60 px-5 py-4`}>
+      <div className="flex items-center justify-between gap-2 flex-wrap mb-2">
         <div className="flex items-center gap-2">
           <span className="text-[11px] font-bold uppercase tracking-wider text-zinc-400 dark:text-zinc-500">Week plan</span>
           <span className="text-[10px] font-bold uppercase tracking-wider text-violet-500/80 dark:text-violet-300/70 bg-violet-100/80 dark:bg-violet-500/15 px-1.5 py-0.5 rounded-full">Set Mondays</span>
         </div>
         <span className="text-[11px] font-semibold text-zinc-400 dark:text-zinc-500">
-          Week of {epmoMonthDay(plan.weekOf)}{doneCount > 0 ? ` · ${doneCount} of ${items.length} done` : ""}
+          Week of {epmoMonthDay(plan.weekOf)}{doneCount > 0 ? ` · ${doneCount} of ${actions.length} done` : ""}
         </span>
       </div>
-      {items.length === 0 ? (
+      {actions.length === 0 ? (
         <div className="py-5 text-center text-[13px] text-zinc-400 dark:text-zinc-500">Clear runway — nothing overdue, nothing due, and no flagged risks for this week.</div>
       ) : (
-        <ul className="divide-y divide-zinc-100 dark:divide-zinc-700/40">
-          {items.map(it => {
-            const proj = projectsByGid[it.projectGid];
-            const health = EPMO_HEALTH[it.health] || EPMO_HEALTH.none;
-            const done = doneGids.has(it.projectGid);
-            const tasks = it.tasksDue || [];
-            const hasTasks = tasks.length > 0;
-            const isOpen = !!open[it.projectGid];
-            const Row = hasTasks ? "button" : "div";
+        <ul className="space-y-2">
+          {actions.map((a, i) => {
+            const kind = EPMO_WEEK_ACTION_KINDS[a.kind] || EPMO_WEEK_ACTION_KINDS.followup;
+            const proj = a.projectGid ? projectsByGid[a.projectGid] : null;
+            const done = !!(a.projectGid && doneGids.has(a.projectGid));
             return (
-              <li key={it.projectGid}>
-                <Row
-                  onClick={hasTasks ? (() => setOpen(o => ({ ...o, [it.projectGid]: !o[it.projectGid] }))) : undefined}
-                  aria-expanded={hasTasks ? isOpen : undefined}
-                  title={hasTasks ? (isOpen ? "Hide this week's tasks" : "Show this week's tasks") : undefined}
-                  className={`w-full flex items-center gap-2.5 py-2 text-left ${hasTasks ? "" : "cursor-default"}`}
-                >
-                  {hasTasks
-                    ? <svg className={`w-3 h-3 flex-shrink-0 text-zinc-300 dark:text-zinc-600 transition-transform ${isOpen ? "rotate-90" : ""}`} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
-                    : <span className="w-3 flex-shrink-0"></span>}
-                  <span className="w-2 h-2 rounded-full flex-shrink-0" style={{ background: done ? "#22c55e" : health.color }} title={done ? "Completed" : health.label}></span>
-                  <span className="min-w-0 flex-1 truncate text-[13px]">
-                    {proj && !done ? (
-                      <span onClick={(e) => { e.stopPropagation(); onFocus(it.projectGid); }}
-                        onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); e.stopPropagation(); onFocus(it.projectGid); } }}
-                        role="link" tabIndex={0} title="Jump to project card"
-                        className="font-semibold text-zinc-800 dark:text-zinc-100 hover:text-blue-600 dark:hover:text-blue-400 cursor-pointer">{it.project}</span>
-                    ) : (
-                      <span className={`font-semibold ${done ? "line-through text-zinc-400 dark:text-zinc-500" : "text-zinc-800 dark:text-zinc-100"}`}>{it.project}</span>
-                    )}
-                    <span className="text-zinc-400 dark:text-zinc-500"> · {(it.member || "").split(" ")[0]}</span>
-                  </span>
-                  <span className="flex-shrink-0 flex items-center gap-1.5">
-                    {done && <span className={`text-[9.5px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded-full whitespace-nowrap ${EPMO_WEEK_CHIPS.done}`}>✓ Done</span>}
-                    {chipsFor(it).map(c => (
-                      <span key={c.key} className={`text-[9.5px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded-full whitespace-nowrap ${c.cls} ${done ? "opacity-50" : ""}`}>{c.label}</span>
-                    ))}
-                    {hasTasks && <span className="text-[12px] font-semibold text-zinc-400 dark:text-zinc-500 whitespace-nowrap">{it.tasksDueTotal} task{it.tasksDueTotal === 1 ? "" : "s"}</span>}
-                  </span>
-                </Row>
-                {hasTasks && isOpen && (
-                  <ul className="pb-2.5 pl-[30px] space-y-1.5">
-                    {tasks.map((t, i) => (
-                      <li key={i} className="flex items-baseline gap-2 text-[13px] leading-relaxed">
-                        <span className="flex-shrink-0 font-bold text-blue-400">•</span>
-                        <span className="flex-1 min-w-0 text-zinc-600 dark:text-zinc-300">{t.name}{t.assignee ? <span className="text-zinc-400 dark:text-zinc-500"> · {t.assignee.split(" ")[0]}</span> : null}</span>
-                        <span className="flex-shrink-0 text-[12px] text-zinc-400 dark:text-zinc-500 whitespace-nowrap">{epmoWeekday(t.dueOn)}</span>
-                      </li>
-                    ))}
-                    {it.tasksDueTotal > tasks.length && (
-                      <li className="text-[12px] text-zinc-400 dark:text-zinc-500 italic pl-4">+{it.tasksDueTotal - tasks.length} more in Asana</li>
-                    )}
-                  </ul>
-                )}
+              <li key={i} className="flex items-start gap-2.5">
+                <span className={`flex-shrink-0 mt-[3px] w-[76px] text-center text-[9.5px] font-bold uppercase tracking-wider py-0.5 rounded-full ${done ? "text-emerald-700 dark:text-emerald-400 bg-emerald-100/80 dark:bg-emerald-500/15" : kind.cls}`}>{done ? "✓ Done" : kind.label}</span>
+                <span className="min-w-0 text-sm sm:text-[15px] leading-relaxed">
+                  <span className={done ? "line-through text-zinc-400 dark:text-zinc-500" : "text-zinc-700 dark:text-zinc-200"}>{a.text}</span>
+                  {proj && !done && (
+                    <button onClick={() => onFocus(a.projectGid)} title={`Jump to ${proj.name}`}
+                      className="inline-flex items-center gap-0.5 ml-1.5 align-baseline text-[12px] font-bold text-blue-600 dark:text-blue-400 hover:underline">
+                      {epmoShortName(proj.name)}
+                      <svg className="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+                    </button>
+                  )}
+                </span>
               </li>
             );
           })}

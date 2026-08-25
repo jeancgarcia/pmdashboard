@@ -78,18 +78,25 @@ falls back to splitting `aiOverview` into headline + bullets.
 - **AI team overview** — a 1-2 sentence headline (`aiOverview`) plus 3-6 tagged
   highlight bullets (`aiHighlights`: risk / win / watch, each optionally linking
   to its project card).
-- **Week plan** (`weekPlan`, rendered right below the overview) — what the team
-  has on its plate this week: overdue projects, projects due inside the week
-  (Mon-Sun), health flagged at-risk/off-track, and open tasks dated inside the
-  week (expand a row to see them; ≤5 listed per project, sorted by due date).
-  **Deterministic, no AI** — the AI stage is explicitly told to leave it alone.
-  It is generated fresh **only on Monday's run** (RD time); Tue-Fri publishes
-  carry Monday's plan forward untouched from the current row 6, so the list is
-  a stable weekly anchor. Projects completed since Monday pick up a live ✓ in
-  the dashboard via `completed.thisWeek`. Self-healing: if no plan exists for
-  the current week (missed Monday run) or the carry-forward read fails, the run
-  regenerates one anchored to that week's Monday instead of leaving it empty.
-  Dashboards reading payloads that predate the field simply hide the section.
+- **Week plan** (`weekPlan`, rendered right below the overview) — the team's
+  marching orders for the week as **imperative action bullets** ("Support Maria
+  on X — decision session Tuesday", "Follow up with Jhara on Y — all five
+  workstreams land Friday"), each tagged Urgent / This week / Support / Follow
+  up with a jump-to-card link. The dashboard renders `weekPlan.aiActions`
+  (5-9 curated bullets the AI stage writes **only when
+  `weekPlan.freshlyGenerated` is true**, i.e. Monday's run — see
+  `_aiGuidance`), falling back to `weekPlan.actions` (deterministic template
+  sentences built from `weekPlan.items`) whenever the AI stage didn't run.
+  The underlying `items` are deterministic: overdue projects, projects due
+  inside the week (Mon-Sun), health flagged at-risk/off-track, and open tasks
+  dated inside the week (≤5 per project). Generated fresh **only on Monday's
+  run** (RD time); Tue-Fri publishes carry Monday's plan forward untouched
+  (with `freshlyGenerated` flipped false so mid-week AI runs leave it alone),
+  making the list a stable weekly anchor. Bullets whose project completes
+  mid-week pick up a live ✓ via `completed.thisWeek`. Self-healing: a missed
+  Monday run or failed carry-forward read regenerates the plan anchored to
+  that week's Monday instead of leaving it empty. Dashboards reading payloads
+  that predate the field simply hide the section.
 - KPIs: open / needs-attention / at-risk.
 - Chart: open-by-health doughnut (the history line chart was removed Aug 2026).
 - Latest activity, **grouped by project** (task movements in the last 3 days;
