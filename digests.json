@@ -1,5 +1,146 @@
 [
   {
+    "id": "eod-2026-08-26",
+    "type": "eod",
+    "date": "Wednesday, August 26 - End of Day",
+    "isoDate": "2026-08-26",
+    "greeting": "Good evening, Jean. The carry-forward list closed out today, while Amazon Connect testing and business controls remain the main follow-through for tomorrow. The EPMO Team Meeting was canceled, giving the afternoon a little more room around the remaining sessions.",
+    "sections": [
+      {
+        "title": "Completed Today",
+        "info": true,
+        "items": [
+          {
+            "id": "eod-0826-done-1",
+            "label": "Set project coverage while Sara is out",
+            "detail": "The coverage work across Preparers’ Certification, Criminal Research, Knowledge Management, and Biometrics is marked complete."
+          },
+          {
+            "id": "eod-0826-done-2",
+            "label": "Closed the Tuesday attendance conflicts",
+            "detail": "The follow-up on missed or delegated Amazon Connect and EPMO updates is marked complete."
+          },
+          {
+            "id": "eod-0826-done-3",
+            "label": "Moved the NTA automated task through the CoE intake",
+            "detail": "The follow-up on the routed intake and its September 1 timing is marked complete."
+          },
+          {
+            "id": "eod-0826-done-4",
+            "label": "Finalized the change-management staffing setup",
+            "detail": "The process-engineer and PM-allocation follow-up is marked complete."
+          },
+          {
+            "id": "eod-0826-done-5",
+            "label": "Set the permanent Contigo IVR path",
+            "detail": "The owner and delivery-target follow-up for the permanent IVR is marked complete."
+          },
+          {
+            "id": "eod-0826-done-6",
+            "label": "Closed the Incident Response stakeholder follow-through",
+            "detail": "The bucket-owner response and implementation-decision follow-up is marked complete."
+          },
+          {
+            "id": "eod-0826-done-7",
+            "label": "Reviewed the Team Lead Suspensions intake",
+            "detail": "The review of whether the request belongs in the CoE path is marked complete."
+          }
+        ]
+      },
+      {
+        "title": "Still Open",
+        "info": false,
+        "items": [
+          {
+            "id": "eod-0826-open-1",
+            "taskId": "task-20260826-amazon-connect-business-controls",
+            "label": "Track the Amazon Connect business-control decisions",
+            "detail": "Confirm the business process and training for Auto Answer, choose an appropriate maximum queue wait time, capture the Auto Answer risk in the RAID log, and assess the two-week AWS timeline impact.",
+            "urgent": true
+          },
+          {
+            "id": "eod-0826-open-2",
+            "taskId": "task-20260826-track-amazon-connect-uat",
+            "label": "Keep Amazon Connect UAT progress visible",
+            "detail": "Testing is mandatory. Track daily completion, participant feedback and bugs in a shared location, and carry unresolved access or support questions into Thursday’s training and project sync.",
+            "urgent": true
+          },
+          {
+            "id": "eod-0826-open-3",
+            "taskId": "task-20260826-resolve-venn-split-tunnel",
+            "label": "Resolve the Venn split-tunnel rollout discrepancy",
+            "detail": "Hilary reported that Venn said the configuration had been deployed to all users on August 18, but it had not. Confirm the actual rollout status and the recovery owner."
+          },
+          {
+            "id": "eod-0826-open-4",
+            "taskId": "task-20260826-complete-leadup-module-2-survey",
+            "label": "Complete the LeadUp Module 2 follow-up survey",
+            "detail": "Byron sent another reminder for the Team Development follow-up survey, which is still awaiting Jean’s response."
+          },
+          {
+            "id": "eod-0826-open-5",
+            "taskId": "task-20260826-clear-overdue-rippling-task",
+            "label": "Clear the overdue Rippling task",
+            "detail": "Rippling sent a same-day notice that one firm task remains overdue; review and complete or route it."
+          }
+        ]
+      },
+      {
+        "title": "Cancelled Today",
+        "info": true,
+        "items": [
+          {
+            "id": "eod-0826-cancel-1",
+            "label": "EPMO Team Meeting was canceled",
+            "detail": "The 2:00 PM EPMO Team Meeting appeared on the calendar as canceled."
+          }
+        ]
+      },
+      {
+        "title": "Key Decisions",
+        "info": true,
+        "items": [
+          {
+            "id": "eod-0826-decision-1",
+            "label": "Nicolas will serve as PM for Knowledge Management",
+            "detail": "Jean’s meeting note says Nicolas is assigned as the project manager so the work can continue with the right project structure."
+          },
+          {
+            "id": "eod-0826-decision-2",
+            "label": "Amazon Connect UAT participation is mandatory",
+            "detail": "Nadia clarified in Teams that the UAT is required and directed participants to Thiago for questions."
+          }
+        ]
+      },
+      {
+        "title": "Tomorrow Preview",
+        "info": true,
+        "items": [
+          {
+            "id": "eod-0826-thu-1",
+            "label": "9:00 AM - SMS Automation Optimization status",
+            "detail": "Review weekly progress, upcoming priorities, resources, risks, and blockers."
+          },
+          {
+            "id": "eod-0826-thu-2",
+            "label": "10:00-11:00 AM - Amazon Connect training overlaps the Knowledge Management and SVC touchpoints",
+            "detail": "Amazon Connect training starts at 10:00 AM. Knowledge Management Project Sync and the SVC standup both begin at 10:30 AM, so decide coverage before the morning stack."
+          },
+          {
+            "id": "eod-0826-thu-3",
+            "label": "11:00 AM-2:30 PM - Project and leadership follow-through",
+            "detail": "Amazon Connect weekly sync starts at 11:00 AM, followed by the BCP/Incident Response weekly meeting at 12:30 PM and the Thiago 1:1 at 2:30 PM."
+          },
+          {
+            "id": "eod-0826-thu-4",
+            "label": "4:00 PM - Amazon Connect UAT overlaps Tudo Bem’s Weekly Meeting",
+            "detail": "The second UAT working session and Tudo Bem’s Weekly Meeting are both scheduled from 4:00 to 5:00 PM; choose live coverage and protect the testing work."
+          }
+        ]
+      }
+    ]
+  },
+  {
     "id": "eod-2026-08-25",
     "type": "eod",
     "date": "Tuesday, August 25 - End of Day",
