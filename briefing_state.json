@@ -49,6 +49,7 @@
     "task-20260727-leadup-module-survey": true,
     "task-20260727-travel-docs-sms-halo": true,
     "task-20260806-replan-vawa-pa21-uat": true,
+    "task-20260825-follow-up-hassan-nta": true,
     "task-20260619-work-smart-goals-kpis": true,
     "task-20260708-send-pm-meeting-notes": true,
     "task-20260728-resolve-1030-conflict": true,
@@ -93,6 +94,7 @@
     "task-20260807-prepare-sms-legal-handoff": true,
     "task-20260810-clear-harassment-training": true,
     "task-20260821-lock-amazon-uat-readiness": true,
+    "task-20260825-resolve-tuesday-conflicts": true,
     "task-20260609-close-coe-guide-follow-ups": true,
     "task-20260609-confirm-kpi-final-approval": true,
     "task-20260610-land-coe-owners-next-steps": true,
@@ -151,6 +153,7 @@
     "task-20260805-set-agentforce-capacity-plan": true,
     "task-20260807-reset-amazon-connect-go-live": true,
     "task-20260820-resolve-noon-triple-conflict": true,
+    "task-20260824-assign-sara-project-coverage": true,
     "task-20260610-review-court-ead-deliverables": true,
     "task-20260615-prepare-epmo-portfolio-review": true,
     "task-20260617-check-litify-field-audit-path": true,
@@ -230,6 +233,7 @@
     "task-20260706-incident-response-incident-guides": true,
     "task-20260716-track-epmo-automation-halo-ticket": true,
     "task-20260728-prepare-amazon-connect-escalation": true,
+    "task-20260825-decide-change-management-staffing": true,
     "task-20260609-decide-expired-staff-aug-recording": true,
     "task-20260609-monitor-daca-i90-remaining-it-work": true,
     "task-20260610-decide-discovery-recording-restore": true,
@@ -697,5 +701,5 @@
     }
   ],
   "assigneeOverrides": {},
-  "lastModified": 1787662684123
+  "lastModified": 1787751033079
 }
