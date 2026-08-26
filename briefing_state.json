@@ -57,6 +57,7 @@
     "task-20260807-lead-bd-bonus-kickoff": true,
     "task-20260810-resubmit-laura-review": true,
     "task-20260820-reply-admin-candidate": true,
+    "task-20260825-review-eugenia-intake": true,
     "task-20260616-coe-playbook-follow-up": true,
     "task-20260616-staff-aug-it-alignment": true,
     "task-20260625-track-baesman-slq-path": true,
@@ -95,6 +96,7 @@
     "task-20260810-clear-harassment-training": true,
     "task-20260821-lock-amazon-uat-readiness": true,
     "task-20260825-resolve-tuesday-conflicts": true,
+    "task-20260825-set-contigo-permanent-ivr": true,
     "task-20260609-close-coe-guide-follow-ups": true,
     "task-20260609-confirm-kpi-final-approval": true,
     "task-20260610-land-coe-owners-next-steps": true,
@@ -270,6 +272,7 @@
     "task-20260720-watch-ice-preparedness-critical-path": true,
     "task-20260728-clear-legal-change-management-owners": true,
     "task-20260806-confirm-amazon-connect-uat-readiness": true,
+    "task-20260825-email-incident-response-stakeholders": true,
     "task-20260612-check-weekly-executive-project-thread": true,
     "task-20260623-review-aos-rejection-downstream-tasks": true,
     "task-20260626-review-slq-baesman-amendment-language": true,
@@ -701,5 +704,5 @@
     }
   ],
   "assigneeOverrides": {},
-  "lastModified": 1787751033079
+  "lastModified": 1787772816945
 }
