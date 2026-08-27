@@ -405,7 +405,18 @@
     }
   },
   "edits": {},
-  "reminders": [],
+  "reminders": [
+    {
+      "id": "rem-1787864806253",
+      "text": "limpiar asana con spreadsheet de Armando",
+      "addedAt": "2026-08-27T21:06:46.253Z"
+    },
+    {
+      "id": "rem-1787867738477",
+      "text": "Escribirle a Nadia para saber que paso ayer",
+      "addedAt": "2026-08-27T21:55:38.477Z"
+    }
+  ],
   "reminderHistory": [
     {
       "id": "rem-1748998800000",
@@ -705,5 +716,5 @@
     }
   ],
   "assigneeOverrides": {},
-  "lastModified": 1787852002481
+  "lastModified": 1787867741170
 }
