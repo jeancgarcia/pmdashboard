@@ -1,5 +1,126 @@
 [
   {
+    "id": "daily-2026-08-27-morning",
+    "type": "daily",
+    "date": "Morning - Thursday, August 27",
+    "isoDate": "2026-08-27",
+    "greeting": "Good morning, Jean. Today is Thursday, August 27, with 12 timed calendar entries, two direct collisions, three urgent priorities, and no eligible carry-over. Recover Amazon Connect UAT visibility, settle its business-control and AWS risks in the noon sync, and move Laura’s schedule dispute into an HR-led resolution. The Legal Request Tool also goes live with the OAA pilot today, so early ownership and status discipline matter.",
+    "sections": [
+      {
+        "title": "Today's Schedule",
+        "info": true,
+        "items": [
+          {
+            "id": "thu-0827-sch-01",
+            "label": "9:00-10:00 AM - SMS status and Amazon training",
+            "detail": "Use the SMS Automation review to surface blockers, then move directly into the Amazon Connect training touchpoint with the UAT recovery plan ready."
+          },
+          {
+            "id": "thu-0827-sch-02",
+            "label": "10:30-11:00 AM - Knowledge Management conflicts with SVC standup",
+            "detail": "You organized the Knowledge Management sync to establish Nicolas’s PM structure. Delegate SVC coverage or capture its UAT and blocker updates asynchronously."
+          },
+          {
+            "id": "thu-0827-sch-03",
+            "label": "11:00 AM-2:00 PM - Amazon, protected work, and Incident Response",
+            "detail": "The Amazon Connect weekly sync is the key decision forum. Follow it with the protected noon block and the 1:30 PM Incident Response touchpoint."
+          },
+          {
+            "id": "thu-0827-sch-04",
+            "label": "2:30-4:00 PM - Thiago 1:1 and focus time",
+            "detail": "Use the Thiago 1:1 to confirm UAT ownership, daily reporting, and the live-support plan, then protect the 3:00 PM hour for unresolved follow-through."
+          },
+          {
+            "id": "thu-0827-sch-05",
+            "label": "4:00-5:00 PM - Amazon UAT conflicts with Tudo Bem weekly",
+            "detail": "Choose live UAT support or name a delegate for the team meeting. The testing block needs active help because documented completion remains at 0%."
+          }
+        ]
+      },
+      {
+        "title": "Action Items",
+        "info": false,
+        "items": [
+          {
+            "id": "thu-0827-ai-01",
+            "taskId": "task-20260826-track-amazon-connect-uat",
+            "label": "Recover Amazon Connect UAT visibility today",
+            "detail": "Only 11 of 21 testers attended and the workbook still shows no Pass, Fail, or Blocked results. Convert today’s working block to live support, chase access confirmations, and require testers to record each outcome on their individual tabs.",
+            "urgent": true
+          },
+          {
+            "id": "thu-0827-ai-02",
+            "taskId": "task-20260826-amazon-connect-business-controls",
+            "label": "Lock the Amazon Connect controls and AWS risk path",
+            "detail": "At the noon sync, decide the Auto Answer process and training controls, set an acceptable queue hold time, and confirm the timeline impact from 1600-number provisioning and spoofing approval. Keep the September 18 go/no-go date visible.",
+            "urgent": true
+          },
+          {
+            "id": "thu-0827-ai-03",
+            "taskId": "task-20260827-resolve-laura-schedule",
+            "label": "Move Laura’s schedule dispute into an HR-led resolution",
+            "detail": "Rippling has routed the case to an HR Advisor, and Laura disputes the schedule change based on recruiting and Rippling records. Schedule the joint HR conversation, preserve the documented evidence, and avoid changing the working arrangement until HR clarifies the contract and hours.",
+            "urgent": true
+          },
+          {
+            "id": "thu-0827-ai-04",
+            "taskId": "task-20260827-resolve-thursday-conflicts",
+            "label": "Set coverage for both Thursday collisions",
+            "detail": "Resolve the 10:30 AM Knowledge Management/SVC overlap and the 4:00 PM UAT/Tudo Bem overlap before the first conflict begins. Protect direct UAT support unless another owner is explicit."
+          },
+          {
+            "id": "thu-0827-ai-05",
+            "taskId": "task-20260827-monitor-legal-request-pilot",
+            "label": "Stabilize the Legal Request Tool pilot on day one",
+            "detail": "The OAA pilot starts today and the Excel tracker is closed. Watch the first submissions, make sure each request has a legal owner and current status, and capture friction while changes are still inexpensive."
+          }
+        ]
+      },
+      {
+        "title": "Out of Office",
+        "info": true,
+        "items": [
+          {
+            "id": "thu-0827-ooo-01",
+            "label": "Sara Watson is out through Friday",
+            "detail": "Her calendar block runs through August 28. Keep urgent project and coverage decisions with the active owners already assigned."
+          },
+          {
+            "id": "thu-0827-ooo-02",
+            "label": "Santiago Arango is on vacation through Friday",
+            "detail": "Plan around his absence for Phase 2 and Legal Change Management follow-through."
+          }
+        ]
+      },
+      {
+        "title": "Tomorrow Preview",
+        "info": true,
+        "items": [
+          {
+            "id": "thu-0827-tmr-01",
+            "label": "9:30 AM-noon - SVC standup and protected work",
+            "detail": "Use the standup to confirm UAT recovery, then protect the noon block for EOW preparation."
+          },
+          {
+            "id": "thu-0827-tmr-02",
+            "label": "1:00-3:00 PM - EPMO and Salesforce operating block",
+            "detail": "EPMO EOW, the Salesforce program standup, and the IT pipeline sync run back-to-back; arrive with project decisions and UAT status already reconciled."
+          },
+          {
+            "id": "thu-0827-tmr-03",
+            "label": "3:00 PM - Sprint review conflicts with executive slide update",
+            "detail": "Choose the review that needs Jean live or name coverage before Friday afternoon."
+          },
+          {
+            "id": "thu-0827-tmr-04",
+            "label": "4:00-5:00 PM - Amazon concurrent stress test",
+            "detail": "Use Friday’s final UAT block to test simultaneous activity and close any remaining evidence gaps before the weekend."
+          }
+        ]
+      }
+    ]
+  },
+  {
     "id": "eod-2026-08-26",
     "type": "eod",
     "date": "Wednesday, August 26 - End of Day",
