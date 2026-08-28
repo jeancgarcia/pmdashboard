@@ -1,5 +1,145 @@
 [
   {
+    "id": "daily-2026-08-28-morning",
+    "type": "daily",
+    "date": "Morning - Friday, August 28",
+    "isoDate": "2026-08-28",
+    "greeting": "Good morning, Jean. Today is Friday, August 28, with seven live timed calendar blocks, one 3:00 PM collision, three urgent priorities, two reminders, and no eligible carry-over. Stabilize Amazon Connect call routing before the 4:00 PM stress test, finish the migration-list review by EOD, and protect coverage for the Sprint review versus executive deck update. The canceled 11:00 AM standup creates useful preparation time before the afternoon stack.",
+    "sections": [
+      {
+        "title": "Reminders",
+        "info": false,
+        "items": [
+          {
+            "id": "fri-0828-rem-01",
+            "taskId": "task-20260828-clean-asana-armando-sheet",
+            "label": "limpiar asana con spreadsheet de Armando",
+            "detail": "Use the 11:00 AM opening and protected noon block to reconcile Armando's spreadsheet against Asana, close stale items, and leave one current source."
+          },
+          {
+            "id": "fri-0828-rem-02",
+            "taskId": "task-20260828-follow-up-nadia-yesterday",
+            "label": "Escribirle a Nadia para saber que paso ayer",
+            "detail": "Message Nadia early to clarify what happened yesterday before the 1:00 PM EPMO EOW check-in turns it into a live dependency."
+          }
+        ]
+      },
+      {
+        "title": "Today's Schedule",
+        "info": true,
+        "items": [
+          {
+            "id": "fri-0828-sch-01",
+            "label": "10:30-11:00 AM - SVC standup",
+            "detail": "Use the standup to confirm the inbound-routing defect owner, the latest test results, and what must be ready for the 4:00 PM stress test."
+          },
+          {
+            "id": "fri-0828-sch-02",
+            "label": "11:00 AM-1:00 PM - Open runway and protected work",
+            "detail": "The Salesforce Program Standup was canceled. Use the released half-hour and the noon block for the migration list, reminders, and UAT evidence before meetings resume."
+          },
+          {
+            "id": "fri-0828-sch-03",
+            "label": "1:00-3:00 PM - EPMO EOW and project pipeline",
+            "detail": "Bring reconciled program status into the EOW check-in, then use the 2:30 PM pipeline sync to settle intake priorities, BA assignment, and upcoming UAT needs."
+          },
+          {
+            "id": "fri-0828-sch-04",
+            "label": "3:00-3:30 PM - Sprint review conflicts with executive deck update",
+            "detail": "Choose where Jean is needed live and assign coverage for the other session before the 2:30 PM pipeline meeting ends."
+          },
+          {
+            "id": "fri-0828-sch-05",
+            "label": "4:00-5:00 PM - Amazon Connect concurrent stress test",
+            "detail": "Treat this as the day's technical close: retest inbound routing, capture pass/fail evidence, and name owners for anything that cannot be resolved before the weekend."
+          }
+        ]
+      },
+      {
+        "title": "Action Items",
+        "info": false,
+        "items": [
+          {
+            "id": "fri-0828-ai-01",
+            "taskId": "task-20260827-resolve-amazon-uat-call-routing",
+            "label": "Stabilize Amazon Connect inbound call routing before 4:00 PM",
+            "detail": "The UAT workbook shows 2% recorded completion with 2 passes and 16 failures. The inbound-routing defect is in the RAID log and Salesforce support is investigating; confirm the cause, retest the affected scenarios, and keep live support available for the stress test.",
+            "urgent": true
+          },
+          {
+            "id": "fri-0828-ai-02",
+            "taskId": "task-20260828-complete-amazon-migration-list",
+            "label": "Finish the Amazon Connect migration-list review by EOD",
+            "detail": "Filter the workbook to Jean's assigned employees, complete missing Yes/No fields in columns G-K, note reporting or employment corrections in column L, and reply to Thiago when the review is complete.",
+            "urgent": true
+          },
+          {
+            "id": "fri-0828-ai-03",
+            "taskId": "task-20260828-resolve-friday-3pm-conflict",
+            "label": "Set coverage for the 3:00 PM review collision",
+            "detail": "The Litify Sprint 16 stakeholder review and Executive Project Status Slide Update fully overlap. Decide which needs Jean live and have the other owner capture decisions and follow-ups before the afternoon stack.",
+            "urgent": true
+          },
+          {
+            "id": "fri-0828-ai-04",
+            "taskId": "task-20260828-align-quality-intake-scope",
+            "label": "Set one path for Licelot's Quality project requests",
+            "detail": "Teams indicates similar requests are arriving through multiple fronts, the scope may span more than two sprints, and ownership is still unclear. Prepare a single prioritized scope and intake path before Monday's 2:30 PM Quality Projects review."
+          }
+        ]
+      },
+      {
+        "title": "Emails Awaiting Reply",
+        "info": false,
+        "items": [
+          {
+            "id": "fri-0828-em-01",
+            "taskId": "task-20260828-review-eduanny-sop-access",
+            "label": "Decide Eduanny Suero's SOP access request",
+            "detail": "SharePoint is waiting for an approve-or-decline decision on the Travel Permit client-contact SOP. Confirm the business need and appropriate permission before granting access."
+          }
+        ]
+      },
+      {
+        "title": "Out of Office",
+        "info": true,
+        "items": [
+          {
+            "id": "fri-0828-ooo-01",
+            "label": "Sara Watson and Santiago Arango are out through today",
+            "detail": "Keep EPMO and project follow-through with the active owners already covering their work."
+          },
+          {
+            "id": "fri-0828-ooo-02",
+            "label": "Jhara Ochoa is out today",
+            "detail": "Plan around her absence for Contigo and other portfolio follow-through; capture decisions she will need on return."
+          }
+        ]
+      },
+      {
+        "title": "Monday Preview",
+        "info": true,
+        "items": [
+          {
+            "id": "fri-0828-mon-01",
+            "label": "8:00 AM-1:00 PM - Timecards, SVC, and protected work",
+            "detail": "Approve timecards early, use the 10:30 AM standup for weekend UAT status, and protect the noon hour for follow-through."
+          },
+          {
+            "id": "fri-0828-mon-02",
+            "label": "2:00-3:00 PM - BD portfolio and Quality project decisions",
+            "detail": "Move directly from the BD review into the Quality Projects session with priorities, duplicate-intake concerns, scope, and ownership already organized."
+          },
+          {
+            "id": "fri-0828-mon-03",
+            "label": "3:00-5:00 PM - Maria 1:1 and Amazon UAT",
+            "detail": "Use the Maria 1:1 to lock portfolio roadblocks and next steps, then carry unresolved Amazon issues into the 4:00 PM working session."
+          }
+        ]
+      }
+    ]
+  },
+  {
     "id": "eod-2026-08-27",
     "type": "eod",
     "date": "Thursday, August 27 - End of Day",

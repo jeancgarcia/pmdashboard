@@ -405,18 +405,7 @@
     }
   },
   "edits": {},
-  "reminders": [
-    {
-      "id": "rem-1787864806253",
-      "text": "limpiar asana con spreadsheet de Armando",
-      "addedAt": "2026-08-27T21:06:46.253Z"
-    },
-    {
-      "id": "rem-1787867738477",
-      "text": "Escribirle a Nadia para saber que paso ayer",
-      "addedAt": "2026-08-27T21:55:38.477Z"
-    }
-  ],
+  "reminders": [],
   "reminderHistory": [
     {
       "id": "rem-1748998800000",
@@ -713,8 +702,24 @@
       "addedAt": "2026-08-24T22:23:26.364Z",
       "shownInDigestId": "daily-2026-08-25-morning",
       "archivedAt": "2026-08-25T12:05:55.468Z"
+    },
+    {
+      "id": "rem-1787864806253",
+      "text": "limpiar asana con spreadsheet de Armando",
+      "addedAt": "2026-08-27T21:06:46.253Z",
+      "shownInDigestId": "daily-2026-08-28-morning",
+      "archivedAt": "2026-08-28T12:04:44.674Z",
+      "lastModified": 1787918684674
+    },
+    {
+      "id": "rem-1787867738477",
+      "text": "Escribirle a Nadia para saber que paso ayer",
+      "addedAt": "2026-08-27T21:55:38.477Z",
+      "shownInDigestId": "daily-2026-08-28-morning",
+      "archivedAt": "2026-08-28T12:04:44.674Z",
+      "lastModified": 1787918684674
     }
   ],
   "assigneeOverrides": {},
-  "lastModified": 1787867741170
+  "lastModified": 1787918684674
 }
