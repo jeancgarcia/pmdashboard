@@ -99,6 +99,7 @@
     "task-20260821-lock-amazon-uat-readiness": true,
     "task-20260825-resolve-tuesday-conflicts": true,
     "task-20260825-set-contigo-permanent-ivr": true,
+    "task-20260828-follow-up-nadia-yesterday": true,
     "task-20260609-close-coe-guide-follow-ups": true,
     "task-20260609-confirm-kpi-final-approval": true,
     "task-20260610-land-coe-owners-next-steps": true,
@@ -721,5 +722,5 @@
     }
   ],
   "assigneeOverrides": {},
-  "lastModified": 1787918684674
+  "lastModified": 1787930548919
 }
