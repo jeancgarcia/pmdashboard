@@ -1,5 +1,124 @@
 [
   {
+    "id": "eod-2026-08-31",
+    "type": "eod",
+    "date": "Monday, August 31 - End of Day",
+    "isoDate": "2026-08-31",
+    "greeting": "Good evening, Jean. Monday closed with the dashboard priorities still open, while direct email evidence confirms one completed payroll escalation and one firm project hold. Tomorrow is meeting-heavy and includes several overlaps that need early coverage decisions.",
+    "sections": [
+      {
+        "title": "Completed Today",
+        "info": true,
+        "items": [
+          {
+            "id": "eod-0831-done-1",
+            "label": "Raised the paystub withholding discrepancy with Payroll",
+            "detail": "Jean sent Payroll a revision request after finding an ISR deduction of RD$46,194.98 on the latest paystub, materially higher than prior months."
+          }
+        ]
+      },
+      {
+        "title": "Still Open",
+        "info": false,
+        "items": [
+          {
+            "id": "eod-0831-open-1",
+            "taskId": "task-20260827-resolve-amazon-uat-call-routing",
+            "label": "Set the Amazon Connect UAT recovery decision",
+            "detail": "Testing continued this afternoon, but the recovery path remains open. Validate routing and time-zone fixes, confirm ownership for number provisioning and spoofing, and decide whether UAT continues through Wednesday, September 2.",
+            "urgent": true
+          },
+          {
+            "id": "eod-0831-open-2",
+            "taskId": "task-20260828-align-quality-intake-scope",
+            "label": "Prioritize Licelot's Quality project portfolio",
+            "detail": "Rank the five named requests by business impact and set one intake path with realistic PM and PE capacity before work is assigned.",
+            "urgent": true
+          },
+          {
+            "id": "eod-0831-open-3",
+            "taskId": "task-20260828-complete-amazon-migration-list",
+            "label": "Close the remaining Amazon Connect migration-list gaps",
+            "detail": "Confirm the remaining leaders, preserve the N/A plus Reporting guidance for non-calling users, and lock the production provisioning list.",
+            "urgent": true
+          },
+          {
+            "id": "eod-0831-open-4",
+            "taskId": "task-20260831-clear-sales-revenue-cloud-owners",
+            "label": "Clear the stalled Sales and Revenue Cloud dependencies",
+            "detail": "Confirm the Revenue Cloud owner, bring Deepak and Tim into the Sales Cloud work, secure an invoice record in sandbox, and set firm due dates."
+          },
+          {
+            "id": "eod-0831-open-5",
+            "taskId": "task-20260831-set-sprint17-priorities",
+            "label": "Resolve the Sprint 17 capacity tradeoff",
+            "detail": "Anu reported that EPMO projects already consume almost all available sprint capacity while Biographical deadline stories still need to be added. Confirm what will move or be reprioritized."
+          },
+          {
+            "id": "eod-0831-open-6",
+            "taskId": "task-20260828-clean-asana-armando-sheet",
+            "label": "Limpiar Asana con el spreadsheet de Armando",
+            "detail": "Reconcile Armando's spreadsheet against Asana, close stale entries, and leave one current operating view."
+          },
+          {
+            "id": "eod-0831-open-7",
+            "taskId": "task-20260828-review-eduanny-sop-access",
+            "label": "Decide Eduanny Suero's SOP access request",
+            "detail": "Confirm the business need and appropriate permission for the Travel Permit client-contact SOP, then approve or decline the outstanding SharePoint request."
+          },
+          {
+            "id": "eod-0831-open-8",
+            "taskId": "task-20260831-clarify-staff-aug-document",
+            "label": "Clarify Licelot's Staff Aug document access and next step",
+            "detail": "Licelot reported that she cannot access the shared Staff Aug Object-fields document and asked what action is expected from her. Restore access and answer the action-item question."
+          }
+        ]
+      },
+      {
+        "title": "Key Decisions",
+        "info": true,
+        "items": [
+          {
+            "id": "eod-0831-decision-1",
+            "label": "TRACE Minor Improvements is on hold pending support documents",
+            "detail": "Mar told Yuri that implementation will remain paused until the required documents arrive, with a September 11 deadline before the request is closed."
+          }
+        ]
+      },
+      {
+        "title": "Tomorrow Preview",
+        "info": true,
+        "items": [
+          {
+            "id": "eod-0831-tue-1",
+            "label": "10:30 AM-noon - Jhara 1:1, SVC, and self-review training",
+            "detail": "The Jhara 1:1 and SVC standup overlap at 10:30 AM. The English self-review training begins at 11:00 AM and is one of the offered live sessions."
+          },
+          {
+            "id": "eod-0831-tue-2",
+            "label": "Noon - PM working schedule discussion replaces the protected block",
+            "detail": "Erin scheduled a PM working schedule meeting for noon, when the calendar still shows blocked space."
+          },
+          {
+            "id": "eod-0831-tue-3",
+            "label": "1:00 PM - Knowledge Management and Case Management overlap",
+            "detail": "The Knowledge Management EPMO alignment and Case Management CoE Process Overview start at the same time, so coverage needs to be assigned."
+          },
+          {
+            "id": "eod-0831-tue-4",
+            "label": "2:00-4:00 PM - EPMO leadership and Nicolas follow-through",
+            "detail": "Carry Monday's portfolio decisions into the 2:00 PM EPMO TL Weekly Catch Up and the 3:30 PM Nicolas 1:1."
+          },
+          {
+            "id": "eod-0831-tue-5",
+            "label": "4:00 PM - Amazon UAT final session conflicts with CSC portfolio review",
+            "detail": "Choose coverage in advance: the Amazon session is the final defect-submission window, while the CSC portfolio review begins at the same time."
+          }
+        ]
+      }
+    ]
+  },
+  {
     "id": "daily-2026-08-31-morning",
     "type": "daily",
     "date": "Morning - Monday, August 31",
