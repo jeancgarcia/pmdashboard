@@ -1,5 +1,141 @@
 [
   {
+    "id": "daily-2026-09-01-morning",
+    "type": "daily",
+    "date": "Morning - Tuesday, September 1",
+    "isoDate": "2026-09-01",
+    "greeting": "Good morning, Jean. Today is Tuesday, September 1, with 11 timed calendar blocks, three urgent priorities, six carried-over items, and no active reminders. The day turns on validating the Amazon Connect routing fix during the final UAT window, resolving the Sprint 17 capacity tradeoff before the 2:00 PM EPMO catch-up, and assigning coverage for the 10:30 AM, 1:00 PM, and 4:00 PM collisions. Amazon UAT reached 21%; the language-setting fix may remove a major routing failure, but it still needs retesting before defects close. Dashboard state was last modified Friday, so completion status may not reflect changes made since then.",
+    "sections": [
+      {
+        "title": "Carried Over",
+        "info": false,
+        "items": [
+          {
+            "id": "tue-0901-co-01",
+            "taskId": "task-20260827-resolve-amazon-uat-call-routing",
+            "label": "Set the Amazon Connect UAT recovery decision",
+            "detail": "Recorded completion reached 21%, and the language-setting defect that blocked calls for users without the English skill was reported fixed. Retest the affected scenarios, close or assign remaining defects, and use the 4:00 PM final working session to set the recovery recommendation.",
+            "flag": "carried",
+            "urgent": true
+          },
+          {
+            "id": "tue-0901-co-02",
+            "taskId": "task-20260828-align-quality-intake-scope",
+            "label": "Prioritize Licelot's Quality project portfolio",
+            "detail": "The Quality review surfaced five requests spanning declarations, cross-client data issues, wrong-client escalation, Team Lead suspensions, and Intake Attorney task-set work. Rank the requests by business impact and set one intake path with realistic PM and PE capacity.",
+            "flag": "carried",
+            "urgent": true
+          },
+          {
+            "id": "tue-0901-co-03",
+            "taskId": "task-20260828-complete-amazon-migration-list",
+            "label": "Close the remaining Amazon Connect migration-list gaps",
+            "detail": "Confirm the remaining leaders, preserve the N/A plus Reporting guidance for non-calling users, and lock the production provisioning list before UAT findings become migration blockers.",
+            "flag": "carried",
+            "urgent": true
+          },
+          {
+            "id": "tue-0901-co-04",
+            "taskId": "task-20260828-clean-asana-armando-sheet",
+            "label": "Limpiar Asana con el spreadsheet de Armando",
+            "detail": "Use the noon protected block to reconcile Armando's spreadsheet against Asana, close stale entries, and leave one current operating view before the afternoon meeting run.",
+            "flag": "carried"
+          },
+          {
+            "id": "tue-0901-co-05",
+            "taskId": "task-20260828-review-eduanny-sop-access",
+            "label": "Decide Eduanny Suero's SOP access request",
+            "detail": "Confirm the business need and appropriate permission for the Travel Permit client-contact SOP, then approve or decline the outstanding SharePoint request.",
+            "flag": "carried"
+          },
+          {
+            "id": "tue-0901-co-06",
+            "taskId": "task-20260831-clear-sales-revenue-cloud-owners",
+            "label": "Clear the stalled Sales and Revenue Cloud dependencies",
+            "detail": "Confirm the Revenue Cloud owner, bring Deepak and Tim into the Sales Cloud work, secure an invoice record in sandbox, and set firm due dates at the next portfolio checkpoint.",
+            "flag": "carried"
+          }
+        ]
+      },
+      {
+        "title": "Today's Schedule",
+        "info": true,
+        "items": [
+          {
+            "id": "tue-0901-sch-01",
+            "label": "10:30-11:00 AM - Jhara 1:1 conflicts with SVC standup",
+            "detail": "Choose the live priority and capture coverage for the other. The SVC session is the first checkpoint for validating yesterday's Amazon routing fix."
+          },
+          {
+            "id": "tue-0901-sch-02",
+            "label": "11:00 AM-noon - Required self-review training",
+            "detail": "The English live session overlaps the first half-hour of slide focus time. Attend this session or deliberately select one of the alternate mandatory sessions."
+          },
+          {
+            "id": "tue-0901-sch-03",
+            "label": "Noon-1:00 PM - Protected work block",
+            "detail": "Use the only clean focus window for the migration list, Asana reconciliation, and the Sprint 17 decision brief."
+          },
+          {
+            "id": "tue-0901-sch-04",
+            "label": "1:00-2:00 PM - Knowledge Management and Case Management overlap",
+            "detail": "Assign coverage before noon. The Knowledge Management discussion needs alignment on why a PM is required and what the role should own."
+          },
+          {
+            "id": "tue-0901-sch-05",
+            "label": "2:00-4:00 PM - EPMO leadership and Nicolas follow-through",
+            "detail": "Bring a clear Sprint 17 recommendation, portfolio risks, and named dependency owners into the EPMO catch-up and the 3:30 PM Nicolas 1:1."
+          },
+          {
+            "id": "tue-0901-sch-06",
+            "label": "4:00 PM - Amazon UAT final session conflicts with CSC portfolio review",
+            "detail": "Choose coverage in advance. The UAT block is the final defect-submission window, while the CSC review needs initial portfolio priorities and risks captured."
+          }
+        ]
+      },
+      {
+        "title": "Action Items",
+        "info": false,
+        "items": [
+          {
+            "id": "tue-0901-ai-01",
+            "taskId": "task-20260831-set-sprint17-priorities",
+            "label": "Resolve the Sprint 17 capacity tradeoff",
+            "detail": "Anu confirmed the sprint cannot absorb both the ready CoE stories and Biographical deadline work. Review Mar's requested project summaries, decide what moves, and give the team a priority answer before the 2:00 PM EPMO catch-up.",
+            "urgent": true
+          },
+          {
+            "id": "tue-0901-ai-02",
+            "taskId": "task-20260831-clarify-staff-aug-document",
+            "label": "Clarify Licelot's Staff Aug document access and next step",
+            "detail": "Licelot reported that the shared Object-fields workbook is inaccessible and asked what action is expected. Restore access or route it to the owner, then answer the action-item question."
+          }
+        ]
+      },
+      {
+        "title": "Tomorrow Preview",
+        "info": true,
+        "items": [
+          {
+            "id": "tue-0901-tom-01",
+            "label": "10:30 AM - Thiago 1:1 conflicts with SVC standup",
+            "detail": "Decide whether the UAT follow-through needs the focused 1:1 or the broader standup, and assign coverage for the other."
+          },
+          {
+            "id": "tue-0901-tom-02",
+            "label": "2:00 PM - EPMO Team Meeting conflicts with English self-review training",
+            "detail": "If today's training is missed, tomorrow's English session overlaps the team meeting; the Spanish morning session remains the cleaner alternative."
+          },
+          {
+            "id": "tue-0901-tom-03",
+            "label": "3:30-4:30 PM - Portfolio and CoE collisions",
+            "detail": "Legal portfolio review overlaps the Laura 1:1 at 3:30 PM, followed by a 4:00 PM CoE touchpoint that competes with meeting-prep focus time."
+          }
+        ]
+      }
+    ]
+  },
+  {
     "id": "eod-2026-08-31",
     "type": "eod",
     "date": "Monday, August 31 - End of Day",
