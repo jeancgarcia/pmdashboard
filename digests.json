@@ -1,5 +1,145 @@
 [
   {
+    "id": "daily-2026-09-02-morning",
+    "type": "daily",
+    "date": "Morning - Wednesday, September 2",
+    "isoDate": "2026-09-02",
+    "greeting": "Good morning, Jean. Today is Wednesday, September 2, with 11 calendar blocks, five urgent priorities, eight carried-over items, and no active reminders. Close Amazon Connect Round 1 by EOD, turn Danny's UAT 1.5 questions into a concrete recovery and Round 2 plan, and send Sara the August Rippling hours and PTO totals this morning. The main risk is the 4:00 PM collision between the final UAT session, the CoE touchpoint, and meeting-prep time, with key SaltClick support unavailable for that UAT block. Dashboard state was last modified Friday, so completion status may not reflect changes made since then.",
+    "sections": [
+      {
+        "title": "Carried Over",
+        "info": false,
+        "items": [
+          {
+            "id": "wed-0902-co-01",
+            "taskId": "task-20260827-resolve-amazon-uat-call-routing",
+            "label": "Close Amazon Connect Round 1 and set the UAT 1.5 recovery plan",
+            "detail": "Recorded completion is uneven across the four groups, with Groups 2 and 3 furthest behind. Before the 4:00 PM final session, answer Danny's questions on untouched scripts, shift-aligned groups, buffer headcount, champions, progress tracking, Thursday-Friday testing time, and first-line technical support. SaltClick has Jacob and Hilary in another working session at 4:00 PM, so confirm coverage and leave a clear go/no-go path toward the proposed September 14 launch.",
+            "flag": "carried",
+            "urgent": true
+          },
+          {
+            "id": "wed-0902-co-02",
+            "taskId": "task-20260828-align-quality-intake-scope",
+            "label": "Prioritize Licelot's Quality project portfolio",
+            "detail": "Rank the five Quality requests by business impact and set one intake path that fits available PM and PE capacity. Bring the priority recommendation into today's EPMO and portfolio conversations.",
+            "flag": "carried",
+            "urgent": true
+          },
+          {
+            "id": "wed-0902-co-03",
+            "taskId": "task-20260828-complete-amazon-migration-list",
+            "label": "Close the remaining Amazon Connect migration-list gaps",
+            "detail": "Finalize the production list, remaining leaders, and provisioning guidance so the gaps do not carry into Round 2 planning or become launch blockers.",
+            "flag": "carried",
+            "urgent": true
+          },
+          {
+            "id": "wed-0902-co-04",
+            "taskId": "task-20260831-set-sprint17-priorities",
+            "label": "Update the Sprint 17 plan and clear the DNC scope question",
+            "detail": "Record the decision to defer Biographical Deadlines and keep NTA in Sprint 17, then resolve the remaining DNC scope expansion that is waiting on Frank's response.",
+            "flag": "carried",
+            "urgent": true
+          },
+          {
+            "id": "wed-0902-co-05",
+            "taskId": "task-20260828-clean-asana-armando-sheet",
+            "label": "Limpiar Asana con el spreadsheet de Armando",
+            "detail": "Use the noon protected block to reconcile Armando's spreadsheet against Asana, close stale entries, and leave one current operating view.",
+            "flag": "carried"
+          },
+          {
+            "id": "wed-0902-co-06",
+            "taskId": "task-20260828-review-eduanny-sop-access",
+            "label": "Decide Eduanny Suero's SOP access request",
+            "detail": "Confirm the business need and appropriate permission for the Travel Permit client-contact SOP, then approve or decline the outstanding SharePoint request.",
+            "flag": "carried"
+          },
+          {
+            "id": "wed-0902-co-07",
+            "taskId": "task-20260831-clear-sales-revenue-cloud-owners",
+            "label": "Clear the stalled Sales and Revenue Cloud dependencies",
+            "detail": "Confirm the Revenue Cloud owner, bring Deepak and Tim into the Sales Cloud work, secure an invoice record in sandbox, and set firm due dates.",
+            "flag": "carried"
+          },
+          {
+            "id": "wed-0902-co-08",
+            "taskId": "task-20260831-clarify-staff-aug-document",
+            "label": "Close out the Staff Aug document question",
+            "detail": "Jason confirmed the broad sharing invitation was accidental and should be ignored. Make sure Licelot has the intended access path and knows whether any action remains.",
+            "flag": "carried"
+          }
+        ]
+      },
+      {
+        "title": "Today's Schedule",
+        "info": true,
+        "items": [
+          {
+            "id": "wed-0902-sch-01",
+            "label": "10:30 AM-noon - SVC standup and required Spanish self-review training",
+            "detail": "Use the standup to simplify the Round 2 test approach and settle immediate UAT ownership, then attend the Spanish training session; self-reviews open September 14 and are due September 25."
+          },
+          {
+            "id": "wed-0902-sch-02",
+            "label": "Noon-2:00 PM - Protected work block",
+            "detail": "Use the cleanest focus window for Sara's August hours report, the UAT recovery brief, and any remaining access decisions."
+          },
+          {
+            "id": "wed-0902-sch-03",
+            "label": "2:00-3:00 PM - EPMO Team Meeting conflicts with English self-review training",
+            "detail": "The morning Spanish session avoids this collision. Bring the Sprint 17 update, portfolio priorities, and named dependency owners to the EPMO meeting."
+          },
+          {
+            "id": "wed-0902-sch-04",
+            "label": "3:00-4:00 PM - Thiago 1:1 and Legal portfolio review",
+            "detail": "Use the Thiago handoff to lock UAT coverage and the 3:30 PM Legal review to surface portfolio decisions before the crowded 4:00 PM block."
+          },
+          {
+            "id": "wed-0902-sch-05",
+            "label": "4:00-5:30 PM - Triple collision across UAT, CoE, and meeting prep",
+            "detail": "Choose coverage before the block begins. Amazon Connect needs a Round 1 close and recovery decision, CoE needs the Sprint 17 direction, and the 4:30 PM Sara 1:1 creates another transition inside the UAT window."
+          }
+        ]
+      },
+      {
+        "title": "Action Items",
+        "info": false,
+        "items": [
+          {
+            "id": "wed-0902-ai-01",
+            "taskId": "task-20260902-send-august-hours-pto",
+            "label": "Send Sara the August hours and PTO totals this morning",
+            "detail": "Pull total Rippling hours for each team member and include August PTO hours. Sara asked for the figures this morning because her report is missing some team members.",
+            "urgent": true
+          }
+        ]
+      },
+      {
+        "title": "Tomorrow Preview",
+        "info": true,
+        "items": [
+          {
+            "id": "wed-0902-tom-01",
+            "label": "10:30 AM-noon - Standup, Toggl follow-up, and Armando 1:1",
+            "detail": "Three back-to-back meetings leave no transition time; bring the UAT closeout and the cleaned operating view into the sequence."
+          },
+          {
+            "id": "wed-0902-tom-02",
+            "label": "Noon-2:00 PM - Amazon Connect sync followed by protected work time",
+            "detail": "Use the project sync to convert today's Round 1 decision into owners and dates, then protect the 90-minute block for follow-through."
+          },
+          {
+            "id": "wed-0902-tom-03",
+            "label": "2:00-5:00 PM - Firmwide meeting, Laura 1:1, and Tudo Bem weekly meeting",
+            "detail": "The afternoon is meeting-heavy; finish UAT and reporting follow-ups before the 2:00 PM firmwide session."
+          }
+        ]
+      }
+    ]
+  },
+  {
     "id": "eod-2026-09-01",
     "type": "eod",
     "date": "Tuesday, September 1 - End of Day",
