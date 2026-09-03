@@ -1,5 +1,164 @@
 [
   {
+    "id": "daily-2026-09-03-morning",
+    "type": "daily",
+    "date": "Morning - Thursday, September 3",
+    "isoDate": "2026-09-03",
+    "greeting": "Good morning, Jean. Today is Thursday, September 3, with nine active calendar blocks, five urgent items, nine carried-over tasks, and no active reminders. Use the noon Amazon Connect sync to turn the completed Round 1 close into a firm Round 2 readiness plan, use the 11:00 AM Toggl touchpoint to settle capacity-reporting expectations, and close the remaining migration and Sprint 17 ownership gaps before the meeting-heavy afternoon. The main risk is that UAT scripts are only 90% complete for Tuesday's kickoff while first-line technical support and a dedicated Salesforce integration account still need confirmed ownership. Dashboard state was last modified Friday, August 28, so completion status may not reflect more recent work.",
+    "sections": [
+      {
+        "title": "Carried Over",
+        "info": false,
+        "items": [
+          {
+            "id": "thu-0903-co-01",
+            "taskId": "task-20260827-resolve-amazon-uat-call-routing",
+            "label": "Lock the Amazon Connect Round 2 readiness plan",
+            "detail": "Round 1 is officially closed, the 26 testers are organized into four groups, and two UAT champions are identified. At today's project sync, confirm the remaining high-concern scripts, finish the Round 2 scripts due Friday, name first-line technical support, and decide how to route the dedicated Salesforce integration account before Tuesday's kickoff.",
+            "flag": "carried",
+            "urgent": true
+          },
+          {
+            "id": "thu-0903-co-02",
+            "taskId": "task-20260828-complete-amazon-migration-list",
+            "label": "Close the remaining Amazon Connect migration-list gaps",
+            "detail": "Finalize the production list, provisioning guidance, and alternate caller IDs. About 150 users have fax-linked direct numbers that may still require RingCentral, so document the interim scope and owner before Round 2.",
+            "flag": "carried",
+            "urgent": true
+          },
+          {
+            "id": "thu-0903-co-03",
+            "taskId": "task-20260828-align-quality-intake-scope",
+            "label": "Prioritize Licelot's Quality project portfolio",
+            "detail": "Rank the five Quality requests by business impact and set one intake path that fits available PM and PE capacity.",
+            "flag": "carried",
+            "urgent": true
+          },
+          {
+            "id": "thu-0903-co-04",
+            "taskId": "task-20260831-set-sprint17-priorities",
+            "label": "Update the Sprint plan with the agreed DNC direction",
+            "detail": "Record Biographical Deadlines as deferred and NTA as included, then place the DNC automation-removal request in the Sprint 18 path with Ben as main contact and tester.",
+            "flag": "carried",
+            "urgent": true
+          },
+          {
+            "id": "thu-0903-co-05",
+            "taskId": "task-20260902-send-august-hours-pto",
+            "label": "Confirm the August hours report is closed with Sara",
+            "detail": "Sara thanked the team for the hours and calculated utilization after PTO and holidays were included. Verify that no final delivery remains, then close the task in the dashboard.",
+            "flag": "carried",
+            "urgent": true
+          },
+          {
+            "id": "thu-0903-co-06",
+            "taskId": "task-20260828-clean-asana-armando-sheet",
+            "label": "Limpiar Asana con el spreadsheet de Armando",
+            "detail": "Use the 11:30 AM Armando 1:1 to reconcile the spreadsheet against Asana, close stale entries, and leave one current operating view.",
+            "flag": "carried"
+          },
+          {
+            "id": "thu-0903-co-07",
+            "taskId": "task-20260828-review-eduanny-sop-access",
+            "label": "Decide Eduanny Suero's SOP access request",
+            "detail": "Confirm the business need and permission level for the Travel Permit client-contact SOP, then approve or decline the outstanding SharePoint request.",
+            "flag": "carried"
+          },
+          {
+            "id": "thu-0903-co-08",
+            "taskId": "task-20260831-clear-sales-revenue-cloud-owners",
+            "label": "Clear the stalled Sales and Revenue Cloud dependencies",
+            "detail": "Confirm the Revenue Cloud owner, bring Deepak and Tim into the Sales Cloud work, secure an invoice record in sandbox, and set firm due dates.",
+            "flag": "carried"
+          },
+          {
+            "id": "thu-0903-co-09",
+            "taskId": "task-20260831-clarify-staff-aug-document",
+            "label": "Close out the Staff Aug document question",
+            "detail": "Confirm that Licelot has the intended access path and knows whether any action remains after the accidental broad sharing invitation.",
+            "flag": "carried"
+          }
+        ]
+      },
+      {
+        "title": "Today's Schedule",
+        "info": true,
+        "items": [
+          {
+            "id": "thu-0903-sch-01",
+            "label": "10:30 AM-noon - Standup, Toggl touchpoint, and Armando 1:1",
+            "detail": "Three back-to-back meetings leave no transition time. Bring the UAT closeout to standup, settle time-tracking guidance at 11:00 AM, and use the Armando 1:1 to close the Asana reconciliation."
+          },
+          {
+            "id": "thu-0903-sch-02",
+            "label": "Noon-2:00 PM - Amazon Connect sync and protected follow-through",
+            "detail": "Use the project sync to assign Round 2 readiness owners, then protect the 90-minute block for migration, Sprint, and reporting follow-through."
+          },
+          {
+            "id": "thu-0903-sch-03",
+            "label": "2:00-4:00 PM - Firmwide meeting followed by Laura and Thiago 1:1s",
+            "detail": "The afternoon starts a continuous three-hour meeting run. Use Laura's 1:1 for the client-notification scope and Thiago's for Round 2 readiness and support ownership."
+          },
+          {
+            "id": "thu-0903-sch-04",
+            "label": "4:00-5:00 PM - Tudo Bem weekly meeting",
+            "detail": "Bring the team's concerns about unclear capacity measurement, missing process owners, and PM staffing into the weekly operating discussion."
+          }
+        ]
+      },
+      {
+        "title": "Action Items",
+        "info": false,
+        "items": [
+          {
+            "id": "thu-0903-ai-01",
+            "taskId": "task-20260903-clarify-toggl-capacity-model",
+            "label": "Clarify the Toggl capacity model and escalation path",
+            "detail": "At the 11:00 AM touchpoint, explain how utilized and non-utilized time will inform capacity, name the owner for missing project IDs, and tell the team how the data will support staffing decisions."
+          },
+          {
+            "id": "thu-0903-ai-02",
+            "taskId": "task-20260903-expand-client-notifications-sop",
+            "label": "Decide the broader client-notification SOP path",
+            "detail": "Lucia said the trigger extends beyond SMS to phone, business-development, attorney, website, email, and social responses, and asked whether the work belongs in BCP. Align with Laura, decide the project home and owner, and reply with the next step."
+          }
+        ]
+      },
+      {
+        "title": "Out of Office",
+        "info": true,
+        "items": [
+          {
+            "id": "thu-0903-ooo-01",
+            "label": "Jenn Gold is out today",
+            "detail": "Ashley Saunders is covering for SaltClick; route any Amazon Connect follow-up that cannot wait through Ashley."
+          }
+        ]
+      },
+      {
+        "title": "Tomorrow Preview",
+        "info": true,
+        "items": [
+          {
+            "id": "thu-0903-tom-01",
+            "label": "10:30-11:00 AM - Salesforce Program Standup conflicts with SVC standup",
+            "detail": "Choose coverage in advance and make sure the Amazon Connect readiness update reaches both groups."
+          },
+          {
+            "id": "thu-0903-tom-02",
+            "label": "11:30 AM-1:00 PM - Protected focus block before EPMO EOW",
+            "detail": "Use the uninterrupted window to finish the weekly executive update and close any owners left open today."
+          },
+          {
+            "id": "thu-0903-tom-03",
+            "label": "1:00-3:30 PM - EPMO EOW, self-review training, pipeline sync, and slide update",
+            "detail": "The 2:00 PM training overlaps the 2:30 PM project-pipeline sync; attend only if a prior mandatory training was missed, and protect the 3:00 PM executive slide update."
+          }
+        ]
+      }
+    ]
+  },
+  {
     "id": "eod-2026-09-02",
     "type": "eod",
     "date": "Wednesday, September 2 - End of Day",
