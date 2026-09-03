@@ -1,5 +1,116 @@
 [
   {
+    "id": "eod-2026-09-03",
+    "type": "eod",
+    "date": "Thursday, September 3 - End of Day",
+    "isoDate": "2026-09-03",
+    "greeting": "Good evening, Jean. Today closed with meaningful progress across Amazon Connect readiness, portfolio prioritization, Sprint planning, and several access and ownership follow-ups. The remaining work is focused on the Asana reconciliation, the Toggl capacity discussion moved to the weekly team meeting, and the new-office calling path.",
+    "sections": [
+      {
+        "title": "Completed Today",
+        "info": true,
+        "items": [
+          {
+            "id": "eod-0903-done-1",
+            "label": "Closed the Amazon Connect readiness and migration work",
+            "detail": "The Round 2 readiness plan and remaining migration-list gaps were marked complete. Hilary also confirmed the updated employee platform list was finished, and the Round 2 kickoff invitations were sent."
+          },
+          {
+            "id": "eod-0903-done-2",
+            "label": "Prioritized the Quality project portfolio",
+            "detail": "The Quality portfolio prioritization item was completed today."
+          },
+          {
+            "id": "eod-0903-done-3",
+            "label": "Updated the Sprint plan with the agreed DNC direction",
+            "detail": "The Sprint planning item covering Biographical Deadlines, NTA, and the DNC automation-removal path was completed today."
+          },
+          {
+            "id": "eod-0903-done-4",
+            "label": "Closed the August hours follow-up",
+            "detail": "The August hours report follow-up with Sara was marked complete."
+          },
+          {
+            "id": "eod-0903-done-5",
+            "label": "Resolved Eduanny Suero's SOP access request",
+            "detail": "The outstanding Travel Permit client-contact SOP access item was completed."
+          },
+          {
+            "id": "eod-0903-done-6",
+            "label": "Cleared the Sales and Revenue Cloud dependencies",
+            "detail": "The ownership and dependency follow-up was marked complete."
+          },
+          {
+            "id": "eod-0903-done-7",
+            "label": "Closed the Staff Aug document question",
+            "detail": "The access-path and remaining-action question was completed."
+          },
+          {
+            "id": "eod-0903-done-8",
+            "label": "Decided the client-notification SOP path",
+            "detail": "The broader client-notification scope and ownership item was marked complete."
+          }
+        ]
+      },
+      {
+        "title": "Still Open",
+        "info": false,
+        "items": [
+          {
+            "id": "eod-0903-open-1",
+            "taskId": "task-20260828-clean-asana-armando-sheet",
+            "label": "Reconcile Asana with Armando's spreadsheet",
+            "detail": "The dashboard still shows this reconciliation open. Close stale entries and leave one current operating view."
+          },
+          {
+            "id": "eod-0903-open-2",
+            "taskId": "task-20260903-clarify-toggl-capacity-model",
+            "label": "Clarify the Toggl capacity model and escalation path",
+            "detail": "The 11:00 AM touchpoint was canceled so the topic could move to the Tudo Bem weekly meeting. Confirm how capacity will be measured, who owns missing project IDs, and how the data will support staffing decisions."
+          },
+          {
+            "id": "eod-0903-open-3",
+            "taskId": "task-20260903-set-amazon-new-office-calling-path",
+            "label": "Set the calling path for new offices and outbound calls",
+            "detail": "Nadia asked whether new offices should launch on Amazon Connect or use RingCentral first, and separately asked Duvan to validate outbound caller-ID behavior. Confirm the decision owners and next steps."
+          }
+        ]
+      },
+      {
+        "title": "Cancelled Today",
+        "info": true,
+        "items": [
+          {
+            "id": "eod-0903-cancel-1",
+            "label": "PC: Toggl touchpoint",
+            "detail": "Jean canceled the 11:00 AM touchpoint so the topic could be discussed during the Tudo Bem weekly meeting."
+          }
+        ]
+      },
+      {
+        "title": "Tomorrow Preview",
+        "info": true,
+        "items": [
+          {
+            "id": "eod-0903-fri-1",
+            "label": "10:30-11:00 AM - Salesforce Program Standup conflicts with SVC Daily Standup",
+            "detail": "Choose coverage in advance and make sure the Amazon Connect readiness update reaches both groups."
+          },
+          {
+            "id": "eod-0903-fri-2",
+            "label": "11:30 AM-1:00 PM - Protected focus block before EPMO EOW",
+            "detail": "Use the uninterrupted window to finish the weekly executive update and close any owners left open today."
+          },
+          {
+            "id": "eod-0903-fri-3",
+            "label": "1:00-3:30 PM - EPMO EOW, self-review training, pipeline sync, and slide update",
+            "detail": "The 2:00 PM training overlaps the 2:30 PM project-pipeline sync; protect the 3:00 PM executive slide update and confirm whether the training needs live attendance."
+          }
+        ]
+      }
+    ]
+  },
+  {
     "id": "daily-2026-09-03-morning",
     "type": "daily",
     "date": "Morning - Thursday, September 3",
