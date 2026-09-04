@@ -1,0 +1,136 @@
+{
+  "digest": {
+    "id": "eod-2026-09-04",
+    "type": "eod",
+    "date": "Friday, September 4 - End of Day",
+    "isoDate": "2026-09-04",
+    "greeting": "Good evening, Jean. Amazon Connect readiness moved forward with the Round II scripts, participant list, tester reference, and training audience prepared, while the core calling, integration-account, and attorney-platform decisions remain open. Monday includes a required UAT access check ahead of Tuesday's kickoff.",
+    "sections": [
+      {
+        "title": "Completed Today",
+        "info": true,
+        "items": [
+          {
+            "id": "eod-0904-done-1",
+            "label": "Advanced Amazon Connect Round II readiness",
+            "detail": "The scripts and participant list were finalized, a tester FAQ was prepared, and the validated training audience was sent for setup with a September 18 due date."
+          }
+        ]
+      },
+      {
+        "title": "Still Open",
+        "info": false,
+        "items": [
+          {
+            "id": "eod-0904-open-1",
+            "taskId": "task-20260903-set-amazon-new-office-calling-path",
+            "label": "Set the Amazon Connect calling-policy path",
+            "detail": "Choose the platform for new offices and close the outbound caller-ID, callback-routing, and number-blocking rules. Queue transfer is still being worked, while the language prompts now need the Salesforce-side update.",
+            "urgent": true
+          },
+          {
+            "id": "eod-0904-open-2",
+            "taskId": "task-20260904-confirm-salesforce-integration-account",
+            "label": "Secure the dedicated Salesforce integration account",
+            "detail": "No update arrived today on the non-human production account. Confirm whether it will be created directly or routed through Halo, with the required permissions and monitoring.",
+            "urgent": true
+          },
+          {
+            "id": "eod-0904-open-3",
+            "taskId": "task-20260904-decide-attorney-calling-platform",
+            "label": "Decide the attorney calling-platform treatment",
+            "detail": "The attorney platform decision remains open and is now tracked in the RAID log with Thiago. Close whether attorneys join the contact center or remain in RingCentral, then adjust the training audience if needed.",
+            "urgent": true
+          },
+          {
+            "id": "eod-0904-open-4",
+            "taskId": "task-20260904-lock-legal-guidance-sop-path",
+            "label": "Lock the Contigo SOP and training path",
+            "detail": "Training is scheduled for September 8-10 while the SOPs are still under review. Confirm that training can proceed, secure the remaining approvals by Tuesday, and keep the September 15 launch on track."
+          },
+          {
+            "id": "eod-0904-open-5",
+            "taskId": "task-20260828-clean-asana-armando-sheet",
+            "label": "Reconcile Asana with Armando's spreadsheet",
+            "detail": "Close stale entries and leave one current operating view before next week's portfolio work."
+          },
+          {
+            "id": "eod-0904-open-6",
+            "taskId": "task-20260903-clarify-toggl-capacity-model",
+            "label": "Clarify the Toggl capacity model and escalation path",
+            "detail": "The new Toggl refresher training is available, but the capacity model still needs agreement on measurement, missing project-ID ownership, and the staffing escalation path."
+          },
+          {
+            "id": "eod-0904-open-7",
+            "taskId": "task-20260904-plan-laura-october-coverage",
+            "label": "Plan Laura's October time-off coverage",
+            "detail": "Use the next 1:1 to confirm project coverage for Laura's proposed October 14-18 time off before the request is submitted in Rippling."
+          }
+        ]
+      },
+      {
+        "title": "Cancelled Today",
+        "info": true,
+        "items": [
+          {
+            "id": "eod-0904-cancel-1",
+            "label": "Salesforce Program Standup was canceled",
+            "detail": "The 10:30 AM program standup was canceled, leaving SVC Daily Standup as the remaining meeting in that time slot."
+          },
+          {
+            "id": "eod-0904-cancel-2",
+            "label": "Project pipeline sync was canceled",
+            "detail": "Jorge canceled the 2:30 PM EPMO and IT weekly sync because several key members were unavailable and directed urgent topics to chat or direct follow-up."
+          },
+          {
+            "id": "eod-0904-cancel-3",
+            "label": "Contigo Plan Weekly Sync was canceled",
+            "detail": "Jhara replaced the meeting with a written update confirming that the September 15 launch remains on track and listing the approvals still needed by Tuesday."
+          }
+        ]
+      },
+      {
+        "title": "Key Decisions",
+        "info": true,
+        "items": [
+          {
+            "id": "eod-0904-decision-1",
+            "label": "Use the current Contact Center audience plus all Round II testers for training",
+            "detail": "The training setup will include the current Contact Center audience and five additional Round II testers so all 26 assigned testers are covered while the attorney-platform decision remains separate."
+          },
+          {
+            "id": "eod-0904-decision-2",
+            "label": "Include CSC leads in Matter Plan rollout communications",
+            "detail": "Carolyn Abarca and Mariela Nava will be included in rollout communications whenever a project changes or updates Matter Plans."
+          }
+        ]
+      },
+      {
+        "title": "Monday Preview",
+        "info": true,
+        "items": [
+          {
+            "id": "eod-0904-mon-1",
+            "label": "8:00-9:00 AM - Approve timecards and prepare the week",
+            "detail": "Clear approvals and set the week's priorities before the meeting run begins."
+          },
+          {
+            "id": "eod-0904-mon-2",
+            "label": "10:30-11:00 AM - SVC Daily Standup",
+            "detail": "Use the standup to confirm ownership for the remaining Round II controls ahead of Tuesday's kickoff."
+          },
+          {
+            "id": "eod-0904-mon-3",
+            "label": "12:00-1:30 PM - Focus block and required UAT access check",
+            "detail": "The required 10-minute Amazon Connect access check is scheduled for 12:30 PM inside the focus block; confirm Salesforce UAT, Omni-Channel, voice availability, and the assigned tester workbook tab."
+          },
+          {
+            "id": "eod-0904-mon-4",
+            "label": "2:00-3:30 PM - BD Portfolio Review and Maria 1:1",
+            "detail": "Review portfolio status, blockers, and next steps, with the Maria 1:1 closing the visible schedule."
+          }
+        ]
+      }
+    ]
+  }
+}
