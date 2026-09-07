@@ -236,6 +236,7 @@
     "task-20260824-report-suspicious-security-email": true,
     "task-20260826-amazon-connect-business-controls": true,
     "task-20260831-clear-sales-revenue-cloud-owners": true,
+    "task-20260904-decide-attorney-calling-platform": true,
     "task-20260610-monitor-docusign-taskset-guidance": true,
     "task-20260611-decide-deleted-recording-restores": true,
     "task-20260611-prepare-bcp-ir-and-portfolio-1-1s": true,
@@ -265,6 +266,7 @@
     "task-20260728-track-ipp-sales-plan-confirmations": true,
     "task-20260729-answer-amazon-connect-quota-inputs": true,
     "task-20260807-unblock-preparer-change-production": true,
+    "task-20260903-set-amazon-new-office-calling-path": true,
     "task-20260610-resolve-dp-trace-staff-aug-coverage": true,
     "task-20260611-confirm-epmo-offers-and-recognition": true,
     "task-20260611-review-phase-2-projects-nadia-reply": true,
@@ -735,5 +737,5 @@
     }
   ],
   "assigneeOverrides": {},
-  "lastModified": 1788447659230
+  "lastModified": 1788796065272
 }
