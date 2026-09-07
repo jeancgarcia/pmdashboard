@@ -1,5 +1,117 @@
 [
   {
+    "id": "eod-2026-09-07",
+    "type": "eod",
+    "date": "Monday, September 7 - End of Day",
+    "isoDate": "2026-09-07",
+    "greeting": "Good evening, Jean. Two priority decisions were closed today, while tomorrow's UAT rollout still needs focused follow-through on access and a compressed meeting schedule. Seven items remain open after a day with two confirmed cancellations.",
+    "sections": [
+      {
+        "title": "Completed Today",
+        "info": true,
+        "items": [
+          {
+            "id": "eod-0907-done-1",
+            "label": "Set the Amazon Connect calling-policy path",
+            "detail": "The calling-policy decision for new offices was completed today."
+          },
+          {
+            "id": "eod-0907-done-2",
+            "label": "Decided the attorney calling-platform treatment",
+            "detail": "The attorney platform decision was completed ahead of the UAT kickoff sequence."
+          }
+        ]
+      },
+      {
+        "title": "Still Open",
+        "info": false,
+        "items": [
+          {
+            "id": "eod-0907-open-1",
+            "taskId": "task-20260904-confirm-salesforce-integration-account",
+            "label": "Secure the dedicated Salesforce integration account",
+            "detail": "Confirm whether the non-human production account will be created directly or routed through Halo, including the required permissions and monitoring.",
+            "urgent": true
+          },
+          {
+            "id": "eod-0907-open-2",
+            "taskId": "task-20260907-complete-amazon-uat-access-check",
+            "label": "Resolve Amazon Connect UAT access issues before Tuesday's kickoffs",
+            "detail": "Today's checkpoint surfaced Salesforce UAT, telephony, and Omni-Channel access problems. The issues were sent to the technical team, which is expected to join the Round 2 channel tomorrow.",
+            "urgent": true
+          },
+          {
+            "id": "eod-0907-open-3",
+            "taskId": "task-20260904-lock-legal-guidance-sop-path",
+            "label": "Lock the Legal Guidance SOP and training path",
+            "detail": "Training starts September 8 while the SOPs remain under review. Confirm that training can proceed, secure the remaining approvals, and protect the September 15 Contigo launch."
+          },
+          {
+            "id": "eod-0907-open-4",
+            "taskId": "task-20260907-review-executive-updates-deck",
+            "label": "Review the executive updates deck",
+            "detail": "Complete the requested Monday review and add the slide covering EPMO projects completed in August before Tuesday's slide block."
+          },
+          {
+            "id": "eod-0907-open-5",
+            "taskId": "task-20260907-confirm-ekm-project-record",
+            "label": "Confirm the Enterprise Knowledge Management project record",
+            "detail": "Confirm whether the project record's deletion was intentional and which record should remain authoritative."
+          },
+          {
+            "id": "eod-0907-open-6",
+            "taskId": "task-20260828-clean-asana-armando-sheet",
+            "label": "Reconcile Asana with Armando's spreadsheet",
+            "detail": "Close stale entries and leave one current operating view before this week's portfolio reviews."
+          },
+          {
+            "id": "eod-0907-open-7",
+            "taskId": "task-20260903-clarify-toggl-capacity-model",
+            "label": "Clarify the Toggl capacity model and escalation path",
+            "detail": "Document how capacity will be measured, who owns missing project IDs, and how the data will inform staffing."
+          }
+        ]
+      },
+      {
+        "title": "Cancelled Today",
+        "info": true,
+        "items": [
+          {
+            "id": "eod-0907-cancel-1",
+            "label": "SVC Daily Standup was canceled",
+            "detail": "The 10:30 AM standup was explicitly canceled on today's calendar."
+          },
+          {
+            "id": "eod-0907-cancel-2",
+            "label": "BD Portfolio Review was canceled",
+            "detail": "Jean canceled this week's meeting because of the U.S. holiday."
+          }
+        ]
+      },
+      {
+        "title": "Tomorrow Preview",
+        "info": true,
+        "items": [
+          {
+            "id": "eod-0907-tue-1",
+            "label": "10:30-11:30 AM - Double-booked start, access check, and slide focus",
+            "detail": "The Jhara 1:1 overlaps SVC Daily Standup at 10:30 AM. At 11:00 AM, the required UAT access recheck overlaps the EPMO slide focus block."
+          },
+          {
+            "id": "eod-0907-tue-2",
+            "label": "1:00-3:00 PM - Leadership meetings collide with UAT",
+            "detail": "CSO GLs Huddle runs 1:00-2:00 PM. EPMO TL Weekly Catch Up at 2:00 PM overlaps the 2:15 PM Group 4 UAT kickoff."
+          },
+          {
+            "id": "eod-0907-tue-3",
+            "label": "3:00-5:45 PM - Amazon Connect kickoff sequence",
+            "detail": "Group 2 starts at 3:00 PM and overlaps the 3:30 PM Nicolas 1:1; Groups 3 and 1 follow at 4:00 PM and 5:00 PM. Confirm coverage and clear access blockers before the sequence."
+          }
+        ]
+      }
+    ]
+  },
+  {
     "id": "daily-2026-09-07-morning",
     "type": "daily",
     "date": "Morning - Monday, September 7",
